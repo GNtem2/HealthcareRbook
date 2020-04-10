@@ -1,0 +1,55 @@
+# Introduction to R {#intro}
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+
+Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+
+This book takes on a non-traditional approach to teaching R. It emphasises learning R by examples. This chapter is devoted to learning ggplot2.
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+library(ggplot2)
+#df
+## Duration_PNES  0.097375702
+## pseudostatus   0.228258071
+## Hx_anxiety     0.047137943
+## Hx_depression  0.005876098
+## DSP            0.058153368
+## seizure_burden 0.017863413
+## sex            0.041313760
+
+df<-data.frame("Predictors"=c("Duration_PNES","pseudostatus","Hx_anxiety","Hx_depression","DSP","seizure_burden","sex"),"Importance"=c(0.09737,0.22825, 0.047137,0.00487,0.058153,0.01786,0.04131))
+
+#dimensions of data frame
+dim(df)
+
+#variables in data frame
+colnames(df)
+
+#scatter plot uses geom_point 
+ggplot(df, aes(x=Predictors,y=Importance))+geom_point()
+
+#The data frame above is unordered
+#Predictors is a factor
+
+Predictors=c("Duration_PNES","pseudostatus","Hx_anxiety","Hx_depression","DSP","seizure_burden","sex")
+
+df<-data.frame(
+  Predictors=as.factor(Predictors),
+  levels=Predictors,
+  "Importance"=c(0.09737,0.22825, 0.047137,0.00487,0.058153,0.01786,0.04131))
+
+#scatter plot useing ordered factors
+ggplot(df, aes(x=Predictors,y=Importance))+geom_point()
+
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(df, 10), caption = 'An example table using data above',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
