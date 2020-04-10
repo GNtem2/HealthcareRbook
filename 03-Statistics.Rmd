@@ -1,0 +1,79 @@
+# Statistics
+
+This section is not intended as a textbook on statistics. Rather it demonstrates multiple approaches that can be used, R codes provided.
+
+## Regression
+
+### Linear regression
+
+### Logistic regression
+In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate.
+
+#### Collinearity
+Collinearity or relatedness among the predictors is often forgotten in many analysis. This issue can lead to instability in the regression coefficients. There are several tests for collinearity: variance inflation factor and condition index. The variance inflation factor (VIF) is proportional to $VIF = 1/1-R^2$. In this example, as the predictors become strogly correlated $R^2$ apporaches 1 and VIF will approaches infintity.
+
+#### Discrimination and Calibration
+The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.
+
+#### Measuring Improvement in Regression Models 
+The net reclassification improvement  (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI were performed using _PredictABEL_ .
+
+#### Shapley value
+We can use ideas from game theory relating to fair distribution of proﬁt in coalition games; the coalition (co-operative) game in this case can be interpreted as contribution of the covariates to the model. The Shapley value regression method calculates the marginal contribution of each covariate as the average of all permutations of the coalition of the covariates containing the covariate of interest minus the coalition without the covariate of interest. The advantage of this approach is that it can handle multicollinearity (relatedness) among the covariates 
+
+#### Special types of regression
+
+##### Penalised regression
+We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome). PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
+ 
+##### Interaction 
+When describing interaction terms it is recommended that the results be expressed as β coefficients rather than as odds ratio. 
+
+##### Non-negative regression
+In certain situations, it is necessary to constrain the analysis so that the regression coefifcients are non-negative. For example, when regressing brain regions against infarct volume, there is no reason believe that a negative coefficient attributable to a brain region is possible. Non-negative regression can be perfomred in R using _nnls_. 
+
+## Metaanalysis
+During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the paper.
+
+### Metaanalysis of rate
+This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic.
+
+```{r eval=FALSE}
+
+library(metafor) #open software metafor
+
+#create data frame dat
+#xi is numerator
+#ni is denominator
+dat <- data.frame(model=c("melbourne","paris","oxford","stanford","ottawa","new zealand"),
+xi=c(7,7,6,2,31,2), 
+ni=c(468,296, 281,223,982,172))
+
+#calculate new variable pi base on ratio xi/ni
+dat$pi <- with(dat, xi/ni)
+
+#Freeman-Tukey double arcsine trasformation
+dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0)	
+res <- rma(yi, vi, method="REML", data=dat, slab=paste(model))
+
+#create forest plot with labels
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), xlim=c(-1,1.5),refline=0.020,cex=.8, ilab=cbind(dat$xi, dat$ni),
+       ilab.xpos=c(-.6,-.4),digits=3)
+op <- par(cex=.75, font=2)
+text(-1.0, 7.5, "model ",pos=4)
+text(c(-.55,-.2), 7.5, c("recurrence", " total subjects"))
+text(1.4,7.5, "frequency [95% CI]", pos=2)
+par(op)
+```
+
+#### Metaanalysis of diagnostic Test
+The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio). This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using _mada_ package.
+
+##### Inconsistency I2
+The inconsistency I2 index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity.56 This test can be performed using metafor package . The presence of high I2 suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. 
+
+#### summary Positive and Negative Likelihood Ratio
+
+Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al,53 a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test result for a range of possible values of baseline risk. 
+
+### Metaregression

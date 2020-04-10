@@ -1,0 +1,14 @@
+# Machine learning
+
+## Decision tree analysis
+There are several different approaches to performing decision tree analyses. The most famous method CART is implemented in R as rpart. This method uses the Gini coeffient to partition the root into branches. The second approaches uses chi-square test to prtition the tree.
+
+### Information theory driven
+
+### Conditional decision tree
+
+## Random Forest
+
+## Support vector machine
+
+

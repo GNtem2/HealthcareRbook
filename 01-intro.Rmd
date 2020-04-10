@@ -6,16 +6,10 @@ Figures and tables with captions will be placed in `figure` and `table` environm
 
 This book takes on a non-traditional approach to teaching R. It emphasises learning R by examples. This chapter is devoted to learning ggplot2.
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+## ggplot2
+
+```{r nice-fig, fig.cap='ggplot style figure!', out.width='80%', fig.asp=.75, fig.align='center'}
 library(ggplot2)
-#df
-## Duration_PNES  0.097375702
-## pseudostatus   0.228258071
-## Hx_anxiety     0.047137943
-## Hx_depression  0.005876098
-## DSP            0.058153368
-## seizure_burden 0.017863413
-## sex            0.041313760
 
 df<-data.frame("Predictors"=c("Duration_PNES","pseudostatus","Hx_anxiety","Hx_depression","DSP","seizure_burden","sex"),"Importance"=c(0.09737,0.22825, 0.047137,0.00487,0.058153,0.01786,0.04131))
 
@@ -42,6 +36,34 @@ df<-data.frame(
 ggplot(df, aes(x=Predictors,y=Importance))+geom_point()
 
 ```
+## Tidy data
+
+Attention to collectionof data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
+
+```{r variables}
+df2<-data.frame(Var=c("test positive","test negative"), Result=c(5, 10))
+df2
+```
+
+The above example should be entered this way. This change allows one to group variables by Test status: 'positive' or 'negative'. One can easily perform a t test here (not recommend in this case as the data contains only 2 rows).
+
+```{r variables2}
+df2<-data.frame(Test=c("positive","negative"), Result=c(5, 10))
+df2
+```
+
+When entering data, avoid writing characters in under date or time.
+
+```{r date}
+df3<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),"Result"=c(4,5,6))
+
+class(df3$DateofEvent)
+
+df3<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006","12-03-2006"),"Result"=c(4,5,6))
+
+class(df3$DateofEvent)
+```
+
 
 Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
 
