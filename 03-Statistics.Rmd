@@ -2,9 +2,40 @@
 
 This section is not intended as a textbook on statistics. Rather it demonstrates multiple approaches that can be used, R codes provided.
 
+## Univariable analyses
+
+### Parametric tests
+T-test is the workhorse for comparing if 2 datasets are have the same distribution. Performing t-test in R requires data from 2 columns: one containing the variables for comparison and one to label the group. It is recommended to check the distribution of the data by using histogram. For this exercise, we will use the simulated data from ECR trials. The grouping variable is the trial assignment.  
+```{r eval=FALSE}
+#comparison of early neurological recovery (ENI) by tral (T)
+dtTrial<-read.csv("./Data-Use/dtTrial_simulated.csv")
+t.test(dtTrial$ENI~dtTrial$T)
+```
+
+### Non-parametric tests
+Chi-square and Fisher-exact tests can be done by using the _table_ function for setting up the count data into 2 x 2 contingency table or confusion matrix. In this example we will use the data above.
+```{r eval=FALSE}
+table(dtTrial$HT,dtTrial$T)
+chisq.test(dtTrial$HT,dtTrial$T)
+```
+The Wilcoxon rank sum test is performed with continuous data organised in the same way as the t-test. There are several different approaches to performing Wilcoxon rank sum test. The _coin_ package allows handling of ties.
+
+```{r eval=FALSE}
+library(coin)
+wilcox.test(ENI~T, data=dtTrial)
+```
 ## Regression
 
 ### Linear regression
+A matrix description of parameter estimation is given here because it is easier to describe the multiple regression [@Draper1998]. 
+        $Y= beta1X1+ beta2X2+...betajXj$
+A matrix is an array of data as rows and columns. For the imaging data, the individual voxel is represented on each column and each row refers to another patient. A vector refers to a matrix of one column.
+
+In matrix form, the multiple regression equation takes the form
+ 				$Y= betaX + E$
+where X is the predictor matrix, Y is the dependent matrix, β is the regression coefficient and E is the error term (not the intercept). The X is a jth rows by ith columns matrix and Y and E is a jth column vector.
+
+Algebraic manipulation of equation 1, shows that the solution for β is  . is the transpose of  such that the columns of   are now written as rows. The correlation matrix of X is given by  . The solution for β is possible if the correlation matrix   can be inverted. The inverse of a matrix can be found if it is has a square shape (columns and rows of the matrix are equal) and the determinant of the matrix is not singular or nonzero [@Draper1998]. The uniqueness of the matrix inverse is that when a matrix is multiplied by its inverse, the solution is an identity matrix. The diagonal elements of a matrix are ones and the remainders of the square matrix are zeros for an identity matrix. For a rectangular matrix, multiplication of the matrix by its Moore-Penrose pseudo-inverse results in an identity matrix.
 
 ### Logistic regression
 In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate.
@@ -13,10 +44,10 @@ In logistic regression, there is no algebraic solution to determine the paramete
 Collinearity or relatedness among the predictors is often forgotten in many analysis. This issue can lead to instability in the regression coefficients. There are several tests for collinearity: variance inflation factor and condition index. The variance inflation factor (VIF) is proportional to $VIF = 1/1-R^2$. In this example, as the predictors become strogly correlated $R^2$ apporaches 1 and VIF will approaches infintity.
 
 #### Discrimination and Calibration
-The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.
+The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016]. Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.
 
 #### Measuring Improvement in Regression Models 
-The net reclassification improvement  (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI were performed using _PredictABEL_ .
+The net reclassification improvement  (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI were performed using _PredictABEL_ . [@pmid28579970][@pmid26796056]
 
 #### Shapley value
 We can use ideas from game theory relating to fair distribution of proﬁt in coalition games; the coalition (co-operative) game in this case can be interpreted as contribution of the covariates to the model. The Shapley value regression method calculates the marginal contribution of each covariate as the average of all permutations of the coalition of the covariates containing the covariate of interest minus the coalition without the covariate of interest. The advantage of this approach is that it can handle multicollinearity (relatedness) among the covariates 
@@ -24,7 +55,7 @@ We can use ideas from game theory relating to fair distribution of proﬁt in co
 #### Special types of regression
 
 ##### Penalised regression
-We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome). PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
+We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) [@pmid23838753]. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
  
 ##### Interaction 
 When describing interaction terms it is recommended that the results be expressed as β coefficients rather than as odds ratio. 
@@ -32,48 +63,166 @@ When describing interaction terms it is recommended that the results be expresse
 ##### Non-negative regression
 In certain situations, it is necessary to constrain the analysis so that the regression coefifcients are non-negative. For example, when regressing brain regions against infarct volume, there is no reason believe that a negative coefficient attributable to a brain region is possible. Non-negative regression can be perfomred in R using _nnls_. 
 
-## Metaanalysis
-During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the paper.
+### Poisson regression
+Poisson regression is used when dealing with number of event over time or distance such as number of new admissions or new cases of hepatitis or TIA over time. An assumption of the Poisson distribution is that the mean &lambda; and variance &lambda; are the same. A special case of Poisson regression is the negative binomial regression. This latter method is used when the variance is greater than the mean pf the data. Negative binomial regression can be applied to number of 'failure' event over time. Here 'failure' has a lose definition and can be stroke recurrence after TIA or cirrhosis after hepatitis C infection. 
 
-### Metaanalysis of rate
+### MARS
+Multivariate adaptive regression spline (MARS) is a non-linear regression method that fits a set of splines (hinge functions) to each of the predictor variables i.e. different hinge function for different variables [@pmid8548103]. As such, the method can be used to plot the relationship between each variable and outcome. Use in this way, the presence of any threshold effect on the predictors can be graphically visualized. The MARS method is implemented in R programming environment in the _earth_ package.
+
+### Mixed Modelling
+Mixed modeling is a useful technique for handling multilevel or group data. There are several R packages for performing mixed modling such as _lme4_. An example of mixed modeling in metaregression is illustrated below.
+
+## Sample size estimation
+There are several packages for sample size estimation: _pwr_ library.
+
+## Metaanalysis
+During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the metaanalysis. For example the bivariate analysis is the preferred method of metaanalysis of diagnostic study [@pmid16168343]. By contrast, the majority of metaanalysis of diagnostic study uses the univariate method of Moses and Littenberg. This issue will be expanded below.
+
+### Metaanalysis of proportion
 This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic.
 
-```{r eval=FALSE}
+```{r nice-fig, fig.cap='Stroke recurrence after TIA clinic', out.width='80%', fig.asp=.75, fig.align='center'}
 
 library(metafor) #open software metafor
-
 #create data frame dat
 #xi is numerator
 #ni is denominator
 dat <- data.frame(model=c("melbourne","paris","oxford","stanford","ottawa","new zealand"),
 xi=c(7,7,6,2,31,2), 
 ni=c(468,296, 281,223,982,172))
-
 #calculate new variable pi base on ratio xi/ni
 dat$pi <- with(dat, xi/ni)
-
 #Freeman-Tukey double arcsine trasformation
 dat <- escalc(measure="PFT", xi=xi, ni=ni, data=dat, add=0)	
 res <- rma(yi, vi, method="REML", data=dat, slab=paste(model))
-
 #create forest plot with labels
-forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), xlim=c(-1,1.5),refline=0.020,cex=.8, ilab=cbind(dat$xi, dat$ni),
-       ilab.xpos=c(-.6,-.4),digits=3)
+forest(res, transf=transf.ipft.hm, targs=list(ni=dat$ni), xlim=c(-1,1.5),refline=res$beta[1],cex=.8, ilab=cbind(dat$xi, dat$ni), ilab.xpos=c(-.6,-.4),digits=3)
 op <- par(cex=.75, font=2)
 text(-1.0, 7.5, "model ",pos=4)
 text(c(-.55,-.2), 7.5, c("recurrence", " total subjects"))
 text(1.4,7.5, "frequency [95% CI]", pos=2)
 par(op)
 ```
+Exact 95% confidence interval is provided below using the data above. This solution was provided on _stack overflow_. 
+```{r nice-fig2, fig.cap='Stroke recurrence after TIA clinic-exact  95% CI', out.width='80%', fig.asp=.75, fig.align='center'}
+tmp <- t(sapply(split(dat, dat$model), function(x) binom.test(x$xi, x$ni)$conf.int))
+dat$ci.lb <- tmp[,1] #adding column to data frame dat
+dat$ci.ub <- tmp[,2] #adding column to data frame dat
 
-#### Metaanalysis of diagnostic Test
-The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio). This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using _mada_ package.
+res <- rma.glmm(measure="PLO", xi=xi, ni=ni, data=dat)
+par(mar=c(5,4,1,2))
+with(dat, forest(yi, ci.lb=ci.lb, ci.ub=ci.ub, ylim=c(-1.5,8), xlim=c(-.5,1), refline=predict(res, transf=transf.ilogit)$pred))
+addpoly(res, row=-1, transf=transf.ilogit)
+abline(h=0)
+text(-1.0, 7.5, "Model", pos=4)
+text(c(-.8,-.2), 7.5, c("recurrence", " total subjects"))
+text( 1,   7.5, "Proportion [95% CI]", pos=2)
+```
 
-##### Inconsistency I2
-The inconsistency I2 index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity.56 This test can be performed using metafor package . The presence of high I2 suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. 
+### Bivariate Metaanalysis
+The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)[@pmid8210827] . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation [@pmid16168343]. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using _mada_ package.
+
+The example below is taken from a metaanalysis of spot sign as predictor expansion of intracerebral hemorrhage [@pmid31272327]. The data for this analysis is available in the Data-Use sub-folder.
+
+```{r bivariate}
+library(mada)
+Dat<-read.csv("./Data-Use/ss150718.csv")
+#remove duplicates
+dat<-subset(Dat, Dat$retain=="yes") 
+(ss<-reitsma(dat))
+summary(ss)
+AUC(reitsma(data = dat))
+sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
+summary(sumss)
+```
+### Metaregression
+```{r metaregression}
+#plot year against tsens
+library(ggplot2)
+library(lubridate)
+ssr<-as.data.frame(ss$residuals)
+ssr$Year<-as.Date(as.character(dat$PubYear),"%Y")
+ssr$Quality<-dat$Quality.assessment
+ggplot(ssr, aes(x=ssr$Year,y=ssr$tsens))+geom_point()+scale_x_date()+geom_smooth(method="lm")+
+  ggtitle("Relationship between transformed sensitivity and Publication Year")+
+  labs(x="Year",y="transformed sensitivity")
+```
+
+### Bayesian Metaanalysis 
+A Bayesian approach towards metaanalysis is provided below using the package _meta4diag_ [@2015arXiv151206220G]. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the _mada_ package which does not provide a bivariate method for performing summary sensitivity and specificity. 
+```{r bayesian-metaanalysis}
+library(meta4diag)
+library(INLA)
+res <- meta4diag(data = dat) 
+SROC(res, crShow = T)
+```
+
+```{r sensitivity}
+#sensitivity
+forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
+```
+
+```{r specificity}
+#specificity
+forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
+```
+
+#### Inconsistency I2
+The inconsistency $I^2$ index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity. This test can be performed using metafor package . The presence of high $I^2$ suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. 
 
 #### summary Positive and Negative Likelihood Ratio
+Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al[@pmid8309035] a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test result for a range of possible values of baseline risk. 
 
-Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al,53 a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test result for a range of possible values of baseline risk. 
+## Data simulation
+Data simulation is an important aspects of data science. The example below is taken from our experience trying to simulate data from recent clot retrieval trials in stroke [@pmid25517348,@pmid25671797]. Simulation is performed using _simstudy_ library. 
 
-### Metaregression
+```{r simstudy}
+library (simstudy)
+library(tidyverse)
+#T is Trial
+tdef <- defData(varname = "T", dist = "binary", formula = 0.5)
+#early neurological improvement (ENI) .37 in TPA and .8 in ECR
+#baseline NIHSS 13 in TPA and 17 in ECR
+tdef <- defData(tdef, varname = "ENI", dist = "normal", formula = .8-.52*T, variance = .1)
+#baseline NIHSS 13 in TPA and 17 in ECR
+tdef <- defData(tdef, varname = "Y0", dist = "normal", formula = 13, variance = 1)
+tdef <- defData(tdef, varname = "Y1", dist = "normal", formula = "Y0- 5 - 5 * T >5",variance = 1)
+tdef <- defData(tdef, varname = "Y2", dist = "normal", formula = "Y0 - 5 - 5- 9* T>0",variance = 1)
+tdef <- defData(tdef, varname = "Y3", dist = "normal", formula = "Y0 - 5 - 5 -2- 12 * T>0", 
+    variance = 1)
+#male
+tdef <- defData(tdef,varname = "Male", dist = "binary", formula = 0.49*T)
+#diabetes .23 in TPA and .06 in ECR
+tdef <- defData(tdef,varname = "Diabetes", dist = "binary", formula = .23-.17*T)
+#HT .66 TPA vs .6 ECR
+tdef <- defData(tdef,varname = "HT", dist = "binary", formula = .66-.06*T)
+#generate data frame
+dtTrial <- genData(500, tdef)
+dtTime <- addPeriods(dtTrial, nPeriods = 4, idvars = "id", timevars = c("Y0", "Y1", "Y2","Y3"), timevarName = "Y")
+dtTime
+
+#check  that 2 groups are similar at start but not at finish
+t.test(Y0~T,data=dtTrial)
+t.test(Y3~T,data=dtTrial)
+t.test(Male~T,data=dtTrial)
+#putting the 4 time periods together
+dtTime <- addPeriods(dtTrial, nPeriods = 3, idvars = "id", timevars = c("Y0", "Y1", "Y2","Y3"), timevarName = "Y")
+#summarise data using group_by
+dtTime2<-dtTime %>%
+  group_by(period, T) %>%
+  summarise(meanY=mean(Y),
+            sdY=sd(Y),
+            upperY=meanY+sdY,
+            lowerY=meanY-sdY)
+#write.csv(dtTime, file="./Data-Use/dtTime_simulated.csv")
+#write.csv(dtTrial,          file="./Data-Use/dtTrial_simulated.csv")
+```
+

@@ -1,77 +1,132 @@
 # Introduction to R {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
-
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
-
-This book takes on a non-traditional approach to teaching R. It emphasises learning R by examples. This chapter is devoted to learning ggplot2.
+This book takes on a non-traditional approach to teaching R. It emphasises learning R by examples. Often data science course spend time going through how R treat data as vector or manipulate data symbolically. That part is the foundation of data science but can bore those new to R. That aspect is left to the next chapter on data wrangling. This chapter is devoted to learning ggplot2. Another aspect of learning R is that the libraries come with many free dataset. Clinicians do not find the _diamond_ or _car_ or _gapminder_ datasets useful as they are not related to medicine. In this book we will try to use dataset which are directly related to medicine or topics of high interest such as the COVID-19 data. Some of the data provided here comes from publications by the Neurology Department, some are simulated and some have come from the internet (COVID-19). Researchers working on animal dataset may find the principles of analysis described here useful for animal research. Unless indicated, the data use in this book can be found in the _Data-Use_ folder. 
 
 ## ggplot2
+The plot below uses ggplot2 or grammar of graphics. The plot is built layer by layer. The plot has a certain format. The ggplot statement contains the data and aesthetics. For illustration purpose the aesthetics are labelled with x and y statements. The fill argument in the aesthetics indicate the variables for coloring. The colors chosen for this graph were imposed by the journal _Epilepsia_ [@pmid30577087]. 
 
-```{r nice-fig, fig.cap='ggplot style figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+### Bar plot
+```{r  nice-fig, fig.cap='ggplot bar plot!', out.width='80%', fig.asp=.75, fig.align='center'}
 library(ggplot2)
-
-df<-data.frame("Predictors"=c("Duration_PNES","pseudostatus","Hx_anxiety","Hx_depression","DSP","seizure_burden","sex"),"Importance"=c(0.09737,0.22825, 0.047137,0.00487,0.058153,0.01786,0.04131))
-
+library(extrafont)
+##                              Lower  Upper
+##                    percentage 0.95   0.95  
+## Duration_PNES.lmg  0.0974     0.0057 0.2906
+## pseudostatus.lmg   0.2283     0.0687 0.3753
+## Hx_anxiety.lmg     0.0471     0.0057 0.1457
+## Hx_depression.lmg  0.0059     0.0041 0.1082
+## DSP.lmg            0.0582     0.0071 0.1500
+## seizure_burden.lmg 0.0179     0.0041 0.1058
+## sex.lmg            0.0413     0.0030 0.1519
+df<-data.frame("Predictors"=c("Duration_PNES","pseudostatus","Hx_anxiety","Hx_depression","DSP","seizure_burden","sex"),"Importance"=c(0.09737,0.22825, 0.047137,0.00487,0.058153,0.01786,0.04131),"Lower.95"=c(0.0057,0.0687,0.0057,0.0041,0.0071,0.0041,0.0030),"Upper.95"=c(0.2906,0.3753,0.1457,0.1082,0.1500,0.1058,0.1519))
 #dimensions of data frame
 dim(df)
-
 #variables in data frame
 colnames(df)
+#bar plot uses geom_bar 
+ggplot(df, aes(x=Predictors,y=Importance))+geom_bar(stat="identity")
+#reordering the data
+df3<-df2<-df
+df3$Predictors<-factor(df2$Predictors, levels=df2[order(df$Importance),"Predictors"])
+#adding color
+p<-ggplot(df3, aes(x=Predictors,y=Importance,fill=Predictors))+geom_bar(colour="black",stat="identity",fill=c("#e4b84b","#ce8080","#511c23","#e37c1d","#ffde75","#abb47d","#a1c5cb"))
+p
+#rotate legend on x axis label by 45
+p+theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=45, vjust=0.5, size=12))
 
-#scatter plot uses geom_point 
-ggplot(df, aes(x=Predictors,y=Importance))+geom_point()
-
-#The data frame above is unordered
-#Predictors is a factor
-
-Predictors=c("Duration_PNES","pseudostatus","Hx_anxiety","Hx_depression","DSP","seizure_burden","sex")
-
-df<-data.frame(
-  Predictors=as.factor(Predictors),
-  levels=Predictors,
-  "Importance"=c(0.09737,0.22825, 0.047137,0.00487,0.058153,0.01786,0.04131))
-
-#scatter plot useing ordered factors
-ggplot(df, aes(x=Predictors,y=Importance))+geom_point()
-
+p1<-p+geom_errorbar(aes(ymin=Lower.95,ymax=Upper.95,width=0.2))+labs(y="R2 exaplained (%)")+
+  theme(text=element_text(size=12))+ggtitle(" Relative Importance of Regressors in Linear Models for Cost among patients with non-epileptic seizure")
+p1
 ```
-## Tidy data
+### Scatter plot
+The above data is used here to illustrate scatter plot. We can denote the color difference among the Predictors by adding _color_ argument in the _aesthetics_. 
+```{r nice-fig1, fig.cap='ggplot scatter plot!', out.width='80%', fig.asp=.75, fig.align='center'}
+#color
+ggplot(df3, aes(x=Predictors,y=Importance,color=Predictors))+geom_point()+theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=45, vjust=0.5, size=12))
+#size
+ggplot(df3, aes(x=Predictors,y=Importance,color=Predictors,size=Predictors))+geom_point()+theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=45, vjust=0.5, size=12))
+```
+### Line plot
+The data below is generated in the section on data simulation. The data were simulated using summary data from recent clot retrieval trials in stroke [@pmid25517348,@pmid25671797]
 
-Attention to collectionof data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
+```{r nice-fig2, fig.cap='ggplot line plot!', out.width='80%', fig.asp=.75, fig.align='center'}
+library(ggplot2)
+library(tidyverse)
+dtTime<-read.csv("./Data-Use/dtTime_simulated.csv")
+dtTrial<-read.csv("./Data-Use/dtTrial_simulated.csv")
+#summarise data using group_by
+dtTime2<-dtTime %>%
+  group_by(period, T) %>%
+  summarise(meanY=mean(Y),
+            sdY=sd(Y),
+            upperY=meanY+sdY,
+            lowerY=meanY-sdY)
+#individual line plot
+ggplot(dtTime,aes(x=as.factor(period),y=Y))+geom_line(aes(color=as.factor(T),group=id))+scale_color_manual(values = c("#e38e17", "#8e17e3")) + xlab("Time")+ylab("NIHSS")
+#box plot
+gg<-ggplot(dtTime,aes(x=as.factor(period),y=Y))+geom_boxplot(aes(color=as.factor(T)))+  xlab("Time")+ylab("NIHSS")
+gg+scale_fill_discrete(name="Treatment")
+#linear regression Y1 predict Y2
+fit<-lm(Y1~Y0+T, data=dtTrial)
 
-```{r variables}
-df2<-data.frame(Var=c("test positive","test negative"), Result=c(5, 10))
-df2
+dtTrial2<-filter(dtTrial, T==1)
+fit2<-lm(Y2~Y1, data=dtTrial2)
+#line plot by group
+pd <- position_dodge2(width = 0.2) # move them .2 to the left and right
+gbase  = ggplot(dtTime2, aes(y=meanY, colour=as.factor(T))) + geom_errorbar(aes(ymin=lowerY, ymax=upperY), width=.3, position=pd)+
+geom_point(position=pd) 
+gline = gbase + geom_line(position=pd) 
+print(gline + aes(x=period))
+dtTime2$period=as.numeric(dtTime2$period)
+unique((dtTime2$period))
+gline = gline %+% dtTime2
+print(gline + aes(x=period))
+```
+### facet wrap
+Facet wrap is a good way to visually explore different aspects pf the data.
+
+### gganimate
+The library _gganimate_ can be used to generate videos in the form of gif file. The data needs to be collated from wide to long format.
+```{r eval=FALSE}
+library(ggplot2)
+library(gganimate)
+#ensure data in long format, Y =NIHSS
+u <- ggplot(dtTime2, aes(period, meanY , color = T, frame = period)) +
+  geom_bar(stat="identity") +
+  #scale_size(range = c(1, 5)) +
+  geom_text(aes(x = 11.9, label = period), hjust = 0) +   xlim(0,13)+
+  coord_cartesian(clip = 'off') + 
+  facet_wrap(~meanY)+
+  labs(title = 'ECR Trials', y = 'Number') +
+transition_reveal(period)
+u
+#create gif
+#animate(u,fps=15,duration=15)
+#anim_save(u,file="./Data-Use/simulated_ECR_trial.gif", width=800, height=800)
 ```
 
-The above example should be entered this way. This change allows one to group variables by Test status: 'positive' or 'negative'. One can easily perform a t test here (not recommend in this case as the data contains only 2 rows).
-
-```{r variables2}
-df2<-data.frame(Test=c("positive","negative"), Result=c(5, 10))
-df2
+### thematic map 
+The _ggplot2_ library can also be used to generate thematic (choropleth) map. In the simple example below we will generate a map of Australian State territories color by size of area. The _ggplot_ combines with _sf_ library and uses the shape file data in the _geom_sf_ call. This section will be expanded further in the _Geospatial Analysis_ chapter.
+```{r nice-fig3, fig.cap='ggplot map of Australia!', out.width='80%', fig.asp=.75, fig.align='center'}
+library(ggplot2)
+library(sf)
+#shape file
+Aust<-st_read("./Data-Use/GCCSA_2016_AUST.shp") 
+colnames(Aust) #find out column variables
+ggplot() + 
+  geom_sf(data=Aust,aes(fill=AREASQKM16))+
+  labs(x="Longitude (WGS84)", y="Latitude", title="Map of Australia") + 
+  theme_bw() 
 ```
 
-When entering data, avoid writing characters in under date or time.
+## plotly
+The library _plotly_ share simlarities with _ggplot2_ and can be called using _ggplot2_ command. It has additional ability for interaction as well as create a video.
 
-```{r date}
-df3<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),"Result"=c(4,5,6))
+## ggraph
+The _ggraph_ library is a member of the tidyverse family of packages with ability to perform complex plotting of graph.
 
-class(df3$DateofEvent)
-
-df3<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006","12-03-2006"),"Result"=c(4,5,6))
-
-class(df3$DateofEvent)
-```
-
-
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
-
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(df, 10), caption = 'An example table using data above',
-  booktabs = TRUE
-)
+```{r grapg}
+library(ggraph)
 ```
 
 You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].

@@ -1,0 +1,12 @@
+id,membership,group
+patient,1,1
+CTscan,1,3
+viewCTscan,1,3
+TPA,1,4
+ECR,1,4
+amb,2,1
+EDdoctor,2,1
+EDnurse,2,1
+StrokeReg,2,2
+StrokeCon,2,2
+INR,2,3

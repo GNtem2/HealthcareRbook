@@ -1,0 +1,15 @@
+V1,V2,time.line,time.capacity,V1a,V2a
+1,7,30,30,amb,patient
+2,7,35,5,EDdoctor,patient
+2,8,40,10,EDdoctor,CTscan
+3,7,35,5,EDnurse,patient
+3,8,40,10,EDnurse,CTscan
+4,7,35,5,StrokeReg,patient
+4,8,40,10,StrokeReg,CTscan
+4,9,55,15,StrokeReg,viewCTscan
+4,10,65,10,StrokeReg,TPA
+5,9,55,15,StrokeCon,viewCTscan
+5,10,60,5,StrokeCon,TPA
+5,11,60,5,StrokeCon,ECR
+6,11,75,10,INR,ECR
+6,9,65,5,INR,viewCTscan

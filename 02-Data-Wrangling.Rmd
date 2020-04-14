@@ -1,0 +1,234 @@
+# Data Wrangling
+This section deals with the nitty gritty of data analysis. There's no nice plots like the previous chapter. In fact, this data wrangling is the major aspect of data science. Sometimes, it's worth spending time on _stack overflow_ to look at similar problems that others have and the approaches to solving them. Useful blogs are available at https://www.r-bloggers.com/.
+
+## Data storage
+Often one assumes that opening Rstudio is sufficient to locate the file and run the analysis. One way of doing this at the console is to click on _Session_ tab, then _Set Working Directory_ to location of file. Another way of doing this seemlessly is to use the library _here_. 
+
+### Excel data
+Excel data are stored as csv, xls and xlsx. 
+```{r eval=FALSE}
+c<-read.csv("File.csv")
+
+c<-readr::read_csv ("File.csv")
+
+c<-readxl::read_xlsx("File.xlsx")
+
+c<-readxl::read_xlsx("File.xlsx",sheet=2)
+```
+### Date and time
+Date and time can be handle in base R. The library _lubridate_ is useful for parsing date data. One warning, errors with parsing can occur if there are characters in the column containing date data.
+```{r date}
+df3<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),"Result"=c(4,5,6))
+class(df3$DateofEvent)
+df3$DateofEvent
+
+df3$DateofEvent2<-as.POSIXct(df3$DateofEvent)
+class(df3$DateofEvent2)
+df3$DateofEvent2
+```
+One way of storing data in R format is to save the file as .Rda. This format will ensure that no one can accidentally rewrite or delete a number. For very large data, it's quicker to save as .Rda file than as csv file.
+
+### Foreign data
+The foreign library is traditionally use to handle data from spss, stata and sas. One should look at the ending in the file to determine the necessary library. The current version of sas file requires _sas7bdat.
+
+### json format
+Json is short for JavaScript object Notification. These files can be read using the _rjson_ library.
+
+## Tidy data
+Attention to collection of data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
+```{r variables}
+df2<-data.frame(Var=c("test positive","test negative"), Result=c(5, 10))
+df2
+```
+
+The above example should be entered this way. This change allows one to group variables by Test status: 'positive' or 'negative'. One can easily perform a t test here (not recommend in this case as the data contains only 2 rows).
+
+```{r variables2}
+df2<-data.frame(Test=c("positive","negative"), Result=c(5, 10))
+df2
+```
+
+### Multiple files
+Merging of files can be done using _dplyr_ to perform _inner_join_, _outer_join_, _left_join_ and _right_join_. Note that this can also be done in base R or using syntax of _data.table_.
+
+### Pivot
+A variety of different expressions are used to describe data format such as wide and long formats. In some case the distinction between such formats is not clear. The verbs for performing these operations are _pivot_wide_, _pivot_long_. Again _data.table_ uses different verbs such as _cast_ and _melt_. In general, most regression analyses are performed with data in wide format. In this case each row represents a unique ID.  Longitudinal analyses are performed with data in long format. Inthis format, there are several rows with the same ID.
+
+## Regular Expressions
+Here is a short tutorial on regular expression. We will begin using base R. This section is based on experience trying to clean a data frame containing many words used to describe one disease or one drug.
+
+### base R
+```{r base-R-example}
+#create example dataframe
+df<-data.frame(
+  drug=c("valium 1mg","verapamil sr","betaloc zoc","tramadol","valium (diazepam)"),
+  infection=c("pneumonia","aspiration pneumonia","tracheobronchitis","respiratory tract infection","respiratory.tract.infection"))
+df
+```
+
+Now that we have a data frame, we can use pattern matching to replace part of phrase. This step can be done simply using _gsub_ command. First create a list so that the computer searches the phrases in the list.
+
+```{r gsub}
+#create list to remove phrase
+redun=c("1mg", "zoc", "sr")
+pat=paste0("\\b(",paste0(redun,collapse = "|"),")\\b")
+df$drug1<-gsub(pat,"",df$drug)
+df$drug1
+#create list to remove phrase
+redunc1=c("respiratory tract infection", "tracheobronchitis", "aspiration")
+pat=paste0("\\b(",paste0(redunc1,collapse = "|"),")\\b")
+df$infection1<-gsub(pat,"",df$infection)
+df$infection1
+```
+
+This section deals with meta-characterers. Examples of meta-characters include $ . + * ? ^ () {} []. These meta-characters requires the double back slashes \\.
+
+```{r metacharacter}
+#create list to remove phrase
+redun=c("1mg", "zoc", "sr")
+pat=paste0("\\b(",paste0(redun, collapse = "|"),")\\b")   
+df$drug2<-gsub(pat,"",df$drug)
+
+#[a-z] indicates any letter
+#[a-z]+ indicates any letter and those that follow the intial letter
+df$drug2<-gsub("\\(|[a-z]+\\)","",df$drug2)
+df$drug2
+```
+
+Back to our data frame df, we want to remove the change the different words accounting for pneumonia.
+
+```{r list}
+redunc=c("\\.")
+redunc1=c("respiratory tract infection", "tracheobronchitis", "aspiration")
+pat=paste0("\\b(",paste0(redunc,collapse = "|"),")\\b")
+df$infection2<-gsub(pat," ",df$infection)
+pat=paste0("\\b(",paste0(redunc1,collapse = "|"),")\\b")
+df$infection2<-gsub(pat," ",df$infection2)
+
+df$infection2
+```
+### stringr
+
+The following examples are taken from excel after cob=nversion from pdf. In the process of conversion errors were introduced in the conversion from pdf to excel. 
+```{r bracket}
+library(stringr)
+#error introduced by double space 
+a<-c("8396 (7890 to 8920)","6 301 113(6 085 757 to 6 517 308)","4 841 208 (4 533 619 to 5 141 654)","1 407 701 (127 445 922 to 138 273 863)","4 841 208\n(4 533 619 to\n5 141 654)")
+
+b<-str_replace (a, "\\(c.*\\)","")
+
+#this is a complex example to clean and requires several steps. Note that the original data in the list a is now assigned to b. 
+b<-str_replace(a,"\n","") %>% 
+  str_replace("\\(.*","") %>%
+  str_replace("\n.*","") %>%
+  str_replace("\\)","") %>%
+str_replace("\\s","") %>%
+  str_replace("\\s","")%>% as.numeric()
+b
+```
+Another example. This time the 2 numbers in the column are separated by a slash sign. Supposed you want to keep the denominator. The first remove the number before the slash sign. The * metacharacter denotes the action occurs at the end.
+```{r slash}
+df.d<-data.frame(seizure.rate=c("59/90", "90/100", "3/23"))
+df.d$seizure.number<-str_replace(df.d$seizure.rate,"[0-9]*","") 
+df.d$seizure.number
+```
+Now combine with the next step to remove the slash sign. 
+```{r slash2}
+#We used [0-9] to denote any number from 0 to 9. For text, one can use [A-Z].
+df.d$seizure.number<-str_replace(df.d$seizure.rate,"^[0-9]*","")%>%
+  str_replace("/","\\")
+df.d$seizure.number
+```
+Removing the denominator requires a different approach. First remove the last number then the slash sign. 
+```{r slash3}
+df.d$case<-str_replace(df.d$seizure.rate,"/[0-9]*"," ")
+df.d$case
+```
+## PDF to xcel
+Sometimes data from public governement sites come in PDF form instead of excel. Conversion from pdf to excel or text can be difficult especially with special character eg Danish. There are several libraries for doing this: _pdftables_ (require API key) and _pdftools_. The example below uses _pdftools_. Documentation for _pdftools_ is available at https://docs.ropensci.org/pdftools/. The document is the 2018 Danish Stroke Registry report. The _tabulizer_ package is excellent for converting table data. However, _tabulizer_ package depends on _rJava_ and requires deft handling. 
+```{r pdf}
+library(pdftools)
+txt<-pdf_text("./Data-Use/4669_dap_aarsrapport-2018_24062019final.pdf")
+cat(txt[17]) #browse data page 13+4 filler pages
+
+screenshot13<-pdf_render_page("./Data-Use/4669_dap_aarsrapport-2018_24062019final.pdf", page =17)
+png::writePNG(screenshot13, "./Data-Use/Danish-Stroke-page13.png")
+
+knitr::include_graphics("./Data-Use/Danish-Stroke-page13.png")
+```
+
+
+### Scanned text or picture
+Importing data from scanned text will require use of Optical Character Recognition (OCR). The _tesseract_ library provides an R interface for OCR. In the example below, a picture is taken from same CDC website containing mortality data  (https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/04102020/nchs-data.html). The screenshot of this website was then cleaned in _paint_. The data is available in the Data-Use folder.
+```{r tesseract}
+library(tesseract)
+eng <- tesseract("eng") #english
+text <- tesseract::ocr("./Data-Use/Covid_PNG100420.png", engine = eng)
+cat(text)
+```
+
+## Web scraping
+The readers may ask why web scraping for healthcare. A pertinent example related to COVID-19 data is provided below. The library _rvest_ is helpful at scraping data from an internet page. The _rvest_ library assumes that web contents have xml document-tree representation. The different options available for web scraping with _rvest_ are available at the website https://rvest.tidyverse.org/reference/. The user can use CSS selectors to scrape content. The library _Rselenium_ is also useful for web scraping. For dynamic web page, the library _CasperJS_ library does a better job especially if the data contain embedded java script. 
+
+The library _cdccovidview_ provides access to the CDC website on COVID-19. In the example below, we will try to this manually. Data from CDC website on COVID-19 is downloaded, cleaned and saved in csv format. It is important to pay attention to the data. The first row contains header and is removed. There are several columns with commas. These commas can be removed using the exercises above. Further the data is updated on weekly basis. As such the data needs to be converted into a date time format using _lubridate_. 
+```{r scrape}
+library(rvest)
+library(tidyverse)
+#assign handle to web page accessed 12/4/20
+cdc<-read_html("https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/04102020/nchs-data.html")
+# scrape all div tags
+html_tag <- cdc %>% html_nodes("div")
+# scrape header h1 tags
+html_list<-html_tag %>% html_nodes("h1") %>% html_text()
+#there is only one table on this web page
+Table1<- cdc %>% html_node("table") %>% html_table(fill = TRUE)
+#Table1 has a header row
+Table1<-Table1[-1,]
+#The data in the Total Deaths column has a comma 
+Table1$Total.Deaths<-as.numeric(gsub(",","",Table1$`Total Deaths`))
+#now combine the year and week column to Date
+Table1$Date<-lubridate::parse_date_time(paste(Table1$Year, Table1$Week, 'Mon', sep="/"),'Y/W/a')
+#there are still commas remaining in some columns. This is a useful exercise for the reader. A solution is provided in the next example.  
+#write.csv(Table1,file="./Data-Use/Covid_Table100420.csv")
+```
+The next example is from the CDC COVID-19 website. It poses a different challenges as there are several columns with the same names. In this case we will rename the column by index. There are several columns containing commas. Rather than removing column by column we will write a function with lapply to do it over the table. the apply function returns a matrix whereas lapply returns a dataframe. There is one column containing percentage enclosed in a bracket. This can be removed using the example above on metacharacter ie using doule back slash in front of bracket and again at close of bracket.
+```{r covid-us}
+library(rvest)
+library(tidyverse)
+cdc<-read_html("https://www.cdc.gov/mmwr/volumes/69/wr/mm6915e4.htm?s_cid=mm6915e4_w")
+# scrape all div tags
+html_tag <- cdc %>% html_nodes("div")
+# scrape header h1 tags
+html_list<-html_tag %>% html_nodes("h1") %>% html_text()
+#there is only one table on this web page
+Table2<- cdc %>% html_node("table") %>% html_table(fill = TRUE)
+#first row is header
+names(Table2) <- as.matrix(Table2[1, ])
+Table2<-Table2[-c(1:2,55),]#rows 1 and 2 are redundant
+#rename the columns by index 
+names(Table2)[2] <-"NumberCases31.03.20"
+names(Table2)[3]<-"CumulativeIncidence31.03.20"
+names(Table2)[4]<-"NumberCases07.04.20"
+names(Table2)[5]<-"NumberDeath07.04.20"
+names(Table2)[6]<-"CumulativeIncidence07.04.20"
+#rather than removing column by column we will write a function with lapply to remove commas over the table. the apply function returns a matrix whereas lapply returns a dataframe.
+Table2<-as.data.frame(lapply(Table2, function(y) gsub(",", "", y))) 
+Table2<-as.data.frame(lapply(Table2, function(x)
+  gsub("\\(|[0-9]+\\)","",x)))
+#write.csv(Table2,file="./Data-Use/Covid_bystate_Table130420.csv")
+```
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  df, caption = 'Table containing uncleaned data above',
+  booktabs = TRUE
+)
+```
+
+```{r nice-tab2, tidy=FALSE}
+knitr::kable(
+  Table2, caption = 'Table containing cleaned data above',
+  booktabs = TRUE
+)
+```

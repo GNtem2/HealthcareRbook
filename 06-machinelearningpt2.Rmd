@@ -1,0 +1,34 @@
+# Machine Learning Part 2
+
+## Non-negative matrix factorisation
+
+## Formal concept analysis
+```{r fca}
+library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
+library(Rgraphviz) #plot hasse diagram
+edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")
+df<-edge[,c(2:dim(edge)[2])]
+row.names(df)<-edge[,1] #bipartite matrix
+#select columns#remove distance data
+df_se<-edge[,c(2:16)]
+row.names(df_se)<-edge[,1] #bipartite matrix
+#south eastern hospitals
+#select rows
+df_se<-df_se[c(1,6,7,11,12,13,14,17,19,20,24,31,33,34,35),]
+#perform Galois derivations between partially ordered subsets
+#galois(df_se',labeling = "full")
+gf <- galois(df_se, labeling = "reduced")
+#partial ordering of concept
+po<-partial.order(gf,type="galois")
+diagram(po, main="Hasse diagram of partial order with reduced context") 
+#lattice  diagram with reduced context
+diagram.levels(po)
+```
+
+## Evolutionary Algorithm
+
+### Simulated Annealing
+
+### Genetic Algorithm
+Genetic algorithm is a machine learning tool based on ideas from Darwin’s concept of natural selection. It is based on mutation, crossover and selection. Genetic algorithm is available in R as part of _caret_ and _GA_ libraries. Genetic algorithm can be used to optimise feature selection for regression modelling at the expense of longer running time.
+

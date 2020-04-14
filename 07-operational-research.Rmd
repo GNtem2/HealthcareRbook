@@ -1,0 +1,101 @@
+# Operational Research
+
+## Discrete Event Simulations
+The example below is a based on examples provided in the _simmer_ website.
+```{r simmer}
+library(simmer)
+library(parallel)
+library(simmer.plot)
+NUM_ANGIO <- 1  # Number of machines for performing ECR
+ECRTIME <- 1     # hours it takes to perform ECR~ 90/60
+T_INTER <- 13 # new patient every ~365*24/700 hours
+SIM_TIME <- 24*30     # Simulation time in 30 days
+# setup
+set.seed(42)
+env <- simmer()
+patient <- trajectory() %>%
+  log_("arrives at the ECR") %>%
+  seize("removeclot", 1) %>%
+  log_("enters the ECR") %>%
+  timeout(ECRTIME) %>%
+  set_attribute("clot_removed", function() sample(50:99, 1)) %>%
+  log_(function() 
+    paste0(get_attribute(env, "clot_removed"), "% of clot was removed")) %>%
+  release("removeclot", 1) %>%
+  log_("leaves the ECR")
+env %>%
+  add_resource("removeclot", NUM_ANGIO) %>%
+  # feed the trajectory with 4 initial patients
+  add_generator("patient_initial", patient, at(rep(0, 4))) %>%
+  # new patient approx. every T_INTER minutes
+  add_generator("patient", patient, function() sample((T_INTER-2):(T_INTER+2), 1)) %>%
+  # start the simulation
+  run(SIM_TIME)
+plot(patient)
+resource <- get_mon_resources(env)
+plot(resource)
+sum(resource$queue) #total queue size
+sum(resource$queue==2) #number of people in queue
+sum(resource$queue==1)
+#View(get_mon_arrivals(env))
+plot(env,what="arrivals",metric="flow_time")
+```
+
+## Linear Programming
+There are several different libraries useful for linear programming.
+
+```{r linear-programming}
+library(lpSolveAPI)
+#3 constrain 2 decision variables
+x<-make.lp(3,2)
+ set.column(x, 1, c(1, 1, 2)) 
+  set.column(x, 2, c(3, 1, 0)) 
+  set.objfn(x, c(-2, -1)) 
+  set.constr.type(x, rep("<=", 3)) 
+  set.rhs(x, c(4, 2, 3)) 
+  solve(x)
+  
+```
+
+## Forecasting
+Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. 
+
+```{r forecast}
+library(tidyverse)
+library(prophet)
+library(ggplot2)
+library(hrbrthemes)
+covid<-read.csv("./Data-Use/Covid_Table100420.csv")
+colnames(covid)
+# A data frame with columns ds & y (datetimes & metrics)
+covid<-rename(covid, ds =Date, y=Total.Deaths)
+#create prophet object
+m<-prophet(covid)
+# Extend dataframe 12 weeks into the future
+future <- make_future_dataframe(m, freq="week" , periods = 12)
+# Generate forecast for next 500 days
+forecast <- predict(m, future)
+forecast %>% 
+  select(ds, yhat, yhat_lower, yhat_upper) %>%
+  tail()
+# What's the forecast for September 1, 2022?
+forecasted_rides <- forecast %>%
+  arrange(desc(ds)) %>%
+  slice(1) %>%
+  pull(yhat) %>%
+  round()
+forecasted_rides
+# Visualize
+forecast_p <- plot(m, forecast) + 
+  labs(x = "", 
+       y = "mortality", 
+       title = "Projected COVID-19 world mortality", 
+       subtitle = "To 2021") +
+        ylim(20000,80000)+
+  theme_ipsum_rc()
+forecast_p
+#prophet_plot_components(m, forecast)
+```
+
+## Health economics
+
