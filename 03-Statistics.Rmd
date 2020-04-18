@@ -25,23 +25,46 @@ library(coin)
 wilcox.test(ENI~T, data=dtTrial)
 ```
 ## Regression
+In the section below, a matrix approach to regression is provided. This step was performed as it explains for issues encountered when doing regression analyses. It is easier to explain collinearity using matrix. Examples of performing regression analyses and steps required to check for errors are given. This section deals with univariable and multivariable analyses. The next chapter will discuss the different multivariate analyses.
 
 ### Linear regression
 A matrix description of parameter estimation is given here because it is easier to describe the multiple regression [@Draper1998]. 
-        $Y= beta1X1+ beta2X2+...betajXj$
+        $Y= \beta_1X_1+ \beta_2X_2+...\beta_jX_j$
 A matrix is an array of data as rows and columns. For the imaging data, the individual voxel is represented on each column and each row refers to another patient. A vector refers to a matrix of one column.
 
 In matrix form, the multiple regression equation takes the form
- 				$Y= betaX + E$
-where X is the predictor matrix, Y is the dependent matrix, β is the regression coefficient and E is the error term (not the intercept). The X is a jth rows by ith columns matrix and Y and E is a jth column vector.
+$Y= \beta_j X + E$ where X is the predictor matrix, Y is the dependent matrix, β is the regression coefficient and E is the error term (not the intercept). The X is a $j^{th}$ rows by ith columns matrix and Y and E is a $j^{th}$ column vector.
 
-Algebraic manipulation of equation 1, shows that the solution for β is  . is the transpose of  such that the columns of   are now written as rows. The correlation matrix of X is given by  . The solution for β is possible if the correlation matrix   can be inverted. The inverse of a matrix can be found if it is has a square shape (columns and rows of the matrix are equal) and the determinant of the matrix is not singular or nonzero [@Draper1998]. The uniqueness of the matrix inverse is that when a matrix is multiplied by its inverse, the solution is an identity matrix. The diagonal elements of a matrix are ones and the remainders of the square matrix are zeros for an identity matrix. For a rectangular matrix, multiplication of the matrix by its Moore-Penrose pseudo-inverse results in an identity matrix.
+Algebraic manipulation of equation 1, shows that the solution for β is $(X^TX)^{-1}X^TY$. $X^T$ is the transpose of X such that the columns of   are now written as rows. The correlation matrix of X is given by $X^TX$. The solution for β is possible if the correlation matrix $X^TX$ can be inverted. The inverse of a matrix can be found if it is has a square shape (columns and rows of the matrix are equal) and the determinant of the matrix is not singular or nonzero [@Draper1998]. The uniqueness of the matrix inverse is that when a matrix is multiplied by its inverse, the solution is an identity matrix. The diagonal elements of a matrix are ones and the remainders of the square matrix are zeros for an identity matrix. For a rectangular matrix, multiplication of the matrix by its Moore-Penrose pseudo-inverse results in an identity matrix.
 
-### Logistic regression
-In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate.
+The terms in the inverse of $X^TX$  are divided by the determinants of $X^TX$ . For simplicity, the determinant of a 2 x 2 matrix is given by $ad-bc$  for a matrix A.
+$A=\left[\begin{array}{cc}a & b\\c & d\end{array}\right]$ 
+The inverse of this matrix A is given by 
+$\frac{1}{ad-bc}\left[\begin{array}{cc}d & -b\\-c & a\end{array}\right]$
+From this equation, it can be seen that the determinant and the inverse exist if the result is nonzero. For a correlation matrix $X^TX$ of the form
+$\left[\begin{array}{cc}n & nX_*\\nX_* & nX_*^2\end{array}\right]$ 
+then the determinant is zero.
+$n \times nX_*^2 -nX_* \times nX_*$ 
+Hence, there is no unique solution for this equation. If near collinearity exists and the determinant approach zero, there are infinite possible combinations that can result in a least squares estimate of the parameter. In this example, the matrix is singular then the columns of X are likely to be linearly related to each other (collinearity). In this case, the regression coefficient is unstable with the variance of the regression coefficient large. Further, small changes in the dependent variables lead to fluctuations in the regression solution.
+
+#### Leasts squares
+
+The least squares solution for the parameter β refers to the fitting of the line between the intercept and the variables of X such that the Euclidian distance between the observed variables Y and expected or predicted variables   are as small as possible. The metric for the fit is the sum of squared errors SSE (or residual mean square error/residual sum of squares) and is given by
+$SSE=\sum(Y-\beta X)^T(Y-\beta X)$
+The variance-covariance matrix of $\beta$ is given by
+$Var(\beta)=\delta^2(X^TX)$
 
 #### Collinearity
-Collinearity or relatedness among the predictors is often forgotten in many analysis. This issue can lead to instability in the regression coefficients. There are several tests for collinearity: variance inflation factor and condition index. The variance inflation factor (VIF) is proportional to $VIF = 1/1-R^2$. In this example, as the predictors become strogly correlated $R^2$ apporaches 1 and VIF will approaches infintity.
+Collinearity or relatedness among the predictors is often forgotten in many analysis. This issue can lead to instability in the regression coefficients. There are several tests for collinearity: variance inflation factor and condition index. The variance inflation factor (VIF) is proportional to $VIF = 1/1-R^2$. In this example, as the predictors become strogly correlated $R^2$ apporaches 1 and VIF will approaches infintity. Collinearity is present if VIF >10[@Kleinbaum1978AppliedRA]. Collinearity can also be assessed by measuring the condition index [@pmid16504541]. This can be given as ratio between the largest and the corresponding eignvalue $CI_i=\sqrt(\frac{\lamda_{max}{\lambda_i})$. Collinearity is present when the condition index is >30[@Kleinbaum1978AppliedRA].
+
+#### weighted least squares
+In the section above, it was not stated explicitly but the least squares regression model is appropriate when the variances of the predictor variables are uniform [@Draper1998]. In this case the variance of the error matrix is a diagonal matrix with equal diagonal elements. When there are unreliable data or errors in measurement of some of the data, the variance of the error matrix contains unequal diagonal elements. The consequence is that the least squares formula leads to instability of the parameter estimate. Weighted least squares regression is similar to least squares regression except that the variance matrix is weighted $w$ by the variance of the columns of the predictor variables.
+$\beta=(X^TV^-1)^-1X^TV^-1Y$.The diagonal matrix $V$ contains weights expressed as 1/w along the diagonal elements. These weights are used to down play the importance of the regions where noise occurs and gives appropriate importance to the true data region. The result is a reduction in the variance of the regression coefficients and hence stability in their estimate.  Weighted least squares is introduced here because the weighted PLS is used in the PLS-PLR model.
+
+### Logistic regression
+In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. The General Linear Model $Y=\beta X$ is modified to the form of  the Generalised Linear Model (GLIM) by adding a non-linear link function $g(\mu)$ . The equation now resembles $Y=g(\beta X)$.
+
+Consider the binary response (1, 0) as proportions of the predictor variables.   is the probability of an event and   is the probability of an event not occurring. The odds ratio $OR$ is given by $OR=\frac{1}{1-p}$. A logit transformation take the form $\n=logit_i(p_i)=ln(\frac{p_i}{1-p_i})=\sum(X_ij\beta_i)$. The logistic equation takes the form $p_i=\frac{e^{X_j\beta_j}}{1-e^{X_j\beta_j}}$
 
 #### Discrimination and Calibration
 The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016]. Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.
@@ -73,13 +96,88 @@ Multivariate adaptive regression spline (MARS) is a non-linear regression method
 Mixed modeling is a useful technique for handling multilevel or group data. There are several R packages for performing mixed modling such as _lme4_. An example of mixed modeling in metaregression is illustrated below.
 
 ## Sample size estimation
-There are several packages for sample size estimation: _pwr_ library.
+Clinicians are often frustrated about sample size and power estimation for a study, grant or clinical trial. This aspect is scrutinised by ethics committee and in peer review process for journals. Luckily, R provides several packages for sample size amd power estimation: _pwr_ library. Cohen has written reference textbook on this subject [@COHEN1977179]. 
+```{r sample ttest}
+library(pwr)
+#ttest-d is effect size 
+#d = )mean group1 -mean group2)/variance
+pwr.t.test(n=300,d=0.2,sig.level=.05,alternative="greater") 
+```
+We provided an example below for generating power of clinical trial. Examples are taken from a paper  sample size estimation for trials [@pmid16931782].
+```{r proportion}
+library(pwr)
+#h is effect size. effect size of 0.5 is very large 
+#sample size
+pwr.2p.test(h=0.5,n=50,sig.level=0.05,alternative="greater")
+
+#medium effect size
+pwr.2p.test(h=0.1,n=50,sig.level=0.05,alternative="greater")
+```
+
+```{r sample plot}
+library(pwr)
+# range of correlations
+#pwr.r.test(r=0.3,n=50,sig.level=0.05,alternative="greater")
+#pwr.2p.test(h=0.3,n=80,sig.level=0.05,alternative="greater")
+h_effect <- seq(.1,.3,.05) #from 0.1 to 0.3 by 0.05
+n_effect <- length(h_effect) #5
+# power values
+p <- seq(.1,.9,.1)
+np <- length(p) #9
+# create an empty array 9 x 5
+samplesize <- array(numeric(n_effect*np), dim=c(n_effect,np))
+for (i in 1:np){
+  for (j in 1:n_effect){
+    result <- pwr.2p.test(n = NULL, h_effect = h_effect[j],
+    sig.level = .05, power = p[i],
+    alternative = "two.sided")
+    samsize[j,i] <- ceiling(result$n_effect)
+  }
+}
+```
+# set up graph
+xrange <- range(r)
+yrange <- round(range(samsize))
+colors <- rainbow(length(p))
+plot(xrange, yrange, type="n",
+  xlab="Correlation Coefficient (r)",
+  ylab="Sample Size (n)" )
+# add power curves
+for (i in 1:np){
+  lines(r, samsize[,i], type="l", lwd=2, col=colors[i])
+}
+# add annotation (grid lines, title, legend) 
+abline(v=0, h=seq(0,yrange[2],50), lty=2, col="grey89")
+abline(h=0, v=seq(xrange[1],xrange[2],.02), lty=2,
+   col="grey89")
+title("Sample Size Estimation for Proportions\n
+  Sig=0.05 (Two-tailed)")
+legend("topright", title="Power", as.character(p),
+   fill=colors)
+
 
 ## Metaanalysis
 During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the metaanalysis. For example the bivariate analysis is the preferred method of metaanalysis of diagnostic study [@pmid16168343]. By contrast, the majority of metaanalysis of diagnostic study uses the univariate method of Moses and Littenberg. This issue will be expanded below.
 
+### PRISMA
+The PRISMA statement is useful for understanding the search strategy and the papers removed and retained in the metaanalysis. An example of generating the statement is provided below in R.
+```{r prisma}
+library(PRISMAstatement)
+#example from Spot sign paper. Stroke 2019
+prisma(found = 193,
+       found_other = 27,
+       no_dupes = 141, 
+       screened = 141, 
+       screen_exclusions = 3, 
+       full_text = 138,
+       full_text_exclusions = 112, 
+       qualitative = 26, 
+       quantitative = 26,
+       width = 800, height = 800)
+```
+
 ### Metaanalysis of proportion
-This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic.
+This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $\frac{p \times (1-p)}{n}$. The term $z$ is given    by $1-\frac{\alpha}{2}$ quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to the Wald method. It has an extra term $z^2/n$. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method [@doi:10.1080/00031305.1998.10480550]. Brown and colleagues proposed the use of the Wilson method [@brown2001]
 
 ```{r nice-fig, fig.cap='Stroke recurrence after TIA clinic', out.width='80%', fig.asp=.75, fig.align='center'}
 
@@ -136,7 +234,7 @@ sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
 summary(sumss)
 ```
 ### Metaregression
-```{r metaregression}
+```{r nice-fig3, fig.cap='Metaregression', out.width='80%', fig.asp=.75, fig.align='center'}
 #plot year against tsens
 library(ggplot2)
 library(lubridate)
@@ -157,7 +255,7 @@ res <- meta4diag(data = dat)
 SROC(res, crShow = T)
 ```
 
-```{r sensitivity}
+```{r nice-fig4, fig.cap='Bayesian Forest plot of sensitivity and specificity', out.width='80%', fig.asp=.75, fig.align='center'}
 #sensitivity
 forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
     nameShow="right", dataShow="center", estShow="left", text.cex=1,

@@ -24,6 +24,49 @@ geocode ("monash medical centre, clayton")
 mapdist("5 stud rd dandenong","monash medical centre")
 ```
 
+Next a demonstration of extracting geocode from a column of data wihin a dataframe. This is more efficient compared to performing geocoding line by line.
+
+```{r geocode}
+library(dplyr)
+library(tidyr) #unite verb from tidyr
+library(readr)
+library(tmaptools)
+library(leaflet)
+clinic<-read_csv("./Data-Use/TIA_clinics.csv")
+clinic2<-clinic %>%  
+  unite ("address",City:Country,sep = ",")%>%   filter(!is.na(`Clinic-Status`)) #remove NA cells
+#clinics_geo<-geocode_OSM(clinic2$address) #geocode TIA clinic
+#save(clinics_geo,file="./Data-Use/TIAclinics_geo.Rda") #save data
+#merge 2 files with different column name
+load("./Data-Use/TIAclinics_geo.Rda")
+clinics_geo<-left_join(clinics_geo,clinic2, by=c("query"="address"))
+#create icon markers
+#icon markers
+icons_blue <- awesomeIcons(
+  icon= 'medkit',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = "blue"
+)
+icons_red <- awesomeIcons(
+  icon= 'medkit',
+  iconColor = 'black',
+  library = 'ion',
+  markerColor = "red"
+)
+#subset 
+clinics_geo_active<-clinics_geo %>%filter(`Clinic-Status`=="Active")
+clinics_geo_inactive<-clinics_geo %>%filter(`Clinic-Status` !="Active")
+m<-leaflet(data=clinics_geo) %>% 
+  addTiles() %>% #default is OSM
+    addAwesomeMarkers(lat=clinics_geo_active$lat,lng=clinics_geo_active$lon,icon=icons_blue,label = ~as.character(clinics_geo_active$query) ) %>%
+  addAwesomeMarkers(lat=clinics_geo_inactive$lat,lng=clinics_geo_inactive$lon,icon=icons_red,label = ~as.character(clinics_geo_inactive$query) ) 
+
+#make pics using mapshot
+mapview::mapshot(m, url = paste0(getwd(),file="./Data-Use/TIAclinic_world.html"), file = paste0(getwd(), "./Data-Use/TIAclinic_world.png"))
+m
+```
+
 Googleway had the flexibility of easily interrogating Google Maps API for time of trip and traffic condition.
 
 ```{r eval=FALSE}

@@ -1,0 +1,26 @@
+City,Country,Setting,Pre-COVID-Assessment,Post-COVID-Assessment,Pre-COVID-Imaging,Post-COVID-Imaging,PPE use in clinic,COVID Alert Level,Clinic-Status,Date 
+Melbourne,Australia,Hospital,In-person,Telephone,CT/US,CTA,NA,3,Active,8/04/2020
+Paris,France,Hospital,In-person,In-person,MRI/US,MRI/US,Yes,3,Active,10/04/2020
+Oxford,UK,,,,,,,,,
+Ottawa,Canada,Hospital,In-person,Telephone,CT/US/CTA,CT/CTA,Yes,4,Active,12/04/2020
+Stanford,USA,Hospital,In-person,Video,MRI/US,MRI/US,NA,3,Active,17/04/2020
+New York,USA,Multicentre,,,,,,,,
+Wellington,New Zealand,Hospital,In-person,Telephone,CT/US,CT/US,Covid screen,4,Active,16/04/2020
+Edinburgh,Scotland,Hospital,In-person,WhatsApp/Facetime/telephone,CT/MR/US,CT/MR/US,NA,3,Active,11/04/2020
+Calgary,Canada,,,,,,,,,
+Nantes,France,,,,,,,,,
+Gloucestershire,UK,,,,,,,,,
+Leicester,UK,,,,,,,,,
+Dublin,Ireland,,,,,,,,,
+Tauranga,New Zealand,Hospital,In-person,Telephone,CT/MR/US,CT/MR/US,NA,4,Active,12/04/2020
+Adelaide,Australia,Hospital,,,,,,3,,
+Sydney,Australia,Hospital,,,,,,3,,
+London,UK,,,,,,,3,,
+Munich,Germany,,,,,,,,,
+London,UK,,,,,,,3,,
+Glasgow,Scotland,Hospital,In-person,Video,CT/CTA/US,CT,,3,,18/04/2020
+Rochester,USA,,,,,,,,,
+Bologna,Italy,,,,,,,,,
+Grand Rapids,USA,Hospital,,,,,,,Non-Active,11/04/2020
+Beijing,China,,,,,,,,,
+Boston,USA,,,,,,,,,

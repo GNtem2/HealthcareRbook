@@ -14,9 +14,11 @@ description: "This is a book describing the use of R in Healthcare. It is aimed 
 
 # Preamble
 
-This is a _book_ adapted from Yihui Xie's package bookdown. The files are written in **Markdown**. R can be installed from The Comprehensive R Archive Network at https://cran.r-project.org/. It is _free_. The user can choose between three different platforms such as Windows, Mac (OS X) and Linux. Following installation of R, you should install Rstudio, available at https://rstudio.com/.
+This is a _book_ adapted from Yihui Xie's package bookdown. The files are written in **Markdown**. Markdown files enable embedding of R script, the main aim of writing this book. The repository for this book is https://github.com/GNtem2/HealthcareRbook. Once completed the book will be available on Netlify. 
 
 The book is written in the hope that clinicians and junior doctors will take a new approach towards understanding medicine and data. Often one is not confronted with the shortcomings of current medical education one look up to our senior clinicians for guidance. Junior doctors are taught list of associations and frequency of signs and symptoms related to a disease  rather than a statistical approach towards recognition of patterns. In statistical analysis, patterns can be found using a variety of multivariate methods [@hastie_09_elements-of.statistical-learning]. An example is the teaching that vasculitis is associated with stroke. This has led many junior doctors to search for vasculitis among young patients with stroke. In an audit over 10 years at Monash Health, there was only one case of vasculitis presenting with stroke [@pmid26778046].
+
+R can be installed from The Comprehensive R Archive Network at https://cran.r-project.org/. It is _free_. The user can choose between three different platforms such as Windows, Mac (OS X) and Linux. Following installation of R, you should install Rstudio, available at https://rstudio.com/.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

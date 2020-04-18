@@ -54,7 +54,6 @@ A positive semi-definite matrix is invertible and has full rank. It is defined a
  
 Such a matrix is symmetrical. Examples include correlation and covariance matrices.
 
-
 ## Principal component analysis
 Principal component analysis (PCA) is a data dimension reduction method which can be applied to a large dataset to determine the latent variables (principal components) which best represent that set of data. A brief description of the method is described here and a more detailed description of the method can be found in review [@pmid10703049]. The usual approach to PCA involves eigen analysis of a covariance matrix or singular value decomposition of a data matrix. 
 
@@ -72,3 +71,5 @@ There are several versions of partial least squares (PLS). A detailed mathematic
 T-Stochastic Neighbourhood Embedding (TSNE) is a visualisation method which seeks to transform the complex data into low (2) dimensions while maintaining the distance between neighbouring objects. This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of TSNE are not intended for machine learning. TSNE is implemented in R as _Rtsne_.
 
 ## Non-negative matrix factorisation
+
+

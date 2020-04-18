@@ -9,15 +9,19 @@ The references are kept in the book.bib file. They are generated from TeXMed - a
 The files were uploaded to github using git bash
 
 ```git
+#initiating repository
+git remote add origin https://github.com/GNtem2/HealthcareRBook.git
+git push -u origin master
+
 #removing files from github
 git  git rm --cached 04-application.Rmd
 git commit -m "remove old 04-application.Rmd"
-git push origin master
+git push -u origin master
 
 #adding files to github
 git add *.Rmd
 git commit -m "updating bookdown with new chapters and data"
-git push origin master
+git push -u origin master
 ```
 
 

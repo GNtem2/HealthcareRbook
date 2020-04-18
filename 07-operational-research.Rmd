@@ -58,27 +58,29 @@ x<-make.lp(3,2)
 ```
 
 ## Forecasting
-Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. 
+Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19. This forecast is an example and is not meant to be used in practice as mortality from COVID also depends on the number of infected cases and the rate of infection may increase exponentially.
 
 ```{r forecast}
 library(tidyverse)
 library(prophet)
 library(ggplot2)
 library(hrbrthemes)
-covid<-read.csv("./Data-Use/Covid_Table100420.csv")
+library(lubridate)
+library(readr) #use read_csv to read csv rather than base R
+covid<-read_csv("./Data-Use/Covid_Table100420.csv") 
 colnames(covid)
 # A data frame with columns ds & y (datetimes & metrics)
 covid<-rename(covid, ds =Date, y=Total.Deaths)
-#create prophet object
-m<-prophet(covid)
+covid2 <- covid[c(1:14),]
+m<-prophet(covid2)#create prophet object
 # Extend dataframe 12 weeks into the future
-future <- make_future_dataframe(m, freq="week" , periods = 12)
+future <- make_future_dataframe(m, freq="week" , periods = 26)
 # Generate forecast for next 500 days
 forecast <- predict(m, future)
 forecast %>% 
   select(ds, yhat, yhat_lower, yhat_upper) %>%
   tail()
-# What's the forecast for September 1, 2022?
+# What's the forecast for July 2020?
 forecasted_rides <- forecast %>%
   arrange(desc(ds)) %>%
   slice(1) %>%
@@ -90,7 +92,7 @@ forecast_p <- plot(m, forecast) +
   labs(x = "", 
        y = "mortality", 
        title = "Projected COVID-19 world mortality", 
-       subtitle = "To 2021") +
+       subtitle = "based on data truncated in January 2020") +
         ylim(20000,80000)+
   theme_ipsum_rc()
 forecast_p

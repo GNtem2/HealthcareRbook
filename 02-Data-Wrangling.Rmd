@@ -18,9 +18,13 @@ c<-readxl::read_xlsx("File.xlsx",sheet=2)
 ### Date and time
 Date and time can be handle in base R. The library _lubridate_ is useful for parsing date data. One warning, errors with parsing can occur if there are characters in the column containing date data.
 ```{r date}
+library(dplyr)
 df3<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),"Result"=c(4,5,6))
 class(df3$DateofEvent)
 df3$DateofEvent
+
+#remove NA
+df3 %>% filter(!is.na(DateofEvent))
 
 df3$DateofEvent2<-as.POSIXct(df3$DateofEvent)
 class(df3$DateofEvent2)
@@ -29,10 +33,39 @@ df3$DateofEvent2
 One way of storing data in R format is to save the file as .Rda. This format will ensure that no one can accidentally rewrite or delete a number. For very large data, it's quicker to save as .Rda file than as csv file.
 
 ### Foreign data
-The foreign library is traditionally use to handle data from spss, stata and sas. One should look at the ending in the file to determine the necessary library. The current version of sas file requires _sas7bdat.
+The foreign library is traditionally use to handle data from _SPSS_ (.sav), _Stata_ (.dta) and _SAS_ (.sas). One should look at the ending in the file to determine the necessary library. 
+```{r eval=FALSE}
+library(foreign)
+#write and read Stata
+write.dta(df3,file="./Data-Use/df3_temp.dta")
+a<-read.dta("./Data-Use/df3_temp.dta")
+a
+```
+
+The _foreign_ library can handle older _SAS_ files but not the current version. The current version of _SAS_ file requires _sas7bdat_. The clue is the file ends in .sas7bdat.
 
 ### json format
-Json is short for JavaScript object Notification. These files can be read using the _rjson_ library.
+Json is short for JavaScript object Notification. These files have a hierarchical structured format.  The json file is in text format amd can also be examined using _Notepad_. These files can be read using the _RJSONIO_ or _rjson_ libraries in R.
+```{r address}
+library(RJSONIO)
+j<-fromJSON("./Data-Use/0411.geojson")
+j<-lapply(j, function(x) {
+  x[sapply(x,is.null)]<-NA
+  unlist(x)
+})
+k<-as.data.frame(do.call("cbind",j)) #list to data frame
+```
+
+### DICOM and nifti format
+R can handle a variety of different data format. Medical images are stored as _DICOM_ files for handling and converted to _nifti_ files for analysis.
+
+```{r nifti}
+library(oro.nifti)
+img<-readNIfTI("./Data-Use/mca_notpa.nii", reorient = FALSE) 
+#plot img at z =30
+image(img,z=35,plot.type="single")
+print(img)#nifti is an S4 with multiple slots for data type
+```
 
 ## Tidy data
 Attention to collection of data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
@@ -47,12 +80,73 @@ The above example should be entered this way. This change allows one to group va
 df2<-data.frame(Test=c("positive","negative"), Result=c(5, 10))
 df2
 ```
+The below example is about collapsing of column using the base R. 
+```{r collapsing column}
+dfa<-data.frame(City=c("Melbourne","Sydney","Adelaide"),State=c("Victoria","NSW","South Australia"))
+#collapsing City and State columns and generate new column address
+dfa$addresses<-paste0(dfa$City,",", dfa$State) #separate by comma
+dfa$addresses2<-paste0(dfa$City,",", dfa$State,", Australia")
+dfa
+```
+
+This exanple is same as above but uses verbs from _tidyr_. This is useful for collapsing address for geocoding. 
+
+```{r unite}
+library(tidyr)
+dfa1<-dfa %>% unite ("new_address",City:State,sep = ",")
+dfa1
+```
+
+Using the data above, let's split the column address
+```{r separate}
+library(tidyr)
+dfa2<-dfa %>% separate(addresses, c("City2", "State2"))
+dfa2
+```
+
+### Factors
+
+There are several types of factors in R: ordered and not ordered. For example, the variable sex does not need to be ordered. There are several ways of coding factors. Sometimes, male is represented as 1 and female as 0. Sometimes, female is represented as 2. This discussion may seems trivial but a paper had been retracted in a high impact factor journal Jama because of miscoding of the trial assignment 1 and 2 rather than the assignment of 0 and 1. This error led to reversing the results with logistic regression [@pmid31593277]. This error led to report that an outpatient management program for chronic obstructive pulmonary disease resulted in fewer admissions. Below is an example which can occur when data is transformed into factor and back to number. 
+
+```{r factors}
+library(Stat2Data)
+data("Leukemia") #treatment of leukemia
+Leukemia$Resp
+Leukemia$Response.factor<-as.factor(Leukemia$Resp)
+Leukemia$Response.factor
+Leukemia$Response.numeric<-as.numeric(Leukemia$Response.factor)
+Leukemia$Response.numeric
+```
+
+This illustration describes conversion of a continuous variable into orderly factors.
+
+```{r ordered factors}
+library(Stat2Data)
+data("Leukemia") #treatment of leukemia
+#partition Age into 8 ordered factors
+Leukemia$AgeCat<-ggplot2::cut_interval(Leukemia$Age, n=8, ordered_result=TRUE)
+class(Leukemia$AgeCat)
+```
 
 ### Multiple files
 Merging of files can be done using _dplyr_ to perform _inner_join_, _outer_join_, _left_join_ and _right_join_. Note that this can also be done in base R or using syntax of _data.table_.
 
 ### Pivot
-A variety of different expressions are used to describe data format such as wide and long formats. In some case the distinction between such formats is not clear. The verbs for performing these operations are _pivot_wide_, _pivot_long_. Again _data.table_ uses different verbs such as _cast_ and _melt_. In general, most regression analyses are performed with data in wide format. In this case each row represents a unique ID.  Longitudinal analyses are performed with data in long format. Inthis format, there are several rows with the same ID.
+A variety of different expressions are used to describe data format such as wide and long formats. In some case the distinction between such formats is not clear. The verbs for performing these operations are _pivot_wide_, _pivot_long_. Again _data.table_ uses different verbs such as _cast_ and _melt_. In general, most regression analyses are performed with data in wide format. In this case each row represents a unique ID.  Longitudinal analyses are performed with data in long format. In this format, there are several rows with the same ID. In the next Chapter on Statistics, an example of data generated in wide format and coverted to long format using _plyr_. Here we will demonstrate the use of _tidyr_ to pivot loner or wider. 
+
+The best way to think about how data should be presented is that data is analyzed according to columns not rows. The data below is extracted from CDC COVID website. Details are given below under Web scraping on how this task was performed.
+
+```{r pivot}
+library(dplyr)
+library(tidyr)
+library(stringr)
+usa<-read.csv("./Data-Use/Covid_bystate_Table130420.csv")
+# for demonstration we will select 3 columns of interest
+usa_long <-usa %>% select(Jurisdiction,NumberCases31.03.20,NumberCases07.04.20) %>% pivot_longer(-Jurisdiction,names_to = "Date",values_to = "Number.Cases")  
+usa_long$Date <- str_replace(usa_long$Date,"NumberCases","")
+head(usa %>%select(Jurisdiction,NumberCases31.03.20,NumberCases07.04.20),6) #data in wide format
+head(usa_long,6) #data in long format
+```
 
 ## Regular Expressions
 Here is a short tutorial on regular expression. We will begin using base R. This section is based on experience trying to clean a data frame containing many words used to describe one disease or one drug.
@@ -104,11 +198,10 @@ pat=paste0("\\b(",paste0(redunc,collapse = "|"),")\\b")
 df$infection2<-gsub(pat," ",df$infection)
 pat=paste0("\\b(",paste0(redunc1,collapse = "|"),")\\b")
 df$infection2<-gsub(pat," ",df$infection2)
-
 df$infection2
 ```
-### stringr
 
+### stringr
 The following examples are taken from excel after cob=nversion from pdf. In the process of conversion errors were introduced in the conversion from pdf to excel. 
 ```{r bracket}
 library(stringr)
@@ -144,6 +237,7 @@ Removing the denominator requires a different approach. First remove the last nu
 df.d$case<-str_replace(df.d$seizure.rate,"/[0-9]*"," ")
 df.d$case
 ```
+
 ## PDF to xcel
 Sometimes data from public governement sites come in PDF form instead of excel. Conversion from pdf to excel or text can be difficult especially with special character eg Danish. There are several libraries for doing this: _pdftables_ (require API key) and _pdftools_. The example below uses _pdftools_. Documentation for _pdftools_ is available at https://docs.ropensci.org/pdftools/. The document is the 2018 Danish Stroke Registry report. The _tabulizer_ package is excellent for converting table data. However, _tabulizer_ package depends on _rJava_ and requires deft handling. 
 ```{r pdf}
