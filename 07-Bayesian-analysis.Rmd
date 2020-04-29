@@ -1,0 +1,113 @@
+# Bayesian Analysis
+
+## Baysian belief
+
+Bayes Theorem deals with the impact of information update on current belief expresses in terms of probability. P(A|B) is the posterior probability of A given knowledge of B. P(A) is the prior probability. P(B|A) is the conditional probability of B given A.
+P(A|B)=P(B|A) x P(A)/P(B)
+
+Bayes’ theorem can be expressed in terms of odds and post-test probabilities. This concept had been used in the analysis of the post-test probabilities of stroke related to the use of ABCD2409. In this case the likelihood ratio and pretest probability of stroke in patients with TIA is used to calculate the post-test probability.
+
+Table 13.	2 x 2 table
+	Disease +	Disease -
+Test + eg ABCD2≥4	TP	FP
+Test – eg ABCD2<4	FN	TN
+
+The true positive rate (TPR) can be expressed as conditional probability P(T+|D+). TP is the joint distribution of T+ and D+ while TN is the joint distribution of T- and D-.
+ 
+The true negative rate (TNR)  can be expressed as conditional  probability P(T-|D-).
+ 
+In the setting of ABCD2, the pre-test odds is derived from cases of TIA and stroke outcome at 90 days. 
+ 
+The positive likelihood ratio (PLR) in this case is derived from the sensitivity of ABCD2 for stroke and the one minus specificity of ABCD for stroke. One can interpret the likelihood ratio in terms of Bayes theorem781.
+ 
+To derive the post-test odds, the PLR is multiplied by the pre-test odds at the voxel level. The post-test odds is given by the product of the pre-test odds and the likelihood ratio. 
+ 
+In turn, the post-test probabilities is calculated from the post-test odds by:  
+
+### Conditional probability
+
+Two events are independent if
+ 
+Or 
+ 
+It follows that the events A and B occur simultaneously P(A∩B) is given by the probability of event A and probability of event B given that A has occurred.
+ 
+If events A and B are independent then P(A∩B) is given by the probability of event A and probability of event B.
+
+#### Bayes Rule
+
+For a sample space (A) containing n different subspaces (A1, A2..An) and A is a subset of the larger sample space B+ and B-, the probability that A is a member of B+an be given by P(A|B+). This can be divised as a tree structure with one branch given by the product of P(B+) and  P(A|B+) and the other P(B-) and P(A|B-). The probability of B is given by the sum of P(B+)P(A|B+) and P(B-)P(A|B).
+
+To make a decision on which of An events to choose, one evaluate the conditional probability of each subset e.g. P(A1∩B)/P(B), P(A2∩B)/P(B)…P(An∩B)/P(B).
+The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B). Here P(An∩B) is the same as P(An)P(B|An). The subspace with the highest conditional probability may yield the optimal result.
+ 
+#### Conditional independence
+
+The conditional distribution is given by
+
+Conditional independence states that two events (A, B) are independent on a third set (C) if those two sets are independent in their conditional probability distribution given C782.  This is stated as 
+ 
+
+## Markov model
+
+The Markov chain describes a chain of memoryless states which transit from one state to another without dependency on previous states. The Markov property The transition matrix describes the probabilities of changing from one state to another. A property of this Markov matrix is that the column data sum to one. An example is provided here $\left[\begin{array}{cc}.8 & .7\\.2 &.3\end{array}\right]$. The column probabilities sum to 1. The PageRank method that we  discuss in chapter on Graph Theory is a special form of Markov chain. 
+
+## INLA, Stan and BUGS
+
+### Bayesian Metaanalysis 
+
+A Bayesian approach towards metaanalysis is provided below using the package _meta4diag_ [@2015arXiv151206220G]. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the _mada_ package which does not provide a bivariate method for performing summary sensitivity and specificity. 
+
+```{r bayesian-metaanalysis}
+library(meta4diag)
+library(INLA)
+Dat<-read.csv("./Data-Use/ss150718.csv")
+#remove duplicates
+dat<-subset(Dat, Dat$retain=="yes") 
+res <- meta4diag(data = dat) 
+SROC(res, crShow = T)
+```
+
+```{r sensitivity}
+#sensitivity
+forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
+```
+
+```{r specificity}
+#specificity
+forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
+```
+
+### Cost
+
+```{r hesim}
+library("hesim")
+library("data.table")
+strategies <- data.table(strategy_id = c(1, 2))
+n_patients <- 1000
+patients <- data.table(patient_id = 1:n_patients,
+          age = rnorm(n_patients, mean = 70, sd = 10),
+          female = rbinom(n_patients, size = 1, prob = .4))
+states <- data.table(state_id = c(1, 2),
+                     state_name = c("Healthy", "Sick")) 
+# Non-death health states
+tmat <- rbind(c(NA, 1, 2),
+              c(3, NA, 4),
+              c(NA, NA, NA))
+colnames(tmat) <- rownames(tmat) <- c("Healthy", "Sick", "Dead")
+transitions <- create_trans_dt(tmat)
+transitions[, trans := factor(transition_id)]
+hesim_dat <- hesim_data(strategies = strategies,
+                        patients = patients, 
+                        states = states,
+                        transitions = transitions)
+print(hesim_dat)
+```

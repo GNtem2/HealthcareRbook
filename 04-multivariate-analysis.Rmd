@@ -1,75 +1,56 @@
 # Multivariate Analysis
+
 The following section illustrates the different methods in multivariate analyses. These methods are not to be confused with the more simple multivariable analyses.
 
-## Brief introduction to Matrix
-Eigenvector (characteristic vector) and eigenvalue (characteristic value) are useful in solving system of linear equations and providing quicker solution to solving task such as finding the nth power of a matrix. The eigenvector v of a  n x n square matrix M is defined as a non-zero vector of M such that the product of Mev is equal to the product of the scalar eigenvalue λ and v.
-
-Eigenvector analysis can be used to describe pattern. Here, the eigenvector has an interpretation in term of the direction of the data and the eigenvalue provides a scaling measure of the length or change in direction of the vector (when both are multiplied). Using the description above regarding finding the nth power of a matrix M, the eigenvectors remain unchanged but the eigenvalues change in proportion to the nth power of M.  
-
-In terms of applications, eigen decomposition approach provides a non-bias method for discovering pattern in complex data; this is typically performed by eigen decomposition of the covariance matrix. This approach had been used in describing pattern of infarct in hypoxic ischaemic injury780, facial recognition.
-
-In the section on regression, we can show that the eigenvalue can be interpreted in term of the variance of data. Eigenvalue can be described
-
-  		I is the n x n identity matrix
-
-In geometric term, the eigenvalue describes the length of its associated eigenvector and in regression analyss, it can be considered as the variance of the data. Eigenvalue is calculated by finding the solution for the root of characteristic polynomial equation. For a 2 x 2 matrix, 
-
- 
-The characteristic polynomial is given by
-
- 
-The Trace(M) is given by 
-The determinant is given by  
-The quadratic formula can be used to solve for λ.
- 
-In this case, the eigenvalue is -1 and 3. The eigenvector of M is given by
- 
-The identity matrix consist of ones on the diagnonal and zero elsewhere. For a 2 x 2 matrix, the identity matrix is 
- 
-
-For the eigenvalue -1, its eigenvector is given by
- 
-The eigenvectors include (1, 1) . For the eigenvalue 3, its associated eigenctor include (1, -1). The solution for the characteristic equation becomes more complex as the size of the matrix increase. For large matrices, the power method is used to derive the eigenvalue. The determinant is equal to the product if the eigenvalues 
-(-1 x 3= -3). The trace is equal to the sum of the eigenvalues (-1+3=2) or the sum of the diagonal of the matrix (1+1 =2).
-
-A matrix is invertible (non-singular) if it satisfies the following
- 
-The matrix M-1 is the inverse of matrix M. The inverse of M is calculated as follow.
- 
- 
-w=1, x=0, y=1,z=0
-Matrix which cannot be inverted is termed singular. The determinant of a square matrix is zero. The significance of invertible matrix will be seen in the section on collinearity when dealing with regression analsysis. 
-
-Sparse matrix is a matrix populated mostly by zeros. In a network sense it implies lack of cohesion in the network. Inverting sparse matrix is challenging due to the reduced rank associate with this type of matrix. The solutions require various form of penalisation (penalised regression is discuss next under Regression). 
-
-The null space of a matrix can be considered as the solutions to homogenous system of linear equations.
- 
-The null space of a matrix is also termed the kernel of that matrix (3, -9, 1). As shown above, the null space of a matrix contains a zero vector. In other word the coefficient matrix is zeros. The augemented matrix is displayed on the left. The null space is a subspace of this matrix.
-
-The rank of matrix of a matrix can be considered as a measure of the ‘non-singularness’ of a matrix. For example, a 3 x 4 matrix with 2 independent rows has rank of 2. In other word, it describes the number of independent columns of a matrix or its eigenvector. It also describes the dimension of the image of the linear transformation that is performed on the matrix. Often the expression that the matrix is full rank (contains independent rows and columns of data) is used in regression to infer that the matrix is invertible and the data are non-collinear. An example of zero rank or collinear matrix is shown here
- 
-Observe that the second column is three times the first column. The determinant of this matrix is 3 x 6 – 2 x 9=0. This matrix is not invertible and rank deficient.  The interpretation is that the rank of the augmented matrix is equal or to that for the coefficient matrix, the solution to system of linear equation is stable. If the rank of an augmented matrix is larger than the coefficient matrix, the matrix is rank deficient.mA special form of multivariate regression use the rank of matrix in regression (reduced rank regression). This type of regression is useful in the case of of minority class distribution where the majority of the data are at one end of the spectrum.
-
-A positive semi-definite matrix is invertible and has full rank. It is defined as a matrix which can be obtained by the multiplication of a matrix and its transpose (denoted by T in upper case).
- 
-Such a matrix is symmetrical. Examples include correlation and covariance matrices.
-
 ## Principal component analysis
+
 Principal component analysis (PCA) is a data dimension reduction method which can be applied to a large dataset to determine the latent variables (principal components) which best represent that set of data. A brief description of the method is described here and a more detailed description of the method can be found in review [@pmid10703049]. The usual approach to PCA involves eigen analysis of a covariance matrix or singular value decomposition of a data matrix. 
 
 PCA estimates an orthogonal transformation (variance maximising) to convert a set of observations of correlated variables into a set of values of uncorrelated (orthogonal) variables called principal components. The first extracted principle component aligns in the direction that contains most of the variance of observed variables. The next principal component is orthogonal to the first principle component and contains the second most of spread of variance. The next component contains the third most of spread, and so on.  The latter principal components are likely to represent noise and are discarded. Expressing this in terms of our imaging data, each component yields a linear combination of ‘ischemic’ voxels that covary with each other. These components can be interpreted as patterns of ischemic injury. The unit of measurement in PCA images is the covariance of the data. 
 
-In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principle components . 
+In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principle components. 
 
 ## Independent component analysis
-Independent component analysis is different from PCA in that it seeks components which are statistically independemt. 
+
+Independent component analysis is different from PCA in that it seeks components which are statistically independent. 
 
 ## Partial least squares
+
 There are several versions of partial least squares (PLS). A detailed mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix [@pmid15531609]. For the purposes of exposition we will describe the individual components of the method. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of dependent variables (neurological outcome scores). Each voxel can take on a value of 1 (representing involvement by infarction) or 0 (representing absence of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. Linear least squares regression of the latent variables produces coefﬁcients or beta weights for the latent variables at each voxel location in the brain in stereotaxic coordinate space.[@pmid19660556]
 
+The colon dataset containing microarray data comes with the _plsgenomics_ library [@pmid28968879]. The analysis involves partitioning the data into training and test set. the classification data is in the Y column.
+
+```{r pls}
+library(plsgenomics)
+data("Colon")
+class(Colon) #list
+#62 samples 2000 genes
+dim(Colon$X) 
+#heatmap
+matrix.heatmap(cbind(Colon$X,Colon$y))
+#
+IndexLearn <- c(sample(which(Colon$Y==2),12),sample(which(Colon$Y==1),8))
+Xtrain <- Colon$X[IndexLearn,] 
+Ytrain <- Colon$Y[IndexLearn] 
+Xtest <- Colon$X[-IndexLearn,]
+# preprocess data 
+resP <- preprocess(Xtrain= Xtrain, Xtest=Xtest,Threshold = c(100,16000),Filtering=c(5,500), log10.scale=TRUE,row.stand=TRUE)
+# perform prediction by GSIM 
+res <- gsim(Xtrain=resP$pXtrain,Ytrain= Ytrain,Xtest=resP$pXtest,Lambda=10,hA=50,hB=NULL)
+res$Cvg 
+sum(res$Ytest!=Colon$Y[-IndexLearn])
+```
+
 ## T-Stochastic Neighbourhood Embedding
+
 T-Stochastic Neighbourhood Embedding (TSNE) is a visualisation method which seeks to transform the complex data into low (2) dimensions while maintaining the distance between neighbouring objects. This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of TSNE are not intended for machine learning. TSNE is implemented in R as _Rtsne_.
+
+```{r rtsne}
+library(Rtsne)
+```
 
 ## Non-negative matrix factorisation
 
-
+```{r nmf}
+library(NMF)
+```

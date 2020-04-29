@@ -4,10 +4,33 @@
 There are several different approaches to performing decision tree analyses. The most famous method CART is implemented in R as rpart. This method uses the Gini coeffient to partition the root into branches. The second approaches uses chi-square test to partition the tree. Decision tree may also reveal complex intreactions (relationship) among the predictors in a way that regression analyses do not easily reveal.
 
 ### Information theory driven
+
 The tree is grown using a “divide and conquer” strategy, with repeated partitioning of the original data into smaller groups (nodes) on a yes or no basis. The method uses a splitting rule built around the notion of “purity.” A node in the tree is defined as pure when all the elements belong to one class. When there is impurity in the node, a split occurs to maximize reduction in “impurity.” In some cases, the split may be biased toward attributes that contain many different ordinal levels or scales. Thus, the selection of an attribute as the root node may vary according to the splitting rule and the scaling of the attribute.  The decision tree package rpart does tolerate certain degree of missing number because the data are split using the available data for that attribute to calculate the Gini index (rather than the entire cohort). One major advantage of _rpart_ is the presentation of the classification rules in the easily interpretable form of a tree. The hierarchical nature of the decision tree is similar to many decision processes [@pmid29559951].
 
+```{r part tree2}
+library(rpart)
+library(rattle)
+library(rpart.plot)
+data("Leukemia", package = "Stat2Data")
+colnames(Leukemia)
+#decision tree model for AML treatment
+treLeukemia<-rpart(Status~., data=Leukemia)
+fancyRpartPlot(treLeukemia)
+```
+
+
 ### Conditional decision tree
- The conditional decision tree approach has been proposed to be  superior to CART method because that method uses information criterion for partitioning and which can lead to overﬁtting.The scenario of overﬁtting describes model which works well on training data but less so with new data.The conditional approach by _party_ is less prone to overﬁtting as it includes signiﬁcance testing [@pmid30761063].
+
+The conditional decision tree approach has been proposed to be  superior to CART method because that method uses information criterion for partitioning and which can lead to overﬁtting.The scenario of overﬁtting describes model which works well on training data but less so with new data.The conditional approach by _party_ is less prone to overﬁtting as it includes signiﬁcance testing [@pmid30761063].
+ 
+```{r party tree}
+library(party)
+data("aSAH", package = "pROC")
+colnames(aSAH)
+#decision tree model
+treeSAH<-ctree(outcome~., data=aSAH, control = ctree_control(mincriterion=0.95, minsplit=50))
+plot(treeSAH,type = "simple",main = "Conditional Inference for aSAH")
+```
 
 ### criticisms of decision tree
 Overfitting and prone to chosing variable with many levels are some disadvantage of _decision tree_. Decision tree do not handle collinearity issues well and the related method of _random forest_ is proposed below.

@@ -37,6 +37,7 @@ plot(davis.fit,pie=TRUE,rand.eff="sociality",labels=TRUE)
 
 ## Centrality Measures
 The nodes in this case are variables such as ASPECTS regions, demographic and risk factors. This graph below uses data from a paper on the use of PageRank. In Figure 1 of that papera graph of 4 variables were used to illustrate the PageRank method for searching brain regions related to disability [@pmid25961856].
+
 ```{r eval=FALSE}
 library(igraph)
 aspects<-graph(c("M1","M2","M2","Disability","tpa","M1","M2","M1","tpa","M2"))
@@ -52,14 +53,16 @@ p<-page.rank(aspects)
 df<-data.frame("degree"=round(d,2),"closeness"=round(cl,2),"betweenness" =round(b,2),"PageRank" =round(p$vector,2))
 knitr::kable(df)
 ```
-## Local centrality measures
+
+### Local centrality measures
+
 Centrality measures assign a measure of “importance” to nodes and can therefore indicate whether some nodes are more critical than others in a given network. When network nodes represent variables, centrality measures may indicate relevance of variables to a model.
 
 The simplest centrality measure, degree centrality, is the count of links for each node and is a purely local measure of importance. Node strength, used in weighted networks, is the sum of weights of edges entering or leaving (or both) the node. Other measures, such as betweenness centrality, describe more global structure - the degree of participation of a node as conduit of information between other nodes in a network.
 
-## Global centrality measures
+### Global centrality measures
 
-### Page Rank
+#### Page Rank
 PageRank is one member of a family of graph eigenvector centrality measures, all of which incorporate the idea that the score of a node depends, at least in part, on the scores of neighbors connecting to the node. Thus a page may have a high PageRank score if many pages link to it, or if a few important or authoritative pages link to it. 
 
 Others include eigenvector centrality (which works best with undirected graphs), alpha centrality and Katz centrality. PageRank uses a different scaling for connections (by the number of links leaving the node) and importance is based on incoming connections rather than outgoing connections[@brin98anatomy] . Eigenvector centrality measure a node’s centrality in terms of node parameters and centrality of neighboring nodes. 
@@ -68,9 +71,7 @@ PageRank has several differences with respect to other eigenvector centrality me
 
 A number of different approaches are available for computing the PageRank for nodes in a network. The conceptually simplest is to assign an equal initial score to each node, and then iteratively update PageRank scores. This is easy to perform algebraically for a small number of nodes but can take a long time with larger data. In practice, it is performed using eigenvector methode. PageRank analysis can be performed using _igraph_ package. [@pmid25961856]
 
-
 Graph based methods have emerged as tools for interpreting and analysing connected network structures and in this case network structures associated with disability.These types of analysis are attractive because they assess the connectedness of each region of interest (ROI) with respect to other ROIs over the entire brain network.Eigenvector centrality methods have been used to explore connectedness of brain regions. PageRank is a variant of eigenvector centrality and is an ideal method for analysis ofdirected graph (the edges between adjacent nodes(regions) have direction). This method was initially developed as the basis of the search engine for Google. PageRank offered a considerable improvement over pure text based methods in ranking search results,and had the advantage of being content independent (i.e. the search is based on links between the web pages).  PageRank emphasises web pages based on the number of links directed to a page and the importance of the sources of those links. Thus a small number of links from influential pages can greatly enhance the importance of the destination page. 
-
 
 ## Community
 
@@ -106,5 +107,53 @@ There are very few softwares capable of handling very large graph with the excep
 Social media platform such as twitter, youtube, facebook and instagram are rich source of information for graph theory analysis as well as textmining. The following section only covers twitter and youtube as both are accessible to the public. There's restricted access for facebook and instagram.
 
 ### Twitter
+Analysis of _Twitter_ requires creating an account on _Twitter_. This step will generate a series of keys listed below. These keys should be stored in a secret location. There are several different ways to access _Twitter_ data. It should be noted that the data covers a range of 9 days and a maximum of 18000 tweets can be downloaded each day. The location of the tweeter can also be accessed if you have created an account with Google Maps API.
+
+```{r eval=FALSE}
+library(rtweet)
+create_token(
+  app= "",
+  consumer_key="",
+  consumer_secret = "",
+  access_token = "",
+  access_secret = ""
+)
+# searching for tweets on WHO
+CW <- search_tweets("WHO", n = 18000, include_rts = TRUE)
+# searching for tweets confined y location
+searchTerm_t= (geocode= ("-37.81363,144.9631,5km"))
+myTwitterData <- Authenticate("twitter", 
+                              apiKey=myapikey, apiSecret=myapisecret, 
+                              accessToken=myaccesstoken, accessTokenSecret=myaccesstokensecret) %>% 
+  Collect(searchTerm=searchTerm_t, numTweets=100, writeToFile=FALSE,verbose=TRUE)
+#alternately confined search for tweets on MS from Australia
+MStw <- search_tweets(
+  "multiple sclerosis", geocode = lookup_coords("AUS"),n = 18000, include_rts = FALSE
+)
+rt <- lat_lng(MStw)#extract lat and lon from tweets
+## plot lat and lng points onto  map
+with(rt, points(lng, lat, pch = 20, cex = .75, col = rgb(0, .3, .7, .75)))
+leaflet:: leaflet(data=rt) %>% addTiles () %>% addCircles(lat=~lat,lng=~lng)
+## plot time series of tweets
+ts_plot(MStw, "weeks") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold"))   ggplot2::labs(
+    x = NULL, y = NULL,
+    title = "Frequency of #MS Twitter statuses from past 9 days",
+    subtitle = "Twitter status (tweet) counts aggregated using three-hour intervals",
+    caption = "\nSource: Data collected from Twitter's REST API via rtweet"
+  )
+```
 
 ### Youtube
+To perform analysis of comments on _Youtube_, a Google Developer's account should be created. The apikey shoud be saved in a secret location. The analysis can be done by identifying the video of interest.
+
+```{r eval=FALSE}
+library(SocialMediaLab)
+apiKey <- ""
+videoIDs<-c("YHzz2cXBlGk") #123 comments #406,253 views 2/2/18
+#extract
+g_youtube_actor <- Authenticate("youtube", apiKey= apiKey) %>%
+  Collect(videoIDs = videoIDs, writeToFile=TRUE) %>%
+  Create("Actor")
+```
