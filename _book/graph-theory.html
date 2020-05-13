@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Graph Theory | Applications of R in Healthcare</title>
+  <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Graph Theory | Applications of R in Healthcare" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="GNtem2/HealthcareRbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Graph Theory | Applications of R in Healthcare" />
+  
+  <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Thanh Phan" />
+
+
+<meta name="date" content="2020-04-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="geospatial-analysis.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/vis-4.20.1/vis.css" rel="stylesheet" />
+<script src="libs/vis-4.20.1/vis.min.js"></script>
+<script src="libs/visNetwork-binding-2.0.6/visNetwork.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applications-of-R-in-Healthcare</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.1</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.1.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.1.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.1.3</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.1.4" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.1.4</b> Line plot</a></li>
+<li class="chapter" data-level="2.1.5" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.1.5</b> Facet wrap</a></li>
+<li class="chapter" data-level="2.1.6" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.1.6</b> Polygons</a></li>
+<li class="chapter" data-level="2.1.7" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.1.7</b> Gganimate</a></li>
+<li class="chapter" data-level="2.1.8" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.1.8</b> Map</a></li>
+<li class="chapter" data-level="2.1.9" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.1.9</b> Heatmap</a></li>
+<li class="chapter" data-level="2.1.10" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.1.10</b> Alluvial and Sankey diagram</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.2</b> plotly</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.3</b> Survival plot</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.4</b> ggraph and tidygraph</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.1</b> Data storage</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.1.1</b> Excel data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#date-and-time"><i class="fa fa-check"></i><b>3.1.2</b> Date and time</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.1.3</b> Foreign data</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.1.4</b> json format</a></li>
+<li class="chapter" data-level="3.1.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.1.5</b> DICOM and nifti format</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.2</b> Tidy data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#factors"><i class="fa fa-check"></i><b>3.2.1</b> Factors</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#multiple-files"><i class="fa fa-check"></i><b>3.2.2</b> Multiple files</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#pivot"><i class="fa fa-check"></i><b>3.2.3</b> Pivot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#regular-expressions"><i class="fa fa-check"></i><b>3.3</b> Regular Expressions</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#base-r"><i class="fa fa-check"></i><b>3.3.1</b> base R</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#stringr"><i class="fa fa-check"></i><b>3.3.2</b> stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#pdf-to-xcel"><i class="fa fa-check"></i><b>3.4</b> PDF to xcel</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.4.1</b> Scanned text or picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.5</b> Web scraping</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
+<li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="statistics.html"><a href="statistics.html#parametric-tests"><i class="fa fa-check"></i><b>4.1.1</b> Parametric tests</a></li>
+<li class="chapter" data-level="4.1.2" data-path="statistics.html"><a href="statistics.html#non-parametric-tests"><i class="fa fa-check"></i><b>4.1.2</b> Non-parametric tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#linear-regression"><i class="fa fa-check"></i><b>4.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.2.3" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.2.3</b> Poisson regression</a></li>
+<li class="chapter" data-level="4.2.4" data-path="statistics.html"><a href="statistics.html#mars"><i class="fa fa-check"></i><b>4.2.4</b> MARS</a></li>
+<li class="chapter" data-level="4.2.5" data-path="statistics.html"><a href="statistics.html#mixed-modelling"><i class="fa fa-check"></i><b>4.2.5</b> Mixed Modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.3</b> Sample size estimation</a></li>
+<li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.4</b> Metaanalysis</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.4.1</b> PRISMA</a></li>
+<li class="chapter" data-level="4.4.2" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.4.2</b> Metaanalysis of proportion</a></li>
+<li class="chapter" data-level="4.4.3" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.4.3</b> Bivariate Metaanalysis</a></li>
+<li class="chapter" data-level="4.4.4" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.4.4</b> Metaregression</a></li>
+<li class="chapter" data-level="4.4.5" data-path="statistics.html"><a href="statistics.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>4.4.5</b> Bayesian Metaanalysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.5</b> Data simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>5.1</b> Brief introduction to Matrix</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Principal component analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.3</b> Independent component analysis</a></li>
+<li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.4</b> Partial least squares</a></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>5.5</b> T-Stochastic Neighbourhood Embedding</a></li>
+<li class="chapter" data-level="5.6" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>5.6</b> Non-negative matrix factorisation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="machine-learning.html"><a href="machine-learning.html#information-theory-driven"><i class="fa fa-check"></i><b>6.1.1</b> Information theory driven</a></li>
+<li class="chapter" data-level="6.1.2" data-path="machine-learning.html"><a href="machine-learning.html#conditional-decision-tree"><i class="fa fa-check"></i><b>6.1.2</b> Conditional decision tree</a></li>
+<li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
+<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a></li>
+<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.4</b> Support vector machine</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a><ul>
+<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#non-negative-matrix-factorisation-1"><i class="fa fa-check"></i><b>7.1</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#formal-concept-analysis"><i class="fa fa-check"></i><b>7.2</b> Formal concept analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>7.3</b> Evolutionary Algorithm</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#simulated-annealing"><i class="fa fa-check"></i><b>7.3.1</b> Simulated Annealing</a></li>
+<li class="chapter" data-level="7.3.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#genetic-algorithm"><i class="fa fa-check"></i><b>7.3.2</b> Genetic Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>8</b> Operational Research</a><ul>
+<li class="chapter" data-level="8.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>8.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="8.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>8.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="8.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a></li>
+<li class="chapter" data-level="8.4" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>8.4</b> Health economics</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>9</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>9.1</b> Geocoding</a></li>
+<li class="chapter" data-level="9.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>9.2</b> Thematic map</a></li>
+<li class="chapter" data-level="9.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>9.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="9.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>9.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a><ul>
+<li class="chapter" data-level="10.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>10.1</b> Special graphs</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Laplacian matrix</a></li>
+<li class="chapter" data-level="10.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>10.1.2</b> Bimodal (bipartite) graph</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>10.2</b> Centrality Measures</a></li>
+<li class="chapter" data-level="10.3" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>10.3</b> Local centrality measures</a></li>
+<li class="chapter" data-level="10.4" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>10.4</b> Global centrality measures</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="graph-theory.html"><a href="graph-theory.html#page-rank"><i class="fa fa-check"></i><b>10.4.1</b> Page Rank</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>10.5</b> Community</a></li>
+<li class="chapter" data-level="10.6" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>10.6</b> Visualising graph</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>10.6.1</b> Visnetwork</a></li>
+<li class="chapter" data-level="10.6.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>10.6.2</b> Large graph</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>10.7</b> Social Media and Network Analysis</a><ul>
+<li class="chapter" data-level="10.7.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>10.7.1</b> Twitter</a></li>
+<li class="chapter" data-level="10.7.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>10.7.2</b> Youtube</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applications of R in Healthcare</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="graph-theory" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Graph Theory</h1>
+<p>Graph based methods are used daily without realisation of their origin. Examples include Google, Facebook social network, and roads. These methods have emerged as tools for interpreting and analysing connected network structures <span class="citation">(Fornito <a href="#ref-c38a1e53f6a2457198c204405a3d7e00">2016</a>)</span>. For example, the brain structures and their association with disability can be framed as a network analysis.</p>
+<p>Matrix can be used to represent graphical data, relevant for the network analysis. An adjacency matrix represents the adjacency between different nodes. The nodes are represented in rows and colums. A value of one represent that node A is adjancence to node B. This graph is symmetrical as the value is also assigned between B and A. The diagonal of this graph consists of zeros as the relationship between A and A is zero. Direction can be introduced to a graph by representing the direction from A to B as one. In this case, a value of zero is attached from B to A.</p>
+<p>A graph consists of vertices (nodes) and edges (links). The edges can have direction in which case it is known as directed graph (digraph). Edge direction indicates flow from a source node to a destination node. The nodes and their directed edges can be represented as an adjacency matrix. A directed graph has an asymmetric adjacency matrix.</p>
+<div id="special-graphs" class="section level2">
+<h2><span class="header-section-number">10.1</span> Special graphs</h2>
+<div id="laplacian-matrix" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Laplacian matrix</h3>
+<p>The Laplacian matrix is the difference between the degree and adjacency matrix. The degree matrix represents the number of direct connection of a node. The diagonal of Laplacian matrix retains the diagonal values of the degree matrix (since the diagonal of the adjacency matrix consists of zeroes). The smallest eigenvalue of the Laplacian describes whether the graph is connected or not. The second eigenvalue of the Laplacian matrix is the algebraic connectivity or Fiedler value. High Fiedler value indicates greater number of connected components and consequently, resilience to breakdown in flow of information between members<span class="citation">(Jamakovic and Mieghem <a href="#ref-conf/networking/JamakovicM08">2008</a>)</span> .</p>
+</div>
+<div id="bimodal-bipartite-graph" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> Bimodal (bipartite) graph</h3>
+<p>Bimodal graphs are of interest in social network and in analysis of food ecosystem in nature. A well studied example is the <em>Zachary</em> karate club network.This dataset is included in the <em>igraphdata</em> package.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(bipartite)</a></code></pre></div>
+<pre><code>## Loading required package: vegan</code></pre>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.5-5</code></pre>
+<pre><code>## Loading required package: sna</code></pre>
+<pre><code>## Loading required package: statnet.common</code></pre>
+<pre><code>## Warning: package &#39;statnet.common&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;statnet.common&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     order</code></pre>
+<pre><code>## Loading required package: network</code></pre>
+<pre><code>## network: Classes for Relational Data
+## Version 1.15 created on 2019-04-01.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Martina Morris, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##  For citation information, type citation(&quot;network&quot;).
+##  Type help(&quot;network-package&quot;) to get started.</code></pre>
+<pre><code>## sna: Tools for Social Network Analysis
+## Version 2.4 created on 2016-07-23.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##  For citation information, type citation(&quot;sna&quot;).
+##  Type help(package=&quot;sna&quot;) to get started.</code></pre>
+<pre><code>##  This is bipartite 2.13.
+##  For latest changes see versionlog in ?&quot;bipartite-package&quot;. For citation see: citation(&quot;bipartite&quot;).
+##  Have a nice time plotting and analysing two-mode networks.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;bipartite&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:vegan&#39;:
+## 
+##     nullmodel</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">edge&lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/Hosp_Network_geocoded.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="co">#community structure of a network as distinct clusters of interactions</span></a>
+<a class="sourceLine" id="cb17-3" title="3">df&lt;-edge[,<span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="kw">dim</span>(edge)[<span class="dv">2</span>])]</a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="kw">row.names</span>(df)&lt;-edge[,<span class="dv">1</span>] </a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="co">#select columns to remove distance data</span></a>
+<a class="sourceLine" id="cb17-6" title="6">df_se&lt;-edge[,<span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">16</span>)]</a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="kw">row.names</span>(df_se)&lt;-edge[,<span class="dv">1</span>] </a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="co">#select rows to subset south eastern hospitals</span></a>
+<a class="sourceLine" id="cb17-9" title="9">df_se&lt;-df_se[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">17</span>,<span class="dv">19</span>,<span class="dv">20</span>,<span class="dv">24</span>,<span class="dv">31</span>,<span class="dv">33</span>,<span class="dv">34</span>,<span class="dv">35</span>),]</a>
+<a class="sourceLine" id="cb17-10" title="10">Nedge3&lt;-<span class="kw">computeModules</span>(df_se)</a></code></pre></div>
+<pre><code>## Warning in computeModules(df_se): Your binary data set contains one (or
+## more) species present everywhere. These will be ignored, as they contain no
+## information for the modularity algorithm.</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">plotModuleWeb</span>(Nedge3) <span class="co">#module web object</span></a></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/bimodal-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">library</span>(latentnet)</a></code></pre></div>
+<pre><code>## Warning: package &#39;latentnet&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## Loading required package: ergm</code></pre>
+<pre><code>## Warning: package &#39;ergm&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## 
+## ergm: version 3.10.4, created on 2019-06-10
+## Copyright (c) 2019, Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Carter T. Butts, University of California -- Irvine
+##                     Steven M. Goodreau, University of Washington
+##                     Pavel N. Krivitsky, University of Wollongong
+##                     Martina Morris, University of Washington
+##                     with contributions from
+##                     Li Wang
+##                     Kirk Li, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##                     Chad Klumb
+## Based on &quot;statnet&quot; project software (statnet.org).
+## For license and citation information see statnet.org/attribution
+## or type citation(&quot;ergm&quot;).</code></pre>
+<pre><code>## NOTE: Versions before 3.6.1 had a bug in the implementation of the
+## bd() constriant which distorted the sampled distribution somewhat.
+## In addition, Sampson&#39;s Monks datasets had mislabeled vertices. See
+## the NEWS and the documentation for more details.</code></pre>
+<pre><code>## NOTE: Some common term arguments pertaining to vertex attribute
+## and level selection have changed in 3.10.0. See terms help for
+## more details. Use &#39;options(ergm.term=list(version=&quot;3.9.4&quot;))&#39; to
+## use old behavior.</code></pre>
+<pre><code>## 
+## latentnet: version 2.10.5, created on 2020-03-20
+## Copyright (c) 2020, Pavel N. Krivitsky
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     with contributions from
+##                     Susan M. Shortreed
+##                     Jeremy Tantrum
+##                     Peter D. Hoff
+##                     Li Wang
+##                     Kirk Li, University of Washington
+##                     Jake Fisher
+##                     Jordan T. Bates
+## Based on &quot;statnet&quot; project software (statnet.org).
+## For license and citation information see statnet.org/attribution
+## or type citation(&quot;latentnet&quot;).
+## NOTE: BIC calculation prior to latentnet 2.7.0 had a bug in the calculation of the effective number of parameters. See help(summary.ergmm) for details.
+## NOTE: Prior to version 2.8.0, handling of fixed effects for directed networks had a bug. See help(&quot;ergmm-terms&quot;) for details.</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">data</span>(davis)</a>
+<a class="sourceLine" id="cb28-2" title="2">davis.fit&lt;-<span class="kw">ergmm</span>(davis<span class="op">~</span><span class="kw">bilinear</span>(<span class="dt">d=</span><span class="dv">2</span>)<span class="op">+</span>rsociality)</a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="kw">plot</span>(davis.fit,<span class="dt">pie=</span><span class="ot">TRUE</span>,<span class="dt">rand.eff=</span><span class="st">&quot;sociality&quot;</span>,<span class="dt">labels=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/bipartite-1.png" width="672" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co">#davis[,1:10]</span></a></code></pre></div>
+</div>
+</div>
+<div id="centrality-measures" class="section level2">
+<h2><span class="header-section-number">10.2</span> Centrality Measures</h2>
+<p>The nodes in this case are variables such as ASPECTS regions, demographic and risk factors. This graph below uses data from a paper on the use of PageRank. In Figure 1 of that papera graph of 4 variables were used to illustrate the PageRank method for searching brain regions related to disability <span class="citation">(Beare et al. <a href="#ref-pmid25961856">2015</a>)</span>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb30-2" title="2">aspects&lt;-<span class="kw">graph</span>(<span class="kw">c</span>(<span class="st">&quot;M1&quot;</span>,<span class="st">&quot;M2&quot;</span>,<span class="st">&quot;M2&quot;</span>,<span class="st">&quot;Disability&quot;</span>,<span class="st">&quot;tpa&quot;</span>,<span class="st">&quot;M1&quot;</span>,<span class="st">&quot;M2&quot;</span>,<span class="st">&quot;M1&quot;</span>,<span class="st">&quot;tpa&quot;</span>,<span class="st">&quot;M2&quot;</span>))</a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="kw">plot</span>(aspects) <span class="co">#aspects is the name of the graph</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="co">#degree</span></a>
+<a class="sourceLine" id="cb30-5" title="5">d&lt;-<span class="kw">degree</span>(aspects)</a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="co">#closeness</span></a>
+<a class="sourceLine" id="cb30-7" title="7">cl&lt;-<span class="kw">closeness</span>(aspects)</a>
+<a class="sourceLine" id="cb30-8" title="8"><span class="co">#betweenness</span></a>
+<a class="sourceLine" id="cb30-9" title="9">b&lt;-<span class="kw">betweenness</span>(aspects)</a>
+<a class="sourceLine" id="cb30-10" title="10"><span class="co">#page rank</span></a>
+<a class="sourceLine" id="cb30-11" title="11">p&lt;-<span class="kw">page.rank</span>(aspects)</a>
+<a class="sourceLine" id="cb30-12" title="12">df&lt;-<span class="kw">data.frame</span>(<span class="st">&quot;degree&quot;</span>=<span class="kw">round</span>(d,<span class="dv">2</span>),<span class="st">&quot;closeness&quot;</span>=<span class="kw">round</span>(cl,<span class="dv">2</span>),<span class="st">&quot;betweenness&quot;</span> =<span class="kw">round</span>(b,<span class="dv">2</span>),<span class="st">&quot;PageRank&quot;</span> =<span class="kw">round</span>(p<span class="op">$</span>vector,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb30-13" title="13">knitr<span class="op">::</span><span class="kw">kable</span>(df)</a></code></pre></div>
+</div>
+<div id="local-centrality-measures" class="section level2">
+<h2><span class="header-section-number">10.3</span> Local centrality measures</h2>
+<p>Centrality measures assign a measure of “importance” to nodes and can therefore indicate whether some nodes are more critical than others in a given network. When network nodes represent variables, centrality measures may indicate relevance of variables to a model.</p>
+<p>The simplest centrality measure, degree centrality, is the count of links for each node and is a purely local measure of importance. Node strength, used in weighted networks, is the sum of weights of edges entering or leaving (or both) the node. Other measures, such as betweenness centrality, describe more global structure - the degree of participation of a node as conduit of information between other nodes in a network.</p>
+</div>
+<div id="global-centrality-measures" class="section level2">
+<h2><span class="header-section-number">10.4</span> Global centrality measures</h2>
+<div id="page-rank" class="section level3">
+<h3><span class="header-section-number">10.4.1</span> Page Rank</h3>
+<p>PageRank is one member of a family of graph eigenvector centrality measures, all of which incorporate the idea that the score of a node depends, at least in part, on the scores of neighbors connecting to the node. Thus a page may have a high PageRank score if many pages link to it, or if a few important or authoritative pages link to it.</p>
+<p>Others include eigenvector centrality (which works best with undirected graphs), alpha centrality and Katz centrality. PageRank uses a different scaling for connections (by the number of links leaving the node) and importance is based on incoming connections rather than outgoing connections<span class="citation">(Brin and Page <a href="#ref-brin98anatomy">1998</a>)</span> . Eigenvector centrality measure a node’s centrality in terms of node parameters and centrality of neighboring nodes.</p>
+<p>PageRank has several differences with respect to other eigenvector centrality methods, expanded below, which make it better suited for digraphs. PageRank was originally described in terms of a web user/surfer randomly clicking links, and the PageRank of a web page corresponds to the probability of the random surfer arriving at the page of interest. The model of the random surfer used in the PageRank computation includes a damping factor, which represents the chance of the random surfer becoming bored and selecting a completely different page at random (teleporting to a random page). Similarly, if a page is a sink (i.e. has no outgoing links), then the random web surfer may click on to a random page.</p>
+<p>A number of different approaches are available for computing the PageRank for nodes in a network. The conceptually simplest is to assign an equal initial score to each node, and then iteratively update PageRank scores. This is easy to perform algebraically for a small number of nodes but can take a long time with larger data. In practice, it is performed using eigenvector methode. PageRank analysis can be performed using <em>igraph</em> package. <span class="citation">(Beare et al. <a href="#ref-pmid25961856">2015</a>)</span></p>
+<p>Graph based methods have emerged as tools for interpreting and analysing connected network structures and in this case network structures associated with disability.These types of analysis are attractive because they assess the connectedness of each region of interest (ROI) with respect to other ROIs over the entire brain network.Eigenvector centrality methods have been used to explore connectedness of brain regions. PageRank is a variant of eigenvector centrality and is an ideal method for analysis ofdirected graph (the edges between adjacent nodes(regions) have direction). This method was initially developed as the basis of the search engine for Google. PageRank offered a considerable improvement over pure text based methods in ranking search results,and had the advantage of being content independent (i.e. the search is based on links between the web pages). PageRank emphasises web pages based on the number of links directed to a page and the importance of the sources of those links. Thus a small number of links from influential pages can greatly enhance the importance of the destination page.</p>
+</div>
+</div>
+<div id="community" class="section level2">
+<h2><span class="header-section-number">10.5</span> Community</h2>
+</div>
+<div id="visualising-graph" class="section level2">
+<h2><span class="header-section-number">10.6</span> Visualising graph</h2>
+<p>There are many packages for visualising graph such as <em>igraph</em>, <em>sna</em>, <em>ggraph</em>, _Rgraphviz, <em>visnetwork</em>, <em>networkD3</em>.</p>
+<div id="visnetwork" class="section level3">
+<h3><span class="header-section-number">10.6.1</span> Visnetwork</h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">library</span>(igraph)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;igraph&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:bipartite&#39;:
+## 
+##     strength</code></pre>
+<pre><code>## The following objects are masked from &#39;package:sna&#39;:
+## 
+##     betweenness, bonpow, closeness, components, degree,
+##     dyad.census, evcent, hierarchy, is.connected, neighborhood,
+##     triad.census</code></pre>
+<pre><code>## The following objects are masked from &#39;package:network&#39;:
+## 
+##     %c%, %s%, add.edges, add.vertices, delete.edges,
+##     delete.vertices, get.edge.attribute, get.edges,
+##     get.vertex.attribute, is.bipartite, is.directed,
+##     list.edge.attributes, list.vertex.attributes,
+##     set.edge.attribute, set.vertex.attribute</code></pre>
+<pre><code>## The following object is masked from &#39;package:vegan&#39;:
+## 
+##     diversity</code></pre>
+<pre><code>## The following object is masked from &#39;package:permute&#39;:
+## 
+##     permute</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     decompose, spectrum</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     union</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">library</span>(RColorBrewer)</a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="kw">library</span>(visNetwork)</a>
+<a class="sourceLine" id="cb40-3" title="3">edge&lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/TPA_edge.csv&quot;</span>) <span class="co">#3 columns:V1 V2 time </span></a>
+<a class="sourceLine" id="cb40-4" title="4">node&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/TPA_node.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb40-5" title="5">df&lt;-<span class="kw">graph_from_data_frame</span>(<span class="dt">d=</span>edge[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="dt">vertices =</span> node,<span class="dt">directed=</span>F)</a>
+<a class="sourceLine" id="cb40-6" title="6"><span class="kw">V</span>(df)<span class="op">$</span>type&lt;-<span class="kw">V</span>(df)<span class="op">$</span>name <span class="op">%in%</span><span class="st"> </span>edge[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb40-7" title="7"><span class="co">#assign color</span></a>
+<a class="sourceLine" id="cb40-8" title="8">vertex.label&lt;-<span class="kw">V</span>(df)<span class="op">$</span>membership</a>
+<a class="sourceLine" id="cb40-9" title="9"><span class="co"># Generate colors based on type:</span></a>
+<a class="sourceLine" id="cb40-10" title="10">colrs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;gray50&quot;</span>, <span class="st">&quot;gold&quot;</span>)</a>
+<a class="sourceLine" id="cb40-11" title="11"><span class="kw">V</span>(df)<span class="op">$</span>color &lt;-<span class="st"> </span>colrs[<span class="kw">V</span>(df)<span class="op">$</span>membership]</a>
+<a class="sourceLine" id="cb40-12" title="12"><span class="co">#assign shape</span></a>
+<a class="sourceLine" id="cb40-13" title="13">shape &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;circle&quot;</span>, <span class="st">&quot;square&quot;</span>)</a>
+<a class="sourceLine" id="cb40-14" title="14"><span class="kw">V</span>(df)<span class="op">$</span>shape&lt;-shape[<span class="kw">V</span>(df)<span class="op">$</span>membership] </a>
+<a class="sourceLine" id="cb40-15" title="15"><span class="co">#extract data for visNetwork</span></a>
+<a class="sourceLine" id="cb40-16" title="16">data&lt;-<span class="kw">toVisNetworkData</span>(df)</a>
+<a class="sourceLine" id="cb40-17" title="17"><span class="kw">visNetwork</span>(<span class="dt">nodes=</span>data<span class="op">$</span>nodes,<span class="dt">edges=</span>data<span class="op">$</span>edges, <span class="dt">main=</span><span class="st">&quot;TPA ECR Network&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">visNodes</span>(<span class="dt">color =</span> <span class="kw">list</span>(<span class="dt">hover =</span> <span class="st">&quot;red&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">visInteraction</span>(<span class="dt">hover =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div id="htmlwidget-60c10b6b5617b2503709" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-60c10b6b5617b2503709">{"x":{"nodes":{"id":["patient","CTscan","viewCTscan","TPA","ECR","amb","EDdoctor","EDnurse","StrokeReg","StrokeCon","INR"],"membership":[1,1,1,1,1,2,2,2,2,2,2],"group":[1,3,3,4,4,1,1,1,2,2,3],"type":[false,false,false,false,false,true,true,true,true,true,true],"color":["gray50","gray50","gray50","gray50","gray50","gold","gold","gold","gold","gold","gold"],"shape":["circle","circle","circle","circle","circle","square","square","square","square","square","square"],"label":["patient","CTscan","viewCTscan","TPA","ECR","amb","EDdoctor","EDnurse","StrokeReg","StrokeCon","INR"]},"edges":{"from":["patient","patient","CTscan","patient","CTscan","patient","CTscan","viewCTscan","TPA","viewCTscan","TPA","ECR","ECR","viewCTscan"],"to":["amb","EDdoctor","EDdoctor","EDnurse","EDnurse","StrokeReg","StrokeReg","StrokeReg","StrokeReg","StrokeCon","StrokeCon","StrokeCon","INR","INR"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","color":{"hover":"red"}},"manipulation":{"enabled":false},"interaction":{"hover":true}},"groups":["1","3","4","2"],"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":{"text":"TPA ECR Network","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="large-graph" class="section level3">
+<h3><span class="header-section-number">10.6.2</span> Large graph</h3>
+<p>There are very few softwares capable of handling very large graph with the exception of <em>Gephi</em> , <em>Cytoscape</em> and <em>Neo4J</em>.</p>
+</div>
+</div>
+<div id="social-media-and-network-analysis" class="section level2">
+<h2><span class="header-section-number">10.7</span> Social Media and Network Analysis</h2>
+<p>Social media platform such as twitter, youtube, facebook and instagram are rich source of information for graph theory analysis as well as textmining. The following section only covers twitter and youtube as both are accessible to the public. There’s restricted access for facebook and instagram.</p>
+<div id="twitter" class="section level3">
+<h3><span class="header-section-number">10.7.1</span> Twitter</h3>
+<p>Analysis of <em>Twitter</em> requires creating an account on <em>Twitter</em>. This step will generate a series of keys listed below. These keys should be stored in a secret location. There are several different ways to access <em>Twitter</em> data. It should be noted that the data covers a range of 9 days and a maximum of 18000 tweets can be downloaded each day. The location of the tweeter can also be accessed if you have created an account with Google Maps API.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">library</span>(rtweet)</a>
+<a class="sourceLine" id="cb41-2" title="2"><span class="kw">create_token</span>(</a>
+<a class="sourceLine" id="cb41-3" title="3">  <span class="dt">app=</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb41-4" title="4">  <span class="dt">consumer_key=</span><span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb41-5" title="5">  <span class="dt">consumer_secret =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb41-6" title="6">  <span class="dt">access_token =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb41-7" title="7">  <span class="dt">access_secret =</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb41-8" title="8">)</a>
+<a class="sourceLine" id="cb41-9" title="9">CW &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span class="st">&quot;WHO&quot;</span>, <span class="dt">n =</span> <span class="dv">18000</span>, <span class="dt">include_rts =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+</div>
+<div id="youtube" class="section level3">
+<h3><span class="header-section-number">10.7.2</span> Youtube</h3>
+<p>To perform analysis of comments on <em>Youtube</em>, a Google Developer’s account should be created. The apikey shoud be saved in a secret location. The analysis can be done by identifying the video of interest.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">library</span>(SocialMediaLab)</a>
+<a class="sourceLine" id="cb42-2" title="2">apiKey &lt;-<span class="st"> &quot;&quot;</span></a>
+<a class="sourceLine" id="cb42-3" title="3">videoIDs&lt;-<span class="kw">c</span>(<span class="st">&quot;YHzz2cXBlGk&quot;</span>) <span class="co">#123 comments #406,253 views 2/2/18</span></a>
+<a class="sourceLine" id="cb42-4" title="4"><span class="co">#extract</span></a>
+<a class="sourceLine" id="cb42-5" title="5">g_youtube_actor &lt;-<span class="st"> </span><span class="kw">Authenticate</span>(<span class="st">&quot;youtube&quot;</span>, <span class="dt">apiKey=</span> apiKey) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-6" title="6"><span class="st">  </span><span class="kw">Collect</span>(<span class="dt">videoIDs =</span> videoIDs, <span class="dt">writeToFile=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb42-7" title="7"><span class="st">  </span><span class="kw">Create</span>(<span class="st">&quot;Actor&quot;</span>)</a></code></pre></div>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-pmid25961856">
+<p>Beare, R., J. Chen, T. G. Phan, R. K. Lees, M. Ali, A. Alexandrov, P. M. Bath, et al. 2015. “Googling Stroke ASPECTS to Determine Disability: Exploratory Analysis from VISTA-Acute Collaboration.” <em>PLoS ONE</em> 10 (5): e0125687.</p>
+</div>
+<div id="ref-brin98anatomy">
+<p>Brin, Sergey, and Lawrence Page. 1998. “The Anatomy of a Large-Scale Hypertextual Web Search Engine.” <em>Computer Networks and ISDN Systems</em> 30 (1-7): 107–17. <a href="https://doi.org/10.1016/S0169-7552(98)00110-X">https://doi.org/10.1016/S0169-7552(98)00110-X</a>.</p>
+</div>
+<div id="ref-c38a1e53f6a2457198c204405a3d7e00">
+<p>Fornito, Alex. 2016. “Graph Theoretic Analysis of Human Brain Networks.” In <em>Neuromethods</em>, edited by Massimo Filippi, 2nd ed., 119:283–314. Neuromethods 119. United States of America: Humana Press. <a href="https://doi.org/10.1007/978-1-4939-5611-1_10">https://doi.org/10.1007/978-1-4939-5611-1_10</a>.</p>
+</div>
+<div id="ref-conf/networking/JamakovicM08">
+<p>Jamakovic, A., and Piet Van Mieghem. 2008. “On the Robustness of Complex Networks by Using the Algebraic Connectivity.” In <em>Networking</em>, edited by Amitabha Das, Hung Keng Pung, Francis Bu-Sung Lee, and Lawrence Wai-Choong Wong, 4982:183–94. Lecture Notes in Computer Science. Springer. <a href="http://dblp.uni-trier.de/db/conf/networking/networking2008.html#JamakovicM08">http://dblp.uni-trier.de/db/conf/networking/networking2008.html#JamakovicM08</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="geospatial-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/09-graph-theory.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Applications-of-R-in-Healthcare.pdf", "Applications-of-R-in-Healthcare.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

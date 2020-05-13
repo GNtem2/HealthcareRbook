@@ -1,9 +1,10 @@
 # Introduction to plotting in R {#intro}
-This chapter focusses on the _ggplot2_ and its related libraries for plotting [@Wickham2016]. Base R also has plotting function but lacks the flexibility of _ggplot2_. Plotting is introduced early to enage clinicians who may not have the patience read the following chapter on data wrangling prior. The book is not intended to be used in a sequential fashion as the reader may find elements of this chapter relevant to them and jump to another chapter such as chapter 3 on statistics. 
+
+This chapter focusses on the _ggplot2_ and its related libraries for plotting [@Wickham2016]. Base R also has plotting function but lacks the flexibility of _ggplot2_. Plotting is introduced early to enage clinicians who may not have the patience read the following chapter on data wrangling. The book is not intended to be used in a sequential fashion as the reader may find elements of this chapter relevant to them and jump to another chapter such as chapter 3 on statistics. 
 
 ## ggplot2
 
-The plot below uses _ggplot2_ or grammar of graphics. The plot is built layer by layer like constructing a sentence. Plotting is a distinct advantage of R over commercial software with GUI (graphical user interface) like _SPSS_. A wide variety of media organisations (BBC, Economist) are using _ggplot2_ with their own stylised theme. The plot has a certain structure such the name of the data and aesthetics for x and y axes. For illustration purpose the aesthetics are labelled with x and y statements. The fill argument in the aesthetics indicate the variables for coloring. The colors chosen for this graph were imposed by the journal _Epilepsia_ [@pmid30577087]. To run the examples, check that you have install the libraries. an error can occurred if you don't have the required library. The metacharacter _#_ is used to signalled that the line is meant to comment the code ie R will not read it. The _install.packages_ command only need to be run once.   
+The plot below uses _ggplot2_ or grammar of graphics. The plot is built layer by layer like constructing a sentence. Plotting is a distinct advantage of R over commercial software with GUI (graphical user interface) like _SPSS_. A wide variety of media organisations (BBC, Financial Times and The Economist) are using _ggplot2_ with their own stylised theme. The plot has a certain structure such the name of the data and aesthetics for x and y axes. For illustration purpose the aesthetics are labelled with x and y statements. The fill argument in the aesthetics indicate the variables for coloring. The colors chosen for this graph were imposed by the journal _Epilepsia_ [@pmid30577087]. To run the examples, check that you have install the libraries. an error can occurred if you don't have the required library. The metacharacter _#_ is used to signalled that the line is meant to comment the code ie R will not read it. The _install.packages_ command only need to be run once.   
 
 ### Histogram
 
@@ -71,6 +72,21 @@ p1<-p+geom_errorbar(aes(ymin=Lower.95,ymax=Upper.95,width=0.2))+labs(y="R2 exapl
   horizontal = TRUE, dkpanel = FALSE)+
   ggtitle(" Relative Importance of Regressors \n Cost among patients with non-epileptic seizure")
 p1
+
+# BBC theme
+library(bbplot)
+b<-p+geom_errorbar(aes(ymin=Lower.95,ymax=Upper.95,width=0.2))+labs(y="R2 exaplained (%)")+
+  theme(text=element_text(size=12))+
+  #the economist theme
+  bbc_style()+
+  ggtitle(" Relative Importance of Regressors \n Cost among patients with non-epileptic seizure")
+b
+#BBC plot are finalised after export to news station
+finalise_plot(plot_name = b,
+source = "Source: Epilepsia 2019",
+save_filepath = "bbc.png",
+width_pixels = 640,
+height_pixels = 550)
 ```
 
 ### Pie chart
@@ -99,7 +115,7 @@ ggplot(df3, aes(x=Predictors,y=Importance,color=Predictors))+geom_point()+theme(
 ggplot(df3, aes(x=Predictors,y=Importance,color=Predictors,size=Predictors))+geom_point()+theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=45, vjust=0.5, size=12))
 ```
 
-This is a more complicated example of scatter plot combined with formula of regression line. The _paste0_ function is used to add the equation to the model. The data comes from GBD 2016 publication on lifetime risk of stroke. A comparison with plotting from base R is also provided. 
+This is a more complicated example of scatter plot combined with formula of regression line. The _paste0_ function is used to add the equation to the model. The data comes from GBD 2016 publication on lifetime risk of stroke. A comparison with plotting from base R is also provided. The regression model illustrating this least square fit is inserted in the figure. See this section  for further details on [Linear (least square) regression]
 
 ```{r linear regression}
 library(ggplot2)
@@ -181,6 +197,58 @@ Facet wrap is a good way to visually explore different aspects pf the data. Usin
 ggplot(dtTime,aes(x=as.factor(period),y=Y))+geom_line(aes(color=as.factor(T),group=id))+scale_color_manual(values = c("#e38e17", "#8e17e3"))+ facet_wrap(~T)+ xlab("Time")+ylab("NIHSS")
 ```
 
+This dataset is from New York COVID-19 mortality among the 5 boroughs and Open data on chronic disease within each borough https://a816-health.nyc.gov/hdi/profiles/. Note that the data has been converted to long format
+
+```{r facet ethnicity}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+
+dfj<-data.frame(
+Borough=c("Bronx","Brooklyn","Manhattan","Queens","Staten Island"),
+Pop=c(1432132,2582830,1628701,2278906,476179),
+Age65=c(12.8,13.9,16.5,15.7,16.2),
+White=c(25.1,46.6,59.2,39.6,75.1),
+Hispanic=c(56.4,19.1,25.9,28.1,18.7),
+Afro.American=c(38.3,33.5,16.9,19.9,11.5),
+Asian=c(4.6,13.4,14,27.5,11),
+Others=c(36.8,10.4,15.4,17,5.2),
+Income=c(38467,61220,85066,69320,82166),
+Beds=c(336,214,534,144,234),
+COVIDtest=c(4599,2970,2844,3800,5603),
+COVIDhosp=c(634,400,331,560,370),
+COVIDdeath=c(224,181,122,200,143),
+COVIDdeathlab=c(173,132,91,154,117),
+Diabetes=c(16,27,15,22,25),
+Obesity=c(32,12,8,11,8),
+Hypertension=c(36,29,23,28,25)
+  ) %>% 
+  #reverse prevalence per 100000 to raw
+  mutate(Age65raw=round(Age65/100*Pop,0),
+               Bedsraw=round(Beds/100000*Pop,0),
+               COVIDtestraw=round(COVIDtest/100000*Pop,0),
+               COVIDhospraw=round(COVIDhosp/100000*Pop,0),
+               COVIDdeathraw=round(COVIDdeath/100000*Pop),0)
+
+
+#Expected
+rate<-sum(dfj$COVIDdeathraw)/sum(dfj$Pop)
+dfj$Expected<-with(dfj, Pop*rate )
+#SMR standardised mortality ratio
+dfj$SMR<-with(dfj, COVIDdeathraw/Expected)
+
+#first pivot
+dfj_long<-pivot_longer(data=dfj, names_to = "Ethnicity", values_to = "Proportion",cols=c(White,Afro.American,Asian,Hispanic,Others)) %>%
+#second pivot
+pivot_longer (names_to="Chronic Disease", values_to = "Percentage",cols=c(Diabetes,Obesity,Hypertension))
+
+#varies by ethinicty
+ggplot(data=dfj_long, mapping=aes(x=Income/1000, y=SMR, size=Proportion,colour=Borough))+geom_point()+facet_wrap(~Ethnicity,nrow=2)+scale_size_continuous(name = "Ethnicity")+xlab("Income (Thousand)")
+
+#varied by chronic disease
+ggplot(data=dfj_long, mapping=aes(x=Income/1000, y=SMR, size=Percentage,colour=Borough))+geom_point()+facet_wrap(~`Chronic Disease`,nrow=1)+scale_size_continuous(name = "`Chronic Disease`")+xlab("Income (Thousand)")
+```
+
 ### Polygons
 
 ```{r polygon}
@@ -223,7 +291,7 @@ ggsave(plot_gantt, file="grant.png")
 
 Flow chart can be created in R using several different strategies. The approach given below is an illustration of the TIA and minor stroke pathway.
 
-```{r diagrammR}
+```{r clinical pathway}
 library(DiagrammeR)
 DiaG<-grViz("digraph flowchart {
 # node definitions with substituted label text
@@ -244,7 +312,7 @@ DiaG<-grViz("digraph flowchart {
       #stroke
       tab1 -> tab2 -> tab3 -> tab4 -> tab5->tab8;
       #minor stroke
-      tab3->tab6->tab7->tab11;
+      tab3->tab6->tab7;
       #tia
       tab1->tab9->tab10->tab7->tab11;
       }
@@ -262,7 +330,62 @@ DiaG<-grViz("digraph flowchart {
       [11]: 'TIA & Minor stroke clinic'
       ")
 DiaG
+#save as html file
+#htmlwidgets::saveWidget(DiaG,file="M3T-pathway.html")
+```
 
+This is a differerent example of work flow in an imaging project.
+
+```{r visual}
+library(DiagrammeR)
+DiaV<-grViz("digraph flowchart {
+# node definitions with substituted label text
+      node [fontname = Helvetica, shape = rectangle]        
+      tab1 [label = '@@1']
+      tab2 [label = '@@2']
+      tab3 [label = '@@3']
+      tab4 [label = '@@4']
+      #tab5 [label = '@@5']
+      tab6 [label = '@@6']
+      tab7 [label = '@@7']
+      tab8 [label = '@@8']
+      tab9 [label = '@@9']
+      tab10 [label = '@@10']
+      tab11 [label = '@@11']
+      tab12 [label = '@@12']
+      tab13 [label = '@@13']
+      tab14 [label = '@@14']
+      
+# edge definitions with the node IDs
+      #stroke
+      tab1 -> tab2 -> tab3 -> tab4->tab13;
+      #Volunteer
+      tab6 -> tab7 -> tab8 -> tab14->tab4;
+      #Visual field
+      tab9 -> tab10 -> tab11 -> tab12;
+      #t map
+      tab3 -> tab12;
+      tab11 -> tab13;
+      }
+#text
+      [1]: 'Occipital lobe infarct'
+      [2]: 'Segmentation'
+      [3]: 'Registration: Infarct-MNI152'
+      [4]: 'overlap'
+      #[5]: 'Average'
+      [6]: 'Volunteer'
+      [7]: 'DTI'
+      [8]: 'visual pathway'
+      [9]: 'visual field'
+      [10]: 'ophthalmologist'
+      [11]: 'hemianopia vs quadrantanopia'
+      [12]: 't-statistic cortical map'
+      [13]: 't-statistic fiber map'
+      [14]: 'Registration: Tract-MNI152'
+      ")
+DiaV
+#save Diav as html file
+#htmlwidgets::saveWidget(DiaV,file="Occipital-Visual.html")
 ```
 
 ### Heatmap
@@ -494,6 +617,7 @@ This is a more complex example and uses state by state COVID-19 data CDC website
 library(ggplot2)
 library(dplyr)
 covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction))
+US <- map_data("state") 
 map_covid<-ggplot()+ 
   geom_map(data=US, map=US,
                     aes(x=long, y=lat, map_id=region),
@@ -539,6 +663,27 @@ m
 #map of lifetime  stroke risk
 n<-tm_shape(world_sfdf)+tm_polygons("MeanLifetimeRisk")
 n
+```
+
+Spatial lines such as subway network can be added using _tm_lines_ call. Points can be added using the _tm_dots_ call. `
+
+```{r tmap line}
+library(tmap)
+library(sf)
+#NY Shape file
+NYsf<-st_read("./Data-Use/Borough_Boundaries/geo_export_7d3b2726-20d8-4aa4-a41f-24ba74eb6bc0.shp")
+#NY subway 
+NYsubline<-st_read("./Data-Use/NYsubways/geo_export_147781bc-e472-4c12-8cd2-5f9859f90706.shp")
+#NY subway stations
+NYsubstation<-st_read("./Data-Use/NYsubways/geo_export_0dab2fcf-79b8-409a-b940-7c98778a4418.shp")
+#combining plot of spatial polygons and lines
+tm_shape(NYsf)+tm_polygons(col="boro_name")+
+  #adding NY subway lines
+  tm_shape(NYsubline)+tm_lines("black")
+#combining spatial polygons,  and point
+tm_shape(NYsf)+tm_polygons(col="boro_name")+
+  #adding NY subway stations
+  tm_shape(NYsubstation)+tm_dots("red")
 ```
 
 #### Voronoi
@@ -607,24 +752,24 @@ ggplot(data = d,
 
 ### gganimate
 
-The library _gganimate_ can be used to generate videos in the form of gif file. The data needs to be collated from wide to long format.
+The library _gganimate_ can be used to generate videos in the form of gif file. The frame argument can be numeric or date.
 
-```{r eval=FALSE}
-library(ggplot2)
+```{r gganimate New York}
 library(gganimate)
-#ensure data in long format, Y =NIHSS
-u <- ggplot(dtTime2, aes(period, meanY , color = T, frame = period)) +
-  geom_bar(stat="identity") +
-  #scale_size(range = c(1, 5)) +
-  geom_text(aes(x = 11.9, label = period), hjust = 0) +   xlim(0,13)+
-  coord_cartesian(clip = 'off') + 
-  facet_wrap(~meanY)+
-  labs(title = 'ECR Trials', y = 'Number') +
-transition_reveal(period)
-u
+ny<-ggplot(data=dfj_long, 
+       mapping=aes(x=Income/1000, y=SMR, size=Proportion,colour=Borough,frame=Income)) + geom_point() + 
+  facet_wrap(~Ethnicity,nrow=2)+
+  scale_size_continuous(name = "Ethnicity")+
+  xlab("Income (Thousand)")+
+  ggtitle("Variations in COVID-19 mortality in New York Boroughs")+
+  #argument for revealing each frame
+  transition_reveal(Income)
+ny
 #create gif
-#animate(u,fps=15,duration=15)
-#anim_save(u,file="./Data-Use/simulated_ECR_trial.gif", width=800, height=800)
+#animate(ny,fps=15,duration=15)
+#anim_save(ny,file="./Data-Use/NYCovid.gif", width=800, height=800)
+
+
 ```
 
 ### ggneuro
@@ -683,6 +828,7 @@ library(ggplot2)
 library(plotly)
 library(dplyr)
 covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction)) #consistent
+US <- map_data("state") 
 ggplotly(
   ggplot()+ 
   geom_map(data=US, map=US,
@@ -697,4 +843,40 @@ ggplotly(
 )
 ```
 
+## Rayshader
+
+The library Rayshader can take a ggplot2 object and convert it to 3D. This is done with the _plot_gg_ call. Here a heatmap is transformed to 3D. Bewarn that Rayshader does use a fair bit of memory for these tasks.
+
+```{r rayshader heatmap, eval=FALSE}
+#remotes::install_github("tylermorganwall/rayshader")
+library(rayshader)
+library(ggplot2)
+data("swiss") #fertility
+q <- ggplot(data.m, aes(variable, swiss_canton)) + 
+         geom_tile(aes(fill = rescale), colour = "white")+
+        scale_fill_gradient(low = "white", high = "steelblue")+
+   ggtitle("Swiss Fertility Data 1888")
+#transform ggplot2 object to 3D #plot_gg(q,multicore=TRUE,width=5,height=5,scale=250)
+```
+
+Here a choropleth map is transformed to 3D.
+
+```{r rayshader map, eval=FALSE}
+library(ggplot2)
+library(rayshader)
+library(dplyr)
+covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction)) #consistent
+US <- map_data("state") 
+gr<-ggplot()+ 
+  geom_map(data=US, map=US,
+                    aes(x=long, y=lat, map_id=region),
+                    fill="#ffffff", color="#ffffff", size=0.15)+
+  #add covid data here
+  geom_map(data=covid, map=US,
+              aes(fill=NumberCases31.03.20, map_id=region),
+                    color="#ffffff", size=0.15)+
+  scale_fill_continuous(low='thistle2', high='darkred', 
+                                 guide='colorbar')
+#plot_gg(gr,multicore=TRUE,width=10,height=10,scale=250)
+```
 You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].

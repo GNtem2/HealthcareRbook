@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Operational Research | Applications of R in Healthcare</title>
+  <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Operational Research | Applications of R in Healthcare" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="GNtem2/HealthcareRbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Operational Research | Applications of R in Healthcare" />
+  
+  <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Thanh Phan" />
+
+
+<meta name="date" content="2020-04-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bayesian-analysis.html"/>
+<link rel="next" href="graph-theory.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applications-of-R-in-Healthcare</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to plotting in R</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.1</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.1.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.1.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.1.3</b> Pie chart</a></li>
+<li class="chapter" data-level="2.1.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.1.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.1.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.1.5</b> arrange plot in grids</a></li>
+<li class="chapter" data-level="2.1.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.1.6</b> Line plot</a></li>
+<li class="chapter" data-level="2.1.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.1.7</b> Facet wrap</a></li>
+<li class="chapter" data-level="2.1.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.1.8</b> Polygons</a></li>
+<li class="chapter" data-level="2.1.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.1.9</b> Gantt chart</a></li>
+<li class="chapter" data-level="2.1.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.1.10</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.2</b> ggplot2 extra</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.2.1</b> Alluvial and Sankey diagram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.2.2</b> Survival plot</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.2.3</b> ggraph and tidygraph</a></li>
+<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.2.4</b> ggparty-decision tree</a></li>
+<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.2.5</b> ggROC- ROC curve</a></li>
+<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#ggtree-and-phyloseq"><i class="fa fa-check"></i><b>2.2.6</b> ggtree and phyloseq</a></li>
+<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.2.7</b> Map</a></li>
+<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.2.8</b> ggwordcloud</a></li>
+<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.2.9</b> gganimate</a></li>
+<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.2.10</b> ggneuro</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.3</b> plotly</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.3.1</b> scatter plot</a></li>
+<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.3.2</b> bar plot</a></li>
+<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.3.3</b> heatmap</a></li>
+<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.3.4</b> map</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#vector-arrays-matrix"><i class="fa fa-check"></i><b>3.1.1</b> Vector, Arrays, Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.1</b> Excel data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.2</b> Foreign data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.3</b> json format</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.4</b> DICOM and nifti format</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#factors"><i class="fa fa-check"></i><b>3.3.1</b> Factors</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#multiple-files"><i class="fa fa-check"></i><b>3.3.2</b> Multiple files</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#pivot"><i class="fa fa-check"></i><b>3.3.3</b> Pivot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#regular-expressions"><i class="fa fa-check"></i><b>3.4</b> Regular Expressions</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#base-r"><i class="fa fa-check"></i><b>3.4.1</b> base R</a></li>
+<li class="chapter" data-level="3.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#stringr"><i class="fa fa-check"></i><b>3.4.2</b> stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#pdf-to-xcel"><i class="fa fa-check"></i><b>3.5</b> PDF to xcel</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.5.1</b> Scanned text or picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.6</b> Web scraping</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
+<li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="statistics.html"><a href="statistics.html#parametric-tests"><i class="fa fa-check"></i><b>4.1.1</b> Parametric tests</a></li>
+<li class="chapter" data-level="4.1.2" data-path="statistics.html"><a href="statistics.html#non-parametric-tests"><i class="fa fa-check"></i><b>4.1.2</b> Non-parametric tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#linear-least-square-regression"><i class="fa fa-check"></i><b>4.2.1</b> Linear (least square) regression</a></li>
+<li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.2</b> Logistic regression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#special-types-of-regression"><i class="fa fa-check"></i><b>4.3</b> Special types of regression</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="statistics.html"><a href="statistics.html#ordinal-regression"><i class="fa fa-check"></i><b>4.3.1</b> Ordinal regression</a></li>
+<li class="chapter" data-level="4.3.2" data-path="statistics.html"><a href="statistics.html#survival-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Survival analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="statistics.html"><a href="statistics.html#quantile-regression"><i class="fa fa-check"></i><b>4.3.3</b> Quantile regression</a></li>
+<li class="chapter" data-level="4.3.4" data-path="statistics.html"><a href="statistics.html#penalised-regression"><i class="fa fa-check"></i><b>4.3.4</b> Penalised regression</a></li>
+<li class="chapter" data-level="4.3.5" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.3.5</b> Poisson regression</a></li>
+<li class="chapter" data-level="4.3.6" data-path="statistics.html"><a href="statistics.html#mars"><i class="fa fa-check"></i><b>4.3.6</b> MARS</a></li>
+<li class="chapter" data-level="4.3.7" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.3.7</b> Conditional logistic regression</a></li>
+<li class="chapter" data-level="4.3.8" data-path="statistics.html"><a href="statistics.html#mixed-modelling"><i class="fa fa-check"></i><b>4.3.8</b> Mixed modelling</a></li>
+<li class="chapter" data-level="4.3.9" data-path="statistics.html"><a href="statistics.html#trajectory-modelling"><i class="fa fa-check"></i><b>4.3.9</b> Trajectory modelling</a></li>
+<li class="chapter" data-level="4.3.10" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.3.10</b> Multinomial modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.4</b> Sample size estimation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="statistics.html"><a href="statistics.html#proportion"><i class="fa fa-check"></i><b>4.4.1</b> Proportion</a></li>
+<li class="chapter" data-level="4.4.2" data-path="statistics.html"><a href="statistics.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.4.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.4.3" data-path="statistics.html"><a href="statistics.html#survival-studies"><i class="fa fa-check"></i><b>4.4.3</b> Survival studies</a></li>
+<li class="chapter" data-level="4.4.4" data-path="statistics.html"><a href="statistics.html#multiple-regression"><i class="fa fa-check"></i><b>4.4.4</b> Multiple regression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.5</b> Metaanalysis</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.5.1</b> PRISMA</a></li>
+<li class="chapter" data-level="4.5.2" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.5.2</b> Metaanalysis of proportion</a></li>
+<li class="chapter" data-level="4.5.3" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.5.3</b> Bivariate Metaanalysis</a></li>
+<li class="chapter" data-level="4.5.4" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.5.4</b> Metaregression</a></li>
+<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#network-metaanalysis"><i class="fa fa-check"></i><b>4.5.5</b> Network metaanalysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.6</b> Data simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.1</b> Principal component analysis</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Independent component analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.3</b> Partial least squares</a></li>
+<li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>5.4</b> T-Stochastic Neighbourhood Embedding</a></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>5.5</b> Non-negative matrix factorisation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="machine-learning.html"><a href="machine-learning.html#information-theory-driven"><i class="fa fa-check"></i><b>6.1.1</b> Information theory driven</a></li>
+<li class="chapter" data-level="6.1.2" data-path="machine-learning.html"><a href="machine-learning.html#conditional-decision-tree"><i class="fa fa-check"></i><b>6.1.2</b> Conditional decision tree</a></li>
+<li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
+<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a></li>
+<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.4</b> Support vector machine</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a><ul>
+<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#non-negative-matrix-factorisation-1"><i class="fa fa-check"></i><b>7.1</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#formal-concept-analysis"><i class="fa fa-check"></i><b>7.2</b> Formal concept analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>7.3</b> Evolutionary Algorithm</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#simulated-annealing"><i class="fa fa-check"></i><b>7.3.1</b> Simulated Annealing</a></li>
+<li class="chapter" data-level="7.3.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#genetic-algorithm"><i class="fa fa-check"></i><b>7.3.2</b> Genetic Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html"><i class="fa fa-check"></i><b>8</b> Bayesian Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#baysian-belief"><i class="fa fa-check"></i><b>8.1</b> Baysian belief</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#conditional-probability"><i class="fa fa-check"></i><b>8.1.1</b> Conditional probability</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#markov-model"><i class="fa fa-check"></i><b>8.2</b> Markov model</a></li>
+<li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>8.3.1</b> Bayesian Metaanalysis</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.2</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a><ul>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.4</b> Supply chains</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.5</b> Health economics</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.5.1</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a><ul>
+<li class="chapter" data-level="10.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>10.1</b> Special graphs</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Laplacian matrix</a></li>
+<li class="chapter" data-level="10.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>10.1.2</b> Bimodal (bipartite) graph</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>10.2</b> Centrality Measures</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>10.2.1</b> Local centrality measures</a></li>
+<li class="chapter" data-level="10.2.2" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>10.2.2</b> Global centrality measures</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>10.3</b> Community</a></li>
+<li class="chapter" data-level="10.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>10.4</b> Visualising graph</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>10.4.1</b> Visnetwork</a></li>
+<li class="chapter" data-level="10.4.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>10.4.2</b> Large graph</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>10.5</b> Social Media and Network Analysis</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>10.5.1</b> Twitter</a></li>
+<li class="chapter" data-level="10.5.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>10.5.2</b> Youtube</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>11</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>11.1</b> Geocoding</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.2</b> Thematic map</a></li>
+<li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>11.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="11.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>11.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>12</b> App</a><ul>
+<li class="chapter" data-level="12.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>12.1</b> Brief introduction to Shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>13</b> Appendix</a><ul>
+<li class="chapter" data-level="13.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>13.1</b> Brief introduction to Matrix</a></li>
+<li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>13.2</b> Regression</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>13.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="13.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-2"><i class="fa fa-check"></i><b>13.2.2</b> Logistic regression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applications of R in Healthcare</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="operational-research" class="section level1">
+<h1><span class="header-section-number">Chapter 9</span> Operational Research</h1>
+<div id="discrete-event-simulations" class="section level2">
+<h2><span class="header-section-number">9.1</span> Discrete Event Simulations</h2>
+<p>The example below is a based on examples provided in the <em>simmer</em> website.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(simmer)</a></code></pre></div>
+<pre><code>## Warning: package &#39;simmer&#39; was built under R version 3.6.1</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(parallel)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">library</span>(simmer.plot)</a></code></pre></div>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;simmer.plot&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:simmer&#39;:
+## 
+##     get_mon_arrivals, get_mon_attributes, get_mon_resources</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">NUM_ANGIO &lt;-<span class="st"> </span><span class="dv">1</span>  <span class="co"># Number of machines for performing ECR</span></a>
+<a class="sourceLine" id="cb8-2" title="2">ECRTIME &lt;-<span class="st"> </span><span class="dv">1</span>     <span class="co"># hours it takes to perform ECR~ 90/60</span></a>
+<a class="sourceLine" id="cb8-3" title="3">T_INTER &lt;-<span class="st"> </span><span class="dv">13</span> <span class="co"># new patient every ~365*24/700 hours</span></a>
+<a class="sourceLine" id="cb8-4" title="4">SIM_TIME &lt;-<span class="st"> </span><span class="dv">24</span><span class="op">*</span><span class="dv">30</span>     <span class="co"># Simulation time in 30 days</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co"># setup</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb8-7" title="7">env &lt;-<span class="st"> </span><span class="kw">simmer</span>()</a>
+<a class="sourceLine" id="cb8-8" title="8">patient &lt;-<span class="st"> </span><span class="kw">trajectory</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="st">  </span><span class="kw">log_</span>(<span class="st">&quot;arrives at the ECR&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="st">  </span><span class="kw">seize</span>(<span class="st">&quot;removeclot&quot;</span>, <span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="st">  </span><span class="kw">log_</span>(<span class="st">&quot;enters the ECR&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="st">  </span><span class="kw">timeout</span>(ECRTIME) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="st">  </span><span class="kw">set_attribute</span>(<span class="st">&quot;clot_removed&quot;</span>, <span class="cf">function</span>() <span class="kw">sample</span>(<span class="dv">50</span><span class="op">:</span><span class="dv">99</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="st">  </span><span class="kw">log_</span>(<span class="cf">function</span>() </a>
+<a class="sourceLine" id="cb8-15" title="15">    <span class="kw">paste0</span>(<span class="kw">get_attribute</span>(env, <span class="st">&quot;clot_removed&quot;</span>), <span class="st">&quot;% of clot was removed&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="st">  </span><span class="kw">release</span>(<span class="st">&quot;removeclot&quot;</span>, <span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="st">  </span><span class="kw">log_</span>(<span class="st">&quot;leaves the ECR&quot;</span>)</a>
+<a class="sourceLine" id="cb8-18" title="18">env <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="st">  </span><span class="kw">add_resource</span>(<span class="st">&quot;removeclot&quot;</span>, NUM_ANGIO) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="st">  </span><span class="co"># feed the trajectory with 4 initial patients</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="st">  </span><span class="kw">add_generator</span>(<span class="st">&quot;patient_initial&quot;</span>, patient, <span class="kw">at</span>(<span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="st">  </span><span class="co"># new patient approx. every T_INTER minutes</span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="st">  </span><span class="kw">add_generator</span>(<span class="st">&quot;patient&quot;</span>, patient, <span class="cf">function</span>() <span class="kw">sample</span>((T_INTER<span class="dv">-2</span>)<span class="op">:</span>(T_INTER<span class="op">+</span><span class="dv">2</span>), <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="st">  </span><span class="co"># start the simulation</span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="st">  </span><span class="kw">run</span>(SIM_TIME)</a></code></pre></div>
+<pre><code>## 0: patient_initial0: arrives at the ECR
+## 0: patient_initial0: enters the ECR
+## 0: patient_initial1: arrives at the ECR
+## 0: patient_initial2: arrives at the ECR
+## 0: patient_initial3: arrives at the ECR
+## 1: patient_initial0: 86% of clot was removed
+## 1: patient_initial0: leaves the ECR
+## 1: patient_initial1: enters the ECR
+## 2: patient_initial1: 50% of clot was removed
+## 2: patient_initial1: leaves the ECR
+## 2: patient_initial2: enters the ECR
+## 3: patient_initial2: 74% of clot was removed
+## 3: patient_initial2: leaves the ECR
+## 3: patient_initial3: enters the ECR
+## 4: patient_initial3: 59% of clot was removed
+## 4: patient_initial3: leaves the ECR
+## 11: patient0: arrives at the ECR
+## 11: patient0: enters the ECR
+## 12: patient0: 67% of clot was removed
+## 12: patient0: leaves the ECR
+## 25: patient1: arrives at the ECR
+## 25: patient1: enters the ECR
+## 26: patient1: 98% of clot was removed
+## 26: patient1: leaves the ECR
+## 37: patient2: arrives at the ECR
+## 37: patient2: enters the ECR
+## 38: patient2: 74% of clot was removed
+## 38: patient2: leaves the ECR
+## 51: patient3: arrives at the ECR
+## 51: patient3: enters the ECR
+## 52: patient3: 95% of clot was removed
+## 52: patient3: leaves the ECR
+## 66: patient4: arrives at the ECR
+## 66: patient4: enters the ECR
+## 67: patient4: 75% of clot was removed
+## 67: patient4: leaves the ECR
+## 80: patient5: arrives at the ECR
+## 80: patient5: enters the ECR
+## 81: patient5: 96% of clot was removed
+## 81: patient5: leaves the ECR
+## 92: patient6: arrives at the ECR
+## 92: patient6: enters the ECR
+## 93: patient6: 90% of clot was removed
+## 93: patient6: leaves the ECR
+## 105: patient7: arrives at the ECR
+## 105: patient7: enters the ECR
+## 106: patient7: 76% of clot was removed
+## 106: patient7: leaves the ECR
+## 116: patient8: arrives at the ECR
+## 116: patient8: enters the ECR
+## 117: patient8: 86% of clot was removed
+## 117: patient8: leaves the ECR
+## 130: patient9: arrives at the ECR
+## 130: patient9: enters the ECR
+## 131: patient9: 54% of clot was removed
+## 131: patient9: leaves the ECR
+## 145: patient10: arrives at the ECR
+## 145: patient10: enters the ECR
+## 146: patient10: 83% of clot was removed
+## 146: patient10: leaves the ECR
+## 159: patient11: arrives at the ECR
+## 159: patient11: enters the ECR
+## 160: patient11: 89% of clot was removed
+## 160: patient11: leaves the ECR
+## 173: patient12: arrives at the ECR
+## 173: patient12: enters the ECR
+## 174: patient12: 82% of clot was removed
+## 174: patient12: leaves the ECR
+## 186: patient13: arrives at the ECR
+## 186: patient13: enters the ECR
+## 187: patient13: 73% of clot was removed
+## 187: patient13: leaves the ECR
+## 198: patient14: arrives at the ECR
+## 198: patient14: enters the ECR
+## 199: patient14: 64% of clot was removed
+## 199: patient14: leaves the ECR
+## 211: patient15: arrives at the ECR
+## 211: patient15: enters the ECR
+## 212: patient15: 57% of clot was removed
+## 212: patient15: leaves the ECR
+## 223: patient16: arrives at the ECR
+## 223: patient16: enters the ECR
+## 224: patient16: 53% of clot was removed
+## 224: patient16: leaves the ECR
+## 237: patient17: arrives at the ECR
+## 237: patient17: enters the ECR
+## 238: patient17: 94% of clot was removed
+## 238: patient17: leaves the ECR
+## 249: patient18: arrives at the ECR
+## 249: patient18: enters the ECR
+## 250: patient18: 54% of clot was removed
+## 250: patient18: leaves the ECR
+## 263: patient19: arrives at the ECR
+## 263: patient19: enters the ECR
+## 264: patient19: 83% of clot was removed
+## 264: patient19: leaves the ECR
+## 277: patient20: arrives at the ECR
+## 277: patient20: enters the ECR
+## 278: patient20: 84% of clot was removed
+## 278: patient20: leaves the ECR
+## 289: patient21: arrives at the ECR
+## 289: patient21: enters the ECR
+## 290: patient21: 75% of clot was removed
+## 290: patient21: leaves the ECR
+## 300: patient22: arrives at the ECR
+## 300: patient22: enters the ECR
+## 301: patient22: 55% of clot was removed
+## 301: patient22: leaves the ECR
+## 312: patient23: arrives at the ECR
+## 312: patient23: enters the ECR
+## 313: patient23: 52% of clot was removed
+## 313: patient23: leaves the ECR
+## 324: patient24: arrives at the ECR
+## 324: patient24: enters the ECR
+## 325: patient24: 51% of clot was removed
+## 325: patient24: leaves the ECR
+## 339: patient25: arrives at the ECR
+## 339: patient25: enters the ECR
+## 340: patient25: 59% of clot was removed
+## 340: patient25: leaves the ECR
+## 351: patient26: arrives at the ECR
+## 351: patient26: enters the ECR
+## 352: patient26: 82% of clot was removed
+## 352: patient26: leaves the ECR
+## 366: patient27: arrives at the ECR
+## 366: patient27: enters the ECR
+## 367: patient27: 88% of clot was removed
+## 367: patient27: leaves the ECR
+## 377: patient28: arrives at the ECR
+## 377: patient28: enters the ECR
+## 378: patient28: 94% of clot was removed
+## 378: patient28: leaves the ECR
+## 391: patient29: arrives at the ECR
+## 391: patient29: enters the ECR
+## 392: patient29: 58% of clot was removed
+## 392: patient29: leaves the ECR
+## 403: patient30: arrives at the ECR
+## 403: patient30: enters the ECR
+## 404: patient30: 61% of clot was removed
+## 404: patient30: leaves the ECR
+## 418: patient31: arrives at the ECR
+## 418: patient31: enters the ECR
+## 419: patient31: 58% of clot was removed
+## 419: patient31: leaves the ECR
+## 432: patient32: arrives at the ECR
+## 432: patient32: enters the ECR
+## 433: patient32: 84% of clot was removed
+## 433: patient32: leaves the ECR
+## 445: patient33: arrives at the ECR
+## 445: patient33: enters the ECR
+## 446: patient33: 65% of clot was removed
+## 446: patient33: leaves the ECR
+## 460: patient34: arrives at the ECR
+## 460: patient34: enters the ECR
+## 461: patient34: 77% of clot was removed
+## 461: patient34: leaves the ECR
+## 475: patient35: arrives at the ECR
+## 475: patient35: enters the ECR
+## 476: patient35: 77% of clot was removed
+## 476: patient35: leaves the ECR
+## 490: patient36: arrives at the ECR
+## 490: patient36: enters the ECR
+## 491: patient36: 67% of clot was removed
+## 491: patient36: leaves the ECR
+## 502: patient37: arrives at the ECR
+## 502: patient37: enters the ECR
+## 503: patient37: 67% of clot was removed
+## 503: patient37: leaves the ECR
+## 513: patient38: arrives at the ECR
+## 513: patient38: enters the ECR
+## 514: patient38: 95% of clot was removed
+## 514: patient38: leaves the ECR
+## 528: patient39: arrives at the ECR
+## 528: patient39: enters the ECR
+## 529: patient39: 85% of clot was removed
+## 529: patient39: leaves the ECR
+## 543: patient40: arrives at the ECR
+## 543: patient40: enters the ECR
+## 544: patient40: 85% of clot was removed
+## 544: patient40: leaves the ECR
+## 554: patient41: arrives at the ECR
+## 554: patient41: enters the ECR
+## 555: patient41: 67% of clot was removed
+## 555: patient41: leaves the ECR
+## 566: patient42: arrives at the ECR
+## 566: patient42: enters the ECR
+## 567: patient42: 62% of clot was removed
+## 567: patient42: leaves the ECR
+## 579: patient43: arrives at the ECR
+## 579: patient43: enters the ECR
+## 580: patient43: 68% of clot was removed
+## 580: patient43: leaves the ECR
+## 594: patient44: arrives at the ECR
+## 594: patient44: enters the ECR
+## 595: patient44: 78% of clot was removed
+## 595: patient44: leaves the ECR
+## 608: patient45: arrives at the ECR
+## 608: patient45: enters the ECR
+## 609: patient45: 93% of clot was removed
+## 609: patient45: leaves the ECR
+## 619: patient46: arrives at the ECR
+## 619: patient46: enters the ECR
+## 620: patient46: 70% of clot was removed
+## 620: patient46: leaves the ECR
+## 630: patient47: arrives at the ECR
+## 630: patient47: enters the ECR
+## 631: patient47: 97% of clot was removed
+## 631: patient47: leaves the ECR
+## 643: patient48: arrives at the ECR
+## 643: patient48: enters the ECR
+## 644: patient48: 87% of clot was removed
+## 644: patient48: leaves the ECR
+## 658: patient49: arrives at the ECR
+## 658: patient49: enters the ECR
+## 659: patient49: 62% of clot was removed
+## 659: patient49: leaves the ECR
+## 669: patient50: arrives at the ECR
+## 669: patient50: enters the ECR
+## 670: patient50: 58% of clot was removed
+## 670: patient50: leaves the ECR
+## 684: patient51: arrives at the ECR
+## 684: patient51: enters the ECR
+## 685: patient51: 92% of clot was removed
+## 685: patient51: leaves the ECR
+## 696: patient52: arrives at the ECR
+## 696: patient52: enters the ECR
+## 697: patient52: 91% of clot was removed
+## 697: patient52: leaves the ECR
+## 708: patient53: arrives at the ECR
+## 708: patient53: enters the ECR
+## 709: patient53: 78% of clot was removed
+## 709: patient53: leaves the ECR
+## 719: patient54: arrives at the ECR
+## 719: patient54: enters the ECR</code></pre>
+<pre><code>## simmer environment: anonymous | now: 720 | next: 720
+## { Monitor: in memory }
+## { Resource: removeclot | monitored: TRUE | server status: 1(1) | queue status: 0(Inf) }
+## { Source: patient_initial | monitored: 1 | n_generated: 4 }
+## { Source: patient | monitored: 1 | n_generated: 56 }</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">plot</span>(patient)</a></code></pre></div>
+<div id="htmlwidget-f11ea15ddf05d5255e05" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f11ea15ddf05d5255e05">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"sans-serif\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"1.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: arrives at..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"2\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: removeclot, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"3\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: enters the..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"4\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: 1\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"5\" [label = \"SetAttribute\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"keys: [clot_removed], values: function(), global: 0, mod: N, init: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"6\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: function(), level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"7\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: removeclot, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"8\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: leaves the..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"black\", style = \"solid\"] \n\"2\"->\"3\" [color = \"black\", style = \"solid\"] \n\"3\"->\"4\" [color = \"black\", style = \"solid\"] \n\"4\"->\"5\" [color = \"black\", style = \"solid\"] \n\"5\"->\"6\" [color = \"black\", style = \"solid\"] \n\"6\"->\"7\" [color = \"black\", style = \"solid\"] \n\"7\"->\"8\" [color = \"black\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">resource &lt;-<span class="st"> </span><span class="kw">get_mon_resources</span>(env)</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw">plot</span>(resource)</a></code></pre></div>
+<pre><code>## Warning: Removed 12 rows containing missing values (geom_path).</code></pre>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/simmer-2.png" width="672" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">sum</span>(resource<span class="op">$</span>queue) <span class="co">#total queue size</span></a></code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">sum</span>(resource<span class="op">$</span>queue<span class="op">==</span><span class="dv">2</span>) <span class="co">#number of people in queue</span></a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">sum</span>(resource<span class="op">$</span>queue<span class="op">==</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co">#View(get_mon_arrivals(env))</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">plot</span>(env,<span class="dt">what=</span><span class="st">&quot;arrivals&quot;</span>,<span class="dt">metric=</span><span class="st">&quot;flow_time&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning: &#39;plot.simmer&#39; is deprecated.
+## Use &#39;plot(get_mon_arrivals(x))&#39; instead.
+## See help(&quot;Deprecated&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/simmer-3.png" width="672" /></p>
+</div>
+<div id="linear-programming" class="section level2">
+<h2><span class="header-section-number">9.2</span> Linear Programming</h2>
+<p>There are several different libraries useful for linear programming.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">library</span>(lpSolveAPI)</a></code></pre></div>
+<pre><code>## Warning: package &#39;lpSolveAPI&#39; was built under R version 3.6.2</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co">#3 constrain 2 decision variables</span></a>
+<a class="sourceLine" id="cb25-2" title="2">x&lt;-<span class="kw">make.lp</span>(<span class="dv">3</span>,<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb25-3" title="3"> <span class="kw">set.column</span>(x, <span class="dv">1</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)) </a>
+<a class="sourceLine" id="cb25-4" title="4">  <span class="kw">set.column</span>(x, <span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)) </a>
+<a class="sourceLine" id="cb25-5" title="5">  <span class="kw">set.objfn</span>(x, <span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">-1</span>)) </a>
+<a class="sourceLine" id="cb25-6" title="6">  <span class="kw">set.constr.type</span>(x, <span class="kw">rep</span>(<span class="st">&quot;&lt;=&quot;</span>, <span class="dv">3</span>)) </a>
+<a class="sourceLine" id="cb25-7" title="7">  <span class="kw">set.rhs</span>(x, <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">3</span>)) </a>
+<a class="sourceLine" id="cb25-8" title="8">  <span class="kw">solve</span>(x)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="forecasting" class="section level2">
+<h2><span class="header-section-number">9.3</span> Forecasting</h2>
+<p>Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19. This forecast is an example and is not meant to be used in practice as mortality from COVID also depends on the number of infected cases and the rate of infection may increase exponentially.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;rvest&#39;:
+##   method            from
+##   read_xml.response xml2</code></pre>
+<pre><code>## -- Attaching packages ------------------------------ tidyverse 1.2.1 --</code></pre>
+<pre><code>## v tibble  2.1.1     v purrr   0.3.2
+## v tidyr   1.0.0     v dplyr   0.8.3
+## v readr   1.3.1     v stringr 1.4.0
+## v tibble  2.1.1     v forcats 0.4.0</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## -- Conflicts --------------------------------- tidyverse_conflicts() --
+## x dplyr::filter()   masks stats::filter()
+## x dplyr::lag()      masks stats::lag()
+## x dplyr::select()   masks simmer::select()
+## x tidyr::separate() masks simmer::separate()</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">library</span>(prophet)</a></code></pre></div>
+<pre><code>## Warning: package &#39;prophet&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Warning: package &#39;Rcpp&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## Loading required package: rlang</code></pre>
+<pre><code>## Warning: package &#39;rlang&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rlang&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     %@%, as_function, flatten, flatten_chr, flatten_dbl,
+##     flatten_int, flatten_lgl, flatten_raw, invoke, list_along,
+##     modify, prepend, splice</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="kw">library</span>(hrbrthemes)</a></code></pre></div>
+<pre><code>## Warning: package &#39;hrbrthemes&#39; was built under R version 3.6.1</code></pre>
+<pre><code>## NOTE: Either Arial Narrow or Roboto Condensed fonts are required to use these themes.</code></pre>
+<pre><code>##       Please use hrbrthemes::import_roboto_condensed() to install Roboto Condensed and</code></pre>
+<pre><code>##       if Arial Narrow is not on your system, please see http://bit.ly/arialnarrow</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">library</span>(lubridate)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:simmer&#39;:
+## 
+##     now, rollback</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">library</span>(readr) <span class="co">#use read_csv to read csv rather than base R</span></a>
+<a class="sourceLine" id="cb51-2" title="2">covid&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;./Data-Use/Covid_Table100420.csv&quot;</span>) </a></code></pre></div>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>## Warning: Duplicated column names deduplicated: &#39;COVID-19 Deaths&#39; =&gt;
+## &#39;COVID-19 Deaths_1&#39; [6], &#39;Pneumonia Deaths*&#39; =&gt; &#39;Pneumonia Deaths*_1&#39; [8],
+## &#39;Influenza Deaths&#39; =&gt; &#39;Influenza Deaths_1&#39; [10]</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_double(),
+##   Year = col_double(),
+##   Week = col_double(),
+##   `Total Deaths` = col_number(),
+##   `COVID-19 Deaths` = col_number(),
+##   `COVID-19 Deaths_1` = col_double(),
+##   `Pneumonia Deaths*` = col_number(),
+##   `Pneumonia Deaths*_1` = col_double(),
+##   `Influenza Deaths` = col_double(),
+##   `Influenza Deaths_1` = col_double(),
+##   Total.Deaths = col_double(),
+##   Date = col_date(format = &quot;&quot;)
+## )</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">colnames</span>(covid)</a></code></pre></div>
+<pre><code>##  [1] &quot;X1&quot;                  &quot;Year&quot;                &quot;Week&quot;               
+##  [4] &quot;Total Deaths&quot;        &quot;COVID-19 Deaths&quot;     &quot;COVID-19 Deaths_1&quot;  
+##  [7] &quot;Pneumonia Deaths*&quot;   &quot;Pneumonia Deaths*_1&quot; &quot;Influenza Deaths&quot;   
+## [10] &quot;Influenza Deaths_1&quot;  &quot;Total.Deaths&quot;        &quot;Date&quot;</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># A data frame with columns ds &amp; y (datetimes &amp; metrics)</span></a>
+<a class="sourceLine" id="cb57-2" title="2">covid&lt;-<span class="kw">rename</span>(covid, <span class="dt">ds =</span>Date, <span class="dt">y=</span>Total.Deaths)</a>
+<a class="sourceLine" id="cb57-3" title="3">covid2 &lt;-<span class="st"> </span>covid[<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">14</span>),]</a>
+<a class="sourceLine" id="cb57-4" title="4">m&lt;-<span class="kw">prophet</span>(covid2)<span class="co">#create prophet object</span></a></code></pre></div>
+<pre><code>## Disabling yearly seasonality. Run prophet with yearly.seasonality=TRUE to override this.</code></pre>
+<pre><code>## Disabling weekly seasonality. Run prophet with weekly.seasonality=TRUE to override this.</code></pre>
+<pre><code>## Disabling daily seasonality. Run prophet with daily.seasonality=TRUE to override this.</code></pre>
+<pre><code>## n.changepoints greater than number of observations. Using 10</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="co"># Extend dataframe 12 weeks into the future</span></a>
+<a class="sourceLine" id="cb62-2" title="2">future &lt;-<span class="st"> </span><span class="kw">make_future_dataframe</span>(m, <span class="dt">freq=</span><span class="st">&quot;week&quot;</span> , <span class="dt">periods =</span> <span class="dv">26</span>)</a>
+<a class="sourceLine" id="cb62-3" title="3"><span class="co"># Generate forecast for next 500 days</span></a>
+<a class="sourceLine" id="cb62-4" title="4">forecast &lt;-<span class="st"> </span><span class="kw">predict</span>(m, future)</a>
+<a class="sourceLine" id="cb62-5" title="5">forecast <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-6" title="6"><span class="st">  </span><span class="kw">select</span>(ds, yhat, yhat_lower, yhat_upper) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-7" title="7"><span class="st">  </span><span class="kw">tail</span>()</a></code></pre></div>
+<pre><code>##            ds     yhat yhat_lower yhat_upper
+## 35 2020-06-01 67996.20   67434.33   68557.93
+## 36 2020-06-08 68448.72   67830.72   68996.54
+## 37 2020-06-15 68901.24   68279.35   69488.65
+## 38 2020-06-22 69353.76   68776.05   69930.08
+## 39 2020-06-29 69806.28   69212.56   70388.11
+## 40 2020-07-06 70258.80   69681.97   70856.43</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="co"># What&#39;s the forecast for July 2020?</span></a>
+<a class="sourceLine" id="cb64-2" title="2">forecasted_rides &lt;-<span class="st"> </span>forecast <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ds)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-4" title="4"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-5" title="5"><span class="st">  </span><span class="kw">pull</span>(yhat) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-6" title="6"><span class="st">  </span><span class="kw">round</span>()</a>
+<a class="sourceLine" id="cb64-7" title="7">forecasted_rides</a></code></pre></div>
+<pre><code>## [1] 70259</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="co"># Visualize</span></a>
+<a class="sourceLine" id="cb66-2" title="2">forecast_p &lt;-<span class="st"> </span><span class="kw">plot</span>(m, forecast) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, </a>
+<a class="sourceLine" id="cb66-4" title="4">       <span class="dt">y =</span> <span class="st">&quot;mortality&quot;</span>, </a>
+<a class="sourceLine" id="cb66-5" title="5">       <span class="dt">title =</span> <span class="st">&quot;Projected COVID-19 world mortality&quot;</span>, </a>
+<a class="sourceLine" id="cb66-6" title="6">       <span class="dt">subtitle =</span> <span class="st">&quot;based on data truncated in January 2020&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb66-7" title="7"><span class="st">        </span><span class="kw">ylim</span>(<span class="dv">20000</span>,<span class="dv">80000</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb66-8" title="8"><span class="st">  </span><span class="kw">theme_ipsum_rc</span>()</a>
+<a class="sourceLine" id="cb66-9" title="9">forecast_p</a></code></pre></div>
+<pre><code>## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font
+## family not found in Windows font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font
+## family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x,
+## x$y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/forecast-1.png" width="672" /></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="co">#prophet_plot_components(m, forecast)</span></a></code></pre></div>
+<div id="bed-requirement" class="section level3">
+<h3><span class="header-section-number">9.3.1</span> Bed requirement</h3>
+</div>
+<div id="length-of-stay" class="section level3">
+<h3><span class="header-section-number">9.3.2</span> Length of stay</h3>
+</div>
+<div id="customer-churns" class="section level3">
+<h3><span class="header-section-number">9.3.3</span> Customer churns</h3>
+<p>Customer churns or turnover is an issue of interest in marketing. The collary within healthcare are patients attendance at outpatient clinics, Insurance. The classical method used is GLM.</p>
+</div>
+</div>
+<div id="supply-chains" class="section level2">
+<h2><span class="header-section-number">9.4</span> Supply chains</h2>
+</div>
+<div id="health-economics" class="section level2">
+<h2><span class="header-section-number">9.5</span> Health economics</h2>
+<div id="cost-1" class="section level3">
+<h3><span class="header-section-number">9.5.1</span> Cost</h3>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw">library</span>(<span class="st">&quot;hesim&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning: package &#39;hesim&#39; was built under R version 3.6.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;hesim&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">library</span>(<span class="st">&quot;data.table&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:lubridate&#39;:
+## 
+##     hour, isoweek, mday, minute, month, quarter, second, wday,
+##     week, yday, year</code></pre>
+<pre><code>## The following object is masked from &#39;package:rlang&#39;:
+## 
+##     :=</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     between, first, last</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     transpose</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">strategies &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">strategy_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb83-2" title="2">n_patients &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb83-3" title="3">patients &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">patient_id =</span> <span class="dv">1</span><span class="op">:</span>n_patients,</a>
+<a class="sourceLine" id="cb83-4" title="4">          <span class="dt">age =</span> <span class="kw">rnorm</span>(n_patients, <span class="dt">mean =</span> <span class="dv">70</span>, <span class="dt">sd =</span> <span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb83-5" title="5">          <span class="dt">female =</span> <span class="kw">rbinom</span>(n_patients, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="fl">.4</span>))</a>
+<a class="sourceLine" id="cb83-6" title="6">states &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">state_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb83-7" title="7">                     <span class="dt">state_name =</span> <span class="kw">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </a>
+<a class="sourceLine" id="cb83-8" title="8"><span class="co"># Non-death health states</span></a>
+<a class="sourceLine" id="cb83-9" title="9">tmat &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb83-10" title="10">              <span class="kw">c</span>(<span class="dv">3</span>, <span class="ot">NA</span>, <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb83-11" title="11">              <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb83-12" title="12"><span class="kw">colnames</span>(tmat) &lt;-<span class="st"> </span><span class="kw">rownames</span>(tmat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</a>
+<a class="sourceLine" id="cb83-13" title="13">transitions &lt;-<span class="st"> </span><span class="kw">create_trans_dt</span>(tmat)</a>
+<a class="sourceLine" id="cb83-14" title="14">transitions[, trans <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(transition_id)]</a>
+<a class="sourceLine" id="cb83-15" title="15">hesim_dat &lt;-<span class="st"> </span><span class="kw">hesim_data</span>(<span class="dt">strategies =</span> strategies,</a>
+<a class="sourceLine" id="cb83-16" title="16">                        <span class="dt">patients =</span> patients, </a>
+<a class="sourceLine" id="cb83-17" title="17">                        <span class="dt">states =</span> states,</a>
+<a class="sourceLine" id="cb83-18" title="18">                        <span class="dt">transitions =</span> transitions)</a>
+<a class="sourceLine" id="cb83-19" title="19"><span class="kw">print</span>(hesim_dat)</a></code></pre></div>
+<pre><code>## $strategies
+##    strategy_id
+## 1:           1
+## 2:           2
+## 
+## $patients
+##       patient_id      age female
+##    1:          1 87.04125      1
+##    2:          2 78.29852      1
+##    3:          3 77.92313      0
+##    4:          4 74.81866      0
+##    5:          5 68.94154      1
+##   ---                           
+##  996:        996 76.93468      1
+##  997:        997 65.77922      0
+##  998:        998 52.87690      0
+##  999:        999 85.37066      0
+## 1000:       1000 75.24386      1
+## 
+## $states
+##    state_id state_name
+## 1:        1    Healthy
+## 2:        2       Sick
+## 
+## $transitions
+##    transition_id from to from_name to_name trans
+## 1:             1    1  2   Healthy    Sick     1
+## 2:             2    1  3   Healthy    Dead     2
+## 3:             3    2  1      Sick Healthy     3
+## 4:             4    2  3      Sick    Dead     4
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;hesim_data&quot;</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"><span class="kw">library</span>(BCEA)</a></code></pre></div>
+<pre><code>## Warning: package &#39;BCEA&#39; was built under R version 3.6.3</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="co">#help (package=&quot;BCEA&quot;)</span></a></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayesian-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="graph-theory.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-operational-research.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Applications-of-R-in-Healthcare.pdf", "Applications-of-R-in-Healthcare.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
