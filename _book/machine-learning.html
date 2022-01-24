@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Machine learning | Applications of R in Healthcare</title>
+  <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Machine learning | Applications of R in Healthcare" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="GNtem2/HealthcareRbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Machine learning | Applications of R in Healthcare" />
+  
+  <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Thanh Phan" />
+
+
+<meta name="date" content="2022-01-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="multivariate-analysis.html"/>
+<link rel="next" href="machine-learning-part-2.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applications-of-R-in-Healthcare</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to plotting in R</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#plot-using-base-r"><i class="fa fa-check"></i><b>2.1</b> Plot using base R</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.2.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.2.3</b> Pie chart</a></li>
+<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.2.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.2.5</b> arrange plot in grids</a></li>
+<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.2.6</b> Line plot</a></li>
+<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.2.7</b> Facet wrap</a></li>
+<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.2.8</b> Polygons</a></li>
+<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.2.9</b> Gantt chart</a></li>
+<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.2.10</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.3</b> ggplot2 extra</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.3.1</b> Alluvial and Sankey diagram</a></li>
+<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.3.2</b> Survival plot</a></li>
+<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.3.3</b> ggraph and tidygraph</a></li>
+<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.3.4</b> ggparty-decision tree</a></li>
+<li class="chapter" data-level="2.3.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.3.5</b> ggROC- ROC curve</a></li>
+<li class="chapter" data-level="2.3.6" data-path="intro.html"><a href="intro.html#ggtree-and-phyloseq"><i class="fa fa-check"></i><b>2.3.6</b> ggtree and phyloseq</a></li>
+<li class="chapter" data-level="2.3.7" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.3.7</b> Map</a></li>
+<li class="chapter" data-level="2.3.8" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.3.8</b> ggwordcloud</a></li>
+<li class="chapter" data-level="2.3.9" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.3.9</b> gganimate</a></li>
+<li class="chapter" data-level="2.3.10" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.10</b> ggneuro</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.4.1</b> scatter plot</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.4.2</b> bar plot</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.4.3</b> heatmap</a></li>
+<li class="chapter" data-level="2.4.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.4.4</b> map</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#vector-arrays-matrix"><i class="fa fa-check"></i><b>3.1.1</b> Vector, Arrays, Matrix</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-lapply-sapply"><i class="fa fa-check"></i><b>3.1.2</b> apply, lapply, sapply</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#simple-function"><i class="fa fa-check"></i><b>3.1.3</b> Simple function</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data-wrangling.html"><a href="data-wrangling.html#for-loop"><i class="fa fa-check"></i><b>3.1.4</b> for loop</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data-frame"><i class="fa fa-check"></i><b>3.2.1</b> Data frame</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.2</b> Excel data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.3</b> Foreign data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.4</b> json format</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.5</b> DICOM and nifti format</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#factors"><i class="fa fa-check"></i><b>3.3.1</b> Factors</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#multiple-files"><i class="fa fa-check"></i><b>3.3.2</b> Multiple files</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#pivot"><i class="fa fa-check"></i><b>3.3.3</b> Pivot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#regular-expressions"><i class="fa fa-check"></i><b>3.4</b> Regular Expressions</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#base-r"><i class="fa fa-check"></i><b>3.4.1</b> base R</a></li>
+<li class="chapter" data-level="3.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#stringr"><i class="fa fa-check"></i><b>3.4.2</b> stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#pdf-to-xcel"><i class="fa fa-check"></i><b>3.5</b> PDF to xcel</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.5.1</b> Scanned text or picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.6</b> Web scraping</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-medical-images"><i class="fa fa-check"></i><b>3.7</b> Manipulating Medical Images</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-array-of-medical-images"><i class="fa fa-check"></i><b>3.7.1</b> Manipulating array of medical images</a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operations"><i class="fa fa-check"></i><b>3.7.2</b> Math operations</a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#average"><i class="fa fa-check"></i><b>3.7.3</b> Average</a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#tar-file"><i class="fa fa-check"></i><b>3.7.4</b> tar file</a></li>
+<li class="chapter" data-level="3.7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#image-registration"><i class="fa fa-check"></i><b>3.7.5</b> Image registration</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
+<li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="statistics.html"><a href="statistics.html#parametric-tests"><i class="fa fa-check"></i><b>4.1.1</b> Parametric tests</a></li>
+<li class="chapter" data-level="4.1.2" data-path="statistics.html"><a href="statistics.html#non-parametric-tests"><i class="fa fa-check"></i><b>4.1.2</b> Non-parametric tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#linear-least-square-regression"><i class="fa fa-check"></i><b>4.2.1</b> Linear (least square) regression</a></li>
+<li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.2</b> Logistic regression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#special-types-of-regression"><i class="fa fa-check"></i><b>4.3</b> Special types of regression</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="statistics.html"><a href="statistics.html#ordinal-regression"><i class="fa fa-check"></i><b>4.3.1</b> Ordinal regression</a></li>
+<li class="chapter" data-level="4.3.2" data-path="statistics.html"><a href="statistics.html#survival-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Survival analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="statistics.html"><a href="statistics.html#quantile-regression"><i class="fa fa-check"></i><b>4.3.3</b> Quantile regression</a></li>
+<li class="chapter" data-level="4.3.4" data-path="statistics.html"><a href="statistics.html#penalised-regression"><i class="fa fa-check"></i><b>4.3.4</b> Penalised regression</a></li>
+<li class="chapter" data-level="4.3.5" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.3.5</b> Poisson regression</a></li>
+<li class="chapter" data-level="4.3.6" data-path="statistics.html"><a href="statistics.html#mars"><i class="fa fa-check"></i><b>4.3.6</b> MARS</a></li>
+<li class="chapter" data-level="4.3.7" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.3.7</b> Conditional logistic regression</a></li>
+<li class="chapter" data-level="4.3.8" data-path="statistics.html"><a href="statistics.html#mixed-modelling"><i class="fa fa-check"></i><b>4.3.8</b> Mixed modelling</a></li>
+<li class="chapter" data-level="4.3.9" data-path="statistics.html"><a href="statistics.html#trajectory-modelling"><i class="fa fa-check"></i><b>4.3.9</b> Trajectory modelling</a></li>
+<li class="chapter" data-level="4.3.10" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.3.10</b> Multinomial modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.4</b> Sample size estimation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="statistics.html"><a href="statistics.html#proportion"><i class="fa fa-check"></i><b>4.4.1</b> Proportion</a></li>
+<li class="chapter" data-level="4.4.2" data-path="statistics.html"><a href="statistics.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.4.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.4.3" data-path="statistics.html"><a href="statistics.html#survival-studies"><i class="fa fa-check"></i><b>4.4.3</b> Survival studies</a></li>
+<li class="chapter" data-level="4.4.4" data-path="statistics.html"><a href="statistics.html#multiple-regression"><i class="fa fa-check"></i><b>4.4.4</b> Multiple regression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.5</b> Metaanalysis</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.5.1</b> PRISMA</a></li>
+<li class="chapter" data-level="4.5.2" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.5.2</b> Metaanalysis of proportion</a></li>
+<li class="chapter" data-level="4.5.3" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.5.3</b> Bivariate Metaanalysis</a></li>
+<li class="chapter" data-level="4.5.4" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.5.4</b> Metaregression</a></li>
+<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>4.5.5</b> Bayesian Metaanalysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.6</b> Data simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.1</b> Principal component analysis</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Independent component analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.3</b> Partial least squares</a></li>
+<li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>5.4</b> T-Stochastic Neighbourhood Embedding</a></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>5.5</b> Non-negative matrix factorisation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="machine-learning.html"><a href="machine-learning.html#information-theory-driven"><i class="fa fa-check"></i><b>6.1.1</b> Information theory driven</a></li>
+<li class="chapter" data-level="6.1.2" data-path="machine-learning.html"><a href="machine-learning.html#conditional-decision-tree"><i class="fa fa-check"></i><b>6.1.2</b> Conditional decision tree</a></li>
+<li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
+<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a></li>
+<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.4</b> Support vector machine</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a><ul>
+<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#non-negative-matrix-factorisation-1"><i class="fa fa-check"></i><b>7.1</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#formal-concept-analysis"><i class="fa fa-check"></i><b>7.2</b> Formal concept analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>7.3</b> Evolutionary Algorithm</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#simulated-annealing"><i class="fa fa-check"></i><b>7.3.1</b> Simulated Annealing</a></li>
+<li class="chapter" data-level="7.3.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#genetic-algorithm"><i class="fa fa-check"></i><b>7.3.2</b> Genetic Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html"><i class="fa fa-check"></i><b>8</b> Bayesian Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#baysian-belief"><i class="fa fa-check"></i><b>8.1</b> Baysian belief</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#conditional-probability"><i class="fa fa-check"></i><b>8.1.1</b> Conditional probability</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#markov-model"><i class="fa fa-check"></i><b>8.2</b> Markov model</a></li>
+<li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis-1"><i class="fa fa-check"></i><b>8.3.1</b> Bayesian Metaanalysis</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.2</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a><ul>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a></li>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.4</b> Health economics</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#markov-model-1"><i class="fa fa-check"></i><b>9.4.1</b> Markov model</a></li>
+<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.4.2</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>10</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>10.1</b> Geocoding</a></li>
+<li class="chapter" data-level="10.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>10.2</b> Thematic map</a></li>
+<li class="chapter" data-level="10.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>10.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="10.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>10.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="operational-research-1.html"><a href="operational-research-1.html"><i class="fa fa-check"></i><b>11</b> Operational Research</a><ul>
+<li class="chapter" data-level="11.1" data-path="operational-research-1.html"><a href="operational-research-1.html#discrete-event-simulations-1"><i class="fa fa-check"></i><b>11.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="11.2" data-path="operational-research-1.html"><a href="operational-research-1.html#linear-programming-1"><i class="fa fa-check"></i><b>11.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="11.3" data-path="operational-research-1.html"><a href="operational-research-1.html#forecasting-1"><i class="fa fa-check"></i><b>11.3</b> Forecasting</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="operational-research-1.html"><a href="operational-research-1.html#bed-requirement"><i class="fa fa-check"></i><b>11.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="operational-research-1.html"><a href="operational-research-1.html#length-of-stay"><i class="fa fa-check"></i><b>11.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="11.3.3" data-path="operational-research-1.html"><a href="operational-research-1.html#customer-churns"><i class="fa fa-check"></i><b>11.3.3</b> Customer churns</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="operational-research-1.html"><a href="operational-research-1.html#process-mapping"><i class="fa fa-check"></i><b>11.4</b> Process mapping</a></li>
+<li class="chapter" data-level="11.5" data-path="operational-research-1.html"><a href="operational-research-1.html#supply-chains"><i class="fa fa-check"></i><b>11.5</b> Supply chains</a></li>
+<li class="chapter" data-level="11.6" data-path="operational-research-1.html"><a href="operational-research-1.html#health-economics-1"><i class="fa fa-check"></i><b>11.6</b> Health economics</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="operational-research-1.html"><a href="operational-research-1.html#cost-2"><i class="fa fa-check"></i><b>11.6.1</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>12</b> Graph Theory</a><ul>
+<li class="chapter" data-level="12.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>12.1</b> Special graphs</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>12.1.1</b> Laplacian matrix</a></li>
+<li class="chapter" data-level="12.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>12.1.2</b> Bimodal (bipartite) graph</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>12.2</b> Centrality Measures</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>12.2.1</b> Local centrality measures</a></li>
+<li class="chapter" data-level="12.2.2" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>12.2.2</b> Global centrality measures</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>12.3</b> Community</a></li>
+<li class="chapter" data-level="12.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>12.4</b> Visualising graph</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>12.4.1</b> Visnetwork</a></li>
+<li class="chapter" data-level="12.4.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>12.4.2</b> Large graph</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>12.5</b> Social Media and Network Analysis</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>12.5.1</b> Twitter</a></li>
+<li class="chapter" data-level="12.5.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>12.5.2</b> Youtube</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html"><i class="fa fa-check"></i><b>13</b> Bayesian Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#baysian-belief-1"><i class="fa fa-check"></i><b>13.1</b> Baysian belief</a></li>
+<li class="chapter" data-level="13.2" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#markov-model-2"><i class="fa fa-check"></i><b>13.2</b> Markov model</a></li>
+<li class="chapter" data-level="13.3" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#inla"><i class="fa fa-check"></i><b>13.3</b> INLA</a></li>
+<li class="chapter" data-level="13.4" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#stan"><i class="fa fa-check"></i><b>13.4</b> Stan</a></li>
+<li class="chapter" data-level="13.5" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#bugs"><i class="fa fa-check"></i><b>13.5</b> BUGS</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#cost-3"><i class="fa fa-check"></i><b>13.5.1</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html"><i class="fa fa-check"></i><b>14</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#geocoding-1"><i class="fa fa-check"></i><b>14.1</b> Geocoding</a></li>
+<li class="chapter" data-level="14.2" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#thematic-map-2"><i class="fa fa-check"></i><b>14.2</b> Thematic map</a></li>
+<li class="chapter" data-level="14.3" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#spatial-regression-1"><i class="fa fa-check"></i><b>14.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="14.4" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#spatio-temporal-regression-1"><i class="fa fa-check"></i><b>14.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>15</b> App</a><ul>
+<li class="chapter" data-level="15.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>15.1</b> Brief introduction to Shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>16</b> Appendix</a><ul>
+<li class="chapter" data-level="16.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>16.1</b> Brief introduction to Matrix</a></li>
+<li class="chapter" data-level="16.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>16.2</b> Regression</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>16.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="16.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-2"><i class="fa fa-check"></i><b>16.2.2</b> Logistic regression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applications of R in Healthcare</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="machine-learning" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Machine learning</h1>
+<div id="decision-tree-analysis" class="section level2">
+<h2><span class="header-section-number">6.1</span> Decision tree analysis</h2>
+<p>There are several different approaches to performing decision tree analyses. The most famous method CART is implemented in R as rpart. This method uses the Gini coeffient to partition the root into branches. The second approaches uses chi-square test to partition the tree. Decision tree may also reveal complex intreactions (relationship) among the predictors in a way that regression analyses do not easily reveal.</p>
+<div id="information-theory-driven" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Information theory driven</h3>
+<p>The tree is grown using a “divide and conquer” strategy, with repeated partitioning of the original data into smaller groups (nodes) on a yes or no basis. The method uses a splitting rule built around the notion of “purity.” A node in the tree is defined as pure when all the elements belong to one class. When there is impurity in the node, a split occurs to maximize reduction in “impurity.” In some cases, the split may be biased toward attributes that contain many different ordinal levels or scales. Thus, the selection of an attribute as the root node may vary according to the splitting rule and the scaling of the attribute. The decision tree package rpart does tolerate certain degree of missing number because the data are split using the available data for that attribute to calculate the Gini index (rather than the entire cohort). One major advantage of <em>rpart</em> is the presentation of the classification rules in the easily interpretable form of a tree. The hierarchical nature of the decision tree is similar to many decision processes <span class="citation">(Phan et al. <a href="#ref-pmid29559951" role="doc-biblioref">2018</a>)</span>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="machine-learning.html#cb1-1"></a><span class="kw">library</span>(rpart)</span>
+<span id="cb1-2"><a href="machine-learning.html#cb1-2"></a><span class="kw">library</span>(rattle)</span></code></pre></div>
+<pre><code>## Loading required package: tibble</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre><code>## Rattle: A free graphical interface for data science with R.
+## Version 5.4.0 Copyright (c) 2006-2020 Togaware Pty Ltd.
+## Type &#39;rattle()&#39; to shake, rattle, and roll your data.</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="machine-learning.html#cb6-1"></a><span class="kw">library</span>(rpart.plot)</span>
+<span id="cb6-2"><a href="machine-learning.html#cb6-2"></a><span class="kw">data</span>(<span class="st">&quot;Leukemia&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;Stat2Data&quot;</span>)</span>
+<span id="cb6-3"><a href="machine-learning.html#cb6-3"></a><span class="kw">colnames</span>(Leukemia)</span></code></pre></div>
+<pre><code>## [1] &quot;Age&quot;    &quot;Smear&quot;  &quot;Infil&quot;  &quot;Index&quot;  &quot;Blasts&quot; &quot;Temp&quot;   &quot;Resp&quot;   &quot;Time&quot;  
+## [9] &quot;Status&quot;</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="machine-learning.html#cb8-1"></a><span class="co">#decision tree model for AML treatment</span></span>
+<span id="cb8-2"><a href="machine-learning.html#cb8-2"></a>treLeukemia&lt;-<span class="kw">rpart</span>(Status<span class="op">~</span>., <span class="dt">data=</span>Leukemia)</span>
+<span id="cb8-3"><a href="machine-learning.html#cb8-3"></a><span class="kw">fancyRpartPlot</span>(treLeukemia)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/part%20tree2-1.png" width="672" /></p>
+</div>
+<div id="conditional-decision-tree" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Conditional decision tree</h3>
+<p>The conditional decision tree approach has been proposed to be superior to CART method because that method uses information criterion for partitioning and which can lead to overﬁtting.The scenario of overﬁtting describes model which works well on training data but less so with new data.The conditional approach by <em>party</em> is less prone to overﬁtting as it includes signiﬁcance testing <span class="citation">(Phan et al. <a href="#ref-pmid30761063" role="doc-biblioref">2019</a>)</span>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="machine-learning.html#cb9-1"></a><span class="kw">library</span>(party)</span></code></pre></div>
+<pre><code>## Loading required package: grid</code></pre>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## Loading required package: modeltools</code></pre>
+<pre><code>## Loading required package: stats4</code></pre>
+<pre><code>## Loading required package: strucchange</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## Loading required package: sandwich</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="machine-learning.html#cb19-1"></a><span class="kw">data</span>(<span class="st">&quot;aSAH&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;pROC&quot;</span>)</span>
+<span id="cb19-2"><a href="machine-learning.html#cb19-2"></a><span class="kw">colnames</span>(aSAH)</span></code></pre></div>
+<pre><code>## [1] &quot;gos6&quot;    &quot;outcome&quot; &quot;gender&quot;  &quot;age&quot;     &quot;wfns&quot;    &quot;s100b&quot;   &quot;ndka&quot;</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="machine-learning.html#cb21-1"></a><span class="co">#decision tree model</span></span>
+<span id="cb21-2"><a href="machine-learning.html#cb21-2"></a>treeSAH&lt;-<span class="kw">ctree</span>(outcome<span class="op">~</span>., <span class="dt">data=</span>aSAH, <span class="dt">control =</span> <span class="kw">ctree_control</span>(<span class="dt">mincriterion=</span><span class="fl">0.95</span>, <span class="dt">minsplit=</span><span class="dv">50</span>))</span>
+<span id="cb21-3"><a href="machine-learning.html#cb21-3"></a><span class="kw">plot</span>(treeSAH,<span class="dt">type =</span> <span class="st">&quot;simple&quot;</span>,<span class="dt">main =</span> <span class="st">&quot;Conditional Inference for aSAH&quot;</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/party%20tree-1.png" width="672" /></p>
+</div>
+<div id="criticisms-of-decision-tree" class="section level3">
+<h3><span class="header-section-number">6.1.3</span> criticisms of decision tree</h3>
+<p>Overfitting and prone to chosing variable with many levels are some disadvantage of <em>decision tree</em>. Decision tree do not handle collinearity issues well and the related method of <em>random forest</em> is proposed below.</p>
+</div>
+</div>
+<div id="random-forest" class="section level2">
+<h2><span class="header-section-number">6.2</span> Random Forest</h2>
+<p>Random forest regression is a supervised machine learning method with the model ensembled from multiple decision trees. The trees are created by obtaining multiple subset of the data (random selection of data by rows and columns).</p>
+</div>
+<div id="gradient-boost-machine" class="section level2">
+<h2><span class="header-section-number">6.3</span> Gradient Boost Machine</h2>
+</div>
+<div id="support-vector-machine" class="section level2">
+<h2><span class="header-section-number">6.4</span> Support vector machine</h2>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-pmid29559951">
+<p>Phan, T. G., J. Chen, S. Singhal, H. Ma, B. B. Clissold, J. Ly, and R. Beare. 2018. “Exploratory Use of Decision Tree Analysis in Classification of Outcome in Hypoxic-Ischemic Brain Injury.” <em>Front Neurol</em> 9: 126.</p>
+</div>
+<div id="ref-pmid30761063">
+<p>Phan, T. G., T. Kooblal, C. Matley, S. Singhal, B. Clissold, J. Ly, A. G. Thrift, V. Srikanth, and H. Ma. 2019. “Stroke Severity Versus Dysphagia Screen as Driver for Post-stroke Pneumonia.” <em>Front Neurol</em> 10: 16.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="multivariate-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="machine-learning-part-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-machinelearning.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Applications-of-R-in-Healthcare.pdf", "Applications-of-R-in-Healthcare.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

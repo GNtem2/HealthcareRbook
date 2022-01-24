@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Multivariate Analysis | Applications of R in Healthcare</title>
   <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Multivariate Analysis | Applications of R in Healthcare" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2020-04-29" />
+<meta name="date" content="2022-01-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,12 +50,13 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -133,47 +136,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to plotting in R</a><ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.1</b> ggplot2</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.1.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.1.2</b> Bar plot</a></li>
-<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.1.3</b> Pie chart</a></li>
-<li class="chapter" data-level="2.1.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.1.4</b> Scatter plot</a></li>
-<li class="chapter" data-level="2.1.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.1.5</b> arrange plot in grids</a></li>
-<li class="chapter" data-level="2.1.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.1.6</b> Line plot</a></li>
-<li class="chapter" data-level="2.1.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.1.7</b> Facet wrap</a></li>
-<li class="chapter" data-level="2.1.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.1.8</b> Polygons</a></li>
-<li class="chapter" data-level="2.1.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.1.9</b> Gantt chart</a></li>
-<li class="chapter" data-level="2.1.10" data-path="intro.html"><a href="intro.html#flow-chart"><i class="fa fa-check"></i><b>2.1.10</b> Flow chart</a></li>
-<li class="chapter" data-level="2.1.11" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.1.11</b> Heatmap</a></li>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#plot-using-base-r"><i class="fa fa-check"></i><b>2.1</b> Plot using base R</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.2.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.2.3</b> Pie chart</a></li>
+<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.2.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.2.5</b> arrange plot in grids</a></li>
+<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.2.6</b> Line plot</a></li>
+<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.2.7</b> Facet wrap</a></li>
+<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.2.8</b> Polygons</a></li>
+<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.2.9</b> Gantt chart</a></li>
+<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.2.10</b> Heatmap</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.2</b> ggplot2 extra</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.2.1</b> Alluvial and Sankey diagram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.2.2</b> Survival plot</a></li>
-<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.2.3</b> ggraph and tidygraph</a></li>
-<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.2.4</b> ggparty-decision tree</a></li>
-<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.2.5</b> ggROC- ROC curve</a></li>
-<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#ggtree-and-phyloseq"><i class="fa fa-check"></i><b>2.2.6</b> ggtree and phyloseq</a></li>
-<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.2.7</b> Map</a></li>
-<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.2.8</b> ggwordcloud</a></li>
-<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.2.9</b> gganimate</a></li>
-<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.2.10</b> ggneuro</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.3</b> ggplot2 extra</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.3.1</b> Alluvial and Sankey diagram</a></li>
+<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.3.2</b> Survival plot</a></li>
+<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.3.3</b> ggraph and tidygraph</a></li>
+<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.3.4</b> ggparty-decision tree</a></li>
+<li class="chapter" data-level="2.3.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.3.5</b> ggROC- ROC curve</a></li>
+<li class="chapter" data-level="2.3.6" data-path="intro.html"><a href="intro.html#ggtree-and-phyloseq"><i class="fa fa-check"></i><b>2.3.6</b> ggtree and phyloseq</a></li>
+<li class="chapter" data-level="2.3.7" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.3.7</b> Map</a></li>
+<li class="chapter" data-level="2.3.8" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.3.8</b> ggwordcloud</a></li>
+<li class="chapter" data-level="2.3.9" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.3.9</b> gganimate</a></li>
+<li class="chapter" data-level="2.3.10" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.10</b> ggneuro</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.3</b> plotly</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.3.1</b> scatter plot</a></li>
-<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.3.2</b> bar plot</a></li>
-<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.3.3</b> heatmap</a></li>
-<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.3.4</b> map</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.4.1</b> scatter plot</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.4.2</b> bar plot</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.4.3</b> heatmap</a></li>
+<li class="chapter" data-level="2.4.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.4.4</b> map</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
 <li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#vector-arrays-matrix"><i class="fa fa-check"></i><b>3.1.1</b> Vector, Arrays, Matrix</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-lapply-sapply"><i class="fa fa-check"></i><b>3.1.2</b> apply, lapply, sapply</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#simple-function"><i class="fa fa-check"></i><b>3.1.3</b> Simple function</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data-wrangling.html"><a href="data-wrangling.html#for-loop"><i class="fa fa-check"></i><b>3.1.4</b> for loop</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.1</b> Excel data</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.2</b> Foreign data</a></li>
-<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.3</b> json format</a></li>
-<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#xml"><i class="fa fa-check"></i><b>3.2.4</b> XML</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data-frame"><i class="fa fa-check"></i><b>3.2.1</b> Data frame</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.2</b> Excel data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.3</b> Foreign data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.4</b> json format</a></li>
 <li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.5</b> DICOM and nifti format</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a><ul>
@@ -189,6 +195,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.5.1</b> Scanned text or picture</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.6</b> Web scraping</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-medical-images"><i class="fa fa-check"></i><b>3.7</b> Manipulating Medical Images</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-array-of-medical-images"><i class="fa fa-check"></i><b>3.7.1</b> Manipulating array of medical images</a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operations"><i class="fa fa-check"></i><b>3.7.2</b> Math operations</a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#average"><i class="fa fa-check"></i><b>3.7.3</b> Average</a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#tar-file"><i class="fa fa-check"></i><b>3.7.4</b> tar file</a></li>
+<li class="chapter" data-level="3.7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#image-registration"><i class="fa fa-check"></i><b>3.7.5</b> Image registration</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
 <li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
@@ -222,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.2" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.5.2</b> Metaanalysis of proportion</a></li>
 <li class="chapter" data-level="4.5.3" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.5.3</b> Bivariate Metaanalysis</a></li>
 <li class="chapter" data-level="4.5.4" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.5.4</b> Metaregression</a></li>
-<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#network-metaanalysis"><i class="fa fa-check"></i><b>4.5.5</b> Network metaanalysis</a></li>
+<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>4.5.5</b> Bayesian Metaanalysis</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.6</b> Data simulation</a></li>
 </ul></li>
@@ -257,56 +270,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#markov-model"><i class="fa fa-check"></i><b>8.2</b> Markov model</a></li>
 <li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>8.3.1</b> Bayesian Metaanalysis</a></li>
+<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis-1"><i class="fa fa-check"></i><b>8.3.1</b> Bayesian Metaanalysis</a></li>
 <li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.2</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a><ul>
 <li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.1</b> Discrete Event Simulations</a></li>
 <li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
-</ul></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.4</b> Supply chains</a></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.5</b> Health economics</a><ul>
-<li class="chapter" data-level="9.5.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.5.1</b> Cost</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a></li>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.4</b> Health economics</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#markov-model-1"><i class="fa fa-check"></i><b>9.4.1</b> Markov model</a></li>
+<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.4.2</b> Cost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a><ul>
-<li class="chapter" data-level="10.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>10.1</b> Special graphs</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Laplacian matrix</a></li>
-<li class="chapter" data-level="10.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>10.1.2</b> Bimodal (bipartite) graph</a></li>
+<li class="chapter" data-level="10" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>10</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>10.1</b> Geocoding</a></li>
+<li class="chapter" data-level="10.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>10.2</b> Thematic map</a></li>
+<li class="chapter" data-level="10.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>10.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="10.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>10.4</b> Spatio-temporal regression</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>10.2</b> Centrality Measures</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>10.2.1</b> Local centrality measures</a></li>
-<li class="chapter" data-level="10.2.2" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>10.2.2</b> Global centrality measures</a></li>
+<li class="chapter" data-level="11" data-path="operational-research-1.html"><a href="operational-research-1.html"><i class="fa fa-check"></i><b>11</b> Operational Research</a><ul>
+<li class="chapter" data-level="11.1" data-path="operational-research-1.html"><a href="operational-research-1.html#discrete-event-simulations-1"><i class="fa fa-check"></i><b>11.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="11.2" data-path="operational-research-1.html"><a href="operational-research-1.html#linear-programming-1"><i class="fa fa-check"></i><b>11.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="11.3" data-path="operational-research-1.html"><a href="operational-research-1.html#forecasting-1"><i class="fa fa-check"></i><b>11.3</b> Forecasting</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="operational-research-1.html"><a href="operational-research-1.html#bed-requirement"><i class="fa fa-check"></i><b>11.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="operational-research-1.html"><a href="operational-research-1.html#length-of-stay"><i class="fa fa-check"></i><b>11.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="11.3.3" data-path="operational-research-1.html"><a href="operational-research-1.html#customer-churns"><i class="fa fa-check"></i><b>11.3.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>10.3</b> Community</a></li>
-<li class="chapter" data-level="10.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>10.4</b> Visualising graph</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>10.4.1</b> Visnetwork</a></li>
-<li class="chapter" data-level="10.4.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>10.4.2</b> Large graph</a></li>
-</ul></li>
-<li class="chapter" data-level="10.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>10.5</b> Social Media and Network Analysis</a><ul>
-<li class="chapter" data-level="10.5.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>10.5.1</b> Twitter</a></li>
-<li class="chapter" data-level="10.5.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>10.5.2</b> Youtube</a></li>
+<li class="chapter" data-level="11.4" data-path="operational-research-1.html"><a href="operational-research-1.html#process-mapping"><i class="fa fa-check"></i><b>11.4</b> Process mapping</a></li>
+<li class="chapter" data-level="11.5" data-path="operational-research-1.html"><a href="operational-research-1.html#supply-chains"><i class="fa fa-check"></i><b>11.5</b> Supply chains</a></li>
+<li class="chapter" data-level="11.6" data-path="operational-research-1.html"><a href="operational-research-1.html#health-economics-1"><i class="fa fa-check"></i><b>11.6</b> Health economics</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="operational-research-1.html"><a href="operational-research-1.html#cost-2"><i class="fa fa-check"></i><b>11.6.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>11</b> Geospatial analysis</a><ul>
-<li class="chapter" data-level="11.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>11.1</b> Geocoding</a></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.2</b> Thematic map</a></li>
-<li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>11.3</b> Spatial regression</a></li>
-<li class="chapter" data-level="11.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>11.4</b> Spatio-temporal regression</a></li>
+<li class="chapter" data-level="12" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>12</b> Graph Theory</a><ul>
+<li class="chapter" data-level="12.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>12.1</b> Special graphs</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>12.1.1</b> Laplacian matrix</a></li>
+<li class="chapter" data-level="12.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>12.1.2</b> Bimodal (bipartite) graph</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>12</b> App</a><ul>
-<li class="chapter" data-level="12.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>12.1</b> Brief introduction to Shiny app</a></li>
+<li class="chapter" data-level="12.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>12.2</b> Centrality Measures</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>12.2.1</b> Local centrality measures</a></li>
+<li class="chapter" data-level="12.2.2" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>12.2.2</b> Global centrality measures</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>13</b> Appendix</a><ul>
-<li class="chapter" data-level="13.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>13.1</b> Brief introduction to Matrix</a></li>
-<li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>13.2</b> Regression</a><ul>
-<li class="chapter" data-level="13.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>13.2.1</b> Linear regression</a></li>
-<li class="chapter" data-level="13.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-2"><i class="fa fa-check"></i><b>13.2.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="12.3" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>12.3</b> Community</a></li>
+<li class="chapter" data-level="12.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>12.4</b> Visualising graph</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>12.4.1</b> Visnetwork</a></li>
+<li class="chapter" data-level="12.4.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>12.4.2</b> Large graph</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>12.5</b> Social Media and Network Analysis</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>12.5.1</b> Twitter</a></li>
+<li class="chapter" data-level="12.5.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>12.5.2</b> Youtube</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html"><i class="fa fa-check"></i><b>13</b> Bayesian Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#baysian-belief-1"><i class="fa fa-check"></i><b>13.1</b> Baysian belief</a></li>
+<li class="chapter" data-level="13.2" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#markov-model-2"><i class="fa fa-check"></i><b>13.2</b> Markov model</a></li>
+<li class="chapter" data-level="13.3" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#inla"><i class="fa fa-check"></i><b>13.3</b> INLA</a></li>
+<li class="chapter" data-level="13.4" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#stan"><i class="fa fa-check"></i><b>13.4</b> Stan</a></li>
+<li class="chapter" data-level="13.5" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#bugs"><i class="fa fa-check"></i><b>13.5</b> BUGS</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#cost-3"><i class="fa fa-check"></i><b>13.5.1</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html"><i class="fa fa-check"></i><b>14</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#geocoding-1"><i class="fa fa-check"></i><b>14.1</b> Geocoding</a></li>
+<li class="chapter" data-level="14.2" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#thematic-map-2"><i class="fa fa-check"></i><b>14.2</b> Thematic map</a></li>
+<li class="chapter" data-level="14.3" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#spatial-regression-1"><i class="fa fa-check"></i><b>14.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="14.4" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#spatio-temporal-regression-1"><i class="fa fa-check"></i><b>14.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>15</b> App</a><ul>
+<li class="chapter" data-level="15.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>15.1</b> Brief introduction to Shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>16</b> Appendix</a><ul>
+<li class="chapter" data-level="16.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>16.1</b> Brief introduction to Matrix</a></li>
+<li class="chapter" data-level="16.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>16.2</b> Regression</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>16.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="16.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-2"><i class="fa fa-check"></i><b>16.2.2</b> Logistic regression</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -335,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The following section illustrates the different methods in multivariate analyses. These methods are not to be confused with the more simple multivariable analyses.</p>
 <div id="principal-component-analysis" class="section level2">
 <h2><span class="header-section-number">5.1</span> Principal component analysis</h2>
-<p>Principal component analysis (PCA) is a data dimension reduction method which can be applied to a large dataset to determine the latent variables (principal components) which best represent that set of data. A brief description of the method is described here and a more detailed description of the method can be found in review <span class="citation">(Friston et al. <a href="#ref-pmid10703049">2000</a>)</span>. The usual approach to PCA involves eigen analysis of a covariance matrix or singular value decomposition of a data matrix.</p>
+<p>Principal component analysis (PCA) is a data dimension reduction method which can be applied to a large dataset to determine the latent variables (principal components) which best represent that set of data. A brief description of the method is described here and a more detailed description of the method can be found in review <span class="citation">(Friston et al. <a href="#ref-pmid10703049" role="doc-biblioref">2000</a>)</span>. The usual approach to PCA involves eigen analysis of a covariance matrix or singular value decomposition of a data matrix.</p>
 <p>PCA estimates an orthogonal transformation (variance maximising) to convert a set of observations of correlated variables into a set of values of uncorrelated (orthogonal) variables called principal components. The first extracted principle component aligns in the direction that contains most of the variance of observed variables. The next principal component is orthogonal to the first principle component and contains the second most of spread of variance. The next component contains the third most of spread, and so on. The latter principal components are likely to represent noise and are discarded. Expressing this in terms of our imaging data, each component yields a linear combination of ‘ischemic’ voxels that covary with each other. These components can be interpreted as patterns of ischemic injury. The unit of measurement in PCA images is the covariance of the data.</p>
 <p>In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principle components.</p>
 </div>
@@ -345,56 +383,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="partial-least-squares" class="section level2">
 <h2><span class="header-section-number">5.3</span> Partial least squares</h2>
-<p>There are several versions of partial least squares (PLS). A detailed mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix <span class="citation">(Fort and Lambert-Lacroix <a href="#ref-pmid15531609">2005</a>)</span>. For the purposes of exposition we will describe the individual components of the method. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of dependent variables (neurological outcome scores). Each voxel can take on a value of 1 (representing involvement by infarction) or 0 (representing absence of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. Linear least squares regression of the latent variables produces coefﬁcients or beta weights for the latent variables at each voxel location in the brain in stereotaxic coordinate space.<span class="citation">(Phan et al. <a href="#ref-pmid19660556">2010</a>)</span></p>
-<p>The colon dataset containing microarray data comes with the <em>plsgenomics</em> library <span class="citation">(Durif et al. <a href="#ref-pmid28968879">2018</a>)</span>. The analysis involves partitioning the data into training and test set. the classification data is in the Y column.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(plsgenomics)</a></code></pre></div>
+<p>There are several versions of partial least squares (PLS). A detailed mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix <span class="citation">(Fort and Lambert-Lacroix <a href="#ref-pmid15531609" role="doc-biblioref">2005</a>)</span>. For the purposes of exposition we will describe the individual components of the method. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of dependent variables (neurological outcome scores). Each voxel can take on a value of 1 (representing involvement by infarction) or 0 (representing absence of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. Linear least squares regression of the latent variables produces coefﬁcients or beta weights for the latent variables at each voxel location in the brain in stereotaxic coordinate space.<span class="citation">(Phan et al. <a href="#ref-pmid19660556" role="doc-biblioref">2010</a>)</span></p>
+<p>The colon dataset containing microarray data comes with the <em>plsgenomics</em> library <span class="citation">(Durif et al. <a href="#ref-pmid28968879" role="doc-biblioref">2018</a>)</span>. The analysis involves partitioning the data into training and test set. the classification data is in the Y column.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="multivariate-analysis.html#cb1-1"></a><span class="kw">library</span>(plsgenomics)</span></code></pre></div>
+<pre><code>## Warning: package &#39;plsgenomics&#39; was built under R version 4.0.5</code></pre>
 <pre><code>## For any news related to the &#39;plsgenomics&#39; package (update, corrected bugs), please check http://thoth.inrialpes.fr/people/gdurif/</code></pre>
 <pre><code>## C++ based sparse PLS routines will soon be available on the CRAN in the new &#39;fastPLS&#39; package.</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">data</span>(<span class="st">&quot;Colon&quot;</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw">class</span>(Colon) <span class="co">#list</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="multivariate-analysis.html#cb5-1"></a><span class="kw">data</span>(<span class="st">&quot;Colon&quot;</span>)</span>
+<span id="cb5-2"><a href="multivariate-analysis.html#cb5-2"></a><span class="kw">class</span>(Colon) <span class="co">#list</span></span></code></pre></div>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">#62 samples 2000 genes</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw">dim</span>(Colon<span class="op">$</span>X) </a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="multivariate-analysis.html#cb7-1"></a><span class="co">#62 samples 2000 genes</span></span>
+<span id="cb7-2"><a href="multivariate-analysis.html#cb7-2"></a><span class="kw">dim</span>(Colon<span class="op">$</span>X) </span></code></pre></div>
 <pre><code>## [1]   62 2000</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co">#heatmap</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw">matrix.heatmap</span>(<span class="kw">cbind</span>(Colon<span class="op">$</span>X,Colon<span class="op">$</span>y))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="multivariate-analysis.html#cb9-1"></a><span class="co">#heatmap</span></span>
+<span id="cb9-2"><a href="multivariate-analysis.html#cb9-2"></a><span class="kw">matrix.heatmap</span>(<span class="kw">cbind</span>(Colon<span class="op">$</span>X,Colon<span class="op">$</span>y))</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/pls-1.png" width="672" /></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">#</span></a>
-<a class="sourceLine" id="cb9-2" title="2">IndexLearn &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sample</span>(<span class="kw">which</span>(Colon<span class="op">$</span>Y<span class="op">==</span><span class="dv">2</span>),<span class="dv">12</span>),<span class="kw">sample</span>(<span class="kw">which</span>(Colon<span class="op">$</span>Y<span class="op">==</span><span class="dv">1</span>),<span class="dv">8</span>))</a>
-<a class="sourceLine" id="cb9-3" title="3">Xtrain &lt;-<span class="st"> </span>Colon<span class="op">$</span>X[IndexLearn,] </a>
-<a class="sourceLine" id="cb9-4" title="4">Ytrain &lt;-<span class="st"> </span>Colon<span class="op">$</span>Y[IndexLearn] </a>
-<a class="sourceLine" id="cb9-5" title="5">Xtest &lt;-<span class="st"> </span>Colon<span class="op">$</span>X[<span class="op">-</span>IndexLearn,]</a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co"># preprocess data </span></a>
-<a class="sourceLine" id="cb9-7" title="7">resP &lt;-<span class="st"> </span><span class="kw">preprocess</span>(<span class="dt">Xtrain=</span> Xtrain, <span class="dt">Xtest=</span>Xtest,<span class="dt">Threshold =</span> <span class="kw">c</span>(<span class="dv">100</span>,<span class="dv">16000</span>),<span class="dt">Filtering=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">500</span>), <span class="dt">log10.scale=</span><span class="ot">TRUE</span>,<span class="dt">row.stand=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co"># perform prediction by GSIM </span></a>
-<a class="sourceLine" id="cb9-9" title="9">res &lt;-<span class="st"> </span><span class="kw">gsim</span>(<span class="dt">Xtrain=</span>resP<span class="op">$</span>pXtrain,<span class="dt">Ytrain=</span> Ytrain,<span class="dt">Xtest=</span>resP<span class="op">$</span>pXtest,<span class="dt">Lambda=</span><span class="dv">10</span>,<span class="dt">hA=</span><span class="dv">50</span>,<span class="dt">hB=</span><span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb9-10" title="10">res<span class="op">$</span>Cvg </a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="multivariate-analysis.html#cb10-1"></a><span class="co">#</span></span>
+<span id="cb10-2"><a href="multivariate-analysis.html#cb10-2"></a>IndexLearn &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sample</span>(<span class="kw">which</span>(Colon<span class="op">$</span>Y<span class="op">==</span><span class="dv">2</span>),<span class="dv">12</span>),<span class="kw">sample</span>(<span class="kw">which</span>(Colon<span class="op">$</span>Y<span class="op">==</span><span class="dv">1</span>),<span class="dv">8</span>))</span>
+<span id="cb10-3"><a href="multivariate-analysis.html#cb10-3"></a>Xtrain &lt;-<span class="st"> </span>Colon<span class="op">$</span>X[IndexLearn,] </span>
+<span id="cb10-4"><a href="multivariate-analysis.html#cb10-4"></a>Ytrain &lt;-<span class="st"> </span>Colon<span class="op">$</span>Y[IndexLearn] </span>
+<span id="cb10-5"><a href="multivariate-analysis.html#cb10-5"></a>Xtest &lt;-<span class="st"> </span>Colon<span class="op">$</span>X[<span class="op">-</span>IndexLearn,]</span>
+<span id="cb10-6"><a href="multivariate-analysis.html#cb10-6"></a><span class="co"># preprocess data </span></span>
+<span id="cb10-7"><a href="multivariate-analysis.html#cb10-7"></a>resP &lt;-<span class="st"> </span><span class="kw">preprocess</span>(<span class="dt">Xtrain=</span> Xtrain, <span class="dt">Xtest=</span>Xtest,<span class="dt">Threshold =</span> <span class="kw">c</span>(<span class="dv">100</span>,<span class="dv">16000</span>),<span class="dt">Filtering=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">500</span>), <span class="dt">log10.scale=</span><span class="ot">TRUE</span>,<span class="dt">row.stand=</span><span class="ot">TRUE</span>)</span>
+<span id="cb10-8"><a href="multivariate-analysis.html#cb10-8"></a><span class="co"># perform prediction by GSIM </span></span>
+<span id="cb10-9"><a href="multivariate-analysis.html#cb10-9"></a>res &lt;-<span class="st"> </span><span class="kw">gsim</span>(<span class="dt">Xtrain=</span>resP<span class="op">$</span>pXtrain,<span class="dt">Ytrain=</span> Ytrain,<span class="dt">Xtest=</span>resP<span class="op">$</span>pXtest,<span class="dt">Lambda=</span><span class="dv">10</span>,<span class="dt">hA=</span><span class="dv">50</span>,<span class="dt">hB=</span><span class="ot">NULL</span>)</span>
+<span id="cb10-10"><a href="multivariate-analysis.html#cb10-10"></a>res<span class="op">$</span>Cvg </span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">sum</span>(res<span class="op">$</span>Ytest<span class="op">!=</span>Colon<span class="op">$</span>Y[<span class="op">-</span>IndexLearn])</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="multivariate-analysis.html#cb12-1"></a><span class="kw">sum</span>(res<span class="op">$</span>Ytest<span class="op">!=</span>Colon<span class="op">$</span>Y[<span class="op">-</span>IndexLearn])</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 </div>
 <div id="t-stochastic-neighbourhood-embedding" class="section level2">
 <h2><span class="header-section-number">5.4</span> T-Stochastic Neighbourhood Embedding</h2>
 <p>T-Stochastic Neighbourhood Embedding (TSNE) is a visualisation method which seeks to transform the complex data into low (2) dimensions while maintaining the distance between neighbouring objects. This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of TSNE are not intended for machine learning. TSNE is implemented in R as <em>Rtsne</em>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">library</span>(Rtsne)</a></code></pre></div>
-<pre><code>## Warning: package &#39;Rtsne&#39; was built under R version 3.6.1</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="multivariate-analysis.html#cb14-1"></a><span class="kw">library</span>(Rtsne)</span></code></pre></div>
 </div>
 <div id="non-negative-matrix-factorisation" class="section level2">
 <h2><span class="header-section-number">5.5</span> Non-negative matrix factorisation</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">library</span>(NMF)</a></code></pre></div>
-<pre><code>## Warning: package &#39;NMF&#39; was built under R version 3.6.1</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="multivariate-analysis.html#cb15-1"></a><span class="kw">library</span>(NMF)</span></code></pre></div>
 <pre><code>## Loading required package: pkgmaker</code></pre>
-<pre><code>## Warning: package &#39;pkgmaker&#39; was built under R version 3.6.1</code></pre>
 <pre><code>## Loading required package: registry</code></pre>
-<pre><code>## 
-## Attaching package: &#39;pkgmaker&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     isFALSE</code></pre>
 <pre><code>## Loading required package: rngtools</code></pre>
-<pre><code>## Warning: package &#39;rngtools&#39; was built under R version 3.6.1</code></pre>
 <pre><code>## Loading required package: cluster</code></pre>
-<pre><code>## NMF - BioConductor layer [OK] | Shared memory capabilities [NO: windows] | Cores 3/4</code></pre>
+<pre><code>## NMF - BioConductor layer [OK] | Shared memory capabilities [NO: windows] | Cores 7/8</code></pre>
 
 </div>
 </div>

@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Statistics | Applications of R in Healthcare</title>
+  <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Statistics | Applications of R in Healthcare" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="GNtem2/HealthcareRbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Statistics | Applications of R in Healthcare" />
+  
+  <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Thanh Phan" />
+
+
+<meta name="date" content="2022-01-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-wrangling.html"/>
+<link rel="next" href="multivariate-analysis.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applications-of-R-in-Healthcare</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to plotting in R</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#plot-using-base-r"><i class="fa fa-check"></i><b>2.1</b> Plot using base R</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.2.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.2.3</b> Pie chart</a></li>
+<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.2.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.2.5</b> arrange plot in grids</a></li>
+<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.2.6</b> Line plot</a></li>
+<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.2.7</b> Facet wrap</a></li>
+<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.2.8</b> Polygons</a></li>
+<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.2.9</b> Gantt chart</a></li>
+<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.2.10</b> Heatmap</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.3</b> ggplot2 extra</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.3.1</b> Alluvial and Sankey diagram</a></li>
+<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.3.2</b> Survival plot</a></li>
+<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.3.3</b> ggraph and tidygraph</a></li>
+<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.3.4</b> ggparty-decision tree</a></li>
+<li class="chapter" data-level="2.3.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.3.5</b> ggROC- ROC curve</a></li>
+<li class="chapter" data-level="2.3.6" data-path="intro.html"><a href="intro.html#ggtree-and-phyloseq"><i class="fa fa-check"></i><b>2.3.6</b> ggtree and phyloseq</a></li>
+<li class="chapter" data-level="2.3.7" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.3.7</b> Map</a></li>
+<li class="chapter" data-level="2.3.8" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.3.8</b> ggwordcloud</a></li>
+<li class="chapter" data-level="2.3.9" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.3.9</b> gganimate</a></li>
+<li class="chapter" data-level="2.3.10" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.10</b> ggneuro</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.4.1</b> scatter plot</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.4.2</b> bar plot</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.4.3</b> heatmap</a></li>
+<li class="chapter" data-level="2.4.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.4.4</b> map</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#vector-arrays-matrix"><i class="fa fa-check"></i><b>3.1.1</b> Vector, Arrays, Matrix</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-lapply-sapply"><i class="fa fa-check"></i><b>3.1.2</b> apply, lapply, sapply</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#simple-function"><i class="fa fa-check"></i><b>3.1.3</b> Simple function</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data-wrangling.html"><a href="data-wrangling.html#for-loop"><i class="fa fa-check"></i><b>3.1.4</b> for loop</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data-frame"><i class="fa fa-check"></i><b>3.2.1</b> Data frame</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.2</b> Excel data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.3</b> Foreign data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.4</b> json format</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.5</b> DICOM and nifti format</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#factors"><i class="fa fa-check"></i><b>3.3.1</b> Factors</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#multiple-files"><i class="fa fa-check"></i><b>3.3.2</b> Multiple files</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#pivot"><i class="fa fa-check"></i><b>3.3.3</b> Pivot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#regular-expressions"><i class="fa fa-check"></i><b>3.4</b> Regular Expressions</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#base-r"><i class="fa fa-check"></i><b>3.4.1</b> base R</a></li>
+<li class="chapter" data-level="3.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#stringr"><i class="fa fa-check"></i><b>3.4.2</b> stringr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#pdf-to-xcel"><i class="fa fa-check"></i><b>3.5</b> PDF to xcel</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.5.1</b> Scanned text or picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.6</b> Web scraping</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-medical-images"><i class="fa fa-check"></i><b>3.7</b> Manipulating Medical Images</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-array-of-medical-images"><i class="fa fa-check"></i><b>3.7.1</b> Manipulating array of medical images</a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operations"><i class="fa fa-check"></i><b>3.7.2</b> Math operations</a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#average"><i class="fa fa-check"></i><b>3.7.3</b> Average</a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#tar-file"><i class="fa fa-check"></i><b>3.7.4</b> tar file</a></li>
+<li class="chapter" data-level="3.7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#image-registration"><i class="fa fa-check"></i><b>3.7.5</b> Image registration</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
+<li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="statistics.html"><a href="statistics.html#parametric-tests"><i class="fa fa-check"></i><b>4.1.1</b> Parametric tests</a></li>
+<li class="chapter" data-level="4.1.2" data-path="statistics.html"><a href="statistics.html#non-parametric-tests"><i class="fa fa-check"></i><b>4.1.2</b> Non-parametric tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#linear-least-square-regression"><i class="fa fa-check"></i><b>4.2.1</b> Linear (least square) regression</a></li>
+<li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.2</b> Logistic regression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#special-types-of-regression"><i class="fa fa-check"></i><b>4.3</b> Special types of regression</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="statistics.html"><a href="statistics.html#ordinal-regression"><i class="fa fa-check"></i><b>4.3.1</b> Ordinal regression</a></li>
+<li class="chapter" data-level="4.3.2" data-path="statistics.html"><a href="statistics.html#survival-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Survival analysis</a></li>
+<li class="chapter" data-level="4.3.3" data-path="statistics.html"><a href="statistics.html#quantile-regression"><i class="fa fa-check"></i><b>4.3.3</b> Quantile regression</a></li>
+<li class="chapter" data-level="4.3.4" data-path="statistics.html"><a href="statistics.html#penalised-regression"><i class="fa fa-check"></i><b>4.3.4</b> Penalised regression</a></li>
+<li class="chapter" data-level="4.3.5" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.3.5</b> Poisson regression</a></li>
+<li class="chapter" data-level="4.3.6" data-path="statistics.html"><a href="statistics.html#mars"><i class="fa fa-check"></i><b>4.3.6</b> MARS</a></li>
+<li class="chapter" data-level="4.3.7" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.3.7</b> Conditional logistic regression</a></li>
+<li class="chapter" data-level="4.3.8" data-path="statistics.html"><a href="statistics.html#mixed-modelling"><i class="fa fa-check"></i><b>4.3.8</b> Mixed modelling</a></li>
+<li class="chapter" data-level="4.3.9" data-path="statistics.html"><a href="statistics.html#trajectory-modelling"><i class="fa fa-check"></i><b>4.3.9</b> Trajectory modelling</a></li>
+<li class="chapter" data-level="4.3.10" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.3.10</b> Multinomial modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.4</b> Sample size estimation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="statistics.html"><a href="statistics.html#proportion"><i class="fa fa-check"></i><b>4.4.1</b> Proportion</a></li>
+<li class="chapter" data-level="4.4.2" data-path="statistics.html"><a href="statistics.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.4.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.4.3" data-path="statistics.html"><a href="statistics.html#survival-studies"><i class="fa fa-check"></i><b>4.4.3</b> Survival studies</a></li>
+<li class="chapter" data-level="4.4.4" data-path="statistics.html"><a href="statistics.html#multiple-regression"><i class="fa fa-check"></i><b>4.4.4</b> Multiple regression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.5</b> Metaanalysis</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.5.1</b> PRISMA</a></li>
+<li class="chapter" data-level="4.5.2" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.5.2</b> Metaanalysis of proportion</a></li>
+<li class="chapter" data-level="4.5.3" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.5.3</b> Bivariate Metaanalysis</a></li>
+<li class="chapter" data-level="4.5.4" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.5.4</b> Metaregression</a></li>
+<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>4.5.5</b> Bayesian Metaanalysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.6</b> Data simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.1</b> Principal component analysis</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Independent component analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.3</b> Partial least squares</a></li>
+<li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>5.4</b> T-Stochastic Neighbourhood Embedding</a></li>
+<li class="chapter" data-level="5.5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>5.5</b> Non-negative matrix factorisation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="machine-learning.html"><a href="machine-learning.html#information-theory-driven"><i class="fa fa-check"></i><b>6.1.1</b> Information theory driven</a></li>
+<li class="chapter" data-level="6.1.2" data-path="machine-learning.html"><a href="machine-learning.html#conditional-decision-tree"><i class="fa fa-check"></i><b>6.1.2</b> Conditional decision tree</a></li>
+<li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
+<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a></li>
+<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.4</b> Support vector machine</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a><ul>
+<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#non-negative-matrix-factorisation-1"><i class="fa fa-check"></i><b>7.1</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#formal-concept-analysis"><i class="fa fa-check"></i><b>7.2</b> Formal concept analysis</a></li>
+<li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>7.3</b> Evolutionary Algorithm</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#simulated-annealing"><i class="fa fa-check"></i><b>7.3.1</b> Simulated Annealing</a></li>
+<li class="chapter" data-level="7.3.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#genetic-algorithm"><i class="fa fa-check"></i><b>7.3.2</b> Genetic Algorithm</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html"><i class="fa fa-check"></i><b>8</b> Bayesian Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#baysian-belief"><i class="fa fa-check"></i><b>8.1</b> Baysian belief</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#conditional-probability"><i class="fa fa-check"></i><b>8.1.1</b> Conditional probability</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#markov-model"><i class="fa fa-check"></i><b>8.2</b> Markov model</a></li>
+<li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis-1"><i class="fa fa-check"></i><b>8.3.1</b> Bayesian Metaanalysis</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.2</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a><ul>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a></li>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.4</b> Health economics</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#markov-model-1"><i class="fa fa-check"></i><b>9.4.1</b> Markov model</a></li>
+<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.4.2</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>10</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>10.1</b> Geocoding</a></li>
+<li class="chapter" data-level="10.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>10.2</b> Thematic map</a></li>
+<li class="chapter" data-level="10.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>10.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="10.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>10.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="operational-research-1.html"><a href="operational-research-1.html"><i class="fa fa-check"></i><b>11</b> Operational Research</a><ul>
+<li class="chapter" data-level="11.1" data-path="operational-research-1.html"><a href="operational-research-1.html#discrete-event-simulations-1"><i class="fa fa-check"></i><b>11.1</b> Discrete Event Simulations</a></li>
+<li class="chapter" data-level="11.2" data-path="operational-research-1.html"><a href="operational-research-1.html#linear-programming-1"><i class="fa fa-check"></i><b>11.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="11.3" data-path="operational-research-1.html"><a href="operational-research-1.html#forecasting-1"><i class="fa fa-check"></i><b>11.3</b> Forecasting</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="operational-research-1.html"><a href="operational-research-1.html#bed-requirement"><i class="fa fa-check"></i><b>11.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="11.3.2" data-path="operational-research-1.html"><a href="operational-research-1.html#length-of-stay"><i class="fa fa-check"></i><b>11.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="11.3.3" data-path="operational-research-1.html"><a href="operational-research-1.html#customer-churns"><i class="fa fa-check"></i><b>11.3.3</b> Customer churns</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="operational-research-1.html"><a href="operational-research-1.html#process-mapping"><i class="fa fa-check"></i><b>11.4</b> Process mapping</a></li>
+<li class="chapter" data-level="11.5" data-path="operational-research-1.html"><a href="operational-research-1.html#supply-chains"><i class="fa fa-check"></i><b>11.5</b> Supply chains</a></li>
+<li class="chapter" data-level="11.6" data-path="operational-research-1.html"><a href="operational-research-1.html#health-economics-1"><i class="fa fa-check"></i><b>11.6</b> Health economics</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="operational-research-1.html"><a href="operational-research-1.html#cost-2"><i class="fa fa-check"></i><b>11.6.1</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>12</b> Graph Theory</a><ul>
+<li class="chapter" data-level="12.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>12.1</b> Special graphs</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>12.1.1</b> Laplacian matrix</a></li>
+<li class="chapter" data-level="12.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>12.1.2</b> Bimodal (bipartite) graph</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>12.2</b> Centrality Measures</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>12.2.1</b> Local centrality measures</a></li>
+<li class="chapter" data-level="12.2.2" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>12.2.2</b> Global centrality measures</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>12.3</b> Community</a></li>
+<li class="chapter" data-level="12.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>12.4</b> Visualising graph</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>12.4.1</b> Visnetwork</a></li>
+<li class="chapter" data-level="12.4.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>12.4.2</b> Large graph</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>12.5</b> Social Media and Network Analysis</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>12.5.1</b> Twitter</a></li>
+<li class="chapter" data-level="12.5.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>12.5.2</b> Youtube</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html"><i class="fa fa-check"></i><b>13</b> Bayesian Analysis</a><ul>
+<li class="chapter" data-level="13.1" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#baysian-belief-1"><i class="fa fa-check"></i><b>13.1</b> Baysian belief</a></li>
+<li class="chapter" data-level="13.2" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#markov-model-2"><i class="fa fa-check"></i><b>13.2</b> Markov model</a></li>
+<li class="chapter" data-level="13.3" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#inla"><i class="fa fa-check"></i><b>13.3</b> INLA</a></li>
+<li class="chapter" data-level="13.4" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#stan"><i class="fa fa-check"></i><b>13.4</b> Stan</a></li>
+<li class="chapter" data-level="13.5" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#bugs"><i class="fa fa-check"></i><b>13.5</b> BUGS</a><ul>
+<li class="chapter" data-level="13.5.1" data-path="bayesian-analysis-1.html"><a href="bayesian-analysis-1.html#cost-3"><i class="fa fa-check"></i><b>13.5.1</b> Cost</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html"><i class="fa fa-check"></i><b>14</b> Geospatial analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#geocoding-1"><i class="fa fa-check"></i><b>14.1</b> Geocoding</a></li>
+<li class="chapter" data-level="14.2" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#thematic-map-2"><i class="fa fa-check"></i><b>14.2</b> Thematic map</a></li>
+<li class="chapter" data-level="14.3" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#spatial-regression-1"><i class="fa fa-check"></i><b>14.3</b> Spatial regression</a></li>
+<li class="chapter" data-level="14.4" data-path="geospatial-analysis-1.html"><a href="geospatial-analysis-1.html#spatio-temporal-regression-1"><i class="fa fa-check"></i><b>14.4</b> Spatio-temporal regression</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>15</b> App</a><ul>
+<li class="chapter" data-level="15.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>15.1</b> Brief introduction to Shiny app</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>16</b> Appendix</a><ul>
+<li class="chapter" data-level="16.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>16.1</b> Brief introduction to Matrix</a></li>
+<li class="chapter" data-level="16.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>16.2</b> Regression</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>16.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="16.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-2"><i class="fa fa-check"></i><b>16.2.2</b> Logistic regression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applications of R in Healthcare</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="statistics" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Statistics</h1>
+<p>This section is not intended as a textbook on statistics. Rather it demonstrates regression approaches that can be used including sample size estimation, R codes provided.</p>
+<div id="univariable-analyses" class="section level2">
+<h2><span class="header-section-number">4.1</span> Univariable analyses</h2>
+<div id="parametric-tests" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Parametric tests</h3>
+<p>T-test is the workhorse for comparing if 2 datasets are have the same distribution. Performing t-test in R requires data from 2 columns: one containing the variables for comparison and one to label the group. There are different forms of t-test depending on whether the two samples are paired or unpaired. In general, the analysis takes the form of <span class="math inline">\(t=\frac{\mu_1 - \mu_2}{variance}\)</span>. It is recommended to check the distribution of the data by using histogram. For this exercise, we will use the simulated data from ECR trials. The grouping variable is the trial assignment.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="statistics.html#cb1-1"></a><span class="co">#comparison of early neurological recovery (ENI) by tral (T)</span></span>
+<span id="cb1-2"><a href="statistics.html#cb1-2"></a>dtTrial&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/dtTrial_simulated.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="statistics.html#cb1-3"></a><span class="kw">t.test</span>(dtTrial<span class="op">$</span>ENI<span class="op">~</span>dtTrial<span class="op">$</span>T)</span></code></pre></div>
+</div>
+<div id="non-parametric-tests" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Non-parametric tests</h3>
+<p>Chi-squared and Fisher-exact tests can be done by using the <em>table</em> function for setting up the count data into 2 x 2 contingency table or confusion matrix. The formula for the Chi-squared test takes on a familiar form <span class="math inline">\(\chi^2=\frac{(observed-expected)^2}{expected}\)</span>. In this example we will use the data above.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="statistics.html#cb2-1"></a><span class="kw">table</span>(dtTrial<span class="op">$</span>HT,dtTrial<span class="op">$</span>T)</span>
+<span id="cb2-2"><a href="statistics.html#cb2-2"></a><span class="kw">chisq.test</span>(dtTrial<span class="op">$</span>HT,dtTrial<span class="op">$</span>T)</span></code></pre></div>
+<p>The Wilcoxon rank sum test is performed with continuous data organised in the same way as the t-test. There are several different approaches to performing Wilcoxon rank sum test. The <em>coin</em> package allows handling of ties.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="statistics.html#cb3-1"></a><span class="kw">library</span>(coin)</span>
+<span id="cb3-2"><a href="statistics.html#cb3-2"></a><span class="kw">wilcox.test</span>(ENI<span class="op">~</span>T, <span class="dt">data=</span>dtTrial)</span></code></pre></div>
+</div>
+</div>
+<div id="regression" class="section level2">
+<h2><span class="header-section-number">4.2</span> Regression</h2>
+<p>There are many different form of regression methods. A key principle is that the predictors are independent of each others. This issue will be expand on in the later in the section on collinearity. Special methods are required when the predictors are collinear.</p>
+<div id="linear-least-square-regression" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Linear (least square) regression</h3>
+<p>Least square regression uses the geometric properties of Euclidean geometry to identify the line of best. The sum of squares <span class="math inline">\(SSE\)</span> is <span class="math inline">\(\sum(observed-expected)^2\)</span>. The <span class="math inline">\(R^2\)</span> is a measure of the fit of the model. It is given by <span class="math inline">\(1-\frac{SS_(res)}{SS_(total)}\)</span>. Low <span class="math inline">\(R^2\)</span> indicates a poorly fitted model and high <span class="math inline">\(R^2\)</span> indicates excellent fitting. The assumption here is that the outcome variable is a continuous variable.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="statistics.html#cb4-1"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.5</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="statistics.html#cb6-1"></a><span class="kw">load</span>(<span class="st">&quot;./Data-Use/world_stroke.Rda&quot;</span>)</span>
+<span id="cb6-2"><a href="statistics.html#cb6-2"></a><span class="kw">ggplot</span>(world_sfdf, <span class="kw">aes</span>(<span class="dt">x=</span>LifeExpectancy,<span class="dt">y=</span>MeanLifetimeRisk))<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="kw">aes</span>(<span class="dt">Group=</span>Income, <span class="dt">linetype=</span>Income))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Ignoring unknown aesthetics: Group</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 71 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 71 rows containing missing values (geom_point).</code></pre>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/linear-1.png" width="672" /></p>
+</div>
+<div id="logistic-regression" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Logistic regression</h3>
+<p>For outcome that are binary in nature such as yes or no, then least square regression is not appropriate. There are no close form solution for this analysis and a numerical approach using maximum likelihood approach is needed. When examining the results of logistic regression one is often enchanted by the large odds ratio. It is important to look at the metrics of model calibration (discussed below). A clue to a poorly calibrated model is the observation that the width of the confidence interval for odds ratio is wide.</p>
+<div id="discrimination-and-calibration" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> Discrimination and Calibration</h4>
+<p>A high _<span class="math inline">\(R^2\)</span> suggests that the linear regression model is well calibrated. This metric is often not displayed but should be sought when interpreting the data.</p>
+<p>The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. It is possible to have a model with high discrimination but poor calibration <span class="citation">(Diamond <a href="#ref-pmid1738016" role="doc-biblioref">1992</a>)</span>.</p>
+<p>Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.</p>
+</div>
+<div id="measuring-improvement-in-regression-models" class="section level4">
+<h4><span class="header-section-number">4.2.2.2</span> Measuring Improvement in Regression Models</h4>
+<p>The net reclassification improvement (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI were performed using <em>PredictABEL</em> . <span class="citation">(Phan et al. <a href="#ref-pmid28579970" role="doc-biblioref">2017</a>)</span><span class="citation">(Phan et al. <a href="#ref-pmid26796056" role="doc-biblioref">2016</a>)</span></p>
+</div>
+<div id="shapley-value" class="section level4">
+<h4><span class="header-section-number">4.2.2.3</span> Shapley value</h4>
+<p>We can use ideas from game theory relating to fair distribution of proﬁt in coalition games; the coalition (co-operative) game in this case can be interpreted as contribution of the covariates to the model. The Shapley value regression method calculates the marginal contribution of each covariate as the average of all permutations of the coalition of the covariates containing the covariate of interest minus the coalition without the covariate of interest. The advantage of this approach is that it can handle multicollinearity (relatedness) among the covariates.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="statistics.html#cb11-1"></a><span class="kw">library</span>(iml)</span></code></pre></div>
+<div id="interaction" class="section level5">
+<h5><span class="header-section-number">4.2.2.3.1</span> Interaction</h5>
+<p>When describing interaction terms it is recommended that the results be expressed as β coefficients rather than as odds ratio.</p>
+</div>
+</div>
+<div id="propensity-matching" class="section level4">
+<h4><span class="header-section-number">4.2.2.4</span> Propensity matching</h4>
+<p>A common misconception is that the multiple regression adjust for imbalance in covariates. This issue was observed in the pivotal NINDS alteplase trial. The results of the trial has since been accepted with re-analysis of this trial.</p>
+<p>Propensity matchine is an important technique to adjust for imbalance in covariates between 2 arms. There are concerns with mis-use of this technique such as difference in placebo arms from multiple sclerosis trials <span class="citation">(Signori et al. <a href="#ref-10.1001/jamaneurol.2020.0678" role="doc-biblioref">2020</a>)</span>. It is proposed that this technique should be used only if all the confounders are measurable. This situation may not be satisfied if the data were accrued at different period, in different continent etc.</p>
+</div>
+</div>
+</div>
+<div id="special-types-of-regression" class="section level2">
+<h2><span class="header-section-number">4.3</span> Special types of regression</h2>
+<div id="ordinal-regression" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Ordinal regression</h3>
+<p>Ordinal regression is appropriate when the outcome variable is in the form of ordered categorical values. For example, the Rankin scale of disability is bounded between the values of 0 and 6. This type of analysis uses the proportional odds model and the requirement for this model is stringent. When examining results of ordinal regression check that the authors provide this metric, the Brant test. The Brant test assesses the parallel regression assumption. Ordinal regression is performed using <em>polr</em> function in <em>MASS</em> library. The Brant test is available in the <em>Brant</em> library.</p>
+</div>
+<div id="survival-analysis" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Survival analysis</h3>
+<p>Survival analysis is useful when dealing with time to event data. The Cox model assesses the hazard of outcome between two groups. The assumption of this model is that the hazard between each arm is proportional <span class="citation">(Stensrud and Hernan <a href="#ref-pmid32167523" role="doc-biblioref">2020</a>)</span>. The proportional hazard model can be tested <span class="citation">(Grambsch and Therneau <a href="#ref-10.1093/biomet/81.3.515" role="doc-biblioref">1994</a>)</span></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="statistics.html#cb12-1"></a><span class="kw">library</span>(survival)</span>
+<span id="cb12-2"><a href="statistics.html#cb12-2"></a><span class="kw">data</span>(<span class="st">&quot;lung&quot;</span>)</span>
+<span id="cb12-3"><a href="statistics.html#cb12-3"></a><span class="co">#data from survival package on NCCTG lung cancer trial</span></span>
+<span id="cb12-4"><a href="statistics.html#cb12-4"></a><span class="co">#https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html</span></span>
+<span id="cb12-5"><a href="statistics.html#cb12-5"></a><span class="co">#time in days</span></span>
+<span id="cb12-6"><a href="statistics.html#cb12-6"></a><span class="co">#status censored=1, dead=2sex:</span></span>
+<span id="cb12-7"><a href="statistics.html#cb12-7"></a><span class="co">#sex:Male=1 Female=2</span></span>
+<span id="cb12-8"><a href="statistics.html#cb12-8"></a>sfit&lt;-<span class="st"> </span><span class="kw">coxph</span>(<span class="kw">Surv</span>(time, status) <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>sex<span class="op">+</span>ph.ecog, <span class="dt">data =</span> lung)</span>
+<span id="cb12-9"><a href="statistics.html#cb12-9"></a><span class="kw">summary</span>(sfit)</span></code></pre></div>
+<pre><code>## Call:
+## coxph(formula = Surv(time, status) ~ age + sex + ph.ecog, data = lung)
+## 
+##   n= 227, number of events= 164 
+##    (1 observation deleted due to missingness)
+## 
+##              coef exp(coef)  se(coef)      z Pr(&gt;|z|)    
+## age      0.011067  1.011128  0.009267  1.194 0.232416    
+## sex     -0.552612  0.575445  0.167739 -3.294 0.000986 ***
+## ph.ecog  0.463728  1.589991  0.113577  4.083 4.45e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##         exp(coef) exp(-coef) lower .95 upper .95
+## age        1.0111     0.9890    0.9929    1.0297
+## sex        0.5754     1.7378    0.4142    0.7994
+## ph.ecog    1.5900     0.6289    1.2727    1.9864
+## 
+## Concordance= 0.637  (se = 0.025 )
+## Likelihood ratio test= 30.5  on 3 df,   p=1e-06
+## Wald test            = 29.93  on 3 df,   p=1e-06
+## Score (logrank) test = 30.5  on 3 df,   p=1e-06</code></pre>
+</div>
+<div id="quantile-regression" class="section level3">
+<h3><span class="header-section-number">4.3.3</span> Quantile regression</h3>
+<p>Quantile regression is appropriate when the distribution of the data is non-normal and it is more appropriate to look at the conditional median of the dependent variable. There are several libraries for this task <em>quantreg</em> and bayesian libraries. In the example below, the life time risk of stroke is regresed against life expectancy using lest square and quantile regression.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="statistics.html#cb14-1"></a><span class="kw">library</span>(quantreg)</span></code></pre></div>
+<pre><code>## Loading required package: SparseM</code></pre>
+<pre><code>## 
+## Attaching package: &#39;SparseM&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     backsolve</code></pre>
+<pre><code>## 
+## Attaching package: &#39;quantreg&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:survival&#39;:
+## 
+##     untangle.specials</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="statistics.html#cb20-1"></a><span class="kw">load</span>(<span class="st">&quot;./Data-Use/world_stroke.Rda&quot;</span>)</span>
+<span id="cb20-2"><a href="statistics.html#cb20-2"></a><span class="co">#quantile</span></span>
+<span id="cb20-3"><a href="statistics.html#cb20-3"></a>rqfit &lt;-<span class="st"> </span><span class="kw">rq</span>( MeanLifetimeRisk<span class="op">~</span><span class="st"> </span>LifeExpectancy, <span class="dt">data =</span> world_sfdf)</span>
+<span id="cb20-4"><a href="statistics.html#cb20-4"></a>rqfit_sum&lt;-<span class="kw">summary</span>(rqfit) </span>
+<span id="cb20-5"><a href="statistics.html#cb20-5"></a><span class="co">#least square</span></span>
+<span id="cb20-6"><a href="statistics.html#cb20-6"></a>lsfit&lt;-<span class="kw">lm</span>(MeanLifetimeRisk<span class="op">~</span>LifeExpectancy,<span class="dt">data=</span>world_sfdf)</span>
+<span id="cb20-7"><a href="statistics.html#cb20-7"></a>lsfit_sum&lt;-<span class="kw">summary</span>(lsfit) </span>
+<span id="cb20-8"><a href="statistics.html#cb20-8"></a><span class="co">#plot</span></span>
+<span id="cb20-9"><a href="statistics.html#cb20-9"></a><span class="kw">ggplot</span>(world_sfdf,  <span class="kw">aes</span>(<span class="dt">x=</span>LifeExpectancy,<span class="dt">y=</span>MeanLifetimeRisk))<span class="op">+</span></span>
+<span id="cb20-10"><a href="statistics.html#cb20-10"></a><span class="st">  </span><span class="co">#add fitted line for least square</span></span>
+<span id="cb20-11"><a href="statistics.html#cb20-11"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span>lsfit_sum<span class="op">$</span>coefficients[<span class="dv">1</span>], <span class="dt">slope=</span>lsfit_sum<span class="op">$</span>coefficients[<span class="dv">2</span>],<span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span></span>
+<span id="cb20-12"><a href="statistics.html#cb20-12"></a><span class="st">  </span><span class="co">#add fitted line for quantile regression</span></span>
+<span id="cb20-13"><a href="statistics.html#cb20-13"></a><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">xlab</span>(<span class="st">&quot;Life Expectancy&quot;</span>)<span class="op">+</span></span>
+<span id="cb20-14"><a href="statistics.html#cb20-14"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span>rqfit_sum<span class="op">$</span>coefficients[<span class="dv">1</span>], <span class="dt">slope=</span>rqfit_sum<span class="op">$</span>coefficients[<span class="dv">2</span>],<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)<span class="op">+</span></span>
+<span id="cb20-15"><a href="statistics.html#cb20-15"></a><span class="st">  </span><span class="co">#annotate least square</span></span>
+<span id="cb20-16"><a href="statistics.html#cb20-16"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="dt">x=</span><span class="dv">60</span>, <span class="dt">y=</span><span class="dv">27</span>,<span class="dt">label=</span><span class="kw">paste0</span>(<span class="st">&quot;least square =&quot;</span>,<span class="kw">round</span>(lsfit_sum<span class="op">$</span>coefficients[<span class="dv">1</span>],<span class="dv">2</span>),<span class="st">&quot; + &quot;</span>,<span class="kw">round</span>(lsfit_sum<span class="op">$</span>coefficients[<span class="dv">2</span>],<span class="dv">2</span>),<span class="st">&quot; x &quot;</span>,<span class="st">&quot;Life Expectancy&quot;</span>),<span class="dt">color=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span></span>
+<span id="cb20-17"><a href="statistics.html#cb20-17"></a><span class="st">  </span><span class="co">#annotae quantile regression</span></span>
+<span id="cb20-18"><a href="statistics.html#cb20-18"></a><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,<span class="dt">x=</span><span class="dv">75</span>, <span class="dt">y=</span><span class="dv">12</span>,<span class="dt">label=</span><span class="kw">paste0</span>(<span class="st">&quot;quantile =&quot;</span>,<span class="kw">round</span>(rqfit_sum<span class="op">$</span>coefficients[<span class="dv">1</span>],<span class="dv">2</span>), <span class="st">&quot; + &quot;</span>, <span class="kw">round</span>(rqfit_sum<span class="op">$</span>coefficients[<span class="dv">2</span>],<span class="dv">2</span>),<span class="st">&quot; x &quot;</span>,<span class="st">&quot;Life Expectancy&quot;</span>),<span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 71 rows containing missing values (geom_point).</code></pre>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/quantile%20regression-1.png" width="672" /></p>
+</div>
+<div id="penalised-regression" class="section level3">
+<h3><span class="header-section-number">4.3.4</span> Penalised regression</h3>
+<p>We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) <span class="citation">(Phan et al. <a href="#ref-pmid23838753" role="doc-biblioref">2013</a>)</span>. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="statistics.html#cb22-1"></a><span class="kw">library</span>(stepPlr)</span></code></pre></div>
+<div id="non-negative-regression" class="section level5">
+<h5><span class="header-section-number">4.3.4.0.1</span> Non-negative regression</h5>
+<p>In certain situations, it is necessary to constrain the analysis so that the regression coefifcients are non-negative. For example, when regressing brain regions against infarct volume, there is no reason believe that a negative coefficient attributable to a brain region is possible. Non-negative regression can be performed in R using <em>nnls</em>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="statistics.html#cb23-1"></a><span class="kw">library</span>(nnls)</span></code></pre></div>
+</div>
+</div>
+<div id="poisson-regression" class="section level3">
+<h3><span class="header-section-number">4.3.5</span> Poisson regression</h3>
+<p>Poisson regression is used when dealing with number of event over time or distance such as number of new admissions or new cases of hepatitis or TIA over time. An assumption of the Poisson distribution is that the mean λ and variance λ are the same.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="statistics.html#cb24-1"></a>Fit&lt;-<span class="kw">glm</span>(OUtcome<span class="op">~</span>Age<span class="op">+</span>Sex<span class="op">+</span>Event,<span class="dt">data=</span>Imaginary, <span class="dt">family=</span>poisson)</span>
+<span id="cb24-2"><a href="statistics.html#cb24-2"></a><span class="kw">print</span>(<span class="kw">summary</span>(Fit))</span></code></pre></div>
+<p>A special case of Poisson regression is the negative binomial regression. This latter method is used when the variance is greater than the mean pf the data or over-dispersed data. Negative binomial regression can be applied to number of ‘failure’ event over time. Here ‘failure’ has a lose definition and can be stroke recurrence after TIA or cirrhosis after hepatitis C infection.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="statistics.html#cb25-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb25-2"><a href="statistics.html#cb25-2"></a>Fit&lt;-<span class="kw">glm.nb</span>(Outcome<span class="op">~</span>Age<span class="op">+</span>Sex<span class="op">+</span>Event,<span class="dt">data=</span>Imaginary,<span class="dt">init.theta =</span> <span class="fl">1.032713156</span>,<span class="dt">link=</span>logit)</span></code></pre></div>
+<p>Zero-inflated data occurs when there is an abundance of zeroes in the data (true and excess zeroes).</p>
+</div>
+<div id="mars" class="section level3">
+<h3><span class="header-section-number">4.3.6</span> MARS</h3>
+<p>Multivariate adaptive regression spline (MARS) is a non-linear regression method that fits a set of splines (hinge functions) to each of the predictor variables i.e. different hinge function for different variables <span class="citation">(Friedman and Roosen <a href="#ref-pmid8548103" role="doc-biblioref">1995</a>)</span>. As such, the method can be used to plot the relationship between each variable and outcome. Use in this way, the presence of any threshold effect on the predictors can be graphically visualized. The MARS method is implemented in R programming environment in the <em>earth</em> package.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="statistics.html#cb26-1"></a><span class="kw">library</span>(earth)</span></code></pre></div>
+</div>
+<div id="conditional-logistic-regression" class="section level3">
+<h3><span class="header-section-number">4.3.7</span> Conditional logistic regression</h3>
+</div>
+<div id="mixed-modelling" class="section level3">
+<h3><span class="header-section-number">4.3.8</span> Mixed modelling</h3>
+<p>In a standard regression analysis, the data is assumed to be random. Mixed models assume that there are more than one source of random variability in the data. This is expressed in terms of fixed and random effects. Mixed modeling is a useful technique for handling multilevel or group data. The intraclass correlation (ICC) is used to determine if a multilevel analysis is necessary ie if the infarct volume varies among the surgeon or not. ICC is the between group variance to the total variance. If the ICC approaches zero then a simple regression model would suffice.</p>
+<p>There are several R packages for performing mixed modling such as <em>lme4</em>. An example of mixed modeling in metaregression is illustrated below in the section on Metaanalysis.</p>
+<div id="random-intercept-model" class="section level4">
+<h4><span class="header-section-number">4.3.8.1</span> Random intercept model</h4>
+<p>In a random intercept or fixed slope multilevel model the slope or gradient of the fitted lines are assumed to be parallel to each other and the intercept varies for different groups.</p>
+</div>
+<div id="random-slope-model" class="section level4">
+<h4><span class="header-section-number">4.3.8.2</span> Random slope model</h4>
+<p>In a random slope model, the slopes are not paralleled</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="statistics.html#cb27-1"></a><span class="kw">library</span>(lme4)</span></code></pre></div>
+</div>
+</div>
+<div id="trajectory-modelling" class="section level3">
+<h3><span class="header-section-number">4.3.9</span> Trajectory modelling</h3>
+<p>Trajectory analysis attempts to group the behaviour of the subject of interest over time. There are several different approaches to trajectory analysis: data in raw form or after orthonal transformation of the data in principal component analysis. Trajectory analysis is different from mixed modelling in that it examines group behaviour. The output of trajectory analysis is only the beginning of the modeling analysis. For example, the analysis may identify that there are 3 groups. These groups are labelled as group A, B and C. The next step would be to use the results in a modelling analysis of your choice.</p>
+<p>A useful library for performing trajectory analysis is <em>akmedoids</em>. This library anchored the analysis around the median value. The analysis requires the data in long format. The <em>traj</em> library is similar to the one in <em>Stata</em>. It uses several steps including factor and cluster analyses to idetify groups. The <em>traj</em> model prefers data in wide format.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="statistics.html#cb28-1"></a><span class="kw">library</span>(akmedoids)</span></code></pre></div>
+</div>
+<div id="multinomial-modelling" class="section level3">
+<h3><span class="header-section-number">4.3.10</span> Multinomial modelling</h3>
+<p>Multinomial modelling is used when the outcome categorical variables are not ordered. This situation can occur when analysis involves choice outcome (choices of fruit: apple, orange or pear). In this case, the log odds of each of the categorical outcomes are analysed as a linear combination of the predictor variables. The <em>nnet</em> library have functions for performing this analysis.</p>
+</div>
+</div>
+<div id="sample-size-estimation" class="section level2">
+<h2><span class="header-section-number">4.4</span> Sample size estimation</h2>
+<p>Clinicians are often frustrated about sample size and power estimation for a study, grant or clinical trial. This aspect is scrutinised by ethics committee and in peer review process for journals. Luckily, R provides several packages for sample size amd power estimation: <em>pwr</em> library. Cohen has written reference textbook on this subject <span class="citation">(Cohen <a href="#ref-COHEN1977179" role="doc-biblioref">1977</a>)</span>.</p>
+<div id="proportion" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Proportion</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="statistics.html#cb29-1"></a><span class="kw">library</span>(pwr)</span>
+<span id="cb29-2"><a href="statistics.html#cb29-2"></a><span class="co">#ttest-d is effect size </span></span>
+<span id="cb29-3"><a href="statistics.html#cb29-3"></a><span class="co">#d = )mean group1 -mean group2)/variance</span></span>
+<span id="cb29-4"><a href="statistics.html#cb29-4"></a><span class="kw">pwr.t.test</span>(<span class="dt">n=</span><span class="dv">300</span>,<span class="dt">d=</span><span class="fl">0.2</span>,<span class="dt">sig.level=</span>.<span class="dv">05</span>,<span class="dt">alternative=</span><span class="st">&quot;greater&quot;</span>) </span></code></pre></div>
+<pre><code>## 
+##      Two-sample t test power calculation 
+## 
+##               n = 300
+##               d = 0.2
+##       sig.level = 0.05
+##           power = 0.7886842
+##     alternative = greater
+## 
+## NOTE: n is number in *each* group</code></pre>
+<p>We provided an example below for generating power of clinical trial. Examples are taken from a paper on sample size estimation for phase II trials <span class="citation">(Phan et al. <a href="#ref-pmid16931782" role="doc-biblioref">2006</a>)</span>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="statistics.html#cb31-1"></a><span class="kw">library</span>(pwr)</span>
+<span id="cb31-2"><a href="statistics.html#cb31-2"></a><span class="co">#h is effect size. effect size of 0.5 is very large </span></span>
+<span id="cb31-3"><a href="statistics.html#cb31-3"></a><span class="co">#sample size</span></span>
+<span id="cb31-4"><a href="statistics.html#cb31-4"></a><span class="kw">pwr.2p.test</span>(<span class="dt">h=</span><span class="fl">0.5</span>,<span class="dt">n=</span><span class="dv">50</span>,<span class="dt">sig.level=</span><span class="fl">0.05</span>,<span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##      Difference of proportion power calculation for binomial distribution (arcsine transformation) 
+## 
+##               h = 0.5
+##               n = 50
+##       sig.level = 0.05
+##           power = 0.705418
+##     alternative = two.sided
+## 
+## NOTE: same sample sizes</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="statistics.html#cb33-1"></a><span class="co">#medium effect size</span></span>
+<span id="cb33-2"><a href="statistics.html#cb33-2"></a><span class="kw">pwr.2p.test</span>(<span class="dt">h=</span><span class="fl">0.1</span>,<span class="dt">n=</span><span class="dv">50</span>,<span class="dt">sig.level=</span><span class="fl">0.05</span>,<span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##      Difference of proportion power calculation for binomial distribution (arcsine transformation) 
+## 
+##               h = 0.1
+##               n = 50
+##       sig.level = 0.05
+##           power = 0.07909753
+##     alternative = two.sided
+## 
+## NOTE: same sample sizes</code></pre>
+<p>The ouput of the sample size calculation can be put into a table or plot.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="statistics.html#cb35-1"></a><span class="kw">library</span>(pwr)</span>
+<span id="cb35-2"><a href="statistics.html#cb35-2"></a><span class="co">#pwr.2p.test(h=0.3,n=80,sig.level=0.05,alternative=&quot;two.sided&quot;)</span></span>
+<span id="cb35-3"><a href="statistics.html#cb35-3"></a>h &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">1</span>,.<span class="dv">5</span>,.<span class="dv">1</span>) <span class="co">#from 0.1 to 0.3 by 0.05</span></span>
+<span id="cb35-4"><a href="statistics.html#cb35-4"></a>nh &lt;-<span class="st"> </span><span class="kw">length</span>(h) <span class="co">#5</span></span>
+<span id="cb35-5"><a href="statistics.html#cb35-5"></a>p &lt;-<span class="st"> </span><span class="kw">seq</span>(.<span class="dv">3</span>,.<span class="dv">9</span>,.<span class="dv">1</span>)<span class="co"># power from 0.5 to 0.9 by 0.1</span></span>
+<span id="cb35-6"><a href="statistics.html#cb35-6"></a>np &lt;-<span class="st"> </span><span class="kw">length</span>(p) <span class="co">#9</span></span>
+<span id="cb35-7"><a href="statistics.html#cb35-7"></a><span class="co"># create an empty array 9 x 5</span></span>
+<span id="cb35-8"><a href="statistics.html#cb35-8"></a>samplesize &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="kw">numeric</span>(nh<span class="op">*</span>np), <span class="dt">dim=</span><span class="kw">c</span>(nh,np))</span>
+<span id="cb35-9"><a href="statistics.html#cb35-9"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>np){</span>
+<span id="cb35-10"><a href="statistics.html#cb35-10"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nh){</span>
+<span id="cb35-11"><a href="statistics.html#cb35-11"></a>    result &lt;-<span class="st"> </span><span class="kw">pwr.2p.test</span>(<span class="dt">n =</span> <span class="ot">NULL</span>, <span class="dt">h =</span> h[j],</span>
+<span id="cb35-12"><a href="statistics.html#cb35-12"></a>    <span class="co">#result &lt;- pwr.r.test(n = NULL, h = h[j],</span></span>
+<span id="cb35-13"><a href="statistics.html#cb35-13"></a>    <span class="dt">sig.level =</span> <span class="fl">.05</span>, <span class="dt">power =</span> p[i],</span>
+<span id="cb35-14"><a href="statistics.html#cb35-14"></a>    <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span>
+<span id="cb35-15"><a href="statistics.html#cb35-15"></a>    samplesize[j,i] &lt;-<span class="st"> </span><span class="kw">ceiling</span>(result<span class="op">$</span>n)</span>
+<span id="cb35-16"><a href="statistics.html#cb35-16"></a>  }</span>
+<span id="cb35-17"><a href="statistics.html#cb35-17"></a>}</span>
+<span id="cb35-18"><a href="statistics.html#cb35-18"></a>samplesize</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]  412  583  769  980 1235 1570 2102
+## [2,]  103  146  193  245  309  393  526
+## [3,]   46   65   86  109  138  175  234
+## [4,]   26   37   49   62   78   99  132
+## [5,]   17   24   31   40   50   63   85</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="statistics.html#cb37-1"></a><span class="co">#graph</span></span>
+<span id="cb37-2"><a href="statistics.html#cb37-2"></a>xrange &lt;-<span class="st"> </span><span class="kw">range</span>(h)</span>
+<span id="cb37-3"><a href="statistics.html#cb37-3"></a>yrange &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">range</span>(samplesize))</span>
+<span id="cb37-4"><a href="statistics.html#cb37-4"></a>colors &lt;-<span class="st"> </span><span class="kw">rainbow</span>(<span class="kw">length</span>(p))</span>
+<span id="cb37-5"><a href="statistics.html#cb37-5"></a><span class="kw">plot</span>(xrange, yrange, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>,</span>
+<span id="cb37-6"><a href="statistics.html#cb37-6"></a>  <span class="dt">xlab=</span><span class="st">&quot;Effect size (h)&quot;</span>,</span>
+<span id="cb37-7"><a href="statistics.html#cb37-7"></a>  <span class="dt">ylab=</span><span class="st">&quot;Sample Size (n)&quot;</span> )</span>
+<span id="cb37-8"><a href="statistics.html#cb37-8"></a><span class="co"># add power curves</span></span>
+<span id="cb37-9"><a href="statistics.html#cb37-9"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>np){</span>
+<span id="cb37-10"><a href="statistics.html#cb37-10"></a>  <span class="kw">lines</span>(h, samplesize[,i], <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span>colors[i])</span>
+<span id="cb37-11"><a href="statistics.html#cb37-11"></a>}</span>
+<span id="cb37-12"><a href="statistics.html#cb37-12"></a><span class="co"># add annotation (grid lines, title, legend) </span></span>
+<span id="cb37-13"><a href="statistics.html#cb37-13"></a><span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">0</span>, <span class="dt">h=</span><span class="kw">seq</span>(<span class="dv">0</span>,yrange[<span class="dv">2</span>],<span class="dv">50</span>), <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;grey89&quot;</span>)</span>
+<span id="cb37-14"><a href="statistics.html#cb37-14"></a><span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">v=</span><span class="kw">seq</span>(xrange[<span class="dv">1</span>],xrange[<span class="dv">2</span>],.<span class="dv">02</span>), <span class="dt">lty=</span><span class="dv">2</span>,</span>
+<span id="cb37-15"><a href="statistics.html#cb37-15"></a>   <span class="dt">col=</span><span class="st">&quot;grey89&quot;</span>)</span>
+<span id="cb37-16"><a href="statistics.html#cb37-16"></a><span class="kw">title</span>(<span class="st">&quot;Sample Size Estimation</span><span class="ch">\n</span><span class="st"> Difference in Proportion&quot;</span>)</span>
+<span id="cb37-17"><a href="statistics.html#cb37-17"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Power&quot;</span>, <span class="kw">as.character</span>(p),</span>
+<span id="cb37-18"><a href="statistics.html#cb37-18"></a>   <span class="dt">fill=</span>colors)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/sample%20plot-1.png" width="672" /></p>
+<div id="non-inferiority" class="section level4">
+<h4><span class="header-section-number">4.4.1.1</span> Non-inferiority</h4>
+<p>Non-inferiority trials may offer information in a way that a traditional superiority design do not. The design may be interested in other aspect of the treatment such as cost and lower toxicity <span class="citation">(Kaji and Lewis <a href="#ref-pmid26080342" role="doc-biblioref">2015</a>)</span>. Examples of non-inferiority trial designs include antibiotics versus surgery for appendicitis <span class="citation">(Salminen et al. <a href="#ref-pmid26080338" role="doc-biblioref">2015</a>)</span>. There are concerns with reporting of noninferiority trial. Justification for the margin provided in 27.6% <span class="citation">(Gopal et al. <a href="#ref-pmid25781447" role="doc-biblioref">2015</a>)</span>. The following describes a trial design where it’s expected that drug will result in a certain outcome <em>p1</em> and the control arm <em>p2</em> and the ratio of subject in treatment to control arm is <em>k</em>. The difference in outcome is <em>delta</em>. The margin is defined as non-inferior if &lt;0.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="statistics.html#cb38-1"></a><span class="kw">library</span>(TrialSize)</span>
+<span id="cb38-2"><a href="statistics.html#cb38-2"></a><span class="kw">TwoSampleProportion.NIS</span>(<span class="dt">alpha=</span>.<span class="dv">05</span>, </span>
+<span id="cb38-3"><a href="statistics.html#cb38-3"></a>                        <span class="dt">beta=</span>.<span class="dv">8</span>,</span>
+<span id="cb38-4"><a href="statistics.html#cb38-4"></a>                        <span class="dt">p1=</span>.<span class="dv">6</span>,</span>
+<span id="cb38-5"><a href="statistics.html#cb38-5"></a>                        <span class="dt">p2=</span>.<span class="dv">7</span>,</span>
+<span id="cb38-6"><a href="statistics.html#cb38-6"></a>                        <span class="dt">k=</span><span class="dv">1</span>,</span>
+<span id="cb38-7"><a href="statistics.html#cb38-7"></a>                        <span class="dt">delta =</span> <span class="fl">.1</span>,       </span>
+<span id="cb38-8"><a href="statistics.html#cb38-8"></a>                        <span class="dt">margin=</span><span class="op">-</span>.<span class="dv">2</span></span>
+<span id="cb38-9"><a href="statistics.html#cb38-9"></a>                        )</span></code></pre></div>
+<pre><code>## [1] 3.225911</code></pre>
+</div>
+</div>
+<div id="logistic-regression-1" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Logistic regression</h3>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="statistics.html#cb40-1"></a><span class="kw">library</span>(powerMediation)</span>
+<span id="cb40-2"><a href="statistics.html#cb40-2"></a><span class="co">#continuous predictor</span></span>
+<span id="cb40-3"><a href="statistics.html#cb40-3"></a><span class="co">#p1=event rate</span></span>
+<span id="cb40-4"><a href="statistics.html#cb40-4"></a><span class="kw">powerLogisticCon</span>(<span class="dt">n=</span><span class="dv">317</span>, <span class="dt">p1=</span><span class="fl">0.5</span>, <span class="dt">OR=</span><span class="kw">exp</span>(<span class="fl">0.405</span>), <span class="dt">alpha=</span><span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## [1] 0.9500611</code></pre>
+</div>
+<div id="survival-studies" class="section level3">
+<h3><span class="header-section-number">4.4.3</span> Survival studies</h3>
+<p>Sample size for survival studies can be performed using <em>powerSurvEpi</em> or <em>gsDesign</em>.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="statistics.html#cb42-1"></a><span class="kw">library</span>(powerSurvEpi)</span>
+<span id="cb42-2"><a href="statistics.html#cb42-2"></a><span class="co">#sample size</span></span>
+<span id="cb42-3"><a href="statistics.html#cb42-3"></a><span class="kw">ssizeEpi.default</span>(<span class="dt">power =</span> <span class="fl">0.80</span>, </span>
+<span id="cb42-4"><a href="statistics.html#cb42-4"></a>                 <span class="dt">theta =</span> <span class="dv">2</span>, </span>
+<span id="cb42-5"><a href="statistics.html#cb42-5"></a>                 <span class="dt">p =</span> <span class="fl">0.408</span> , </span>
+<span id="cb42-6"><a href="statistics.html#cb42-6"></a>                 <span class="dt">psi =</span> <span class="fl">0.15</span>,</span>
+<span id="cb42-7"><a href="statistics.html#cb42-7"></a>                 <span class="dt">rho2 =</span> <span class="fl">0.344</span><span class="op">^</span><span class="dv">2</span>, </span>
+<span id="cb42-8"><a href="statistics.html#cb42-8"></a>                 <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## [1] 512</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="statistics.html#cb44-1"></a><span class="co">#power</span></span>
+<span id="cb44-2"><a href="statistics.html#cb44-2"></a><span class="kw">powerEpi.default</span>(<span class="dt">n =</span> <span class="dv">2691</span>, </span>
+<span id="cb44-3"><a href="statistics.html#cb44-3"></a>                 <span class="dt">theta =</span> <span class="dv">2</span>, </span>
+<span id="cb44-4"><a href="statistics.html#cb44-4"></a>                 <span class="dt">p =</span> <span class="fl">0.408</span>, </span>
+<span id="cb44-5"><a href="statistics.html#cb44-5"></a>                 <span class="dt">psi =</span> <span class="fl">0.250</span>,</span>
+<span id="cb44-6"><a href="statistics.html#cb44-6"></a>                 <span class="dt">rho2 =</span> <span class="fl">0.344</span><span class="op">^</span><span class="dv">2</span>, </span>
+<span id="cb44-7"><a href="statistics.html#cb44-7"></a>                 <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="statistics.html#cb46-1"></a><span class="co">#Amarenco NEJM 2020 #equal sample size k=1</span></span>
+<span id="cb46-2"><a href="statistics.html#cb46-2"></a><span class="kw">ssizeCT.default</span>(<span class="dt">power =</span> <span class="fl">0.8</span>, <span class="dt">k =</span> <span class="fl">.8</span>, <span class="dt">pE =</span> <span class="fl">0.085</span>, </span>
+<span id="cb46-3"><a href="statistics.html#cb46-3"></a>                <span class="dt">pC =</span> <span class="fl">0.109</span>, </span>
+<span id="cb46-4"><a href="statistics.html#cb46-4"></a>                <span class="dt">RR =</span> <span class="fl">0.78</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>##   nE   nC 
+## 2417 3021</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="statistics.html#cb48-1"></a><span class="kw">library</span>(gsDesign)</span></code></pre></div>
+</div>
+<div id="multiple-regression" class="section level3">
+<h3><span class="header-section-number">4.4.4</span> Multiple regression</h3>
+<p>The power for general linear model can be calculated using the <em>pwr.f2.test</em> function.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="statistics.html#cb49-1"></a><span class="kw">library</span>(pwr)</span>
+<span id="cb49-2"><a href="statistics.html#cb49-2"></a><span class="co">#u=degrees of freedom for numerator</span></span>
+<span id="cb49-3"><a href="statistics.html#cb49-3"></a><span class="co">#v=degrees of freedomfor denominator</span></span>
+<span id="cb49-4"><a href="statistics.html#cb49-4"></a><span class="co">#f2=effect size</span></span></code></pre></div>
+</div>
+</div>
+<div id="metaanalysis" class="section level2">
+<h2><span class="header-section-number">4.5</span> Metaanalysis</h2>
+<p>During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the metaanalysis. It is not well known outside of statistics journal that the bivariate analysis is the preferred method of metaanalysis of diagnostic study <span class="citation">(Reitsma et al. <a href="#ref-pmid16168343" role="doc-biblioref">2005</a>)</span>. By contrast, the majority of metaanalysis of diagnostic study uses the univariate method of Moses and Littenberg <span class="citation">(Moses, Shapiro, and Littenberg <a href="#ref-pmid8210827" role="doc-biblioref">1993</a>)</span>. This issue will be expanded below.</p>
+<div id="prisma" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> PRISMA</h3>
+<p>The PRISMA statement is useful for understanding the search strategy and the papers removed and retained in the metaanalysis. An example of generating the statement is provided below in R. The example given here is from a paper on the use of spot sign to predict enlargment of intracerebral hemorrhage <span class="citation">(Phan et al. <a href="#ref-pmid31272327" role="doc-biblioref">2019</a>)</span>.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="statistics.html#cb50-1"></a><span class="kw">library</span>(PRISMAstatement)</span>
+<span id="cb50-2"><a href="statistics.html#cb50-2"></a><span class="co">#example from Spot sign paper. Stroke 2019</span></span>
+<span id="cb50-3"><a href="statistics.html#cb50-3"></a><span class="kw">prisma</span>(<span class="dt">found =</span> <span class="dv">193</span>,</span>
+<span id="cb50-4"><a href="statistics.html#cb50-4"></a>       <span class="dt">found_other =</span> <span class="dv">27</span>,</span>
+<span id="cb50-5"><a href="statistics.html#cb50-5"></a>       <span class="dt">no_dupes =</span> <span class="dv">141</span>, </span>
+<span id="cb50-6"><a href="statistics.html#cb50-6"></a>       <span class="dt">screened =</span> <span class="dv">141</span>, </span>
+<span id="cb50-7"><a href="statistics.html#cb50-7"></a>       <span class="dt">screen_exclusions =</span> <span class="dv">3</span>, </span>
+<span id="cb50-8"><a href="statistics.html#cb50-8"></a>       <span class="dt">full_text =</span> <span class="dv">138</span>,</span>
+<span id="cb50-9"><a href="statistics.html#cb50-9"></a>       <span class="dt">full_text_exclusions =</span> <span class="dv">112</span>, </span>
+<span id="cb50-10"><a href="statistics.html#cb50-10"></a>       <span class="dt">qualitative =</span> <span class="dv">26</span>, </span>
+<span id="cb50-11"><a href="statistics.html#cb50-11"></a>       <span class="dt">quantitative =</span> <span class="dv">26</span>,</span>
+<span id="cb50-12"><a href="statistics.html#cb50-12"></a>       <span class="dt">width =</span> <span class="dv">800</span>, <span class="dt">height =</span> <span class="dv">800</span>)</span></code></pre></div>
+<div id="htmlwidget-999cb8df7cca33270d57" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-999cb8df7cca33270d57">{"x":{"diagram":"digraph prisma {\n    node [shape=\"box\", fontsize = 10];\n    graph [splines=ortho, nodesep=1, dpi = 72]\n    a -> nodups;\n    b -> nodups;\n    a [label=\"Records identified through\ndatabase searching\n(n = 193)\"];\n    b [label=\"Additional records identified\nthrough other sources\n(n = 27)\"]\n    nodups -> incex;\n    nodups [label=\"Records after duplicates removed\n(n = 141)\"];\n    incex -> {ex; ft}\n    incex [label=\"Records screened\n(n = 141)\"];\n    ex [label=\"Records excluded\n(n = 3)\"];\n    {rank=same; incex ex}\n    ft -> {qual; ftex};\n    ft [label=\"Full-text articles assessed\nfor eligibility\n(n = 138)\"];\n    {rank=same; ft ftex}\n    ftex [label=\"Full-text articles excluded,\nwith reasons\n(n = 112)\"];\n    qual -> quant\n    qual [label=\"Studies included in qualitative synthesis\n(n = 26)\"];\n    quant [label=\"Studies included in\nquantitative synthesis\n(meta-analysis)\n(n = 26)\"];\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="metaanalysis-of-proportion" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Metaanalysis of proportion</h3>
+<p>This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by <span class="math inline">\(\frac{p \times (1-p)}{n}\)</span>. The term <span class="math inline">\(z\)</span> is given by <span class="math inline">\(1-\frac{\alpha}{2}\)</span> quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method <span class="math inline">\(p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}\)</span>. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to the Wald method. It has an extra term <span class="math inline">\(z^2/n\)</span>. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method <span class="citation">(Agresti and Coull <a href="#ref-doi:10.1080/00031305.1998.10480550" role="doc-biblioref">1998</a>)</span>. Brown and colleagues proposed the use of the Wilson method <span class="citation">(Brown, Cai, and DasGupta <a href="#ref-brown2001" role="doc-biblioref">2001</a>)</span></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="statistics.html#cb51-1"></a><span class="kw">library</span>(metafor) <span class="co">#open software metafor</span></span></code></pre></div>
+<pre><code>## Warning: package &#39;metafor&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Loading the &#39;metafor&#39; package (version 3.0-2). For an
+## introduction to the package please type: help(metafor)</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="statistics.html#cb55-1"></a><span class="co">#create data frame dat</span></span>
+<span id="cb55-2"><a href="statistics.html#cb55-2"></a><span class="co">#xi is numerator</span></span>
+<span id="cb55-3"><a href="statistics.html#cb55-3"></a><span class="co">#ni is denominator</span></span>
+<span id="cb55-4"><a href="statistics.html#cb55-4"></a>dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">model=</span><span class="kw">c</span>(<span class="st">&quot;melbourne&quot;</span>,<span class="st">&quot;paris&quot;</span>,<span class="st">&quot;oxford&quot;</span>,<span class="st">&quot;stanford&quot;</span>,<span class="st">&quot;ottawa&quot;</span>,<span class="st">&quot;new zealand&quot;</span>),</span>
+<span id="cb55-5"><a href="statistics.html#cb55-5"></a><span class="dt">xi=</span><span class="kw">c</span>(<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">31</span>,<span class="dv">2</span>), </span>
+<span id="cb55-6"><a href="statistics.html#cb55-6"></a><span class="dt">ni=</span><span class="kw">c</span>(<span class="dv">468</span>,<span class="dv">296</span>, <span class="dv">281</span>,<span class="dv">223</span>,<span class="dv">982</span>,<span class="dv">172</span>))</span>
+<span id="cb55-7"><a href="statistics.html#cb55-7"></a><span class="co">#calculate new variable pi base on ratio xi/ni</span></span>
+<span id="cb55-8"><a href="statistics.html#cb55-8"></a>dat<span class="op">$</span>pi &lt;-<span class="st"> </span><span class="kw">with</span>(dat, xi<span class="op">/</span>ni)</span>
+<span id="cb55-9"><a href="statistics.html#cb55-9"></a><span class="co">#Freeman-Tukey double arcsine trasformation</span></span>
+<span id="cb55-10"><a href="statistics.html#cb55-10"></a>dat &lt;-<span class="st"> </span><span class="kw">escalc</span>(<span class="dt">measure=</span><span class="st">&quot;PFT&quot;</span>, <span class="dt">xi=</span>xi, <span class="dt">ni=</span>ni, <span class="dt">data=</span>dat, <span class="dt">add=</span><span class="dv">0</span>) </span>
+<span id="cb55-11"><a href="statistics.html#cb55-11"></a>res &lt;-<span class="st"> </span><span class="kw">rma</span>(yi, vi, <span class="dt">method=</span><span class="st">&quot;REML&quot;</span>, <span class="dt">data=</span>dat, <span class="dt">slab=</span><span class="kw">paste</span>(model))</span>
+<span id="cb55-12"><a href="statistics.html#cb55-12"></a><span class="co">#create forest plot with labels</span></span>
+<span id="cb55-13"><a href="statistics.html#cb55-13"></a><span class="kw">forest</span>(res, <span class="dt">transf=</span>transf.ipft.hm, <span class="dt">targs=</span><span class="kw">list</span>(<span class="dt">ni=</span>dat<span class="op">$</span>ni), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="fl">1.5</span>),<span class="dt">refline=</span>res<span class="op">$</span>beta[<span class="dv">1</span>],<span class="dt">cex=</span>.<span class="dv">8</span>, <span class="dt">ilab=</span><span class="kw">cbind</span>(dat<span class="op">$</span>xi, dat<span class="op">$</span>ni), <span class="dt">ilab.xpos=</span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">6</span>,<span class="op">-</span>.<span class="dv">4</span>),<span class="dt">digits=</span><span class="dv">3</span>)</span>
+<span id="cb55-14"><a href="statistics.html#cb55-14"></a>op &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">cex=</span>.<span class="dv">75</span>, <span class="dt">font=</span><span class="dv">2</span>)</span>
+<span id="cb55-15"><a href="statistics.html#cb55-15"></a><span class="kw">text</span>(<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">7.5</span>, <span class="st">&quot;model &quot;</span>,<span class="dt">pos=</span><span class="dv">4</span>)</span>
+<span id="cb55-16"><a href="statistics.html#cb55-16"></a><span class="kw">text</span>(<span class="kw">c</span>(<span class="op">-</span>.<span class="dv">55</span>,<span class="op">-</span>.<span class="dv">2</span>), <span class="fl">7.5</span>, <span class="kw">c</span>(<span class="st">&quot;recurrence&quot;</span>, <span class="st">&quot; total subjects&quot;</span>))</span>
+<span id="cb55-17"><a href="statistics.html#cb55-17"></a><span class="kw">text</span>(<span class="fl">1.4</span>,<span class="fl">7.5</span>, <span class="st">&quot;frequency [95% CI]&quot;</span>, <span class="dt">pos=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
+<img src="Applications-of-R-in-Healthcare_files/figure-html/nice-fig-1.png" alt="Stroke recurrence after TIA clinic" width="80%" />
+<p class="caption">
+Figure 4.1: Stroke recurrence after TIA clinic
+</p>
+</div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="statistics.html#cb56-1"></a><span class="kw">par</span>(op)</span></code></pre></div>
+<p>Exact 95% confidence interval is provided below using the data above. This solution was provided on <em>stack overflow</em>.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="statistics.html#cb57-1"></a>tmp &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">sapply</span>(<span class="kw">split</span>(dat, dat<span class="op">$</span>model), <span class="cf">function</span>(x) <span class="kw">binom.test</span>(x<span class="op">$</span>xi, x<span class="op">$</span>ni)<span class="op">$</span>conf.int))</span>
+<span id="cb57-2"><a href="statistics.html#cb57-2"></a>dat<span class="op">$</span>ci.lb &lt;-<span class="st"> </span>tmp[,<span class="dv">1</span>] <span class="co">#adding column to data frame dat</span></span>
+<span id="cb57-3"><a href="statistics.html#cb57-3"></a>dat<span class="op">$</span>ci.ub &lt;-<span class="st"> </span>tmp[,<span class="dv">2</span>] <span class="co">#adding column to data frame dat</span></span>
+<span id="cb57-4"><a href="statistics.html#cb57-4"></a></span>
+<span id="cb57-5"><a href="statistics.html#cb57-5"></a>res &lt;-<span class="st"> </span><span class="kw">rma.glmm</span>(<span class="dt">measure=</span><span class="st">&quot;PLO&quot;</span>, <span class="dt">xi=</span>xi, <span class="dt">ni=</span>ni, <span class="dt">data=</span>dat)</span>
+<span id="cb57-6"><a href="statistics.html#cb57-6"></a><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb57-7"><a href="statistics.html#cb57-7"></a><span class="kw">with</span>(dat, <span class="kw">forest</span>(yi, <span class="dt">ci.lb=</span>ci.lb, <span class="dt">ci.ub=</span>ci.ub, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.5</span>,<span class="dv">8</span>), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="op">-</span>.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">refline=</span><span class="kw">predict</span>(res, <span class="dt">transf=</span>transf.ilogit)<span class="op">$</span>pred))</span>
+<span id="cb57-8"><a href="statistics.html#cb57-8"></a><span class="kw">addpoly</span>(res, <span class="dt">row=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">transf=</span>transf.ilogit)</span>
+<span id="cb57-9"><a href="statistics.html#cb57-9"></a><span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
+<span id="cb57-10"><a href="statistics.html#cb57-10"></a><span class="kw">text</span>(<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">7.5</span>, <span class="st">&quot;Model&quot;</span>, <span class="dt">pos=</span><span class="dv">4</span>)</span>
+<span id="cb57-11"><a href="statistics.html#cb57-11"></a><span class="kw">text</span>(<span class="kw">c</span>(<span class="op">-</span>.<span class="dv">8</span>,<span class="op">-</span>.<span class="dv">2</span>), <span class="fl">7.5</span>, <span class="kw">c</span>(<span class="st">&quot;recurrence&quot;</span>, <span class="st">&quot; total subjects&quot;</span>))</span>
+<span id="cb57-12"><a href="statistics.html#cb57-12"></a><span class="kw">text</span>( <span class="dv">1</span>,   <span class="fl">7.5</span>, <span class="st">&quot;Proportion [95% CI]&quot;</span>, <span class="dt">pos=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:nice-fig2"></span>
+<img src="Applications-of-R-in-Healthcare_files/figure-html/nice-fig2-1.png" alt="Stroke recurrence after TIA clinic-exact  95% CI" width="80%" />
+<p class="caption">
+Figure 4.2: Stroke recurrence after TIA clinic-exact 95% CI
+</p>
+</div>
+</div>
+<div id="bivariate-metaanalysis" class="section level3">
+<h3><span class="header-section-number">4.5.3</span> Bivariate Metaanalysis</h3>
+<p>The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)<span class="citation">(Moses, Shapiro, and Littenberg <a href="#ref-pmid8210827" role="doc-biblioref">1993</a>)</span> . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation <span class="citation">(Reitsma et al. <a href="#ref-pmid16168343" role="doc-biblioref">2005</a>)</span>. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using <em>mada</em> package.</p>
+<p>The example below is taken from a metaanalysis of spot sign as predictor expansion of intracerebral hemorrhage <span class="citation">(Phan et al. <a href="#ref-pmid31272327" role="doc-biblioref">2019</a>)</span>. The data for this analysis is available in the Data-Use sub-folder.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="statistics.html#cb58-1"></a><span class="kw">library</span>(mada)</span></code></pre></div>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## Loading required package: ellipse</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ellipse&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     pairs</code></pre>
+<pre><code>## Loading required package: mvmeta</code></pre>
+<pre><code>## This is mvmeta 1.0.3. For an overview type: help(&#39;mvmeta-package&#39;).</code></pre>
+<pre><code>## 
+## Attaching package: &#39;mvmeta&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:metafor&#39;:
+## 
+##     blup</code></pre>
+<pre><code>## 
+## Attaching package: &#39;mada&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:metafor&#39;:
+## 
+##     forest</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="statistics.html#cb69-1"></a>Dat&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/ss150718.csv&quot;</span>)</span>
+<span id="cb69-2"><a href="statistics.html#cb69-2"></a><span class="co">#remove duplicates</span></span>
+<span id="cb69-3"><a href="statistics.html#cb69-3"></a>dat&lt;-<span class="kw">subset</span>(Dat, Dat<span class="op">$</span>retain<span class="op">==</span><span class="st">&quot;yes&quot;</span>) </span>
+<span id="cb69-4"><a href="statistics.html#cb69-4"></a>(ss&lt;-<span class="kw">reitsma</span>(dat))</span></code></pre></div>
+<pre><code>## Call:  reitsma.default(data = dat)
+## 
+## Fixed-effects coefficients:
+##               tsens     tfpr
+## (Intercept)  0.2548  -1.9989
+## 
+## 27 studies, 2 fixed and 3 random-effects parameters
+##   logLik       AIC       BIC  
+##  52.0325  -94.0650  -84.1201</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="statistics.html#cb71-1"></a><span class="kw">summary</span>(ss)</span></code></pre></div>
+<pre><code>## Call:  reitsma.default(data = dat)
+## 
+## Bivariate diagnostic random-effects meta-analysis
+## Estimation method: REML
+## 
+## Fixed-effects coefficients
+##                   Estimate Std. Error       z Pr(&gt;|z|) 95%ci.lb 95%ci.ub    
+## tsens.(Intercept)    0.255      0.152   1.676    0.094   -0.043    0.553   .
+## tfpr.(Intercept)    -1.999      0.097 -20.664    0.000   -2.189   -1.809 ***
+## sensitivity          0.563          -       -        -    0.489    0.635    
+## false pos. rate      0.119          -       -        -    0.101    0.141    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Variance components: between-studies Std. Dev and correlation matrix
+##       Std. Dev  tsens  tfpr
+## tsens    0.692  1.000     .
+## tfpr     0.400 -0.003 1.000
+## 
+##  logLik     AIC     BIC 
+##  52.033 -94.065 -84.120 
+## 
+## AUC:  0.858
+## Partial AUC (restricted to observed FPRs and normalized):  0.547
+## 
+## HSROC parameters 
+##       Theta      Lambda        beta sigma2theta sigma2alpha 
+##      -1.217       2.823      -0.548       0.138       0.556</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="statistics.html#cb73-1"></a><span class="kw">AUC</span>(<span class="kw">reitsma</span>(<span class="dt">data =</span> dat))</span></code></pre></div>
+<pre><code>## $AUC
+## [1] 0.8576619
+## 
+## $pAUC
+## [1] 0.5474316
+## 
+## attr(,&quot;sroc.type&quot;)
+## [1] &quot;ruttergatsonis&quot;</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="statistics.html#cb75-1"></a>sumss&lt;-<span class="kw">SummaryPts</span>(ss,<span class="dt">n.iter =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">3</span>) <span class="co">#bivariate pooled LR</span></span>
+<span id="cb75-2"><a href="statistics.html#cb75-2"></a><span class="kw">summary</span>(sumss)</span></code></pre></div>
+<pre><code>##           Mean Median  2.5%  97.5%
+## posLR    4.750  4.740 3.790  5.870
+## negLR    0.494  0.494 0.413  0.578
+## invnegLR 2.040  2.030 1.730  2.420
+## DOR      9.760  9.580 6.620 13.700</code></pre>
+</div>
+<div id="metaregression" class="section level3">
+<h3><span class="header-section-number">4.5.4</span> Metaregression</h3>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="statistics.html#cb77-1"></a><span class="co">#plot year against tsens</span></span>
+<span id="cb77-2"><a href="statistics.html#cb77-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb77-3"><a href="statistics.html#cb77-3"></a><span class="kw">library</span>(lubridate)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="statistics.html#cb80-1"></a>ssr&lt;-<span class="kw">as.data.frame</span>(ss<span class="op">$</span>residuals)</span>
+<span id="cb80-2"><a href="statistics.html#cb80-2"></a>ssr<span class="op">$</span>Year&lt;-<span class="kw">as.Date</span>(<span class="kw">as.character</span>(dat<span class="op">$</span>PubYear),<span class="st">&quot;%Y&quot;</span>)</span>
+<span id="cb80-3"><a href="statistics.html#cb80-3"></a>ssr<span class="op">$</span>Quality&lt;-dat<span class="op">$</span>Quality.assessment</span>
+<span id="cb80-4"><a href="statistics.html#cb80-4"></a><span class="kw">ggplot</span>(ssr, <span class="kw">aes</span>(<span class="dt">x=</span>ssr<span class="op">$</span>Year,<span class="dt">y=</span>ssr<span class="op">$</span>tsens))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">scale_x_date</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)<span class="op">+</span></span>
+<span id="cb80-5"><a href="statistics.html#cb80-5"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Relationship between transformed sensitivity and Publication Year&quot;</span>)<span class="op">+</span></span>
+<span id="cb80-6"><a href="statistics.html#cb80-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">y=</span><span class="st">&quot;transformed sensitivity&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Use of `ssr$Year` is discouraged. Use `Year` instead.</code></pre>
+<pre><code>## Warning: Use of `ssr$tsens` is discouraged. Use `tsens` instead.</code></pre>
+<pre><code>## Warning: Use of `ssr$Year` is discouraged. Use `Year` instead.</code></pre>
+<pre><code>## Warning: Use of `ssr$tsens` is discouraged. Use `tsens` instead.</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:nice-fig3"></span>
+<img src="Applications-of-R-in-Healthcare_files/figure-html/nice-fig3-1.png" alt="Metaregression" width="80%" />
+<p class="caption">
+Figure 4.3: Metaregression
+</p>
+</div>
+</div>
+<div id="bayesian-metaanalysis" class="section level3">
+<h3><span class="header-section-number">4.5.5</span> Bayesian Metaanalysis</h3>
+<p>A Bayesian approach towards metaanalysis is provided below using the package <em>meta4diag</em> <span class="citation">(Guo and Riebler <a href="#ref-2015arXiv151206220G" role="doc-biblioref">2015</a>)</span>. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the <em>mada</em> package which does not provide a bivariate method for performing summary sensitivity and specificity.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="statistics.html#cb86-1"></a><span class="kw">library</span>(meta4diag)</span></code></pre></div>
+<pre><code>## Loading required package: sp</code></pre>
+<pre><code>## Loading required package: grid</code></pre>
+<pre><code>## Loading required package: shiny</code></pre>
+<pre><code>## Loading required package: shinyBS</code></pre>
+<pre><code>## Loading required package: caTools</code></pre>
+<pre><code>## 
+## Attaching package: &#39;meta4diag&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:mada&#39;:
+## 
+##     AUC, crosshair, forest</code></pre>
+<pre><code>## The following objects are masked from &#39;package:metafor&#39;:
+## 
+##     forest, funnel</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="statistics.html#cb95-1"></a><span class="kw">library</span>(INLA)</span></code></pre></div>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## This is INLA_20.07.18-2 built 2020-07-18 12:21:38 UTC.
+##  - See www.r-inla.org/contact-us for how to get help.
+##  - Save 521.2Mb of storage running &#39;inla.prune()&#39;</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="statistics.html#cb99-1"></a>res &lt;-<span class="st"> </span><span class="kw">meta4diag</span>(<span class="dt">data =</span> dat) </span>
+<span id="cb99-2"><a href="statistics.html#cb99-2"></a><span class="kw">SROC</span>(res, <span class="dt">crShow =</span> T)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/bayesian-metaanalysis-1.png" width="672" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="statistics.html#cb100-1"></a><span class="co">#sensitivity</span></span>
+<span id="cb100-2"><a href="statistics.html#cb100-2"></a><span class="kw">forest</span>(res, <span class="dt">accuracy.type=</span><span class="st">&quot;sens&quot;</span>, <span class="dt">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="dt">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="dt">p.pch=</span><span class="dv">15</span>, <span class="dt">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb100-3"><a href="statistics.html#cb100-3"></a>    <span class="dt">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="dt">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="dt">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="dt">text.cex=</span><span class="dv">1</span>,</span>
+<span id="cb100-4"><a href="statistics.html#cb100-4"></a>    <span class="dt">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">arrow.lty=</span><span class="dv">1</span>, <span class="dt">arrow.lwd=</span><span class="dv">1</span>,</span>
+<span id="cb100-5"><a href="statistics.html#cb100-5"></a>    <span class="dt">cut=</span><span class="ot">TRUE</span>, <span class="dt">intervals=</span><span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
+<span id="cb100-6"><a href="statistics.html#cb100-6"></a>    <span class="dt">main=</span><span class="st">&quot;Forest plot of Sensitivity&quot;</span>, <span class="dt">main.cex=</span><span class="fl">1.5</span>, <span class="dt">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:nice-fig4"></span>
+<img src="Applications-of-R-in-Healthcare_files/figure-html/nice-fig4-1.png" alt="Bayesian Forest plot of sensitivity and specificity" width="80%" />
+<p class="caption">
+Figure 4.4: Bayesian Forest plot of sensitivity and specificity
+</p>
+</div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="statistics.html#cb101-1"></a><span class="co">#specificity</span></span>
+<span id="cb101-2"><a href="statistics.html#cb101-2"></a><span class="kw">forest</span>(res, <span class="dt">accuracy.type=</span><span class="st">&quot;spec&quot;</span>, <span class="dt">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="dt">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="dt">p.pch=</span><span class="dv">15</span>, <span class="dt">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb101-3"><a href="statistics.html#cb101-3"></a>    <span class="dt">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="dt">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="dt">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="dt">text.cex=</span><span class="dv">1</span>,</span>
+<span id="cb101-4"><a href="statistics.html#cb101-4"></a>    <span class="dt">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">arrow.lty=</span><span class="dv">1</span>, <span class="dt">arrow.lwd=</span><span class="dv">1</span>,</span>
+<span id="cb101-5"><a href="statistics.html#cb101-5"></a>    <span class="dt">cut=</span><span class="ot">TRUE</span>, <span class="dt">intervals=</span><span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
+<span id="cb101-6"><a href="statistics.html#cb101-6"></a>    <span class="dt">main=</span><span class="st">&quot;Forest plot of Specificity&quot;</span>, <span class="dt">main.cex=</span><span class="fl">1.5</span>, <span class="dt">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/specificity-1.png" width="672" /></p>
+<div id="inconsistency-i2" class="section level4">
+<h4><span class="header-section-number">4.5.5.1</span> Inconsistency I2</h4>
+<p>The inconsistency <span class="math inline">\(I^2\)</span> index is the sum of the squared deviations from the overall effect and weighted by the study size. Value &lt;25% is classified as low and greater than 75% as high heterogeneity. This test can be performed using metafor package . The presence of high <span class="math inline">\(I^2\)</span> suggests a need to proceed to meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR.</p>
+</div>
+<div id="summary-positive-and-negative-likelihood-ratio" class="section level4">
+<h4><span class="header-section-number">4.5.5.2</span> summary Positive and Negative Likelihood Ratio</h4>
+<p>Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al<span class="citation">(Jaeschke, Guyatt, and Sackett <a href="#ref-pmid8309035" role="doc-biblioref">1994</a>)</span> a high PLR (&gt;5) and low NLR (&lt;0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of &gt;10 and NLRs of &lt;0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test result for a range of possible values of baseline risk.</p>
+</div>
+</div>
+</div>
+<div id="data-simulation" class="section level2">
+<h2><span class="header-section-number">4.6</span> Data simulation</h2>
+<p>Data simulation is an important aspects of data science. The example below is taken from our experience trying to simulate data from recent clot retrieval trials in stroke <span class="citation">(Berkhemer et al. <a href="#ref-pmid25517348" role="doc-biblioref">2015</a>, @pmid25671797)</span>. Simulation is performed using <em>simstudy</em> library.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="statistics.html#cb102-1"></a><span class="kw">library</span> (simstudy)</span>
+<span id="cb102-2"><a href="statistics.html#cb102-2"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v tibble  3.1.5     v dplyr   1.0.7
+## v tidyr   1.1.4     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0
+## v purrr   0.3.4</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x purrr::accumulate()      masks foreach::accumulate()
+## x lubridate::as.difftime() masks base::as.difftime()
+## x lubridate::date()        masks base::date()
+## x tidyr::expand()          masks Matrix::expand()
+## x dplyr::filter()          masks stats::filter()
+## x lubridate::intersect()   masks base::intersect()
+## x dplyr::lag()             masks stats::lag()
+## x tidyr::pack()            masks Matrix::pack()
+## x lubridate::setdiff()     masks base::setdiff()
+## x readr::spec()            masks mada::spec()
+## x lubridate::union()       masks base::union()
+## x tidyr::unpack()          masks Matrix::unpack()
+## x purrr::when()            masks foreach::when()</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="statistics.html#cb109-1"></a><span class="co">#T is Trial</span></span>
+<span id="cb109-2"><a href="statistics.html#cb109-2"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(<span class="dt">varname =</span> <span class="st">&quot;T&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="dt">formula =</span> <span class="fl">0.5</span>)</span>
+<span id="cb109-3"><a href="statistics.html#cb109-3"></a><span class="co">#early neurological improvement (ENI) .37 in TPA and .8 in ECR</span></span>
+<span id="cb109-4"><a href="statistics.html#cb109-4"></a><span class="co">#baseline NIHSS 13 in TPA and 17 in ECR</span></span>
+<span id="cb109-5"><a href="statistics.html#cb109-5"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef, <span class="dt">varname =</span> <span class="st">&quot;ENI&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">formula =</span> <span class="fl">.8-.52</span><span class="op">*</span>T, <span class="dt">variance =</span> <span class="fl">.1</span>)</span>
+<span id="cb109-6"><a href="statistics.html#cb109-6"></a><span class="co">#baseline NIHSS 13 in TPA and 17 in ECR</span></span>
+<span id="cb109-7"><a href="statistics.html#cb109-7"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef, <span class="dt">varname =</span> <span class="st">&quot;Y0&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">formula =</span> <span class="dv">13</span>, <span class="dt">variance =</span> <span class="dv">1</span>)</span>
+<span id="cb109-8"><a href="statistics.html#cb109-8"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef, <span class="dt">varname =</span> <span class="st">&quot;Y1&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">formula =</span> <span class="st">&quot;Y0- 5 - 5 * T &gt;5&quot;</span>,<span class="dt">variance =</span> <span class="dv">1</span>)</span>
+<span id="cb109-9"><a href="statistics.html#cb109-9"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef, <span class="dt">varname =</span> <span class="st">&quot;Y2&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">formula =</span> <span class="st">&quot;Y0 - 5 - 5- 9* T&gt;0&quot;</span>,<span class="dt">variance =</span> <span class="dv">1</span>)</span>
+<span id="cb109-10"><a href="statistics.html#cb109-10"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef, <span class="dt">varname =</span> <span class="st">&quot;Y3&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;normal&quot;</span>, <span class="dt">formula =</span> <span class="st">&quot;Y0 - 5 - 5 -2- 12 * T&gt;0&quot;</span>, </span>
+<span id="cb109-11"><a href="statistics.html#cb109-11"></a>    <span class="dt">variance =</span> <span class="dv">1</span>)</span>
+<span id="cb109-12"><a href="statistics.html#cb109-12"></a><span class="co">#male</span></span>
+<span id="cb109-13"><a href="statistics.html#cb109-13"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef,<span class="dt">varname =</span> <span class="st">&quot;Male&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="dt">formula =</span> <span class="fl">0.49</span><span class="op">*</span>T)</span>
+<span id="cb109-14"><a href="statistics.html#cb109-14"></a><span class="co">#diabetes .23 in TPA and .06 in ECR</span></span>
+<span id="cb109-15"><a href="statistics.html#cb109-15"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef,<span class="dt">varname =</span> <span class="st">&quot;Diabetes&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="dt">formula =</span> <span class="fl">.23-.17</span><span class="op">*</span>T)</span>
+<span id="cb109-16"><a href="statistics.html#cb109-16"></a><span class="co">#HT .66 TPA vs .6 ECR</span></span>
+<span id="cb109-17"><a href="statistics.html#cb109-17"></a>tdef &lt;-<span class="st"> </span><span class="kw">defData</span>(tdef,<span class="dt">varname =</span> <span class="st">&quot;HT&quot;</span>, <span class="dt">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="dt">formula =</span> <span class="fl">.66-.06</span><span class="op">*</span>T)</span>
+<span id="cb109-18"><a href="statistics.html#cb109-18"></a><span class="co">#generate data frame</span></span>
+<span id="cb109-19"><a href="statistics.html#cb109-19"></a>dtTrial &lt;-<span class="st"> </span><span class="kw">genData</span>(<span class="dv">500</span>, tdef)</span>
+<span id="cb109-20"><a href="statistics.html#cb109-20"></a>dtTime &lt;-<span class="st"> </span><span class="kw">addPeriods</span>(dtTrial, <span class="dt">nPeriods =</span> <span class="dv">4</span>, <span class="dt">idvars =</span> <span class="st">&quot;id&quot;</span>, <span class="dt">timevars =</span> <span class="kw">c</span>(<span class="st">&quot;Y0&quot;</span>, <span class="st">&quot;Y1&quot;</span>, <span class="st">&quot;Y2&quot;</span>,<span class="st">&quot;Y3&quot;</span>), <span class="dt">timevarName =</span> <span class="st">&quot;Y&quot;</span>)</span>
+<span id="cb109-21"><a href="statistics.html#cb109-21"></a>dtTime</span></code></pre></div>
+<pre><code>##        id period T        ENI Male Diabetes HT            Y timeID
+##    1:   1      0 1 0.61824281    0        0  1 12.930373412      1
+##    2:   1      1 1 0.61824281    0        0  1  1.510254428      2
+##    3:   1      2 1 0.61824281    0        0  1 -2.058587431      3
+##    4:   1      3 1 0.61824281    0        0  1 -0.003425594      4
+##    5:   2      0 0 0.73175513    0        0  1 12.291593547      5
+##   ---                                                             
+## 1996: 499      3 1 0.34126778    1        0  1  0.229942383   1996
+## 1997: 500      0 0 0.08392724    0        0  1 13.702553060   1997
+## 1998: 500      1 0 0.08392724    0        0  1  2.056580009   1998
+## 1999: 500      2 0 0.08392724    0        0  1  1.239466774   1999
+## 2000: 500      3 0 0.08392724    0        0  1  1.519625094   2000</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="statistics.html#cb111-1"></a><span class="co">#check  that 2 groups are similar at start but not at finish</span></span>
+<span id="cb111-2"><a href="statistics.html#cb111-2"></a><span class="kw">t.test</span>(Y0<span class="op">~</span>T,<span class="dt">data=</span>dtTrial)</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  Y0 by T
+## t = -0.32903, df = 483.46, p-value = 0.7423
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.2006294  0.1430742
+## sample estimates:
+## mean in group 0 mean in group 1 
+##        12.89510        12.92388</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="statistics.html#cb113-1"></a><span class="kw">t.test</span>(Y3<span class="op">~</span>T,<span class="dt">data=</span>dtTrial)</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  Y3 by T
+## t = 8.1513, df = 445.81, p-value = 3.676e-15
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.5888762 0.9630507
+## sample estimates:
+## mean in group 0 mean in group 1 
+##      0.81390394      0.03794047</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="statistics.html#cb115-1"></a><span class="kw">t.test</span>(Male<span class="op">~</span>T,<span class="dt">data=</span>dtTrial)</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  Male by T
+## t = 1.8522, df = 485.04, p-value = 0.0646
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.005045043  0.170919453
+## sample estimates:
+## mean in group 0 mean in group 1 
+##       0.5589520       0.4760148</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="statistics.html#cb117-1"></a><span class="co">#putting the 4 time periods together</span></span>
+<span id="cb117-2"><a href="statistics.html#cb117-2"></a>dtTime &lt;-<span class="st"> </span><span class="kw">addPeriods</span>(dtTrial, <span class="dt">nPeriods =</span> <span class="dv">3</span>, <span class="dt">idvars =</span> <span class="st">&quot;id&quot;</span>, <span class="dt">timevars =</span> <span class="kw">c</span>(<span class="st">&quot;Y0&quot;</span>, <span class="st">&quot;Y1&quot;</span>, <span class="st">&quot;Y2&quot;</span>,<span class="st">&quot;Y3&quot;</span>), <span class="dt">timevarName =</span> <span class="st">&quot;Y&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in addPeriods(dtTrial, nPeriods = 3, idvars = &quot;id&quot;, timevars = c(&quot;Y0&quot;, : Number of periods &lt;&gt; number of time dependent variables:
+##       periods based on time-dependent variables</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="statistics.html#cb119-1"></a><span class="co">#summarise data using group_by</span></span>
+<span id="cb119-2"><a href="statistics.html#cb119-2"></a>dtTime2&lt;-dtTime <span class="op">%&gt;%</span></span>
+<span id="cb119-3"><a href="statistics.html#cb119-3"></a><span class="st">  </span><span class="kw">group_by</span>(period, T) <span class="op">%&gt;%</span></span>
+<span id="cb119-4"><a href="statistics.html#cb119-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanY=</span><span class="kw">mean</span>(Y),</span>
+<span id="cb119-5"><a href="statistics.html#cb119-5"></a>            <span class="dt">sdY=</span><span class="kw">sd</span>(Y),</span>
+<span id="cb119-6"><a href="statistics.html#cb119-6"></a>            <span class="dt">upperY=</span>meanY<span class="op">+</span>sdY,</span>
+<span id="cb119-7"><a href="statistics.html#cb119-7"></a>            <span class="dt">lowerY=</span>meanY<span class="op">-</span>sdY)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;period&#39;. You can override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="statistics.html#cb121-1"></a><span class="co">#write.csv(dtTime, file=&quot;./Data-Use/dtTime_simulated.csv&quot;)</span></span>
+<span id="cb121-2"><a href="statistics.html#cb121-2"></a><span class="co">#write.csv(dtTrial,          file=&quot;./Data-Use/dtTrial_simulated.csv&quot;)</span></span></code></pre></div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-doi:10.1080/00031305.1998.10480550">
+<p>Agresti, Alan, and Brent A. Coull. 1998. “Approximate Is Better Than ‘Exact’ for Interval Estimation of Binomial Proportions.” <em>The American Statistician</em> 52 (2): 119–26. <a href="https://doi.org/10.1080/00031305.1998.10480550">https://doi.org/10.1080/00031305.1998.10480550</a>.</p>
+</div>
+<div id="ref-pmid25517348">
+<p>Berkhemer, O. A., P. S. Fransen, D. Beumer, L. A. van den Berg, H. F. Lingsma, A. J. Yoo, W. J. Schonewille, et al. 2015. “A randomized trial of intraarterial treatment for acute ischemic stroke.” <em>N. Engl. J. Med.</em> 372 (1): 11–20.</p>
+</div>
+<div id="ref-brown2001">
+<p>Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001. “Interval Estimation for a Binomial Proportion.” <em>Statist. Sci.</em> 16 (2): 101–33. <a href="https://doi.org/10.1214/ss/1009213286">https://doi.org/10.1214/ss/1009213286</a>.</p>
+</div>
+<div id="ref-COHEN1977179">
+<p>Cohen, Jacob. 1977. “CHAPTER 6 - Differences Between Proportions.” In <em>Statistical Power Analysis for the Behavioral Sciences</em>, edited by Jacob Cohen, 179–213. Academic Press. <a href="https://doi.org/https://doi.org/10.1016/B978-0-12-179060-8.50011-6">https://doi.org/https://doi.org/10.1016/B978-0-12-179060-8.50011-6</a>.</p>
+</div>
+<div id="ref-pmid1738016">
+<p>Diamond, G. A. 1992. “What price perfection? Calibration and discrimination of clinical prediction models.” <em>J Clin Epidemiol</em> 45 (1): 85–89.</p>
+</div>
+<div id="ref-pmid8548103">
+<p>Friedman, J. H., and C. B. Roosen. 1995. “An introduction to multivariate adaptive regression splines.” <em>Stat Methods Med Res</em> 4 (3): 197–217.</p>
+</div>
+<div id="ref-pmid25781447">
+<p>Gopal, A. D., N. R. Desai, T. Tse, and J. S. Ross. 2015. “Reporting of noninferiority trials in ClinicalTrials.gov and corresponding publications.” <em>JAMA</em> 313 (11): 1163–5.</p>
+</div>
+<div id="ref-10.1093/biomet/81.3.515">
+<p>Grambsch, P. M., and T. M. Therneau. 1994. “Proportional hazards tests and diagnostics based on weighted residuals.” <em>Biometrika</em> 81 (3): 515–26. <a href="https://doi.org/10.1093/biomet/81.3.515">https://doi.org/10.1093/biomet/81.3.515</a>.</p>
+</div>
+<div id="ref-2015arXiv151206220G">
+<p>Guo, Jingyi, and Andrea Riebler. 2015. “meta4diag: Bayesian Bivariate Meta-analysis of Diagnostic Test Studies for Routine Practice.” <em>arXiv E-Prints</em>, December, arXiv:1512.06220. <a href="http://arxiv.org/abs/1512.06220">http://arxiv.org/abs/1512.06220</a>.</p>
+</div>
+<div id="ref-pmid8309035">
+<p>Jaeschke, R., G. H. Guyatt, and D. L. Sackett. 1994. “Users’ guides to the medical literature. III. How to use an article about a diagnostic test. B. What are the results and will they help me in caring for my patients? The Evidence-Based Medicine Working Group.” <em>JAMA</em> 271 (9): 703–7.</p>
+</div>
+<div id="ref-pmid26080342">
+<p>Kaji, A. H., and R. J. Lewis. 2015. “Noninferiority Trials: Is a New Treatment Almost as Effective as Another?” <em>JAMA</em> 313 (23): 2371–2.</p>
+</div>
+<div id="ref-pmid8210827">
+<p>Moses, L. E., D. Shapiro, and B. Littenberg. 1993. “Combining independent studies of a diagnostic test into a summary ROC curve: data-analytic approaches and some additional considerations.” <em>Stat Med</em> 12 (14): 1293–1316.</p>
+</div>
+<div id="ref-pmid28579970">
+<p>Phan, T. G., B. B. Clissold, H. Ma, J. V. Ly, and V. Srikanth. 2017. “Predicting Disability after Ischemic Stroke Based on Comorbidity Index and Stroke Severity-From the Virtual International Stroke Trials Archive-Acute Collaboration.” <em>Front Neurol</em> 8: 192.</p>
+</div>
+<div id="ref-pmid26796056">
+<p>Phan, T. G., B. Clissold, J. Ly, H. Ma, C. Moran, V. Srikanth, K. R. Lees, et al. 2016. “Stroke Severity and Comorbidity Index for Prediction of Mortality after Ischemic Stroke from the Virtual International Stroke Trials Archive-Acute Collaboration.” <em>J Stroke Cerebrovasc Dis</em> 25 (4): 835–42.</p>
+</div>
+<div id="ref-pmid23838753">
+<p>Phan, T. G., A. Demchuk, V. Srikanth, B. Silver, S. C. Patel, P. A. Barber, S. R. Levine, and M. D. Hill. 2013. “Proof of concept study: relating infarct location to stroke disability in the NINDS rt-PA trial.” <em>Cerebrovasc. Dis.</em> 35 (6): 560–65.</p>
+</div>
+<div id="ref-pmid16931782">
+<p>Phan, T. G., G. A. Donnan, S. M. Davis, and G. Byrnes. 2006. “Proof-of-principle phase II MRI studies in stroke: sample size estimates from dichotomous and continuous data.” <em>Stroke</em> 37 (10): 2521–5.</p>
+</div>
+<div id="ref-pmid31272327">
+<p>Phan, T. G., N. Krishnadas, V. W. Y. Lai, M. Batt, L. A. Slater, R. V. Chandra, V. Srikanth, and H. Ma. 2019. “Meta-Analysis of Accuracy of the Spot Sign for Predicting Hematoma Growth and Clinical Outcomes.” <em>Stroke</em> 50 (8): 2030–6.</p>
+</div>
+<div id="ref-pmid16168343">
+<p>Reitsma, J. B., A. S. Glas, A. W. Rutjes, R. J. Scholten, P. M. Bossuyt, and A. H. Zwinderman. 2005. “Bivariate analysis of sensitivity and specificity produces informative summary measures in diagnostic reviews.” <em>J Clin Epidemiol</em> 58 (10): 982–90.</p>
+</div>
+<div id="ref-pmid26080338">
+<p>Salminen, P., H. Paajanen, T. Rautio, P. Nordstr?m, M. Aarnio, T. Rantanen, R. Tuominen, et al. 2015. “Antibiotic Therapy vs Appendectomy for Treatment of Uncomplicated Acute Appendicitis: The APPAC Randomized Clinical Trial.” <em>JAMA</em> 313 (23): 2340–8.</p>
+</div>
+<div id="ref-10.1001/jamaneurol.2020.0678">
+<p>Signori, Alessio, Fabio Pellegrini, Francesca Bovis, Luca Carmisciano, Carl de Moor, and Maria Pia Sormani. 2020. “Comparison of Placebos and Propensity Score Adjustment in Multiple Sclerosis Nonrandomized Studies.” <em>JAMA Neurology</em>, April. <a href="https://doi.org/10.1001/jamaneurol.2020.0678">https://doi.org/10.1001/jamaneurol.2020.0678</a>.</p>
+</div>
+<div id="ref-pmid32167523">
+<p>Stensrud, M. J., and M. A. Hernan. 2020. “Why Test for Proportional Hazards?” <em>JAMA</em>, March.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-wrangling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multivariate-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-Statistics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Applications-of-R-in-Healthcare.pdf", "Applications-of-R-in-Healthcare.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
