@@ -4,8 +4,11 @@
 
 ## Formal concept analysis
 ```{r fca}
+
 library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
 library(Rgraphviz) #plot hasse diagram
+#install BiocManager::install("Rgraphviz")
+
 edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")
 df<-edge[,c(2:dim(edge)[2])]
 row.names(df)<-edge[,1] #bipartite matrix

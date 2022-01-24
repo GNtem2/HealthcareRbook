@@ -1,6 +1,6 @@
-# Statistics {#Statistics}
+# Statistics
 
-This section is not intended as a textbook on statistics. Rather it demonstrates different regression approaches that can be used such as Poisson \@ref(poisson), survival \@ref(survival), quantile \@ref(quantile), penalised \@ref(penalised), and non-linear regressions \@ref(nonlinear). It also  includes sections on [Sample size estimation], [Metaanalysis] and [Data simulation]. R codes are provided.
+This section is not intended as a textbook on statistics. Rather it demonstrates regression approaches that can be used including sample size estimation, R codes provided.
 
 ## Univariable analyses
 
@@ -28,7 +28,7 @@ wilcox.test(ENI~T, data=dtTrial)
 ```
 
 ## Regression
-There are many different form of regression methods: [Linear (least square) regression] and [Non-linear regression]. A key principle is that the predictors are independent of each others. This issue will be expand on in the later in the section on collinearity. Special methods are required when the predictors are collinear.
+There are many different form of regression methods. A key principle is that the predictors are independent of each others. This issue will be expand on in the later in the section on collinearity. Special methods are required when the predictors are collinear.
 
 ### Linear (least square) regression
 
@@ -41,19 +41,16 @@ ggplot(world_sfdf, aes(x=LifeExpectancy,y=MeanLifetimeRisk))+geom_smooth(method=
 ```
 
 ### Logistic regression
-
 For outcome that are binary in nature such as yes or no, then least square regression is not appropriate. There are no close form solution for this analysis and a numerical approach using maximum likelihood approach is needed. When examining the results of logistic regression one is often enchanted by the large odds ratio. It is important to look at the metrics of model calibration (discussed below). A clue to a poorly calibrated model is the observation that the width of the confidence interval for odds ratio is wide.
 
 #### Discrimination and Calibration
-
 A high _$R^2$ suggests that the linear regression model is well calibrated. This metric is often not displayed but should be sought when interpreting the data.
 
 The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016].
 
 Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.
 
-#### Measuring Improvement in Regression Models
-
+#### Measuring Improvement in Regression Models 
 The net reclassification improvement  (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI were performed using _PredictABEL_ . [@pmid28579970][@pmid26796056]
 
 #### Shapley value
@@ -76,15 +73,10 @@ Propensity matchine is an important technique to adjust for imbalance in covaria
 
 ## Special types of regression
 
-### Multinomial modelling
-
-Multinomial modelling is used when the outcome categorical variables are not ordered. This situation can occur when analysis involves choice outcome (choices of fruit: apple, orange or pear). In this case, the log odds of each of the categorical outcomes are analysed as a linear combination of the predictor variables. The _nnet_ library have functions for performing this analysis.
-
 ### Ordinal regression
-
 Ordinal regression is appropriate when the outcome variable is in the form of ordered categorical values. For example, the Rankin scale of disability is bounded between the values of 0 and 6. This type of analysis uses the proportional odds model and the requirement for this model is stringent. When examining results of ordinal regression check that the authors provide this metric, the Brant test. The Brant test assesses the parallel regression assumption. Ordinal regression is performed using _polr_ function in _MASS_ library. The Brant test is available in the _Brant_ library.
 
-### Survival analysis {#survival}
+### Survival analysis
 
 Survival analysis is useful when dealing with time to event data. The Cox model assesses the hazard of outcome between two groups. The assumption of this model is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested [@10.1093/biomet/81.3.515]
 
@@ -100,7 +92,7 @@ sfit<- coxph(Surv(time, status) ~ age+sex+ph.ecog, data = lung)
 summary(sfit)
 ```
 
-### Quantile regression {#quantile}
+### Quantile regression
 
 Quantile regression is appropriate when the distribution of the data is non-normal and it is more appropriate to look at the conditional median of the dependent variable. There are several libraries for this task _quantreg_ and bayesian libraries. In the example below, the life time risk of stroke is regresed against life expectancy using lest square and quantile regression. 
 
@@ -126,7 +118,7 @@ ggplot(world_sfdf,  aes(x=LifeExpectancy,y=MeanLifetimeRisk))+
   annotate("text",x=75, y=12,label=paste0("quantile =",round(rqfit_sum$coefficients[1],2), " + ", round(rqfit_sum$coefficients[2],2)," x ","Life Expectancy"),color="blue")
 ```
 
-### Penalised regression {#penalised}
+### Penalised regression
 
 We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) [@pmid23838753]. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
 
@@ -143,8 +135,7 @@ In certain situations, it is necessary to constrain the analysis so that the reg
 library(nnls)
 ```
 
-### Poisson regression {#poisson}
-
+### Poisson regression
 Poisson regression is used when dealing with number of event over time or distance such as number of new admissions or new cases of hepatitis or TIA over time. An assumption of the Poisson distribution is that the mean &lambda; and variance &lambda; are the same. 
 
 ```{r eval=FALSE}
@@ -161,24 +152,36 @@ Fit<-glm.nb(Outcome~Age+Sex+Event,data=Imaginary,init.theta = 1.032713156,link=l
 
 Zero-inflated data occurs when there is an abundance of zeroes in the data (true and excess zeroes).
 
+### MARS
+Multivariate adaptive regression spline (MARS) is a non-linear regression method that fits a set of splines (hinge functions) to each of the predictor variables i.e. different hinge function for different variables [@pmid8548103]. As such, the method can be used to plot the relationship between each variable and outcome. Use in this way, the presence of any threshold effect on the predictors can be graphically visualized. The MARS method is implemented in R programming environment in the _earth_ package.
+
+```{r eval=FALSE}
+library(earth)
+```
+
 ### Conditional logistic regression
 
-This special form of logistic regression is used when handling matched data or hierarchical data. An example would be paired carotid arteries or identical twins.
+### Mixed modelling
+In a standard regression analysis, the data is assumed to be random. Mixed models assume that there are more than one source of random variability in the data. This is expressed in terms of fixed and random effects. Mixed modeling is a useful technique for handling multilevel or group data. The intraclass correlation (ICC) is used to determine if a multilevel analysis is necessary ie if the infarct volume varies among the surgeon or not. ICC is the between group variance to the total variance. If the ICC approaches zero then a simple regression model would suffice.
 
-### Multinomial modelling
+There are several R packages for performing mixed modling such as _lme4_. An example of mixed modeling in metaregression is illustrated below in the section on Metaanalysis.
 
-Multinomial modelling is used when the outcome categorical variables are not ordered. This situation can occur when analysis involves choice outcome (choices of fruit: apple, orange or pear). In this case, the log odds of each of the categorical outcomes are analysed as a linear combination of the predictor variables. The _nnet_ library have functions for performing this analysis.
+#### Random intercept model
 
-### Mixed modelling {#mixed}
+In a random intercept  or fixed slope multilevel model the slope or gradient of the fitted lines are assumed to be parallel to each other and the intercept varies for different groups.
 
-Mixed modeling is a useful technique for handling multilevel or group data. There are several R packages for performing mixed modling such as _lme4_. An example of mixed modeling in metaregression is illustrated below in the section on Metaanalysis.
+
+#### Random slope model
+
+In a random slope model, the slopes are not paralleled 
+
+
 
 ```{r eval=FALSE}
 library(lme4)
 ```
 
 ### Trajectory modelling
-
 Trajectory analysis attempts to group the behaviour of the subject of interest over time. There are several different approaches to trajectory analysis: data in raw form or after orthonal transformation of the data in principal component analysis. Trajectory analysis is different from mixed modelling in that it examines group behaviour. The output of trajectory analysis is only the beginning of the modeling analysis. For example, the analysis may identify that there are 3 groups. These groups are labelled as group A, B and C. The next step would be to use the results in a modelling analysis of your choice.
 
 A useful library for performing trajectory analysis is _akmedoids_. This library anchored the analysis around the median value. The analysis requires the data in long format. The _traj_ library is similar to the one in _Stata_. It uses several steps including factor and cluster analyses to idetify groups. The _traj_ model prefers data in wide format.
@@ -187,21 +190,9 @@ A useful library for performing trajectory analysis is _akmedoids_. This library
 library(akmedoids)
 ```
 
+### Multinomial modelling
 
-## Non-linear regression {#nonlinear}
-
-In this section, several different methods are illustrated such as polynomial, MARS, kernel.  MARS and Supported vector machine (SVM) will be discussed in the chapters \@ref(mars) and \@ref(svm) on machine learning  and manifold regression will be discussed in the chapter on machine learning \@ref(manifoldregression). 
-
-#### Polynomial
-
-
-#### Kernel regression
-
-Kernel regression is a non-linear regression method which uses Gaussian kernel to model the curvature of the data. It is equivalent to radial basis function (neural) network.
-
-```{r kernel}
-library(np)
-```
+Multinomial modelling is used when the outcome categorical variables are not ordered. This situation can occur when analysis involves choice outcome (choices of fruit: apple, orange or pear). In this case, the log odds of each of the categorical outcomes are analysed as a linear combination of the predictor variables. The _nnet_ library have functions for performing this analysis.
 
 ## Sample size estimation
 
@@ -407,9 +398,9 @@ text( 1,   7.5, "Proportion [95% CI]", pos=2)
 
 ### Bivariate Metaanalysis
 
-The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)[@pmid8210827] . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation [@pmid16168343]. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using _mada_ package. Bayesian bivariate metaanalysis will be discussed under Bayesian Analysis chapter \@ref(bayesianmeta).
+The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)[@pmid8210827] . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation [@pmid16168343]. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using _mada_ package.
 
-The example below is taken from a metaanalysis of spot sign as predictor expansion of intracerebral hemorrhage [@pmid31272327]. The data for this analysis is available in the Data-Use sub-folder. SROC for different subgroups to explore their effects on the results.
+The example below is taken from a metaanalysis of spot sign as predictor expansion of intracerebral hemorrhage [@pmid31272327]. The data for this analysis is available in the Data-Use sub-folder.
 
 ```{r bivariate}
 library(mada)
@@ -421,82 +412,11 @@ summary(ss)
 AUC(reitsma(data = dat))
 sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
 summary(sumss)
-#compare retro vs prospective study
-datpros<-subset(dat,dat$Study.type=="Prospective")
-#retrospective vs prospective
-datretro<-subset(dat, dat$Study.type=="Retro")
-#compare study with clinical data
-datclin<-subset(dat, dat$clinical==1)
-#compare CTA<6hr
-datlt6h<-subset(dat, dat$CTA6hrs=="yes")
-datgt6h<-subset(dat,dat$CTA6hrs=="no")
-#subset Du's data
-DuSS<-subset(Dat,Dat$metaDu=="yes") #14
-#subset Xu data
-XuSS<-subset(Dat,Dat$metaXu=="yes") #14
-####################################
-srocretro<-reitsma(datretro)
-AUC(srocretro)$AUC
-sr1<-SummaryPts(srocretro,n.iter = 1000) #mc
-summary(sr1)
-#talpha
-fit.retro <- reitsma(datretro, alphasens = 0, alphafpr = 2, method = "ml") 
-summary(fit.retro)
-#
-srocpros<-reitsma(datpros)
-AUC(srocpros)$AUC
-plot(srocretro, xlim = c(0,.5), ylim = c(.5,1))
-lines(sroc(srocpros), lty = 2) 
-ROCellipse(srocpros, lty = 2, pch = 2, add = TRUE) 
-points(fpr(datretro), sens(datretro), cex = .5)
-points(fpr(datpros), sens(datpros), pch = 2, cex = 0.5) 
-legend("bottomright",c("AUC Retrospective=0.87","AUC Prospective=0.85"),pch = 1:2, lty = 1:2)
-##################################
-#compare clinical
-datclinno<-subset(dat,dat$clinical==0)
-srocclin<-reitsma(datclin)
-AUC(srocclin)$AUC
-srocclinno<-reitsma(datclinno)
-AUC(srocclinno)$AUC
-plot(srocclin, xlim = c(0,.5), ylim = c(.5,1))
-lines(sroc(srocclinno), lty = 2) 
-ROCellipse(srocclinno, lty = 2, pch = 2, add = TRUE) 
-points(fpr(datclin), sens(datclin), cex = .5)
-points(fpr(datclinno), sens(datclinno), pch = 2, cex = 0.5) 
-legend("bottomright", c("AUC Clinical data=0.86","AUC Without clinical=0.86"), pch = 1:2, lty = 1:2)
-#################################
-#compare CTA<6hr
-sroclt6h<-reitsma(datlt6h)
-AUC(sroclt6h)$AUC
-srocgt6h<-reitsma(datgt6h)
-AUC(srocgt6h)$AUC
-plot(sroclt6h, xlim = c(0,.5), ylim = c(.5,1))
-lines(sroc(srocgt6h), lty = 2) 
-ROCellipse(srocgt6h, lty = 2, pch = 2, add = TRUE) 
-points(fpr(datlt6h), sens(datlt6h), cex = .5)
-points(fpr(datgt6h), sens(datgt6h), pch = 2, cex = 0.5) 
-legend("bottomright",  c("AUC CTA=<6 hrs=0.88", "AUC CTA> 6 hrs=0.84"), pch = 1:2, lty = 1:2)
-################################
-#original Du
-summary(reitsma((DuSS)))
-#compare new Du
-datMetaDu<-subset(dat, dat$metaDu=="yes")
-datnotDu<-subset(dat, dat$metaDu=="no")
-srocMetaDu<-reitsma(datMetaDu)
-a1=round(AUC(srocMetaDu)$AUC,2)
-srocnotDu<-reitsma(datnotDu)
-a2=round(AUC(srocnotDu)$AUC,2)
-plot(srocMetaDu, xlim = c(0,.5), ylim = c(.5,1))
-lines(sroc(srocnotDu), lty = 2) 
-ROCellipse(srocnotDu, lty = 2, pch = 2, add = TRUE) 
-points(fpr(datMetaDu), sens(datMetaDu), cex = .5)
-points(fpr(datnotDu), sens(datnotDu), pch = 2, cex = 0.5) 
-legend("bottomright", c("AUC Du=0.89", "AUC Later=0.83"), pch = 1:2, lty = 1:2)
 ```
 
 ### Metaregression
 
-```{r metaregression}
+```{r nice-fig3, fig.cap='Metaregression', out.width='80%', fig.asp=.75, fig.align='center'}
 #plot year against tsens
 library(ggplot2)
 library(lubridate)
@@ -508,6 +428,35 @@ ggplot(ssr, aes(x=ssr$Year,y=ssr$tsens))+geom_point()+scale_x_date()+geom_smooth
   labs(x="Year",y="transformed sensitivity")
 ```
 
+### Bayesian Metaanalysis 
+
+A Bayesian approach towards metaanalysis is provided below using the package _meta4diag_ [@2015arXiv151206220G]. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the _mada_ package which does not provide a bivariate method for performing summary sensitivity and specificity. 
+
+```{r bayesian-metaanalysis}
+library(meta4diag)
+library(INLA)
+res <- meta4diag(data = dat) 
+SROC(res, crShow = T)
+```
+
+```{r nice-fig4, fig.cap='Bayesian Forest plot of sensitivity and specificity', out.width='80%', fig.asp=.75, fig.align='center'}
+#sensitivity
+forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
+```
+
+```{r specificity}
+#specificity
+forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
+    nameShow="right", dataShow="center", estShow="left", text.cex=1,
+    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
+    cut=TRUE, intervals=c(0.025,0.975),
+    main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
+```
+
 #### Inconsistency I2
 
 The inconsistency $I^2$ index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity. This test can be performed using metafor package . The presence of high $I^2$ suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. 
@@ -515,21 +464,6 @@ The inconsistency $I^2$ index is the sum of the squared deviations from the over
 #### summary Positive and Negative Likelihood Ratio
 
 Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al[@pmid8309035] a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test result for a range of possible values of baseline risk. 
-
-### Network metaanalysis
-
-Traditionally metaanalysis studies of clinical trials evaluate one intervention. Network metaanalysis is increasingly used to indirectly evaluate efficacy of different interevention [@pmid30999733]. The Parkinson dataset is used to illustrate network metaanalysis. The dataset contains 3 different treatments. There are 801 patients in group 1 and 731 patients in group 2. 
-
-```{r netmeta}
-library(netmeta)
-data("parkinson", package = "netmeta")
-colnames(parkinson)
-net1 <- netmeta(y1, sd1, Treatment1, Treatment2, Study,
-                data = parkinson, sm = "MD", reference = "2")
-
-# Network graph with default settings
-netgraph(net1)
-```
 
 ## Data simulation
 

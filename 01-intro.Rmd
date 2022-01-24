@@ -1,14 +1,9 @@
 # Introduction to plotting in R {#intro}
+This chapter focusses on the _ggplot2_ and its related libraries for plotting [@Wickham2016]. Base R also has plotting function but lacks the flexibility of _ggplot2_. Plotting is introduced early to enage clinicians who may not have the patience read the following chapter on data wrangling prior. The book is not intended to be used in a sequential fashion as the reader may find elements of this chapter relevant to them and jump to another chapter such as chapter 3 on statistics. 
 
-This chapter focusses on the _ggplot2_ and its related libraries for plotting [@Wickham2016]. Base R also has plotting function but lacks the flexibility of _ggplot2_. Plotting is introduced early to enage clinicians who may not have the patience read the following chapter on data wrangling. The book is not intended to be used in a sequential fashion as the reader may find elements of this chapter relevant to them and jump to another chapter such as chapter 3 on statistics. 
+## Plot using base R
 
-## ggplot2
-
-The plot below uses _ggplot2_ or grammar of graphics. The plot is built layer by layer like constructing a sentence. Plotting is a distinct advantage of R over commercial software with GUI (graphical user interface) like _SPSS_. A wide variety of media organisations (BBC, Financial Times and The Economist) are using _ggplot2_ with their own stylised theme. The plot has a certain structure such the name of the data and aesthetics for x and y axes. For illustration purpose the aesthetics are labelled with x and y statements. The fill argument in the aesthetics indicate the variables for coloring. The colors chosen for this graph were imposed by the journal _Epilepsia_ [@pmid30577087]. To run the examples, check that you have install the libraries. an error can occurred if you don't have the required library. The metacharacter _#_ is used to signalled that the line is meant to comment the code ie R will not read it. The _install.packages_ command only need to be run once.   
-
-### Histogram
-
-The flexibility of _ggplot2_ is shown here in this histogram. The legend can be altered using the _scale_fill_manual_ function. If other colours are preferred then under _values_ add the preferre colours. 
+Below we illustrate bar plot using base R.
 
 ```{r base R plot}
 data("Leukemia", package="Stat2Data")
@@ -17,6 +12,120 @@ colnames(Leukemia)
 #base R
 hist(Leukemia$Age, 8, xlab = "Age",main="Acute Myeloid Leukemia Dataset")
 ```
+
+Line plot can be performed in base R using _abline_ argument. The font is defined by _cex_ argument and colour defined by _col_ argument. The title is defined by _main_ argument. The X and Y axes can be labelled using _xlab_ and _ylab_ arguments within the _plot_ function. Below we illustrate example of drawing a line to a point and in the segment below we illustrate example of drawing a line.
+
+```{r line plot segment base R}
+#set parameters of plot
+X=seq(0,1,by=.1) #define a set of point from 0 to 1, separated by 0.1.
+Y=seq(0,1,by=.1)
+
+#define A and B
+A=.065; B=.44
+
+#location of point
+plot(X,Y, main="ROC curve")
+points(A,B,pch=8,col="red",cex=2) #add point
+abline(coef = c(0,1)) #add diagonal line
+
+#draw line to a point
+segments(x0=0,y0=0,x1=A,y1=B,col="blue")
+segments(x0=A,y0=B,x1=1,y=1,col="blue")
+```
+
+This is an illustration of using base R to plot regression line. Later, we will illustrate using _geom_smooth_ call from _ggplot2_.
+
+```{r line plot base R}
+TPR_1=.44; FPR_1=.065
+
+plot(X,Y,main="Likelihood ratio graph", xlab="1-Specificity",ylab="Sensitivity",cex=.25)
+  points(.02,.8,pch=8,col="red",cex=2) #add point
+  df1<-data.frame(c1=c(0,TPR_1),c2=c(0,FPR_1))
+  reg1<-lm(c1~c2,data=df1)
+  df2<-data.frame(c1=c(TPR_1,1),c2=c(FPR_1,1))
+  reg2<-lm(c1~c2,data=df2)
+  abline(reg1) #draw line using coefficient reg1
+  abline(reg2) #draw line using coefficient reg2
+  text(x=FPR_1,y=TPR_1+.3,label="Superior",cex=.7)
+  text(x=FPR_1+.2,y=TPR_1+.2,label="Absence",cex=.7)
+  text(x=.0125,y=TPR_1-.1,label="Presence",cex=.7)
+  text(x=FPR_1+.1,y=TPR_1,label="Inferior",cex=.7)
+  
+```
+
+Function can be plotted using variations of the above. This requires a formula to describe variable _Y_. Shading in base R is performed with the _polygon_ function.
+
+```{r plot function}
+
+AUC_Logistic<-function (A,B,C,D){
+  #binary data
+  #A=True pos %B=False positive   %C=False negative   %D=True negative
+  
+  TPR=A/(A+C)
+  FPR=1-(D/(D+B))
+  
+  #binomial distribution sqrt(np(1-p))
+  #Statist. Med. 2002; 21:1237???1256 (DOI: 10.1002/sim.1099)
+  STDa=sqrt((A+C)*TPR*(1-TPR));
+  STDn=sqrt((B+D)*FPR*(1-FPR));
+  a=STDn/STDa;
+  theta=log((TPR/(1-TPR))/((FPR/(1-FPR))^a));
+  
+  #define a set of point from 0 to 1, separated by 0.001.
+  X=seq(0,1,by=0.001)  
+  
+  #logistic regression model
+  Y1=(X^a)/(X^a+(((1-X)^a)*exp(-1*theta)));
+  AUC=round(pracma::trapz(X,Y1),2)
+  AUC
+
+#SE using Hanley & McNeil
+#Preferred method if more than one TPR,FPR data point known
+#Hanley is less conservative than Bamber
+  Nn=B+D;
+  Na=A+C;
+  Q1=AUC/(2-AUC);
+  Q2=2*AUC^2/(1+AUC);
+  
+SEhanley=sqrt(((AUC*(1-AUC))+((Na-1)*(Q1-AUC^2))+((Nn-1)*(Q2-AUC^2)))/(Na*Nn))
+
+#SE using Bamber
+#Ns is the number of patients in the smallest group
+if (A+C>B+D) {
+  Ns=B+D
+  } else {
+   Ns=A+C
+  }
+SEbamber=sqrt((AUC*(1-AUC))/(Ns-1))
+
+# plot smoothed ROC
+plot(X,Y1,main="ROC curve", xlab="1-Specificity",ylab="Sensitivity",cex=.25)
+points(FPR,TPR,pch=8,col="red",cex=2) #add point
+
+Y2=0
+polygon(c(X[X >= 0 & X <= 1],
+          rev(X[X >= 0 & X <= 1])),
+        c(Y1[X >= 0 & X <= 1],
+          rev(Y2[X >= 0 & X <= 1])),
+        col = "#6BD7AF")
+
+
+print(paste("The Area under the ROC curve using the logistic function is", AUC,". The Area under the ROC curve using rank sum method is", round(.5*(TPR+(1-FPR)),2)))
+}
+
+AUC_Logistic(10,20,2,68)
+```
+
+
+
+## ggplot2
+
+The plot below uses _ggplot2_ or grammar of graphics. The plot is built layer by layer like constructing a sentence. Plotting is a distinct advantage of R over commercial software with GUI (graphical user interface) like _SPSS_. A wide variety of media organisations (BBC, Economist) are using _ggplot2_ with their own stylised theme. The plot has a certain structure such the name of the data and aesthetics for x and y axes. For illustration purpose the aesthetics are labelled with x and y statements. The fill argument in the aesthetics indicate the variables for coloring. The colors chosen for this graph were imposed by the journal _Epilepsia_ [@pmid30577087]. To run the examples, check that you have install the libraries. an error can occurred if you don't have the required library. The meta-character _#_ is used to signal that the line is meant to comment the code ie R will not read it. The _install.packages_ command only need to be run once.   
+
+### Histogram
+
+The flexibility of _ggplot2_ is shown here in this histogram. The legend can be altered using the _scale_fill_manual_ function. If other colours are preferred then under _values_ add the preferred colours. 
+
 
 There are different ways to use _ggplot2_: quick plot or _qplot_ with limited options and full _ggplot2_ with all the options. The choice of the method depends on indvidual preference and as well as reason for plotting.
 
@@ -37,7 +146,6 @@ ggplot(data=Leukemia,aes(Age,fill=as.factor(Resp)))+geom_histogram(bins=8)+scale
 ```{r  bar plot}
 library(ggplot2)
 library(extrafont)
-library(ggthemes)
 ##                              Lower  Upper
 ##                    percentage 0.95   0.95  
 ## Duration_PNES.lmg  0.0974     0.0057 0.2906
@@ -62,31 +170,10 @@ p<-ggplot(df3, aes(x=Predictors,y=Importance,fill=Predictors))+geom_bar(colour="
 p
 #rotate legend on x axis label by 45
 p+theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=45, vjust=0.5, size=12))
-
 #adding break in title
-#the economist theme
 p1<-p+geom_errorbar(aes(ymin=Lower.95,ymax=Upper.95,width=0.2))+labs(y="R2 exaplained (%)")+
-  theme(text=element_text(size=12))+
-  #the economist theme
-  theme_economist(base_size = 10, base_family = "sans",
-  horizontal = TRUE, dkpanel = FALSE)+
-  ggtitle(" Relative Importance of Regressors \n Cost among patients with non-epileptic seizure")
+  theme(text=element_text(size=12))+ggtitle(" Relative Importance of Regressors \n Cost among patients with non-epileptic seizure")
 p1
-
-# BBC theme
-library(bbplot)
-b<-p+geom_errorbar(aes(ymin=Lower.95,ymax=Upper.95,width=0.2))+labs(y="R2 exaplained (%)")+
-  theme(text=element_text(size=12))+
-  #the economist theme
-  bbc_style()+
-  ggtitle(" Relative Importance of Regressors \n Cost among patients with non-epileptic seizure")
-b
-#BBC plot are finalised after export to news station
-finalise_plot(plot_name = b,
-source = "Source: Epilepsia 2019",
-save_filepath = "bbc.png",
-width_pixels = 640,
-height_pixels = 550)
 ```
 
 ### Pie chart
@@ -115,7 +202,7 @@ ggplot(df3, aes(x=Predictors,y=Importance,color=Predictors))+geom_point()+theme(
 ggplot(df3, aes(x=Predictors,y=Importance,color=Predictors,size=Predictors))+geom_point()+theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=45, vjust=0.5, size=12))
 ```
 
-This is a more complicated example of scatter plot combined with formula of regression line. The _paste0_ function is used to add the equation to the model. The data comes from GBD 2016 publication on lifetime risk of stroke. A comparison with plotting from base R is also provided. The regression model illustrating this least square fit is inserted in the figure. See this section  for further details on [Linear (least square) regression]
+This is a more complicated example of scatter plot combined with formula of regression line. The _paste0_ function is used to add the equation to the model. The data comes from GBD 2016 publication on lifetime risk of stroke. A comparison with plotting from base R is also provided. 
 
 ```{r linear regression}
 library(ggplot2)
@@ -135,7 +222,7 @@ SR<-ggplot(world_sfdf,  aes(x=LifeExpectancy,y=MeanLifetimeRisk))+geom_smooth(me
 SR
 ```
 
-In order to understand the reason for deviations from the fitted line above, it is possible possible to add additional step to explore the relationship for each income group. This graph illustrates that the high income countries have a ceiling in the relationship betwen lifetime risk and life expectancy from age of 70 onward.
+In order to understand the reason for deviations from the fitted line above, it is possible possible to add additional step to explore the relationship for each income group. This graph illustrates that the high income countries have a ceiling in the relationship between lifetime risk and life expectancy from age of 70 onward.
 
 ```{r enhance linear regresion}
 SRIncome<-ggplot(world_sfdf, aes(x=LifeExpectancy,y=MeanLifetimeRisk))+geom_smooth(method="lm", aes(group=Income, linetype=Income, colour= Income))+geom_point()+xlab("Life Expectancy")
@@ -150,6 +237,13 @@ library(gridExtra)
 SRContinent<-ggplot(world_sfdf, aes(x=LifeExpectancy,y=MeanLifetimeRisk))+geom_smooth(method="lm", aes(group=Continent, linetype=Continent, colour= Continent))+geom_point()+xlab("Life Expectancy")+ylim(c(0,50))
 
 grid.arrange(SRIncome, SRContinent, ncol=1) 
+```
+
+An alternative plot is to use _patchwork_ library.
+
+```{r patchwork}
+library(patchwork)
+SRIncome/SRContinent
 ```
 
 ### Line plot
@@ -197,65 +291,38 @@ Facet wrap is a good way to visually explore different aspects pf the data. Usin
 ggplot(dtTime,aes(x=as.factor(period),y=Y))+geom_line(aes(color=as.factor(T),group=id))+scale_color_manual(values = c("#e38e17", "#8e17e3"))+ facet_wrap(~T)+ xlab("Time")+ylab("NIHSS")
 ```
 
-This dataset is from New York COVID-19 mortality among the 5 boroughs and Open data on chronic disease within each borough https://a816-health.nyc.gov/hdi/profiles/. Note that the data has been converted to long format
-
-```{r facet ethnicity}
-library(ggplot2)
-library(dplyr)
-library(tidyverse)
-
-dfj<-data.frame(
-Borough=c("Bronx","Brooklyn","Manhattan","Queens","Staten Island"),
-Pop=c(1432132,2582830,1628701,2278906,476179),
-Age65=c(12.8,13.9,16.5,15.7,16.2),
-White=c(25.1,46.6,59.2,39.6,75.1),
-Hispanic=c(56.4,19.1,25.9,28.1,18.7),
-Afro.American=c(38.3,33.5,16.9,19.9,11.5),
-Asian=c(4.6,13.4,14,27.5,11),
-Others=c(36.8,10.4,15.4,17,5.2),
-Income=c(38467,61220,85066,69320,82166),
-Beds=c(336,214,534,144,234),
-COVIDtest=c(4599,2970,2844,3800,5603),
-COVIDhosp=c(634,400,331,560,370),
-COVIDdeath=c(224,181,122,200,143),
-COVIDdeathlab=c(173,132,91,154,117),
-Diabetes=c(16,27,15,22,25),
-Obesity=c(32,12,8,11,8),
-Hypertension=c(36,29,23,28,25)
-  ) %>% 
-  #reverse prevalence per 100000 to raw
-  mutate(Age65raw=round(Age65/100*Pop,0),
-               Bedsraw=round(Beds/100000*Pop,0),
-               COVIDtestraw=round(COVIDtest/100000*Pop,0),
-               COVIDhospraw=round(COVIDhosp/100000*Pop,0),
-               COVIDdeathraw=round(COVIDdeath/100000*Pop),0)
-
-
-#Expected
-rate<-sum(dfj$COVIDdeathraw)/sum(dfj$Pop)
-dfj$Expected<-with(dfj, Pop*rate )
-#SMR standardised mortality ratio
-dfj$SMR<-with(dfj, COVIDdeathraw/Expected)
-
-#first pivot
-dfj_long<-pivot_longer(data=dfj, names_to = "Ethnicity", values_to = "Proportion",cols=c(White,Afro.American,Asian,Hispanic,Others)) %>%
-#second pivot
-pivot_longer (names_to="Chronic Disease", values_to = "Percentage",cols=c(Diabetes,Obesity,Hypertension))
-
-#varies by ethinicty
-ggplot(data=dfj_long, mapping=aes(x=Income/1000, y=SMR, size=Proportion,colour=Borough))+geom_point()+facet_wrap(~Ethnicity,nrow=2)+scale_size_continuous(name = "Ethnicity")+xlab("Income (Thousand)")
-
-#varied by chronic disease
-ggplot(data=dfj_long, mapping=aes(x=Income/1000, y=SMR, size=Percentage,colour=Borough))+geom_point()+facet_wrap(~`Chronic Disease`,nrow=1)+scale_size_continuous(name = "`Chronic Disease`")+xlab("Income (Thousand)")
-```
-
 ### Polygons
 
+The _geom_polygon_ is often used in thematic plot of maps. It can be used to show polygons outside of map. It requires one data frame for coordinate and another for the values. 
+
 ```{r polygon}
-ggplot(dtTime,aes(x=as.factor(period),y=Y))+
-  geom_point()+
-  geom_polygon(mapping=aes(x=as.factor(period), y=Y, group=as.factor(T),fill=as.factor(T)))+ 
-  xlab("Time")+ylab("NIHSS")
+
+ids <- factor(c("1", "2", "3", "4","5","6"))
+
+values <- data.frame(
+  id = ids,
+  value = c(3, 3.1, 3.2, 3.3,3.4,3.5)
+)
+
+a=seq(0,1.5,by=0.5)
+x=c(a,a-.5,a+.5,a+.2, a-.3,a+.1)
+
+positions <- data.frame(
+  id = rep(ids, each = 4),
+  x=c(a,a-.5,a+.5,a+.2, a-.3,a+.1),
+  y=sample(x)
+  )
+
+# Currently we need to manually merge the two together
+comb <- merge(values, positions, by = c("id"))
+
+p <- ggplot(comb, aes(x = x, y = y)) +
+  geom_polygon(aes(fill = value, group = id))
+  
+p
+
+
+
 ```
 
 ### Gantt chart
@@ -264,8 +331,7 @@ Gantt chart can be used to illustrate project timeline. It needs a minimum of 4 
 
 ```{r gantt}
 library(tidyverse)
-library(ggplot2)
-gantt_df<-data.frame(item=seq(1:4), activity=c("Ethics submission","Length","Recruitment","Follow up"),category=c("Ethics","Duration","Recruitment","Follow up"),Start=c("2020-06-01","2021-02-01","2021-02-01","2022-02-01"),End=c("2021-02-01","2023-02-01","2022-02-01","2023-02-01"))
+gantt_df<-data.frame(item=seq(1:4), activity=c("Ethics submission","Length","Recruitment","Follow up"),category=c("Ethics","Duration","Recruitment","Follow up"),Start=c("2020-06-01","2021-01-01","2021-01-01","2022-01-01"),End=c("2021-01-01","2023-01-01","2022-01-01","2023-01-01"))
 #Set factor level to order the activities on the plot
 gantt_df <- mutate(gantt_df,
       activity=factor(activity,levels=activity[1:nrow(gantt_df)]),
@@ -278,114 +344,11 @@ plot_gantt <- qplot(ymin = Start,
                     data = gantt_df,
                     size = I(10)) +    #width of line
     scale_colour_manual(values = c("blue", "red", "purple", "yellow")) +
-  #flip the axis of the graph
     coord_flip() +
     xlab("") +
-    ylab("") +theme(axis.title.y = element_text(face="bold",  size=12),axis.title.x = element_text(face="bold", size=12), axis.text.x  = element_text(angle=70, vjust=0.5, size=12))+
+    ylab("") +
     ggtitle("Project plan")
 plot_gantt
-ggsave(plot_gantt, file="grant.png")
-```
-
-### Flow chart
-
-Flow chart can be created in R using several different strategies. The approach given below is an illustration of the TIA and minor stroke pathway.
-
-```{r clinical pathway}
-library(DiagrammeR)
-DiaG<-grViz("digraph flowchart {
-# node definitions with substituted label text
-      node [fontname = Helvetica, shape = rectangle]        
-      tab1 [label = '@@1']
-      tab2 [label = '@@2']
-      tab3 [label = '@@3']
-      tab4 [label = '@@4']
-      tab5 [label = '@@5']
-      tab6 [label = '@@6']
-      tab7 [label = '@@7']
-      tab8 [label = '@@8']
-      tab9 [label = '@@9']
-      tab10 [label = '@@10']
-      tab11 [label = '@@11']
-      
-# edge definitions with the node IDs
-      #stroke
-      tab1 -> tab2 -> tab3 -> tab4 -> tab5->tab8;
-      #minor stroke
-      tab3->tab6->tab7;
-      #tia
-      tab1->tab9->tab10->tab7->tab11;
-      }
-#text
-      [1]: 'TIA or Stroke'
-      [2]: 'Discuss with Stroke Team'
-      [3]: 'Stroke Protocol Scan'
-      [4]: 'Salvageable Tissue or LVO'
-      [5]: 'Reperfusion Therapy'
-      [6]: 'Minor Stroke-No Salvageable Tissue nor LVO'
-      [7]: 'Discharge'
-      [8]: 'Admit'
-      [9]: 'Resolved'
-      [10]: 'TIA protocol scan'
-      [11]: 'TIA & Minor stroke clinic'
-      ")
-DiaG
-#save as html file
-#htmlwidgets::saveWidget(DiaG,file="M3T-pathway.html")
-```
-
-This is a differerent example of work flow in an imaging project.
-
-```{r visual}
-library(DiagrammeR)
-DiaV<-grViz("digraph flowchart {
-# node definitions with substituted label text
-      node [fontname = Helvetica, shape = rectangle]        
-      tab1 [label = '@@1']
-      tab2 [label = '@@2']
-      tab3 [label = '@@3']
-      tab4 [label = '@@4']
-      #tab5 [label = '@@5']
-      tab6 [label = '@@6']
-      tab7 [label = '@@7']
-      tab8 [label = '@@8']
-      tab9 [label = '@@9']
-      tab10 [label = '@@10']
-      tab11 [label = '@@11']
-      tab12 [label = '@@12']
-      tab13 [label = '@@13']
-      tab14 [label = '@@14']
-      
-# edge definitions with the node IDs
-      #stroke
-      tab1 -> tab2 -> tab3 -> tab4->tab13;
-      #Volunteer
-      tab6 -> tab7 -> tab8 -> tab14->tab4;
-      #Visual field
-      tab9 -> tab10 -> tab11 -> tab12;
-      #t map
-      tab3 -> tab12;
-      tab11 -> tab13;
-      }
-#text
-      [1]: 'Occipital lobe infarct'
-      [2]: 'Segmentation'
-      [3]: 'Registration: Infarct-MNI152'
-      [4]: 'overlap'
-      #[5]: 'Average'
-      [6]: 'Volunteer'
-      [7]: 'DTI'
-      [8]: 'visual pathway'
-      [9]: 'visual field'
-      [10]: 'ophthalmologist'
-      [11]: 'hemianopia vs quadrantanopia'
-      [12]: 't-statistic cortical map'
-      [13]: 't-statistic fiber map'
-      [14]: 'Registration: Tract-MNI152'
-      ")
-DiaV
-#save Diav as html file
-#htmlwidgets::saveWidget(DiaV,file="Occipital-Visual.html")
 ```
 
 ### Heatmap
@@ -468,75 +431,66 @@ The _igraph_ library does the heavy lifting in graph theory analysis. This aspec
 ```{r ggraph}
 library(tidygraph)
 library(ggraph) 
+
 #relationship among members of acute stroke team
 tpa<-readr::read_csv("./Data-Use/TPA_edge010817.csv")%>%
   rename(from=V1, to=V2)
+
 #node by degree centrality
 graph<-as_tbl_graph(tpa) %>%  mutate(degree = centrality_degree())
 ggraph(graph, layout = 'fr') + 
  geom_edge_link() + 
+  #label size by degree centrality
   geom_node_point(aes(size=degree))+
+  #label node
+  geom_node_text(aes(label=name),repel=T)+
   ggtitle("Acute Stroke Team Network")
 ```
 
 ### ggparty-decision tree
 
-Decision tree can be plotted using _ggplot2_ and _ggparty_ framework. This example is from the subarachnoid hemorrhage dataset. It explores the use of different clinical features on outcome. There is data available on the fatal Titanic maiden voyage.  This example below may be of interest to those who have watched the movie Titanic. The data can be accessed as _data("Titanic")_. The decision tree shows the impact of passenger class, sex and age on survival. This is a more complex example from the Wisconsin Breast Cancer data. The data contains histological descriptors of fine needle aspirates used in describing breast tumor as class benign or malignant.
+Decision tree can be plotted using _ggplot2_ and _ggparty_ framework. This example uses data from the Breast Cancer dataset. It explores the effect of different histological features on class of breast tissue type. 
 
-```{r breast ca tree}
+```{r decision tree}
 library(ggparty)
 library(partykit)
+library(tidyverse)
+
 data("BreastCancer",package = "mlbench")
-colnames(BreastCancer)
-#decision tree model remove column Id
-treeBC<-ctree(Class~., data=BreastCancer[,-1], control = ctree_control(testtype = "Teststatistic"))
+
+#check data type
+str(BreastCancer)
+
+BC<- BreastCancer %>% select(-Id)
+
+treeBC<-ctree(Class~., data=BC, control = ctree_control(testtype = "Teststatistic"))
+
 #plot tree using plot from base R
 plot(treeBC)
 #plot tree using ggparty
+
 ggparty(treeBC) +
   geom_edge() +
   geom_edge_label() +
-  geom_node_label(
-    line_list = list(
-      aes(label = splitvar),
-      aes(label = paste("N =", nodesize))
-    ),
-    line_gpar = list(
-      #change size
-      list(size = 8),
-      #change size
-      list(size = 6)
-    ),
-    ids = "inner"
-  ) +
-  geom_node_label(aes(label = paste0("Node ", id, ", N = ", nodesize)),
-    ids = "terminal", nudge_y = -0.5, nudge_x = 0.01
-  ) +
-geom_node_plot(
-    gglist = list(
-      #fill =Class (outcome)
-      geom_bar(aes(x = "", fill = Class),
-        position = position_fill(), color = "black"
-      ),
-      theme_minimal(),
-  scale_fill_manual(values = c("white", "red"), guide = FALSE),
-      scale_y_continuous(breaks = c(0, 1)),
-      xlab(""), ylab("proportion malignant tumor"),
-      geom_text(aes(
-        #group=Class(outcome)
-        x = "", group = Class,
-        label = stat(count)
-      ),
-      stat = "count", position = position_fill(), vjust = 1.2
-      )
-    ),
-    shared_axis_labels = TRUE
-  )+ggtitle("Wisconsin Breast Cancer Dataset")
+  geom_node_label(aes(label = splitvar),
+                  ids = "inner") +
+  geom_node_label(aes(label = info),
+                  ids = "terminal")
+
+ggparty(treeBC) +
+  geom_edge() +
+  geom_edge_label() +
+  # map color to level and size to nodesize for all nodes
+  geom_node_splitvar(aes(col = factor(level),
+                         size = nodesize)) +
+  geom_node_info(aes(col = factor(level),
+                     size = nodesize))
+
 ```
 
 ### ggROC- ROC curve
 
-This example is from the Wisconsin Breast Cancer Dataset. It examines the use of fine needle aspirate to diagnose breast cancer.
+This example uses data from the Wisconsin Breast Cancer Dataset. It examines the use of fine needle aspirate to diagnose breast cancer.
 
 ```{r roc}
 library(ggROC)
@@ -555,12 +509,11 @@ ggroc(roc.model)+ggtitle("Wisconsin Breast Cancer Dataset")
 
 ### ggtree and phyloseq
 
-The _ggtree_ library is available on Bioconductor, not CRAN. The steps for installing this library is provided here. Here we illustrates _ggtree_ [@Yu2016] with data from _phyloseq_ [@10.1371/journal.pone.0061217]. 
+The _ggtree_ library is available on Bioconductor, not CRAN. It is a package for visualisation of tree and annotation of data. The steps for installing this library is provided here. Here we illustrates _ggtree_ [@10.1111/2041-210x.12628] with data from _phyloseq_ [@10.1371/journal.pone.0061217]. 
 
+This example shown here is taken from https://www.r-bloggers.com/ggtree-for-microbiome-data/.
 
-This example is taken from https://www.r-bloggers.com/ggtree-for-microbiome-data/.
-
-```{r ggtree}
+```{r tree}
 #installing bioconductor and ggtree
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
@@ -572,16 +525,16 @@ library(ggtree)
 library(phyloseq)
 library(scales)
 library(ggplot2)
+
 data(GlobalPatterns)
 #View(GlobalPatterns@otu_table@.Data)
 GP <- prune_taxa(taxa_sums(GlobalPatterns) > 0, GlobalPatterns)
 GP.chl <- subset_taxa(GP, Phylum=="Chlamydiae")
-ggtree(GP.chl, ladderize = FALSE) + geom_text2(aes(subset=!isTip, label=label), hjust=-.2, size=4) +
-    geom_tiplab(aes(label=Genus), hjust=-.3) +
-    geom_point(aes(x=x+hjust, color=SampleType, shape=Family, size=Abundance),na.rm=TRUE) +
-    #scale_size_continuous is from ggplot2  
-    scale_size_continuous(trans=log_trans(5)) +
-    theme(legend.position="right") + ggtitle("reproduce phyloseq by ggtree")
+
+#microbiome data
+plot_tree(GP.chl, color="SampleType", shape="Family", label.tips="Genus", size="Abundance") + ggtitle("tree annotation using phyloseq")
+
+
 ```
 
 ### Map 
@@ -617,7 +570,6 @@ This is a more complex example and uses state by state COVID-19 data CDC website
 library(ggplot2)
 library(dplyr)
 covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction))
-US <- map_data("state") 
 map_covid<-ggplot()+ 
   geom_map(data=US, map=US,
                     aes(x=long, y=lat, map_id=region),
@@ -663,27 +615,6 @@ m
 #map of lifetime  stroke risk
 n<-tm_shape(world_sfdf)+tm_polygons("MeanLifetimeRisk")
 n
-```
-
-Spatial lines such as subway network can be added using _tm_lines_ call. Points can be added using the _tm_dots_ call. `
-
-```{r tmap line}
-library(tmap)
-library(sf)
-#NY Shape file
-NYsf<-st_read("./Data-Use/Borough_Boundaries/geo_export_7d3b2726-20d8-4aa4-a41f-24ba74eb6bc0.shp")
-#NY subway 
-NYsubline<-st_read("./Data-Use/NYsubways/geo_export_147781bc-e472-4c12-8cd2-5f9859f90706.shp")
-#NY subway stations
-NYsubstation<-st_read("./Data-Use/NYsubways/geo_export_0dab2fcf-79b8-409a-b940-7c98778a4418.shp")
-#combining plot of spatial polygons and lines
-tm_shape(NYsf)+tm_polygons(col="boro_name")+
-  #adding NY subway lines
-  tm_shape(NYsubline)+tm_lines("black")
-#combining spatial polygons,  and point
-tm_shape(NYsf)+tm_polygons(col="boro_name")+
-  #adding NY subway stations
-  tm_shape(NYsubstation)+tm_dots("red")
 ```
 
 #### Voronoi
@@ -752,24 +683,24 @@ ggplot(data = d,
 
 ### gganimate
 
-The library _gganimate_ can be used to generate videos in the form of gif file. The frame argument can be numeric or date.
+The library _gganimate_ can be used to generate videos in the form of gif file. The data needs to be collated from wide to long format.
 
-```{r gganimate New York}
+```{r eval=FALSE}
+library(ggplot2)
 library(gganimate)
-ny<-ggplot(data=dfj_long, 
-       mapping=aes(x=Income/1000, y=SMR, size=Proportion,colour=Borough,frame=Income)) + geom_point() + 
-  facet_wrap(~Ethnicity,nrow=2)+
-  scale_size_continuous(name = "Ethnicity")+
-  xlab("Income (Thousand)")+
-  ggtitle("Variations in COVID-19 mortality in New York Boroughs")+
-  #argument for revealing each frame
-  transition_reveal(Income)
-ny
+#ensure data in long format, Y =NIHSS
+u <- ggplot(dtTime2, aes(period, meanY , color = T, frame = period)) +
+  geom_bar(stat="identity") +
+  #scale_size(range = c(1, 5)) +
+  geom_text(aes(x = 11.9, label = period), hjust = 0) +   xlim(0,13)+
+  coord_cartesian(clip = 'off') + 
+  facet_wrap(~meanY)+
+  labs(title = 'ECR Trials', y = 'Number') +
+transition_reveal(period)
+u
 #create gif
-#animate(ny,fps=15,duration=15)
-#anim_save(ny,file="./Data-Use/NYCovid.gif", width=800, height=800)
-
-
+#animate(u,fps=15,duration=15)
+#anim_save(u,file="./Data-Use/simulated_ECR_trial.gif", width=800, height=800)
 ```
 
 ### ggneuro
@@ -828,7 +759,6 @@ library(ggplot2)
 library(plotly)
 library(dplyr)
 covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction)) #consistent
-US <- map_data("state") 
 ggplotly(
   ggplot()+ 
   geom_map(data=US, map=US,
@@ -843,40 +773,4 @@ ggplotly(
 )
 ```
 
-## Rayshader
-
-The library Rayshader can take a ggplot2 object and convert it to 3D. This is done with the _plot_gg_ call. Here a heatmap is transformed to 3D. Bewarn that Rayshader does use a fair bit of memory for these tasks.
-
-```{r rayshader heatmap, eval=FALSE}
-#remotes::install_github("tylermorganwall/rayshader")
-library(rayshader)
-library(ggplot2)
-data("swiss") #fertility
-q <- ggplot(data.m, aes(variable, swiss_canton)) + 
-         geom_tile(aes(fill = rescale), colour = "white")+
-        scale_fill_gradient(low = "white", high = "steelblue")+
-   ggtitle("Swiss Fertility Data 1888")
-#transform ggplot2 object to 3D #plot_gg(q,multicore=TRUE,width=5,height=5,scale=250)
-```
-
-Here a choropleth map is transformed to 3D.
-
-```{r rayshader map, eval=FALSE}
-library(ggplot2)
-library(rayshader)
-library(dplyr)
-covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction)) #consistent
-US <- map_data("state") 
-gr<-ggplot()+ 
-  geom_map(data=US, map=US,
-                    aes(x=long, y=lat, map_id=region),
-                    fill="#ffffff", color="#ffffff", size=0.15)+
-  #add covid data here
-  geom_map(data=covid, map=US,
-              aes(fill=NumberCases31.03.20, map_id=region),
-                    color="#ffffff", size=0.15)+
-  scale_fill_continuous(low='thistle2', high='darkred', 
-                                 guide='colorbar')
-#plot_gg(gr,multicore=TRUE,width=10,height=10,scale=250)
-```
 You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
