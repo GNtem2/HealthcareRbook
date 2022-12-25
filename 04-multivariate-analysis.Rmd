@@ -10,6 +10,8 @@ PCA estimates an orthogonal transformation (variance maximising) to convert a se
 
 In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principle components. 
 
+Based on cosine rule, principle components from different data are similar if values approach 1 and dissimilar if values approach 0 [@pmid22551679].
+
 ## Independent component analysis
 
 Independent component analysis is different from PCA in that it seeks components which are statistically independent. 
@@ -41,16 +43,3 @@ res$Cvg
 sum(res$Ytest!=Colon$Y[-IndexLearn])
 ```
 
-## T-Stochastic Neighbourhood Embedding
-
-T-Stochastic Neighbourhood Embedding (TSNE) is a visualisation method which seeks to transform the complex data into low (2) dimensions while maintaining the distance between neighbouring objects. This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of TSNE are not intended for machine learning. TSNE is implemented in R as _Rtsne_.
-
-```{r rtsne}
-library(Rtsne)
-```
-
-## Non-negative matrix factorisation
-
-```{r nmf}
-library(NMF)
-```

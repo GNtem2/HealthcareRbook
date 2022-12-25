@@ -27,8 +27,10 @@ df_se<-df_se[c(1,6,7,11,12,13,14,17,19,20,24,31,33,34,35),]
 Nedge3<-computeModules(df_se)
 plotModuleWeb(Nedge3) #module web object
 ```
-```{r bipartite}
+```{r bipartite, warning=F}
 library(latentnet)
+
+#davis of social network
 data(davis)
 davis.fit<-ergmm(davis~bilinear(d=2)+rsociality)
 plot(davis.fit,pie=TRUE,rand.eff="sociality",labels=TRUE)
@@ -36,18 +38,23 @@ plot(davis.fit,pie=TRUE,rand.eff="sociality",labels=TRUE)
 ```
 
 ## Centrality Measures
+
 The nodes in this case are variables such as ASPECTS regions, demographic and risk factors. This graph below uses data from a paper on the use of PageRank. In Figure 1 of that papera graph of 4 variables were used to illustrate the PageRank method for searching brain regions related to disability [@pmid25961856].
 
-```{r eval=FALSE}
+```{r Igraph}
 library(igraph)
 aspects<-graph(c("M1","M2","M2","Disability","tpa","M1","M2","M1","tpa","M2"))
 plot(aspects) #aspects is the name of the graph
-#degree
-d<-degree(aspects)
-#closeness
-cl<-closeness(aspects)
+
+#degree is available in igraph, sna
+d<-igraph::degree(aspects)
+
+#closeness is available in igraph, sna
+cl<-igraph::closeness(aspects)
+
 #betweenness
-b<-betweenness(aspects)
+b<-igraph::betweenness(aspects)
+
 #page rank
 p<-page.rank(aspects)
 df<-data.frame("degree"=round(d,2),"closeness"=round(cl,2),"betweenness" =round(b,2),"PageRank" =round(p$vector,2))

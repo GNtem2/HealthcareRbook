@@ -75,17 +75,16 @@ apply(array1,c(1,2),sum)
 
 The call _lapply_ applies a function to a list. In the section below of medical images the _lapply_ funcrion will be used to creates a list of nifti files and which can be opened painlessly with additional call to _readNIfTI_. Here a more simple example is used.
 
-```{r eval=FALSE}
+```{r lapply example, warning=F}
 a<-c(1,2,3,4,5,6,7,8)
-b<-lapply(a, function(x) x^3)
-b
+lapply(a, function(x) x^3)
 ```
 
 #### sapply
 
 The call _sapply_ applies a function to a vector, matrix or list. It returns the results in the form of a matrix.
 
-```{r sapply, eval=FALSE}
+```{r Sapply example, warning=F}
 a<-c(1,2,3,4)
 sapply(a, function(x) x^2)
 
@@ -95,7 +94,7 @@ sapply(a, function(x) x^2)
 
 The _tapply_ function applies a function to a subset of the data.
 
-```{r tapply}
+```{r tapply example}
 
 dat.array1<-as.data.frame.array(array1) 
 dat.array1$V6<- dat.array1$V6 %% 2
@@ -123,7 +122,7 @@ ArithSum(vector1)
 ```
 ### for loop
 
-```{r for loop}
+```{r For loop}
 vector2<-c(4,5,6)
 for (i in vector2){
   print(i)
@@ -148,7 +147,7 @@ Often one assumes that opening Rstudio is sufficient to locate the file and run 
 
 
 ```{r list files}
-#list all files in a directory
+#list all files in a directory then
 #list.files()
 #list files matching pattern
 list.files(pattern=".Rmd")
@@ -158,7 +157,7 @@ list.files(pattern=".Rmd")
 
 Data frame is a convenient way of formatting data in table format. It is worth checking the structure of data. Some libraries prefer to work with data in data frame while others prefer matrix or array structure.
 
-```{r dataframe}
+```{r Dataframe}
 a<-c(1,2,3)
 b<-c("apple","orange","banana")
 e<-data.frame(a,b)
@@ -167,35 +166,55 @@ rownames(e)
 
 ### Excel data
 
-Excel data are stored as csv, xls and xlsx.  Csv files can be open in base R using _read.csv_ function or using _readr_ library and _read_csv function_. I would urge you to get used to manipulating data in R as the codes serve as a way to keep track with the change in data. The original xcel data should not be touched outside of R. A problem with excel data is that its autocorrect function change provenance of genomic data eg SEPT1, MARCH1. SEPT1 is now relabeled as SEPTIN1
+Excel data are stored as csv, xls and xlsx.  Csv files can be open in base R using _read.csv_ function or using _readr_ library and _read_csv function_. I would urge you to get used to manipulating data in R as the codes serve as a way to keep track with the change in data. The original xcel data should not be touched outside of R. A problem with excel data is that its autocorrect function change provenance of genomic data eg SEPT1, MARCH1. SEPT1 is now relabeled as SEPTIN1.
 
-```{r eval=FALSE}
-c<-read.csv("File.csv")
 
-c<-readr::read_csv ("File.csv")
-
-c<-readxl::read_xlsx("File.xlsx",skip=1) #skip first row 
-
-c<-readxl::read_xlsx("File.xlsx",sheet=2) #read data from sheet 2
-```
 
 #### Date and time
 
-Date and time can be handle in base R. The library _lubridate_ is useful for parsing date data. One warning, errors with parsing can occur if there are characters in the column containing date data. It is possible to get an overview of the functions of the library by typing _help(package=lubridate)_.
+Date and time can be handle in base R. The library _lubridate_ is useful for parsing date data. It is possible to get an overview of the functions of the library by typing _help(package=lubridate)_. Errors with parsing can occur if there are characters in the column containing date data. 
 
-```{r date}
+```{r Date character}
 library(dplyr)
-dfdate<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),"Result"=c(4,5,6))
+dfdate<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),
+                   "Result"=c(4,5,6))
 class(dfdate$DateofEvent)
 dfdate$DateofEvent
 
-#remove NA
+#remove NA using filter
 dfdate %>% filter(!is.na(DateofEvent))
 
+#re assigning date data type
 dfdate$DateofEvent2<-as.POSIXct(dfdate$DateofEvent)
 class(dfdate$DateofEvent2)
 dfdate$DateofEvent2
 ```
+
+Problem can occur when date and time are located in separate columns. The first issue is that time data is assigned a default date 1899-12-30. This error occurs as the base date in MS Office is 1899-12-30. This issue can be compounded when there are 2 time data eg a patient has stroke onset at 22:00 and is scanned at 02:00. The data become 1899-12-31 22:00 and 1899-12-31 02:00. In this case it implies that scanning occurs before stroke onset. This could have been solved at the data collection stage by having 2 separate date colums. There are several solutions inclusing _ifelse_ but care must be taken with this argument. Note that _ifelse_ argument convert date time data to numeric class. This can be resolved by embedding _ifelse_ statement within _as.Date_ argument. This argument requires _origin_ argument. The logic argument may fail when the default date differ eg 1904-02-08 02:00. In this case 1904-02-08 02:00 is greater than 1899-12-31 22:00.
+
+```{r date time}
+library(lubridate)
+library(tidyverse)
+
+df<-data.frame("Onset_date"=c("2014-03-06","2013-06-09"), "Onset_Time"=c("1899-12-31 08:03:00","1899-12-31 22:00:00"), "Scan_Time"=c("1904-02-08 10:00:00","1899-12-31 02:00:00")) %>% 
+  mutate(
+  #use update argument to reassign year, month and day
+  Scantime=update(ymd_hms(Scan_Time), year=year(ymd(Onset_date)), month=month(ymd(Onset_date)), mday=day(ymd(Onset_date))),
+ 
+  Onsettime=update(ymd_hms(Onset_Time), year=year(ymd(Onset_date)), month=month(ymd(Onset_date)), mday=day(ymd(Onset_date))),
+  
+  Scan_date=ifelse(Onsettime>Scantime,1,0),
+  Scantime=Scantime+Scan_date*hms("24:00:00"),
+  
+ DiffHour=Scantime-Onsettime #minutes
+)
+
+df %>% select(-Scan_date) %>% gt::gt()
+
+
+
+```
+
 
 One way of storing data in R format is to save the file as .Rda. This format will ensure that no one can accidentally rewrite or delete a number. For very large data, it's quicker to save as .Rda file than as csv file.
 
@@ -242,6 +261,7 @@ neurobase::ortho2(SimIm)
 
 
 ## Tidy data
+
 Attention to collection of data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
 
 ```{r variables}
@@ -259,14 +279,15 @@ df2
 The below example is about collapsing of column using the base R. 
 
 ```{r collapsing column}
-dfa<-data.frame(City=c("Melbourne","Sydney","Adelaide"),State=c("Victoria","NSW","South Australia"))
+dfa<-data.frame(City=c("Melbourne","Sydney","Adelaide"),
+                State=c("Victoria","NSW","South Australia"))
 #collapsing City and State columns and generate new column address
 dfa$addresses<-paste0(dfa$City,",", dfa$State) #separate by comma
 dfa$addresses2<-paste0(dfa$City,",", dfa$State,", Australia")
 dfa
 ```
 
-This exanple is same as above but uses verbs from _tidyr_. This is useful for collapsing address for geocoding. 
+This example is same as above but uses verbs from _tidyr_. This is useful for collapsing address for geocoding. 
 
 ```{r unite}
 library(tidyr)
@@ -275,6 +296,7 @@ dfa1
 ```
 
 Using the data above, let's split the column address
+
 ```{r separate}
 library(tidyr)
 dfa2<-dfa %>% separate(addresses, c("City2", "State2"))
@@ -329,16 +351,21 @@ A variety of different expressions are used to describe data format such as wide
 
 The best way to think about how data should be presented is that data is analyzed according to columns not rows. The data below is extracted from CDC COVID website. Details are given below under Web scraping on how this task was performed.
 
-```{r pivot}
+```{r Pivot}
 library(dplyr)
 library(tidyr)
 library(stringr)
 usa<-read.csv("./Data-Use/Covid_bystate_Table130420.csv")
 # for demonstration we will select 3 columns of interest
-usa_long <-usa %>% select(Jurisdiction,NumberCases31.03.20,NumberCases07.04.20) %>% pivot_longer(-Jurisdiction,names_to = "Date",values_to = "Number.Cases")  
+usa_long <-usa %>% 
+  select(Jurisdiction,NumberCases31.03.20,NumberCases07.04.20) %>% pivot_longer(-Jurisdiction,names_to = "Date",values_to = "Number.Cases")  
 usa_long$Date <- str_replace(usa_long$Date,"NumberCases","")
-head(usa %>%select(Jurisdiction,NumberCases31.03.20,NumberCases07.04.20),6) #data in wide format
-head(usa_long,6) #data in long format
+
+#data in wide format
+head(usa %>%select(Jurisdiction,NumberCases31.03.20,NumberCases07.04.20),6) 
+
+#data in long format
+head(usa_long,6) 
 ```
 
 ## Regular Expressions
@@ -403,7 +430,10 @@ The following examples are taken from excel after conversion from pdf. In the pr
 ```{r bracket}
 library(stringr)
 #error introduced by double space 
-a<-c("8396 (7890 to 8920)","6 301 113(6 085 757 to 6 517 308)","4 841 208 (4 533 619 to 5 141 654)","1 407 701 (127 445 922 to 138 273 863)","4 841 208\n(4 533 619 to\n5 141 654)")
+a<-c("8396 (7890 to 8920)","6 301 113(6 085 757 to 6 517 308)",
+     "4 841 208 (4 533 619 to 5 141 654)",
+     "1 407 701 (127 445 922 to 138 273 863)",
+     "4 841 208\n(4 533 619 to\n5 141 654)")
 
 b<-str_replace (a, "\\(c.*\\)","")
 
@@ -527,7 +557,9 @@ knitr::include_graphics("./Data-Use/Danish-Stroke-page13.png")
 
 
 ### Scanned text or picture
+
 Importing data from scanned text will require use of Optical Character Recognition (OCR). The _tesseract_ library provides an R interface for OCR. In the example below, a picture is taken from same CDC website containing mortality data  (https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/04102020/nchs-data.html). The screenshot of this website was then cleaned in _paint_. The data is available in the Data-Use folder.
+
 ```{r tesseract}
 library(tesseract)
 eng <- tesseract("eng") #english
@@ -536,6 +568,7 @@ cat(text)
 ```
 
 ## Web scraping
+
 The readers may ask why web scraping for healthcare. A pertinent example related to COVID-19 data is provided below. The library _rvest_ is helpful at scraping data from an internet page. The _rvest_ library assumes that web contents have xml document-tree representation. The different options available for web scraping with _rvest_ are available at the website https://rvest.tidyverse.org/reference/. The user can use CSS selectors to scrape content. The library _Rselenium_ is also useful for web scraping. For dynamic web page, the library _CasperJS_ library does a better job especially if the data contain embedded java script. 
 
 The library _cdccovidview_ provides access to the CDC website on COVID-19. In the example below, we will try to this manually. Data from CDC website on COVID-19 is downloaded, cleaned and saved in csv format. It is important to pay attention to the data. The first row contains header and is removed. There are several columns with commas. These commas can be removed using the exercises above. Further the data is updated on weekly basis. As such the data needs to be converted into a date time format using _lubridate_. 
@@ -665,11 +698,13 @@ This is an illustration of simple operation such as addition. It can be extended
 ```{r math nifti}
 #stack arrays
 k2<-cbind(k,k1)
-dim(k2)
-#abind arrays
+dim(k2) ### [1] 902629      2
+
+#combine multi-dimensional arrays 
 ab<-abind::abind(k,k1)
 neurobase::ortho2(ab)
-dim(ab)
+dim(ab) ### [1]  91 109 182
+
 #sum array
 k3<-k+k1
 neurobase::ortho2(k3)
@@ -684,11 +719,14 @@ library(oro.nifti)
 library(abind)
 library(CHNOSZ)
 library(RNiftyReg)
+
 #create a list using pattern matching
 mca.list<-list.files(path="./Ext-Data/",pattern = "*.nii", full.names = TRUE)
+
 #length of list
 length(mca.list)
 #read multiple files using lapply function
+
 #note lapply returns a list
 mca.list.nii <- lapply(mca.list, readNIfTI)
 
@@ -697,20 +735,46 @@ neurobase::ortho2(mca.list.nii[[1]])
 mca_ave3<-(mca.list.nii[[1]]+mca.list.nii[[2]]+mca.list.nii[[3]])/3
 neurobase::ortho2(mca_ave3)
 
-#extract array
+#extract multiple arrays using lapply
 mca.list.array<-lapply(mca.list.nii, img_data)
+
 #average 3 arrays
 m3<-(mca.list.array[[2]]+mca.list.array[[2]]+mca.list.array[[3]])/3
 neurobase::ortho2(m3)
 
-#bind 3 arrays
-m.abind<-abind(mca.list.nii[[1]],mca.list.nii[[2]],mca.list.nii[[3]])
-
-#bind multiple arrays
-m.abind<-abind(mca.list.nii) #91  109 2275
-
 #bind multiple array by CHNOSZ
 m.listarray<-list2array(mca.list.array)#91 109  91  25
+
+#pca requires scaling
+pca_mca<-prcomp(scale(m.listarray))
+
+
+```
+
+One way of handling imaging data for multivariate analysis is to flatten the image. This can be done by using _as.vector_ function.
+
+```{r flatten 3D}
+#flatten 3D
+niivector = as.vector(img[,,])
+
+#Create empty array of same size to fill up
+niinew = array(0, dim=dim(img))
+
+#return to 3D
+niinew = array(niivector, dim=dim(img))
+
+#confirm
+neurobase::ortho2(niinew)
+
+#convert the list above to array
+newmcaarray<-list2array(mca.list.nii)
+
+dim(newmcaarray)
+#[1]  91 109  91  29
+
+mcavector = as.vector(newmcaarray[,,,])
+
+mca.pca<-prcomp(newmcaarray, center = T, scale. = T)
 
 
 ```
@@ -772,6 +836,7 @@ ica1000.rescale<-rescale(ica1000,c(2,2,2))
 
 ```
 
+Label a parcellated region in AAL atlas
 
 ```{r label atlas}
 library(rgl)
@@ -780,7 +845,6 @@ library(MNITemplate)
 library(aal)
 library(neurobase)
 library(magick)
-#library(RNiftyReg)
 library(oro.nifti)
 
 img = aal_image()

@@ -36,10 +36,118 @@ plot(treeSAH,type = "simple",main = "Conditional Inference for aSAH")
 Overfitting and prone to chosing variable with many levels are some disadvantage of _decision tree_. Decision tree do not handle collinearity issues well and the related method of _random forest_ is proposed below.
  
 ## Random Forest
-Random forest regression is a supervised machine learning method with the model ensembled from multiple decision trees. The trees are created by obtaining multiple subset of the data (random selection of data by rows and columns).  
+Both gradient boost machine and random forest are examples of tree-based method with the former based on boosting of the residuals of the model and the latter based on bagging with random selection (rows and columns) of multiple subsets of the data. As such random forest regression ensembles the model from multiple decision trees. The trees are created by obtaining multiple subset of the data (random selection of data by rows and columns). Decision tree comes at certain disadvantage such as overfitting. Random forest avoids the problems of single decision tree analyses by aggregating the results of multiple trees obtained by performing analysis on random subsets of the original data. This method is different from the bootstrapping procedure that can be used in decision tree which may not change the data structure; hence the trees can look very similar. A major drawback to random forest is that the hierarchical nature of the trees is lost. As such this method is seen as a black box tool and is less commonly embraced in the medical literature. One way us to use  an interpretable machine learning tool _iml_ [@10.21105/joss.00786] (Shapley values) tool to aid interpretation of the model. This method uses ideas from coalition game theory to fairly distribute the contribution of the coalition of covariates to the random forest model. 
 
 ## Gradient Boost Machine
 
+Gradient boost machine is available as gradient boost machine and extreme gradient boost machine.
+
+```{r XGB}
+library(xgboost)
+library(caret)
+
+data("BreastCancer",package = "mlbench")
+
+BreastCancer$Class<-as.character(BreastCancer$Class)
+BreastCancer$Class[BreastCancer$Class=="benign"]<-0
+BreastCancer$Class[BreastCancer$Class=="malignant"]<-1
+#BreastCancer$Class<-as.numeric(BreastCancer$Class)
+
+#remove ID column
+#remove column a=with NA
+#convert multiple columns to numeric
+#lapply output a list
+BreastCancer2<-lapply(BreastCancer[,-c(1,7)], as.numeric)
+BreastCancer2<-as.data.frame(BreastCancer2)
+
+
+set.seed(1234)
+parts = createDataPartition(BreastCancer2, p = 0.7, list=F)
+train = BreastCancer2[parts, ]
+test = BreastCancer2[-parts, ]
+
+X_train = data.matrix(train[,-9])          # independent variables for train
+y_train = train[,9]                        # dependent variables for train
+X_test = data.matrix(test[,-9])            # independent variables for test
+y_test = test[,9]                          # dependent variables for test
+
+# convert the train and test data into xgboost matrix type.
+xgboost_train = xgb.DMatrix(data=X_train, label=as.matrix(y_train))
+xgboost_test = xgb.DMatrix(data=X_test, label=as.matrix(y_test))
+
+# train a model using our training data
+# nthread is the number of CPU threads we use
+# nrounds is the number of passes on the data
+
+model <- xgboost(data = xgboost_train, max.depth = 2, eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic", verbose = 2)                           
+summary(model)
+
+#use model to make predictions on test data
+pred_test = predict(model, xgboost_test)
+pred_test
+
+#classify 1 if prediction >.5
+prediction <- as.numeric(pred_test > 0.5)
+print(head(prediction))
+
+err <- mean(as.numeric(pred_test > 0.5) != y_test)
+print(paste("test-error=", err))
+
+#xgb.plot.tree(model = model, trees = 1:10)
+
+
+
+```
+
+## KNN
+
+K nearest neighbour is available from the _caret_ library.
+
+```{r KNN}
+library(caret)
+
+```
+
 ## Support vector machine
 
+In brief, support vector machine regression (SVR) can be seen as a way to enhance data which may not be easily separated in its native space. It manipulates data from low dimension to higher dimension in feature space and which can reveal relationship not discernible in low dimensional space. It does this around the hyperparameter controlling the margin of the data from a fitted line in a way not dissimilar from fitting a regression line based on minimising least squares. The default setting is radial basis function.
 
+```{r SVM Classification}
+library(e1071)
+library(caTools)
+library(caret)
+library(iml)
+
+data("BreastCancer",package = "mlbench")
+colnames(BreastCancer)
+
+#note Class is benign or malignant of class factor
+#column Bare.nuclei removed due to NA
+BreastCancer<-BreastCancer[,-c(1,7)]
+
+#split data
+set.seed(123)
+split = sample.split(BreastCancer$Class, SplitRatio = 0.75)
+Train = subset(BreastCancer, split == TRUE)
+Test = subset(BreastCancer, split == FALSE)
+
+trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
+
+#scaling data is performed here under preProcess
+
+
+svm_Linear <- train(Class ~ ., 
+                    data = Train, 
+                  method = "svmLinear",
+                 trControl=trctrl,
+                 preProcess = c("center", "scale"),
+                 tuneLength = 10)
+
+
+summary(svm_Linear)
+pred<-predict(svm_Linear,BreastCancer)
+confusionMatrix(pred, BreastCancer$Class)
+roc_svm<-roc(BreastCancer$Class, as.numeric(pred))
+
+
+```

@@ -55,11 +55,9 @@ A positive semi-definite matrix is invertible and has full rank. It is defined a
 Such a matrix is symmetrical. Examples include correlation and covariance matrices.
 
 ## Regression
-
 In the section below, a matrix approach to regression is provided. This step was performed as it explains for issues encountered when doing regression analyses. It is easier to explain collinearity using matrix. Examples of performing regression analyses and steps required to check for errors are given. This section deals with univariable and multivariable analyses. The next chapter will discuss the different multivariate analyses.
 
 ### Linear regression
-
 A matrix description of parameter estimation is given here because it is easier to describe the multiple regression [@Draper1998]. 
         $Y= \beta_1X_1+ \beta_2X_2+...\beta_jX_j$
 A matrix is an array of data as rows and columns. For the imaging data, the individual voxel is represented on each column and each row refers to another patient. A vector refers to a matrix of one column.

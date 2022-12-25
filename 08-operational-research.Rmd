@@ -43,51 +43,142 @@ plot(env,what="arrivals",metric="flow_time")
 ```
 
 ## Linear Programming
-There are several different libraries useful for linear programming.
 
-```{r linear-programming}
-library(lpSolveAPI)
-#3 constrain 2 decision variables
-x<-make.lp(3,2)
- set.column(x, 1, c(1, 1, 2)) 
-  set.column(x, 2, c(3, 1, 0)) 
-  set.objfn(x, c(-2, -1)) 
-  set.constr.type(x, rep("<=", 3)) 
-  set.rhs(x, c(4, 2, 3)) 
-  solve(x)
+There are several different libraries useful for linear programming. The _lpSolve_ library is used here as illustration.
+
+```{r Linear Pogramming}
+library(lpSolve)
+
+#solve using linear programming
+n <-2.5 # Numbers of techs
+set_up_eeg <- 40 # min
+to_do_eeg <- 30 # min
+clean_equipment <- 10 #min
+annotate_eeg <- 10 #min
+
+# put some error for EEG time
+# if error=1 that mean NO errors happen
+error <- 0.8 #change from 0.93
+
+#Calculate time for EEG in hour
+eeg_case_time <- ((set_up_eeg+to_do_eeg+clean_equipment+annotate_eeg)/60)*error
+
+# limit for EEG per day
+# we can put different limits for EEGs
+limit_eeg <- round(8*eeg_case_time, digits = 0)
+
+#s[i] - numbers of cases for each i-EEG's machines 
+#Setting the coefficients of s[i]-decision variables
+#In a future can put some efficiency or some cost
+objective.in=c(1,1,1,1,1)
+
+#Constraint Matrix
+const.mat=matrix(c(1,0,0,0,0,
+                   0,1,0,0,0,
+                   0,0,1,0,0,
+                   0,0,0,1,0,
+                   0,0,0,0,1,
+                   1,1,1,1,1),nrow = 6,byrow = T)
+
+#defining constraints
+const_num_1=limit_eeg  #in cases
+const_num_2=limit_eeg  #in cases
+const_num_3=limit_eeg  #in cases
+const_num_4=limit_eeg  #in cases
+const_num_5=limit_eeg  #in cases
+const_res= n*7 # limit per sessions
+
+#RHS for constraints
+const.rhs=c(const_num_1,const_num_2,const_num_3,const_num_4,const_num_5, const_res)
+
+#Direction for constraints
+constr.dir <- rep("<=",6)
+
+#Finding the optimum solution
+opt=lp(direction = "max",objective.in,const.mat,constr.dir,const.rhs)
+#summary(opt)
+
+#Objective values of s[i]
+
+opt$solution 
   
+  
+```
+#Estimate for day (Value of objective function at optimal point)
+```{r echo=FALSE, message=FALSE}
+opt$objval
+
+#Urgent cases estimate
+
+saturday <-2
+sunday <- 2
+
+```
+
+#Estimate EEG per month based on staff EFT- only 3.5 of 5.7
+
+```{r echo=FALSE, message=FALSE}
+estimate_week <- 5*opt$objval + saturday + sunday
+estimate_month <- 4*estimate_week
+estimate_month
+```
+
+## Plots
+
+The median number of hours per fortnight is 127 + 8 (for urgent EEG)
+The median number of sessions is 36 + 4 for weekend
+
+```{r Session}
+t=c(189.9370, 168.4725, 186.1128, 194.3047, 193.2593, 184.1915, 174.7920, 176.8964, 204.1324, 190.5459, 187.4211, 181.3592, 188.0941, 173.4730, 183.4212, 181.8803, 197.2092, 183.0857, 174.7203, 149.6084, 178.6238, 178.2982, 179.9899, 180.5452, 165.4464, 175.8635, 188.0470, 187.1038, 176.0725, 189.5796, 184.8708, 197.6775, 179.7429, 184.8719, 174.9163, 194.0854, 178.4370, 189.0127, 191.6685, 168.9936, 170.7558, 182.9075, 173.2931, 161.7117, 166.2627, 176.6619, 187.4424, 196.0481, 170.1041, 201.6837, 206.3890, 183.1897, 187.7450, 170.2805, 200.0915, 172.9868, 179.6910, 189.4723, 190.2622, 154.0683, 191.1630, 187.4863, 177.4675, 200.0806)
+
+num_sessions=t/5
+  
+# Time spend on a report by neurologists (1 report = 30 min)
+neurologists_h <- num_sessions*3.5
+#print(neurologists_h)
+
+# Histogram for Estimate Neurologists Time, hours per 2 weeks
+hist(neurologists_h,
+     main="Estimate Neurologists Time, hours per 2 weeks",
+     xlab="Hours per 2 weeks",
+     col="magenta")
+text(135, 15, paste0("Neurologist Hours=", " " , round(median(neurologists_h))))
+
 ```
 
 ## Forecasting
-Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19. This forecast is an example and is not meant to be used in practice as mortality from COVID also depends on the number of infected cases and the rate of infection may increase exponentially.
 
-```{r forecast}
+Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19 in 2020. This forecast is an example and is not meant to be used in practice as mortality from COVID depends on the number of factors including infected cases, age, socioeconomic group, and comorbidity. 
+
+
+```{r Forecasting}
 library(tidyverse)
 library(prophet)
-library(ggplot2)
 library(hrbrthemes)
 library(lubridate)
 library(readr) #use read_csv to read csv rather than base R
+
 covid<-read_csv("./Data-Use/Covid_Table100420.csv") 
 colnames(covid)
+
 # A data frame with columns ds & y (datetimes & metrics)
 covid<-rename(covid, ds =Date, y=Total.Deaths)
-covid2 <- covid[c(1:14),]
+covid2 <- covid[c(1:12),]
+
 m<-prophet(covid2)#create prophet object
 # Extend dataframe 12 weeks into the future
 future <- make_future_dataframe(m, freq="week" , periods = 26)
 # Generate forecast for next 500 days
 forecast <- predict(m, future)
-forecast %>% 
-  select(ds, yhat, yhat_lower, yhat_upper) %>%
-  tail()
+
 # What's the forecast for July 2020?
 forecasted_rides <- forecast %>%
   arrange(desc(ds)) %>%
-  slice(1) %>%
+  dplyr::slice(1) %>%
   pull(yhat) %>%
   round()
 forecasted_rides
+
 # Visualize
 forecast_p <- plot(m, forecast) + 
   labs(x = "", 
@@ -96,16 +187,58 @@ forecast_p <- plot(m, forecast) +
        subtitle = "based on data truncated in January 2020") +
         ylim(20000,80000)+
   theme_ipsum_rc()
-forecast_p
-#prophet_plot_components(m, forecast)
+#forecast_p
+
 ```
+
 ### Bed requirement
 
 ### Length of stay
 
 ### Customer churns
 
-Customer churns or turnover is an issue of interest in marketing. The collary within healthcare are patients attendance at outpatient clinics, Insurance. The classical method used is GLM.
+Customer churns or turnover is an issue of interest in marketing. The corollary within healthcare are patients attendance at outpatient clinics, Insurance. The classical method used is GLM.
+
+
+## Process mapping
+
+```{r mermaid}
+library(DiagrammeR)
+a.plot<-mermaid("
+        graph TB
+        
+        A((Triage))
+        A-->|2.3 hr|B(Imaging-No Stroke Code)
+        A-->|0.6 hr|B1(Imaging-Stroke Code)
+        
+        B-->|14.6 hr|B2(Dysphagia Screen)
+        B1-->|no TPA 10.7 hr|B2(Dysphagia Screen)
+
+        C(Stop NBM)
+        B2-->|0 hr|C
+      
+        C-->|Oral route 1.7 hr|E{Antithrombotics}
+        
+        D1-->|7.5 hr|E
+        B-->|PR route 6.8 hr|E
+        B1-->|PR route 3.8 hr|E
+    
+        B1-->|TPA 24.7 hr|D1(Post TPA Scan)
+    
+        style A fill:#ADF, stroke:#333, stroke-width:2px
+        style B fill:#9AA, stroke:#333, stroke-width:2px
+        style B2 fill:#9AA, stroke:#333, stroke-width:2px
+        style B1 fill:#879, stroke:#333, stroke-width:2px
+        style C fill:#9AA, stroke:#333, stroke-width:2px
+        style D1 fill:#879, stroke:#333, stroke-width:2px
+        style E fill:#9C2, stroke:#9C2, stroke-width:2px
+        ") 
+a.plot
+```
+
+```{r bupaR}
+library(bupaR)
+```
 
 ## Supply chains
 
@@ -113,9 +246,11 @@ Customer churns or turnover is an issue of interest in marketing. The collary wi
 
 ### Cost
 
-```{r hesim}
+```{r Hesim Cost}
+
 library("hesim")
 library("data.table")
+
 strategies <- data.table(strategy_id = c(1, 2))
 n_patients <- 1000
 patients <- data.table(patient_id = 1:n_patients,
@@ -140,18 +275,22 @@ print(hesim_dat)
 Data from WHO on mortality rate can be extracted directly from WHO or by calling _get_who_mr_ in _heemod_ library.
 
 ```{r heemod}
+
 library(heemod)
 
 ```
 
-There are several data in BCEA library: Vaccine.[@Baio2012]
+There are several data in BCEA library.
 
 ```{r bcea}
 library(BCEA)
-#help (package="BCEA")
+
+#use Vaccine data from BCEA
 data(Vaccine,package = "BCEA")
-View(vaccine)
+
 ints=c("Standard care","Vaccination")
+
 m <- bcea(e,c,ref=2,interventions=ints)
+
 summary(m)
 ```
