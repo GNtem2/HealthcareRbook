@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Bayesian Analysis | Applications of R in Healthcare</title>
-  <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Bayesian Analysis | Applications of R in Healthcare" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="GNtem2/HealthcareRbook" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 8 Bayesian Analysis | Applications of R in Healthcare" />
   
-  <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
   
 
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2020-04-28" />
+<meta name="date" content="2023-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,12 +50,13 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -64,14 +65,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -132,47 +135,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to plotting in R</a><ul>
-<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.1</b> ggplot2</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.1.1</b> Histogram</a></li>
-<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.1.2</b> Bar plot</a></li>
-<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.1.3</b> Pie chart</a></li>
-<li class="chapter" data-level="2.1.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.1.4</b> Scatter plot</a></li>
-<li class="chapter" data-level="2.1.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.1.5</b> arrange plot in grids</a></li>
-<li class="chapter" data-level="2.1.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.1.6</b> Line plot</a></li>
-<li class="chapter" data-level="2.1.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.1.7</b> Facet wrap</a></li>
-<li class="chapter" data-level="2.1.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.1.8</b> Polygons</a></li>
-<li class="chapter" data-level="2.1.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.1.9</b> Gantt chart</a></li>
-<li class="chapter" data-level="2.1.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.1.10</b> Heatmap</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#plot-using-base-r"><i class="fa fa-check"></i><b>2.1</b> Plot using base R</a></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
+<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.2.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.2.3</b> Pie chart</a></li>
+<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#scatter-plot"><i class="fa fa-check"></i><b>2.2.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#arrange-plot-in-grids"><i class="fa fa-check"></i><b>2.2.5</b> arrange plot in grids</a></li>
+<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#line-plot"><i class="fa fa-check"></i><b>2.2.6</b> Line plot</a></li>
+<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#facet-wrap"><i class="fa fa-check"></i><b>2.2.7</b> Facet wrap</a></li>
+<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#polygons"><i class="fa fa-check"></i><b>2.2.8</b> Polygons</a></li>
+<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.2.9</b> Gantt chart</a></li>
+<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.2.10</b> Heatmap</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.2</b> ggplot2 extra</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.2.1</b> Alluvial and Sankey diagram</a></li>
-<li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.2.2</b> Survival plot</a></li>
-<li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.2.3</b> ggraph and tidygraph</a></li>
-<li class="chapter" data-level="2.2.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.2.4</b> ggparty-decision tree</a></li>
-<li class="chapter" data-level="2.2.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.2.5</b> ggROC- ROC curve</a></li>
-<li class="chapter" data-level="2.2.6" data-path="intro.html"><a href="intro.html#ggtree-and-phyloseq"><i class="fa fa-check"></i><b>2.2.6</b> ggtree and phyloseq</a></li>
-<li class="chapter" data-level="2.2.7" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.2.7</b> Map</a></li>
-<li class="chapter" data-level="2.2.8" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.2.8</b> ggwordcloud</a></li>
-<li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.2.9</b> gganimate</a></li>
-<li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.2.10</b> ggneuro</a></li>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.3</b> ggplot2 extra</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.3.1</b> Alluvial and Sankey diagram</a></li>
+<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.3.2</b> Survival plot</a></li>
+<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.3.3</b> ggraph and tidygraph</a></li>
+<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.3.4</b> ggparty-decision tree</a></li>
+<li class="chapter" data-level="2.3.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.3.5</b> ggROC- ROC curve</a></li>
+<li class="chapter" data-level="2.3.6" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.3.6</b> Map</a></li>
+<li class="chapter" data-level="2.3.7" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.3.7</b> ggwordcloud</a></li>
+<li class="chapter" data-level="2.3.8" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.3.8</b> gganimate</a></li>
+<li class="chapter" data-level="2.3.9" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.9</b> ggneuro</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.3</b> plotly</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.3.1</b> scatter plot</a></li>
-<li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.3.2</b> bar plot</a></li>
-<li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.3.3</b> heatmap</a></li>
-<li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.3.4</b> map</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.4.1</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.4.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.4.3</b> Heatmap</a></li>
+<li class="chapter" data-level="2.4.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.4.4</b> map</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
 <li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#vector-arrays-matrix"><i class="fa fa-check"></i><b>3.1.1</b> Vector, Arrays, Matrix</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-lapply-sapply"><i class="fa fa-check"></i><b>3.1.2</b> apply, lapply, sapply</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#simple-function"><i class="fa fa-check"></i><b>3.1.3</b> Simple function</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data-wrangling.html"><a href="data-wrangling.html#for-loop"><i class="fa fa-check"></i><b>3.1.4</b> for loop</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.1</b> Excel data</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.2</b> Foreign data</a></li>
-<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.3</b> json format</a></li>
-<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.4</b> DICOM and nifti format</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data-frame"><i class="fa fa-check"></i><b>3.2.1</b> Data frame</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.2</b> Excel data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.3</b> Foreign data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.4</b> json format</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.5</b> DICOM and nifti format</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#factors"><i class="fa fa-check"></i><b>3.3.1</b> Factors</a></li>
@@ -187,6 +194,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.5.1</b> Scanned text or picture</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.6</b> Web scraping</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-medical-images"><i class="fa fa-check"></i><b>3.7</b> Manipulating Medical Images</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-array-of-medical-images"><i class="fa fa-check"></i><b>3.7.1</b> Manipulating array of medical images</a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operations"><i class="fa fa-check"></i><b>3.7.2</b> Math operations</a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#average"><i class="fa fa-check"></i><b>3.7.3</b> Average</a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#tar-file"><i class="fa fa-check"></i><b>3.7.4</b> tar file</a></li>
+<li class="chapter" data-level="3.7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#image-registration"><i class="fa fa-check"></i><b>3.7.5</b> Image registration</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
 <li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
@@ -194,20 +208,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.2" data-path="statistics.html"><a href="statistics.html#non-parametric-tests"><i class="fa fa-check"></i><b>4.1.2</b> Non-parametric tests</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#linear-least-square-regression"><i class="fa fa-check"></i><b>4.2.1</b> Linear (least square) regression</a></li>
-<li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#brief-review-of-matrix"><i class="fa fa-check"></i><b>4.2.1</b> Brief review of matrix</a></li>
+<li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#linear-least-square-regression"><i class="fa fa-check"></i><b>4.2.2</b> Linear (least square) regression</a></li>
+<li class="chapter" data-level="4.2.3" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.3</b> Logistic regression</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#special-types-of-regression"><i class="fa fa-check"></i><b>4.3</b> Special types of regression</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="statistics.html"><a href="statistics.html#ordinal-regression"><i class="fa fa-check"></i><b>4.3.1</b> Ordinal regression</a></li>
 <li class="chapter" data-level="4.3.2" data-path="statistics.html"><a href="statistics.html#survival-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Survival analysis</a></li>
 <li class="chapter" data-level="4.3.3" data-path="statistics.html"><a href="statistics.html#quantile-regression"><i class="fa fa-check"></i><b>4.3.3</b> Quantile regression</a></li>
-<li class="chapter" data-level="4.3.4" data-path="statistics.html"><a href="statistics.html#penalised-regression"><i class="fa fa-check"></i><b>4.3.4</b> Penalised regression</a></li>
-<li class="chapter" data-level="4.3.5" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.3.5</b> Poisson regression</a></li>
-<li class="chapter" data-level="4.3.6" data-path="statistics.html"><a href="statistics.html#mars"><i class="fa fa-check"></i><b>4.3.6</b> MARS</a></li>
-<li class="chapter" data-level="4.3.7" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.3.7</b> Conditional logistic regression</a></li>
-<li class="chapter" data-level="4.3.8" data-path="statistics.html"><a href="statistics.html#mixed-modelling"><i class="fa fa-check"></i><b>4.3.8</b> Mixed modelling</a></li>
-<li class="chapter" data-level="4.3.9" data-path="statistics.html"><a href="statistics.html#trajectory-modelling"><i class="fa fa-check"></i><b>4.3.9</b> Trajectory modelling</a></li>
-<li class="chapter" data-level="4.3.10" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.3.10</b> Multinomial modelling</a></li>
+<li class="chapter" data-level="4.3.4" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.3.4</b> Poisson regression</a></li>
+<li class="chapter" data-level="4.3.5" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.3.5</b> Conditional logistic regression</a></li>
+<li class="chapter" data-level="4.3.6" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.3.6</b> Multinomial modelling</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.4</b> Sample size estimation</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="statistics.html"><a href="statistics.html#proportion"><i class="fa fa-check"></i><b>4.4.1</b> Proportion</a></li>
@@ -215,21 +226,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4.3" data-path="statistics.html"><a href="statistics.html#survival-studies"><i class="fa fa-check"></i><b>4.4.3</b> Survival studies</a></li>
 <li class="chapter" data-level="4.4.4" data-path="statistics.html"><a href="statistics.html#multiple-regression"><i class="fa fa-check"></i><b>4.4.4</b> Multiple regression</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.5</b> Metaanalysis</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.5.1</b> PRISMA</a></li>
-<li class="chapter" data-level="4.5.2" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.5.2</b> Metaanalysis of proportion</a></li>
-<li class="chapter" data-level="4.5.3" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.5.3</b> Bivariate Metaanalysis</a></li>
-<li class="chapter" data-level="4.5.4" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.5.4</b> Metaregression</a></li>
-<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#network-metaanalysis"><i class="fa fa-check"></i><b>4.5.5</b> Network metaanalysis</a></li>
+<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#interpreting-clinical-trials"><i class="fa fa-check"></i><b>4.5</b> Interpreting clinical trials</a></li>
+<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.6</b> Metaanalysis</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.6.1</b> PRISMA</a></li>
+<li class="chapter" data-level="4.6.2" data-path="statistics.html"><a href="statistics.html#conversion-of-mean-and-median"><i class="fa fa-check"></i><b>4.6.2</b> Conversion of mean and median</a></li>
+<li class="chapter" data-level="4.6.3" data-path="statistics.html"><a href="statistics.html#inconsistency-i2"><i class="fa fa-check"></i><b>4.6.3</b> Inconsistency I2</a></li>
+<li class="chapter" data-level="4.6.4" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.6.4</b> Metaanalysis of proportion</a></li>
+<li class="chapter" data-level="4.6.5" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.6.5</b> Bivariate Metaanalysis</a></li>
+<li class="chapter" data-level="4.6.6" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-clinical-trial."><i class="fa fa-check"></i><b>4.6.6</b> Metaanalysis of clinical trial.</a></li>
+<li class="chapter" data-level="4.6.7" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.6.7</b> Metaregression</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.6</b> Data simulation</a></li>
+<li class="chapter" data-level="4.7" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.7</b> Data simulation</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a><ul>
-<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.1</b> Principal component analysis</a></li>
-<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Independent component analysis</a></li>
-<li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.3</b> Partial least squares</a></li>
-<li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>5.4</b> T-Stochastic Neighbourhood Embedding</a></li>
-<li class="chapter" data-level="5.5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>5.5</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#multivariate-regression"><i class="fa fa-check"></i><b>5.1</b> Multivariate regression</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#penalised-regression"><i class="fa fa-check"></i><b>5.1.1</b> Penalised regression</a></li>
+<li class="chapter" data-level="5.1.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#mars"><i class="fa fa-check"></i><b>5.1.2</b> MARS</a></li>
+<li class="chapter" data-level="5.1.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#mixed-modelling"><i class="fa fa-check"></i><b>5.1.3</b> Mixed modelling</a></li>
+<li class="chapter" data-level="5.1.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#trajectory-modelling"><i class="fa fa-check"></i><b>5.1.4</b> Trajectory modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Principal component analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.3</b> Independent component analysis</a></li>
+<li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.4</b> Partial least squares</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a><ul>
 <li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a><ul>
@@ -238,15 +256,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
-<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a></li>
-<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.4</b> Support vector machine</a></li>
+<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="machine-learning.html"><a href="machine-learning.html#extreme-gradient-boost-machine"><i class="fa fa-check"></i><b>6.3.1</b> Extreme gradient boost machine</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#knn"><i class="fa fa-check"></i><b>6.4</b> KNN</a></li>
+<li class="chapter" data-level="6.5" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.5</b> Support vector machine</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="machine-learning.html"><a href="machine-learning.html#survival-analysis-using-random-forest"><i class="fa fa-check"></i><b>6.5.1</b> Survival analysis using random forest</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="machine-learning.html"><a href="machine-learning.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>6.6</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="6.7" data-path="machine-learning.html"><a href="machine-learning.html#formal-concept-analysis"><i class="fa fa-check"></i><b>6.7</b> Formal concept analysis</a></li>
+<li class="chapter" data-level="6.8" data-path="machine-learning.html"><a href="machine-learning.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>6.8</b> Evolutionary Algorithm</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="machine-learning.html"><a href="machine-learning.html#simulated-annealing"><i class="fa fa-check"></i><b>6.8.1</b> Simulated Annealing</a></li>
+<li class="chapter" data-level="6.8.2" data-path="machine-learning.html"><a href="machine-learning.html#genetic-algorithm"><i class="fa fa-check"></i><b>6.8.2</b> Genetic Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="machine-learning.html"><a href="machine-learning.html#manifold-learning"><i class="fa fa-check"></i><b>6.9</b> Manifold learning</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="machine-learning.html"><a href="machine-learning.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>6.9.1</b> T-Stochastic Neighbourhood Embedding</a></li>
+<li class="chapter" data-level="6.9.2" data-path="machine-learning.html"><a href="machine-learning.html#self-organising-map"><i class="fa fa-check"></i><b>6.9.2</b> Self organising map</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="machine-learning.html"><a href="machine-learning.html#deep-learning"><i class="fa fa-check"></i><b>6.10</b> Deep learning</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="machine-learning.html"><a href="machine-learning.html#multiplayer-perceptron"><i class="fa fa-check"></i><b>6.10.1</b> Multiplayer Perceptron</a></li>
+<li class="chapter" data-level="6.10.2" data-path="machine-learning.html"><a href="machine-learning.html#cnn"><i class="fa fa-check"></i><b>6.10.2</b> CNN</a></li>
+<li class="chapter" data-level="6.10.3" data-path="machine-learning.html"><a href="machine-learning.html#rnn"><i class="fa fa-check"></i><b>6.10.3</b> RNN</a></li>
+<li class="chapter" data-level="6.10.4" data-path="machine-learning.html"><a href="machine-learning.html#reinforcement-learning"><i class="fa fa-check"></i><b>6.10.4</b> Reinforcement learning</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a><ul>
-<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#non-negative-matrix-factorisation-1"><i class="fa fa-check"></i><b>7.1</b> Non-negative matrix factorisation</a></li>
-<li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#formal-concept-analysis"><i class="fa fa-check"></i><b>7.2</b> Formal concept analysis</a></li>
-<li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>7.3</b> Evolutionary Algorithm</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#simulated-annealing"><i class="fa fa-check"></i><b>7.3.1</b> Simulated Annealing</a></li>
-<li class="chapter" data-level="7.3.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#genetic-algorithm"><i class="fa fa-check"></i><b>7.3.2</b> Genetic Algorithm</a></li>
+<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#bag-of-words"><i class="fa fa-check"></i><b>7.1</b> Bag of words</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#tfidf"><i class="fa fa-check"></i><b>7.1.1</b> TFIDF</a></li>
+<li class="chapter" data-level="7.1.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#extracting-data-from-web"><i class="fa fa-check"></i><b>7.1.2</b> Extracting data from web</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#wordcloud"><i class="fa fa-check"></i><b>7.2</b> Wordcloud</a></li>
+<li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#bigram-analysis"><i class="fa fa-check"></i><b>7.3</b> Bigram analysis</a></li>
+<li class="chapter" data-level="7.4" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#trigram"><i class="fa fa-check"></i><b>7.4</b> Trigram</a></li>
+<li class="chapter" data-level="7.5" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#topic-modeling-or-thematic-analysis"><i class="fa fa-check"></i><b>7.5</b> Topic modeling or thematic analysis</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#probabilistic-topic-model"><i class="fa fa-check"></i><b>7.5.1</b> Probabilistic topic model</a></li>
+<li class="chapter" data-level="7.5.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#nmf"><i class="fa fa-check"></i><b>7.5.2</b> NMF</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html"><i class="fa fa-check"></i><b>8</b> Bayesian Analysis</a><ul>
@@ -255,21 +299,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#markov-model"><i class="fa fa-check"></i><b>8.2</b> Markov model</a></li>
 <li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>8.3.1</b> Bayesian Metaanalysis</a></li>
-<li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.2</b> Cost</a></li>
+<li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#linear-regression"><i class="fa fa-check"></i><b>8.3.1</b> Linear regression</a></li>
+<li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#logistic-regression-2"><i class="fa fa-check"></i><b>8.3.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="8.3.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#mixed-model"><i class="fa fa-check"></i><b>8.3.3</b> Mixed model</a></li>
+<li class="chapter" data-level="8.3.4" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#bayesian-metaanalysis"><i class="fa fa-check"></i><b>8.3.4</b> Bayesian Metaanalysis</a></li>
+<li class="chapter" data-level="8.3.5" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.5</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a><ul>
 <li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.1</b> Discrete Event Simulations</a></li>
 <li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#plots"><i class="fa fa-check"></i><b>9.3</b> Plots</a></li>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.4</b> Supply chains</a></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.5</b> Health economics</a><ul>
-<li class="chapter" data-level="9.5.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.5.1</b> Cost</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
+<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
+<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a><ul>
@@ -292,10 +341,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>11</b> Geospatial analysis</a><ul>
-<li class="chapter" data-level="11.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>11.1</b> Geocoding</a></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.2</b> Thematic map</a></li>
-<li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>11.3</b> Spatial regression</a></li>
-<li class="chapter" data-level="11.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>11.4</b> Spatio-temporal regression</a></li>
+<li class="chapter" data-level="11.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>11.1</b> Geocoding</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
+<li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>11.4</b> Spatial regression</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#new-york-covid-19-mortality"><i class="fa fa-check"></i><b>11.4.1</b> New York COVID-19 mortality</a></li>
+<li class="chapter" data-level="11.4.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#danish-stroke-registry"><i class="fa fa-check"></i><b>11.4.2</b> Danish Stroke Registry</a></li>
+<li class="chapter" data-level="11.4.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#inla"><i class="fa fa-check"></i><b>11.4.3</b> INLA</a></li>
+<li class="chapter" data-level="11.4.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#stan"><i class="fa fa-check"></i><b>11.4.4</b> Stan</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#machine-learning-1"><i class="fa fa-check"></i><b>11.5</b> Machine learning</a></li>
+<li class="chapter" data-level="11.6" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>11.6</b> Spatio-temporal regression</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>12</b> App</a><ul>
 <li class="chapter" data-level="12.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>12.1</b> Brief introduction to Shiny app</a></li>
@@ -303,8 +364,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>13</b> Appendix</a><ul>
 <li class="chapter" data-level="13.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>13.1</b> Brief introduction to Matrix</a></li>
 <li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>13.2</b> Regression</a><ul>
-<li class="chapter" data-level="13.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>13.2.1</b> Linear regression</a></li>
-<li class="chapter" data-level="13.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-2"><i class="fa fa-check"></i><b>13.2.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="13.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression-1"><i class="fa fa-check"></i><b>13.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="13.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-3"><i class="fa fa-check"></i><b>13.2.2</b> Logistic regression</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -334,7 +395,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">8.1</span> Baysian belief</h2>
 <p>Bayes Theorem deals with the impact of information update on current belief expresses in terms of probability. P(A|B) is the posterior probability of A given knowledge of B. P(A) is the prior probability. P(B|A) is the conditional probability of B given A.
 P(A|B)=P(B|A) x P(A)/P(B)</p>
-<p>Bayes’ theorem can be expressed in terms of odds and post-test probabilities. This concept had been used in the analysis of the post-test probabilities of stroke related to the use of ABCD2409. In this case the likelihood ratio and pretest probability of stroke in patients with TIA is used to calculate the post-test probability.</p>
+<p>Bayes’ theorem can be expressed in terms of odds and post-test probabilities. This concept had been used in the analysis of the post-test probabilities of stroke related to the use of ABCD2. In this case the likelihood ratio and pretest probability of stroke in patients with TIA is used to calculate the post-test probability.</p>
 <p>Table 13. 2 x 2 table
 Disease + Disease -
 Test + eg ABCD2≥4 TP FP
@@ -342,7 +403,7 @@ Test – eg ABCD2&lt;4 FN TN</p>
 <p>The true positive rate (TPR) can be expressed as conditional probability P(T+|D+). TP is the joint distribution of T+ and D+ while TN is the joint distribution of T- and D-.</p>
 <p>The true negative rate (TNR) can be expressed as conditional probability P(T-|D-).</p>
 <p>In the setting of ABCD2, the pre-test odds is derived from cases of TIA and stroke outcome at 90 days.</p>
-<p>The positive likelihood ratio (PLR) in this case is derived from the sensitivity of ABCD2 for stroke and the one minus specificity of ABCD for stroke. One can interpret the likelihood ratio in terms of Bayes theorem781.</p>
+<p>The positive likelihood ratio (PLR) in this case is derived from the sensitivity of ABCD2 for stroke and the one minus specificity of ABCD for stroke. One can interpret the likelihood ratio in terms of Bayes theorem.</p>
 <p>To derive the post-test odds, the PLR is multiplied by the pre-test odds at the voxel level. The post-test odds is given by the product of the pre-test odds and the likelihood ratio.</p>
 <p>In turn, the post-test probabilities is calculated from the post-test odds by:</p>
 <div id="conditional-probability" class="section level3">
@@ -370,69 +431,605 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 </div>
 <div id="inla-stan-and-bugs" class="section level2">
 <h2><span class="header-section-number">8.3</span> INLA, Stan and BUGS</h2>
-<div id="bayesian-metaanalysis" class="section level3">
-<h3><span class="header-section-number">8.3.1</span> Bayesian Metaanalysis</h3>
-<p>A Bayesian approach towards metaanalysis is provided below using the package <em>meta4diag</em> <span class="citation">(Guo and Riebler <a href="#ref-2015arXiv151206220G">2015</a>)</span>. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the <em>mada</em> package which does not provide a bivariate method for performing summary sensitivity and specificity.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(meta4diag)</a></code></pre></div>
+<p>In the example here, the GBD 2016 life time risk of stroke is re-used. The model is shown next to the simple linear regression. INLA is used to infer the probability of a set of data given the defined parameters. In the regression example below the linear regression return coefficient of 0.788 and the INLA version returns a mean value of 0.789 as well. Note that Bayesian methods do not provide p-values.</p>
+<div id="linear-regression" class="section level3">
+<h3><span class="header-section-number">8.3.1</span> Linear regression</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="bayesian-analysis.html#cb1-1"></a><span class="kw">library</span>(INLA)</span></code></pre></div>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## Warning: package &#39;Matrix&#39; was built under R version 4.0.5</code></pre>
 <pre><code>## Loading required package: sp</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## This is INLA_20.07.18-2 built 2020-07-18 12:21:38 UTC.
+##  - See www.r-inla.org/contact-us for how to get help.
+##  - Save 521.2Mb of storage running &#39;inla.prune()&#39;</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="bayesian-analysis.html#cb8-1"></a><span class="kw">load</span>(<span class="st">&quot;./Data-Use/world_stroke.Rda&quot;</span>)</span>
+<span id="cb8-2"><a href="bayesian-analysis.html#cb8-2"></a></span>
+<span id="cb8-3"><a href="bayesian-analysis.html#cb8-3"></a><span class="co">#perform ordinary linear regression for comparison</span></span>
+<span id="cb8-4"><a href="bayesian-analysis.html#cb8-4"></a>fit&lt;-<span class="kw">lm</span>(LifeExpectancy<span class="op">~</span>MeanLifetimeRisk, <span class="dt">data =</span>world_sfdf)</span>
+<span id="cb8-5"><a href="bayesian-analysis.html#cb8-5"></a><span class="kw">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = LifeExpectancy ~ MeanLifetimeRisk, data = world_sfdf)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -15.5141  -4.8413   0.1315   5.3673  10.5146 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      56.27490    1.59843   35.21   &lt;2e-16 ***
+## MeanLifetimeRisk  0.78852    0.07655   10.30   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.223 on 173 degrees of freedom
+##   (71 observations deleted due to missingness)
+## Multiple R-squared:  0.3802, Adjusted R-squared:  0.3766 
+## F-statistic: 106.1 on 1 and 173 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bayesian-analysis.html#cb10-1"></a><span class="co">#need to subset data as world_sfdf is of class &quot;sf&quot;         &quot;tbl_df&quot;     &quot;tbl&quot; &quot;data.frame&quot;</span></span>
+<span id="cb10-2"><a href="bayesian-analysis.html#cb10-2"></a>fitINLA&lt;-<span class="kw">inla</span>(LifeExpectancy<span class="op">~</span>MeanLifetimeRisk, <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>, <span class="dt">data =</span>world_sfdf[,<span class="kw">c</span>(<span class="dv">23</span>,<span class="dv">12</span>)])</span></code></pre></div>
+<pre><code>## Warning in .recacheSubclasses(def@className, def, env): undefined subclass
+## &quot;numericVector&quot; of class &quot;Mnumeric&quot;; definition not updated</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="bayesian-analysis.html#cb12-1"></a><span class="kw">summary</span>(fitINLA)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##    c(&quot;inla(formula = LifeExpectancy ~ MeanLifetimeRisk, family = 
+##    \&quot;gaussian\&quot;, &quot;, &quot; data = world_sfdf[, c(23, 12)])&quot;) 
+## Time used:
+##     Pre = 0.95, Running = 0.86, Post = 0.523, Total = 2.33 
+## Fixed effects:
+##                    mean    sd 0.025quant 0.5quant 0.975quant   mode kld
+## (Intercept)      56.275 1.598     53.135   56.275     59.413 56.275   0
+## MeanLifetimeRisk  0.789 0.077      0.638    0.789      0.939  0.789   0
+## 
+## Model hyperparameters:
+##                                          mean    sd 0.025quant 0.5quant
+## Precision for the Gaussian observations 0.026 0.003      0.021    0.026
+##                                         0.975quant  mode
+## Precision for the Gaussian observations      0.032 0.026
+## 
+## Expected number of effective parameters(stdev): 2.00(0.00)
+## Number of equivalent replicates : 87.50 
+## 
+## Marginal log-Likelihood:  -588.00</code></pre>
+<p>Performing Bayesian analysis with <em>rstan</em> can be tricky as the text file for the stan code require an empty line at the end. The <em>brms</em> library contains the same precompiled <em>stan</em> code and is easier to run.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="bayesian-analysis.html#cb14-1"></a><span class="kw">library</span>(brms)</span></code></pre></div>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Warning: package &#39;Rcpp&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Loading &#39;brms&#39; package (version 2.14.4). Useful instructions
+## can be found by typing help(&#39;brms&#39;). A more detailed introduction
+## to the package is available through vignette(&#39;brms_overview&#39;).</code></pre>
+<pre><code>## 
+## Attaching package: &#39;brms&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     ar</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bayesian-analysis.html#cb20-1"></a>fitBRM&lt;-<span class="kw">brm</span>(LifeExpectancy<span class="op">~</span>MeanLifetimeRisk,  <span class="dt">data =</span>world_sfdf[,<span class="kw">c</span>(<span class="dv">23</span>,<span class="dv">12</span>)])</span></code></pre></div>
+<pre><code>## Warning: Rows containing NAs were excluded from the model.</code></pre>
+<pre><code>## Compiling Stan program...</code></pre>
+<pre><code>## Start sampling</code></pre>
+<pre><code>## 
+## SAMPLING FOR MODEL &#39;6d6d026fdd62b36893c9210b3edc6eec&#39; NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 0.108 seconds (Warm-up)
+## Chain 1:                0.099 seconds (Sampling)
+## Chain 1:                0.207 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL &#39;6d6d026fdd62b36893c9210b3edc6eec&#39; NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 0.11 seconds (Warm-up)
+## Chain 2:                0.103 seconds (Sampling)
+## Chain 2:                0.213 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL &#39;6d6d026fdd62b36893c9210b3edc6eec&#39; NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 0.099 seconds (Warm-up)
+## Chain 3:                0.084 seconds (Sampling)
+## Chain 3:                0.183 seconds (Total)
+## Chain 3: 
+## 
+## SAMPLING FOR MODEL &#39;6d6d026fdd62b36893c9210b3edc6eec&#39; NOW (CHAIN 4).
+## Chain 4: 
+## Chain 4: Gradient evaluation took 0 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 4: Adjust your expectations accordingly!
+## Chain 4: 
+## Chain 4: 
+## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 4: 
+## Chain 4:  Elapsed Time: 0.125 seconds (Warm-up)
+## Chain 4:                0.091 seconds (Sampling)
+## Chain 4:                0.216 seconds (Total)
+## Chain 4:</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="bayesian-analysis.html#cb25-1"></a><span class="kw">summary</span>(fitBRM)</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: LifeExpectancy ~ MeanLifetimeRisk 
+##    Data: world_sfdf[, c(23, 12)] (Number of observations: 175) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept           56.32      1.56    53.29    59.31 1.00     4299     3176
+## MeanLifetimeRisk     0.79      0.07     0.64     0.93 1.00     4189     3151
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     6.25      0.34     5.65     6.96 1.00     3759     2992
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Extract the posterior samples for plotting.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="bayesian-analysis.html#cb27-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.6     v dplyr   1.0.8
+## v tidyr   1.1.4     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.0.5</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x purrr::accumulate() masks foreach::accumulate()
+## x tidyr::expand()     masks Matrix::expand()
+## x dplyr::filter()     masks stats::filter()
+## x dplyr::lag()        masks stats::lag()
+## x tidyr::pack()       masks Matrix::pack()
+## x tidyr::unpack()     masks Matrix::unpack()
+## x purrr::when()       masks foreach::when()</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="bayesian-analysis.html#cb35-1"></a>post_samples_BRM &lt;-<span class="st"> </span>brms<span class="op">::</span><span class="kw">posterior_samples</span>(fitBRM) </span>
+<span id="cb35-2"><a href="bayesian-analysis.html#cb35-2"></a></span>
+<span id="cb35-3"><a href="bayesian-analysis.html#cb35-3"></a>post_samples_BRM <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-4"><a href="bayesian-analysis.html#cb35-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>lp__) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-5"><a href="bayesian-analysis.html#cb35-5"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>()) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb35-6"><a href="bayesian-analysis.html#cb35-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value)) <span class="op">+</span></span>
+<span id="cb35-7"><a href="bayesian-analysis.html#cb35-7"></a><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></span>
+<span id="cb35-8"><a href="bayesian-analysis.html#cb35-8"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>name, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-1-3-1.png" width="672" /></p>
+</div>
+<div id="logistic-regression-2" class="section level3">
+<h3><span class="header-section-number">8.3.2</span> Logistic regression</h3>
+<p>This example illustrates the use of INLA for logistic regression.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="bayesian-analysis.html#cb36-1"></a><span class="co">#library(INLA)</span></span>
+<span id="cb36-2"><a href="bayesian-analysis.html#cb36-2"></a><span class="kw">data</span>(<span class="st">&quot;BreastCancer&quot;</span>,<span class="dt">package =</span> <span class="st">&quot;mlbench&quot;</span>)</span>
+<span id="cb36-3"><a href="bayesian-analysis.html#cb36-3"></a><span class="kw">colnames</span>(BreastCancer)</span></code></pre></div>
+<pre><code>##  [1] &quot;Id&quot;              &quot;Cl.thickness&quot;    &quot;Cell.size&quot;       &quot;Cell.shape&quot;     
+##  [5] &quot;Marg.adhesion&quot;   &quot;Epith.c.size&quot;    &quot;Bare.nuclei&quot;     &quot;Bl.cromatin&quot;    
+##  [9] &quot;Normal.nucleoli&quot; &quot;Mitoses&quot;         &quot;Class&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="bayesian-analysis.html#cb38-1"></a><span class="co">#note Class is benign or malignant of class factor</span></span>
+<span id="cb38-2"><a href="bayesian-analysis.html#cb38-2"></a><span class="co">#need to convert this to numeric values</span></span>
+<span id="cb38-3"><a href="bayesian-analysis.html#cb38-3"></a></span>
+<span id="cb38-4"><a href="bayesian-analysis.html#cb38-4"></a></span>
+<span id="cb38-5"><a href="bayesian-analysis.html#cb38-5"></a><span class="co">#first convert to character</span></span>
+<span id="cb38-6"><a href="bayesian-analysis.html#cb38-6"></a>BreastCancer<span class="op">$</span>Class&lt;-<span class="kw">as.character</span>(BreastCancer<span class="op">$</span>Class)</span>
+<span id="cb38-7"><a href="bayesian-analysis.html#cb38-7"></a></span>
+<span id="cb38-8"><a href="bayesian-analysis.html#cb38-8"></a>BreastCancer<span class="op">$</span>Class[BreastCancer<span class="op">$</span>Class<span class="op">==</span><span class="st">&quot;benign&quot;</span>]&lt;-<span class="dv">0</span></span>
+<span id="cb38-9"><a href="bayesian-analysis.html#cb38-9"></a>BreastCancer<span class="op">$</span>Class[BreastCancer<span class="op">$</span>Class<span class="op">==</span><span class="st">&quot;malignant&quot;</span>]&lt;-<span class="dv">1</span></span>
+<span id="cb38-10"><a href="bayesian-analysis.html#cb38-10"></a></span>
+<span id="cb38-11"><a href="bayesian-analysis.html#cb38-11"></a></span>
+<span id="cb38-12"><a href="bayesian-analysis.html#cb38-12"></a></span>
+<span id="cb38-13"><a href="bayesian-analysis.html#cb38-13"></a><span class="co">#convert factors to numeric</span></span>
+<span id="cb38-14"><a href="bayesian-analysis.html#cb38-14"></a>BreastCancer2&lt;-<span class="kw">lapply</span>(BreastCancer[,<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>)], as.numeric)</span>
+<span id="cb38-15"><a href="bayesian-analysis.html#cb38-15"></a>BreastCancer2&lt;-<span class="kw">as.data.frame</span>(BreastCancer2)</span>
+<span id="cb38-16"><a href="bayesian-analysis.html#cb38-16"></a></span>
+<span id="cb38-17"><a href="bayesian-analysis.html#cb38-17"></a><span class="co">#return Class to data</span></span>
+<span id="cb38-18"><a href="bayesian-analysis.html#cb38-18"></a><span class="co">#convert character back to numeric</span></span>
+<span id="cb38-19"><a href="bayesian-analysis.html#cb38-19"></a>BreastCancer2<span class="op">$</span>Class&lt;-<span class="kw">as.numeric</span>(BreastCancer<span class="op">$</span>Class)</span>
+<span id="cb38-20"><a href="bayesian-analysis.html#cb38-20"></a></span>
+<span id="cb38-21"><a href="bayesian-analysis.html#cb38-21"></a>Dx&lt;-<span class="kw">inla</span>(Class <span class="op">~</span>Epith.c.size<span class="op">+</span>Cl.thickness<span class="op">+</span>Cell.shape, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
+<span id="cb38-22"><a href="bayesian-analysis.html#cb38-22"></a>         <span class="dt">data =</span> BreastCancer2)</span>
+<span id="cb38-23"><a href="bayesian-analysis.html#cb38-23"></a></span>
+<span id="cb38-24"><a href="bayesian-analysis.html#cb38-24"></a><span class="kw">summary</span>(Dx)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##    c(&quot;inla(formula = Class ~ Epith.c.size + Cl.thickness + Cell.shape, &quot;, 
+##    &quot; family = \&quot;binomial\&quot;, data = BreastCancer2)&quot;) 
+## Time used:
+##     Pre = 1.57, Running = 0.355, Post = 0.56, Total = 2.49 
+## Fixed effects:
+##                mean    sd 0.025quant 0.5quant 0.975quant   mode kld
+## (Intercept)  -8.405 0.708     -9.891   -8.371     -7.106 -8.304   0
+## Epith.c.size  0.478 0.123      0.242    0.476      0.724  0.472   0
+## Cl.thickness  0.635 0.094      0.460    0.632      0.830  0.625   0
+## Cell.shape    0.929 0.121      0.704    0.924      1.179  0.914   0
+## 
+## Expected number of effective parameters(stdev): 4.00(0.00)
+## Number of equivalent replicates : 174.75 
+## 
+## Marginal log-Likelihood:  -114.89</code></pre>
+<p>The same data is used for logistic regression with stan.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="bayesian-analysis.html#cb40-1"></a>DxBRM&lt;-<span class="kw">brm</span>(Class <span class="op">~</span>Epith.c.size<span class="op">+</span>Cl.thickness<span class="op">+</span>Cell.shape, </span>
+<span id="cb40-2"><a href="bayesian-analysis.html#cb40-2"></a>           <span class="dt">family=</span><span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> BreastCancer2)</span></code></pre></div>
+<pre><code>## Compiling Stan program...</code></pre>
+<pre><code>## Start sampling</code></pre>
+<pre><code>## 
+## SAMPLING FOR MODEL &#39;266de4bd8199d4b1f9b8e7a6f02de83c&#39; NOW (CHAIN 1).
+## Chain 1: 
+## Chain 1: Gradient evaluation took 0 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 1: Adjust your expectations accordingly!
+## Chain 1: 
+## Chain 1: 
+## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 1: 
+## Chain 1:  Elapsed Time: 0.825 seconds (Warm-up)
+## Chain 1:                0.739 seconds (Sampling)
+## Chain 1:                1.564 seconds (Total)
+## Chain 1: 
+## 
+## SAMPLING FOR MODEL &#39;266de4bd8199d4b1f9b8e7a6f02de83c&#39; NOW (CHAIN 2).
+## Chain 2: 
+## Chain 2: Gradient evaluation took 0 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 2: Adjust your expectations accordingly!
+## Chain 2: 
+## Chain 2: 
+## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 2: 
+## Chain 2:  Elapsed Time: 0.767 seconds (Warm-up)
+## Chain 2:                0.744 seconds (Sampling)
+## Chain 2:                1.511 seconds (Total)
+## Chain 2: 
+## 
+## SAMPLING FOR MODEL &#39;266de4bd8199d4b1f9b8e7a6f02de83c&#39; NOW (CHAIN 3).
+## Chain 3: 
+## Chain 3: Gradient evaluation took 0 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 3: Adjust your expectations accordingly!
+## Chain 3: 
+## Chain 3: 
+## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 3: 
+## Chain 3:  Elapsed Time: 0.782 seconds (Warm-up)
+## Chain 3:                0.813 seconds (Sampling)
+## Chain 3:                1.595 seconds (Total)
+## Chain 3: 
+## 
+## SAMPLING FOR MODEL &#39;266de4bd8199d4b1f9b8e7a6f02de83c&#39; NOW (CHAIN 4).
+## Chain 4: 
+## Chain 4: Gradient evaluation took 0 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+## Chain 4: Adjust your expectations accordingly!
+## Chain 4: 
+## Chain 4: 
+## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+## Chain 4: 
+## Chain 4:  Elapsed Time: 0.816 seconds (Warm-up)
+## Chain 4:                0.793 seconds (Sampling)
+## Chain 4:                1.609 seconds (Total)
+## Chain 4:</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="bayesian-analysis.html#cb44-1"></a><span class="kw">summary</span>(DxBRM)</span></code></pre></div>
+<pre><code>##  Family: bernoulli 
+##   Links: mu = logit 
+## Formula: Class ~ Epith.c.size + Cl.thickness + Cell.shape 
+##    Data: BreastCancer2 (Number of observations: 699) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept       -8.47      0.73    -9.92    -7.14 1.00     3832     2929
+## Epith.c.size     0.48      0.12     0.25     0.74 1.00     3947     2832
+## Cl.thickness     0.64      0.10     0.46     0.83 1.00     3677     2782
+## Cell.shape       0.94      0.12     0.71     1.19 1.00     4002     2944
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Extract the posterior sample from logistic regression.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="bayesian-analysis.html#cb46-1"></a>post_samples_DxBRM &lt;-<span class="st"> </span>brms<span class="op">::</span><span class="kw">posterior_samples</span>(DxBRM)</span>
+<span id="cb46-2"><a href="bayesian-analysis.html#cb46-2"></a></span>
+<span id="cb46-3"><a href="bayesian-analysis.html#cb46-3"></a>post_samples_DxBRM <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb46-4"><a href="bayesian-analysis.html#cb46-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>lp__) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb46-5"><a href="bayesian-analysis.html#cb46-5"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>()) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb46-6"><a href="bayesian-analysis.html#cb46-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value)) <span class="op">+</span></span>
+<span id="cb46-7"><a href="bayesian-analysis.html#cb46-7"></a><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></span>
+<span id="cb46-8"><a href="bayesian-analysis.html#cb46-8"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>name, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-2-2-1.png" width="672" /></p>
+</div>
+<div id="mixed-model" class="section level3">
+<h3><span class="header-section-number">8.3.3</span> Mixed model</h3>
+<p>Plotting world_sfdf to identify characteristics of the data</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bayesian-analysis.html#cb47-1"></a><span class="kw">ggplot</span>(<span class="dt">data=</span>world_sfdf, <span class="kw">aes</span>(<span class="dt">x=</span>LifeExpectancy, <span class="dt">y=</span>MeanLifetimeRisk,</span>
+<span id="cb47-2"><a href="bayesian-analysis.html#cb47-2"></a>              <span class="dt">color=</span>Income, <span class="dt">shape=</span>Continent))<span class="op">+</span><span class="st">                                               </span></span>
+<span id="cb47-3"><a href="bayesian-analysis.html#cb47-3"></a><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></span>
+<span id="cb47-4"><a href="bayesian-analysis.html#cb47-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>()</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-3-1.png" width="672" /></p>
+<p>Intercept model with INLA</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="bayesian-analysis.html#cb48-1"></a><span class="co"># Set prior on precision</span></span>
+<span id="cb48-2"><a href="bayesian-analysis.html#cb48-2"></a>prec.prior &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">prec =</span> <span class="kw">list</span>(<span class="dt">param =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.001</span>)))</span>
+<span id="cb48-3"><a href="bayesian-analysis.html#cb48-3"></a></span>
+<span id="cb48-4"><a href="bayesian-analysis.html#cb48-4"></a>Inla_Income&lt;-<span class="kw">inla</span>(MeanLifetimeRisk<span class="op">~</span><span class="dv">1</span><span class="op">+</span>LifeExpectancy<span class="op">+</span><span class="kw">f</span>(Income,  </span>
+<span id="cb48-5"><a href="bayesian-analysis.html#cb48-5"></a>    <span class="dt">model =</span> <span class="st">&quot;iid&quot;</span>,</span>
+<span id="cb48-6"><a href="bayesian-analysis.html#cb48-6"></a>    <span class="dt">hyper =</span> prec.prior), </span>
+<span id="cb48-7"><a href="bayesian-analysis.html#cb48-7"></a>    <span class="dt">data =</span>world_sfdf[,<span class="kw">c</span>(<span class="dv">23</span>,<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">20</span>)], </span>
+<span id="cb48-8"><a href="bayesian-analysis.html#cb48-8"></a>    <span class="dt">control.predictor =</span> <span class="kw">list</span>(<span class="dt">compute =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb48-9"><a href="bayesian-analysis.html#cb48-9"></a></span>
+<span id="cb48-10"><a href="bayesian-analysis.html#cb48-10"></a><span class="kw">summary</span>(Inla_Income)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##    c(&quot;inla(formula = MeanLifetimeRisk ~ 1 + LifeExpectancy + f(Income, &quot;, 
+##    &quot; model = \&quot;iid\&quot;, hyper = prec.prior), data = world_sfdf[, c(23, &quot;, &quot; 
+##    12, 15, 20)], control.predictor = list(compute = TRUE))&quot; ) 
+## Time used:
+##     Pre = 1.7, Running = 1.9, Post = 1.01, Total = 4.61 
+## Fixed effects:
+##                  mean    sd 0.025quant 0.5quant 0.975quant   mode   kld
+## (Intercept)    17.937 2.386      13.10   17.962     22.636 18.005 0.001
+## LifeExpectancy  0.027 0.019      -0.01    0.027      0.064  0.027 0.000
+## 
+## Random effects:
+##   Name     Model
+##     Income IID model
+## 
+## Model hyperparameters:
+##                                          mean    sd 0.025quant 0.5quant
+## Precision for the Gaussian observations 0.047 0.004      0.039    0.047
+## Precision for Income                    0.086 0.068      0.013    0.069
+##                                         0.975quant  mode
+## Precision for the Gaussian observations      0.056 0.046
+## Precision for Income                         0.262 0.037
+## 
+## Expected number of effective parameters(stdev): 5.75(0.177)
+## Number of equivalent replicates : 42.81 
+## 
+## Marginal log-Likelihood:  -760.71 
+## Posterior marginals for the linear predictor and
+##  the fitted values are computed</code></pre>
+<p>Intercept model with BRMS</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="bayesian-analysis.html#cb50-1"></a>BRMS_Income &lt;-<span class="st"> </span><span class="kw">brm</span>(MeanLifetimeRisk <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>LifeExpectancy<span class="op">+</span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Income), </span>
+<span id="cb50-2"><a href="bayesian-analysis.html#cb50-2"></a>                              <span class="dt">data   =</span> world_sfdf, </span>
+<span id="cb50-3"><a href="bayesian-analysis.html#cb50-3"></a>                              <span class="dt">warmup =</span> <span class="dv">100</span>, </span>
+<span id="cb50-4"><a href="bayesian-analysis.html#cb50-4"></a>                              <span class="dt">iter   =</span> <span class="dv">200</span>, </span>
+<span id="cb50-5"><a href="bayesian-analysis.html#cb50-5"></a>                              <span class="dt">chains =</span> <span class="dv">2</span>, </span>
+<span id="cb50-6"><a href="bayesian-analysis.html#cb50-6"></a>                              <span class="dt">inits  =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb50-7"><a href="bayesian-analysis.html#cb50-7"></a>                              <span class="dt">cores  =</span> <span class="dv">2</span>)  <span class="co">#use 2 CPU cores simultaneously instead of just 1.</span></span></code></pre></div>
+<pre><code>## Warning: Rows containing NAs were excluded from the model.</code></pre>
+<pre><code>## Compiling Stan program...</code></pre>
+<pre><code>## Start sampling</code></pre>
+<pre><code>## Warning: The largest R-hat is 1.09, indicating chains have not mixed.
+## Running the chains for more iterations may help. See
+## http://mc-stan.org/misc/warnings.html#r-hat</code></pre>
+<pre><code>## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+## Running the chains for more iterations may help. See
+## http://mc-stan.org/misc/warnings.html#bulk-ess</code></pre>
+<pre><code>## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+## Running the chains for more iterations may help. See
+## http://mc-stan.org/misc/warnings.html#tail-ess</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="bayesian-analysis.html#cb57-1"></a><span class="kw">summary</span>(BRMS_Income)</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: MeanLifetimeRisk ~ 1 + LifeExpectancy + (1 | Income) 
+##    Data: world_sfdf (Number of observations: 175) 
+## Samples: 2 chains, each with iter = 200; warmup = 100; thin = 1;
+##          total post-warmup samples = 200
+## 
+## Group-Level Effects: 
+## ~Income (Number of levels: 4) 
+##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(Intercept)     1.40      1.18     0.06     4.55 1.09       25       68
+## 
+## Population-Level Effects: 
+##                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept        -12.93      4.70   -20.84    -3.93 0.99      166      224
+## LifeExpectancy     0.46      0.07     0.32     0.56 0.99      164      200
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     4.86      0.22     4.49     5.30 1.00      266      186
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="bayesian-analysis.html#cb60-1"></a>post_samples_BRMS_Income &lt;-<span class="st"> </span>brms<span class="op">::</span><span class="kw">posterior_samples</span>(BRMS_Income)</span>
+<span id="cb60-2"><a href="bayesian-analysis.html#cb60-2"></a></span>
+<span id="cb60-3"><a href="bayesian-analysis.html#cb60-3"></a>post_samples_BRMS_Income <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-4"><a href="bayesian-analysis.html#cb60-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>lp__) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-5"><a href="bayesian-analysis.html#cb60-5"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>()) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-6"><a href="bayesian-analysis.html#cb60-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value)) <span class="op">+</span></span>
+<span id="cb60-7"><a href="bayesian-analysis.html#cb60-7"></a><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></span>
+<span id="cb60-8"><a href="bayesian-analysis.html#cb60-8"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>name, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-3-3-1.png" width="672" /></p>
+</div>
+<div id="bayesian-metaanalysis" class="section level3">
+<h3><span class="header-section-number">8.3.4</span> Bayesian Metaanalysis</h3>
+<p>A Bayesian approach towards metaanalysis is provided below using the package <em>meta4diag</em> <span class="citation">(Guo and Riebler <a href="#ref-2015arXiv151206220G" role="doc-biblioref">2015</a>)</span>. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the <em>mada</em> package which does not provide a bivariate method for performing summary sensitivity and specificity.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="bayesian-analysis.html#cb61-1"></a><span class="kw">library</span>(meta4diag)</span></code></pre></div>
 <pre><code>## Loading required package: grid</code></pre>
 <pre><code>## Loading required package: shiny</code></pre>
 <pre><code>## Loading required package: shinyBS</code></pre>
 <pre><code>## Loading required package: caTools</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">library</span>(INLA)</a></code></pre></div>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## This is INLA_18.07.12 built 2018-07-12 11:05:18 UTC.
-## See www.r-inla.org/contact-us for how to get help.</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">Dat&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/ss150718.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="co">#remove duplicates</span></a>
-<a class="sourceLine" id="cb10-3" title="3">dat&lt;-<span class="kw">subset</span>(Dat, Dat<span class="op">$</span>retain<span class="op">==</span><span class="st">&quot;yes&quot;</span>) </a>
-<a class="sourceLine" id="cb10-4" title="4">res &lt;-<span class="st"> </span><span class="kw">meta4diag</span>(<span class="dt">data =</span> dat) </a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="kw">SROC</span>(res, <span class="dt">crShow =</span> T)</a></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/bayesian-metaanalysis-1.png" width="672" /></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co">#sensitivity</span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw">forest</span>(res, <span class="dt">accuracy.type=</span><span class="st">&quot;sens&quot;</span>, <span class="dt">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="dt">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="dt">p.pch=</span><span class="dv">15</span>, <span class="dt">p.col=</span><span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="dt">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="dt">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="dt">text.cex=</span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">arrow.lty=</span><span class="dv">1</span>, <span class="dt">arrow.lwd=</span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">cut=</span><span class="ot">TRUE</span>, <span class="dt">intervals=</span><span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</a>
-<a class="sourceLine" id="cb11-6" title="6">    <span class="dt">main=</span><span class="st">&quot;Forest plot of Sensitivity&quot;</span>, <span class="dt">main.cex=</span><span class="fl">1.5</span>, <span class="dt">axis.cex=</span><span class="dv">1</span>)</a></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/sensitivity-1.png" width="672" /></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co">#specificity</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="kw">forest</span>(res, <span class="dt">accuracy.type=</span><span class="st">&quot;spec&quot;</span>, <span class="dt">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="dt">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="dt">p.pch=</span><span class="dv">15</span>, <span class="dt">p.col=</span><span class="st">&quot;black&quot;</span>,</a>
-<a class="sourceLine" id="cb12-3" title="3">    <span class="dt">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="dt">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="dt">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="dt">text.cex=</span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-4" title="4">    <span class="dt">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">arrow.lty=</span><span class="dv">1</span>, <span class="dt">arrow.lwd=</span><span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-5" title="5">    <span class="dt">cut=</span><span class="ot">TRUE</span>, <span class="dt">intervals=</span><span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</a>
-<a class="sourceLine" id="cb12-6" title="6">    <span class="dt">main=</span><span class="st">&quot;Forest plot of Specificity&quot;</span>, <span class="dt">main.cex=</span><span class="fl">1.5</span>, <span class="dt">axis.cex=</span><span class="dv">1</span>)</a></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/specificity-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="bayesian-analysis.html#cb66-1"></a><span class="kw">library</span>(INLA)</span>
+<span id="cb66-2"><a href="bayesian-analysis.html#cb66-2"></a></span>
+<span id="cb66-3"><a href="bayesian-analysis.html#cb66-3"></a><span class="co">#data from spot sign metaanalysis</span></span>
+<span id="cb66-4"><a href="bayesian-analysis.html#cb66-4"></a>Dat&lt;-<span class="kw">read.csv</span>(<span class="st">&quot;./Data-Use/ss150718.csv&quot;</span>)</span>
+<span id="cb66-5"><a href="bayesian-analysis.html#cb66-5"></a></span>
+<span id="cb66-6"><a href="bayesian-analysis.html#cb66-6"></a><span class="co">#remove duplicates</span></span>
+<span id="cb66-7"><a href="bayesian-analysis.html#cb66-7"></a>dat&lt;-<span class="kw">subset</span>(Dat, Dat<span class="op">$</span>retain<span class="op">==</span><span class="st">&quot;yes&quot;</span>) </span>
+<span id="cb66-8"><a href="bayesian-analysis.html#cb66-8"></a></span>
+<span id="cb66-9"><a href="bayesian-analysis.html#cb66-9"></a><span class="co">#the data can be viewed under res$data</span></span>
+<span id="cb66-10"><a href="bayesian-analysis.html#cb66-10"></a>res &lt;-<span class="st"> </span><span class="kw">meta4diag</span>(<span class="dt">data =</span> dat) </span>
+<span id="cb66-11"><a href="bayesian-analysis.html#cb66-11"></a></span>
+<span id="cb66-12"><a href="bayesian-analysis.html#cb66-12"></a><span class="co">#perform SROC</span></span>
+<span id="cb66-13"><a href="bayesian-analysis.html#cb66-13"></a><span class="kw">SROC</span>(res, <span class="dt">crShow =</span> T)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-4-1.png" width="672" /></p>
+<p>Forest plot of sensitivity using the <em>meta4diag</em> package.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="bayesian-analysis.html#cb67-1"></a><span class="co">#sensitivity is specified under accuracy.type</span></span>
+<span id="cb67-2"><a href="bayesian-analysis.html#cb67-2"></a><span class="co">#note that there are several different forest plot: mada, metafor, meta4diag</span></span>
+<span id="cb67-3"><a href="bayesian-analysis.html#cb67-3"></a>meta4diag<span class="op">::</span><span class="kw">forest</span>(res, <span class="dt">accuracy.type=</span><span class="st">&quot;sens&quot;</span>, <span class="dt">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="dt">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="dt">p.pch=</span><span class="dv">15</span>, <span class="dt">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb67-4"><a href="bayesian-analysis.html#cb67-4"></a>    <span class="dt">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="dt">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="dt">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="dt">text.cex=</span><span class="dv">1</span>,</span>
+<span id="cb67-5"><a href="bayesian-analysis.html#cb67-5"></a>    <span class="dt">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">arrow.lty=</span><span class="dv">1</span>, <span class="dt">arrow.lwd=</span><span class="dv">1</span>,</span>
+<span id="cb67-6"><a href="bayesian-analysis.html#cb67-6"></a>    <span class="dt">cut=</span><span class="ot">TRUE</span>, <span class="dt">intervals=</span><span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
+<span id="cb67-7"><a href="bayesian-analysis.html#cb67-7"></a>    <span class="dt">main=</span><span class="st">&quot;Forest plot of Sensitivity&quot;</span>, <span class="dt">main.cex=</span><span class="fl">1.5</span>, <span class="dt">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-4-1-1.png" width="672" /></p>
+<p>Forest plot of specificity using the <em>meta4diag</em> package.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="bayesian-analysis.html#cb68-1"></a><span class="co">#specificity is specified under accuracy.type</span></span>
+<span id="cb68-2"><a href="bayesian-analysis.html#cb68-2"></a><span class="co">#note that there are several different forest plot: mada, metafor, meta4diag</span></span>
+<span id="cb68-3"><a href="bayesian-analysis.html#cb68-3"></a>meta4diag<span class="op">::</span><span class="kw">forest</span>(res, <span class="dt">accuracy.type=</span><span class="st">&quot;spec&quot;</span>, <span class="dt">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="dt">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="dt">p.pch=</span><span class="dv">15</span>, <span class="dt">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb68-4"><a href="bayesian-analysis.html#cb68-4"></a>    <span class="dt">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="dt">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="dt">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="dt">text.cex=</span><span class="dv">1</span>,</span>
+<span id="cb68-5"><a href="bayesian-analysis.html#cb68-5"></a>    <span class="dt">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="dt">arrow.lty=</span><span class="dv">1</span>, <span class="dt">arrow.lwd=</span><span class="dv">1</span>,</span>
+<span id="cb68-6"><a href="bayesian-analysis.html#cb68-6"></a>    <span class="dt">cut=</span><span class="ot">TRUE</span>, <span class="dt">intervals=</span><span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
+<span id="cb68-7"><a href="bayesian-analysis.html#cb68-7"></a>    <span class="dt">main=</span><span class="st">&quot;Forest plot of Specificity&quot;</span>, <span class="dt">main.cex=</span><span class="fl">1.5</span>, <span class="dt">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-4-2-1.png" width="672" /></p>
 </div>
 <div id="cost" class="section level3">
-<h3><span class="header-section-number">8.3.2</span> Cost</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">library</span>(<span class="st">&quot;hesim&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning: package &#39;hesim&#39; was built under R version 3.6.3</code></pre>
+<h3><span class="header-section-number">8.3.5</span> Cost</h3>
+<p>The example below is provided by <em>hesim</em>.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="bayesian-analysis.html#cb69-1"></a><span class="kw">library</span>(<span class="st">&quot;hesim&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;hesim&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
 <pre><code>## The following object is masked from &#39;package:Matrix&#39;:
 ## 
 ##     expand</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">library</span>(<span class="st">&quot;data.table&quot;</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2">strategies &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">strategy_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb17-3" title="3">n_patients &lt;-<span class="st"> </span><span class="dv">1000</span></a>
-<a class="sourceLine" id="cb17-4" title="4">patients &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">patient_id =</span> <span class="dv">1</span><span class="op">:</span>n_patients,</a>
-<a class="sourceLine" id="cb17-5" title="5">          <span class="dt">age =</span> <span class="kw">rnorm</span>(n_patients, <span class="dt">mean =</span> <span class="dv">70</span>, <span class="dt">sd =</span> <span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb17-6" title="6">          <span class="dt">female =</span> <span class="kw">rbinom</span>(n_patients, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="fl">.4</span>))</a>
-<a class="sourceLine" id="cb17-7" title="7">states &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">state_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb17-8" title="8">                     <span class="dt">state_name =</span> <span class="kw">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </a>
-<a class="sourceLine" id="cb17-9" title="9"><span class="co"># Non-death health states</span></a>
-<a class="sourceLine" id="cb17-10" title="10">tmat &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb17-11" title="11">              <span class="kw">c</span>(<span class="dv">3</span>, <span class="ot">NA</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb17-12" title="12">              <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb17-13" title="13"><span class="kw">colnames</span>(tmat) &lt;-<span class="st"> </span><span class="kw">rownames</span>(tmat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</a>
-<a class="sourceLine" id="cb17-14" title="14">transitions &lt;-<span class="st"> </span><span class="kw">create_trans_dt</span>(tmat)</a>
-<a class="sourceLine" id="cb17-15" title="15">transitions[, trans <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(transition_id)]</a>
-<a class="sourceLine" id="cb17-16" title="16">hesim_dat &lt;-<span class="st"> </span><span class="kw">hesim_data</span>(<span class="dt">strategies =</span> strategies,</a>
-<a class="sourceLine" id="cb17-17" title="17">                        <span class="dt">patients =</span> patients, </a>
-<a class="sourceLine" id="cb17-18" title="18">                        <span class="dt">states =</span> states,</a>
-<a class="sourceLine" id="cb17-19" title="19">                        <span class="dt">transitions =</span> transitions)</a>
-<a class="sourceLine" id="cb17-20" title="20"><span class="kw">print</span>(hesim_dat)</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="bayesian-analysis.html#cb73-1"></a><span class="kw">library</span>(<span class="st">&quot;data.table&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     between, first, last</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     transpose</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="bayesian-analysis.html#cb77-1"></a>strategies &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">strategy_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb77-2"><a href="bayesian-analysis.html#cb77-2"></a>n_patients &lt;-<span class="st"> </span><span class="dv">1000</span></span>
+<span id="cb77-3"><a href="bayesian-analysis.html#cb77-3"></a>patients &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">patient_id =</span> <span class="dv">1</span><span class="op">:</span>n_patients,</span>
+<span id="cb77-4"><a href="bayesian-analysis.html#cb77-4"></a>          <span class="dt">age =</span> <span class="kw">rnorm</span>(n_patients, <span class="dt">mean =</span> <span class="dv">70</span>, <span class="dt">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb77-5"><a href="bayesian-analysis.html#cb77-5"></a>          <span class="dt">female =</span> <span class="kw">rbinom</span>(n_patients, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> <span class="fl">.4</span>))</span>
+<span id="cb77-6"><a href="bayesian-analysis.html#cb77-6"></a>states &lt;-<span class="st"> </span><span class="kw">data.table</span>(<span class="dt">state_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb77-7"><a href="bayesian-analysis.html#cb77-7"></a>                     <span class="dt">state_name =</span> <span class="kw">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </span>
+<span id="cb77-8"><a href="bayesian-analysis.html#cb77-8"></a><span class="co"># Non-death health states</span></span>
+<span id="cb77-9"><a href="bayesian-analysis.html#cb77-9"></a>tmat &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb77-10"><a href="bayesian-analysis.html#cb77-10"></a>              <span class="kw">c</span>(<span class="dv">3</span>, <span class="ot">NA</span>, <span class="dv">4</span>),</span>
+<span id="cb77-11"><a href="bayesian-analysis.html#cb77-11"></a>              <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="ot">NA</span>))</span>
+<span id="cb77-12"><a href="bayesian-analysis.html#cb77-12"></a><span class="kw">colnames</span>(tmat) &lt;-<span class="st"> </span><span class="kw">rownames</span>(tmat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
+<span id="cb77-13"><a href="bayesian-analysis.html#cb77-13"></a>transitions &lt;-<span class="st"> </span><span class="kw">create_trans_dt</span>(tmat)</span>
+<span id="cb77-14"><a href="bayesian-analysis.html#cb77-14"></a>transitions[, trans <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">factor</span>(transition_id)]</span>
+<span id="cb77-15"><a href="bayesian-analysis.html#cb77-15"></a>hesim_dat &lt;-<span class="st"> </span><span class="kw">hesim_data</span>(<span class="dt">strategies =</span> strategies,</span>
+<span id="cb77-16"><a href="bayesian-analysis.html#cb77-16"></a>                        <span class="dt">patients =</span> patients, </span>
+<span id="cb77-17"><a href="bayesian-analysis.html#cb77-17"></a>                        <span class="dt">states =</span> states,</span>
+<span id="cb77-18"><a href="bayesian-analysis.html#cb77-18"></a>                        <span class="dt">transitions =</span> transitions)</span>
+<span id="cb77-19"><a href="bayesian-analysis.html#cb77-19"></a><span class="kw">print</span>(hesim_dat)</span></code></pre></div>
 <pre><code>## $strategies
 ##    strategy_id
 ## 1:           1
@@ -440,17 +1037,17 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ## 
 ## $patients
 ##       patient_id      age female
-##    1:          1 78.69450      1
-##    2:          2 72.11735      1
-##    3:          3 59.79763      1
-##    4:          4 87.15168      1
-##    5:          5 75.14334      1
+##    1:          1 65.55161      0
+##    2:          2 69.21270      0
+##    3:          3 62.91645      1
+##    4:          4 76.32085      0
+##    5:          5 65.34567      1
 ##   ---                           
-##  996:        996 61.29022      1
-##  997:        997 83.09807      1
-##  998:        998 83.37359      0
-##  999:        999 73.47563      1
-## 1000:       1000 71.32919      0
+##  996:        996 62.88248      1
+##  997:        997 61.26253      0
+##  998:        998 97.95896      1
+##  999:        999 77.18068      0
+## 1000:       1000 74.69763      0
 ## 
 ## $states
 ##    state_id state_name
