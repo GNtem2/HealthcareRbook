@@ -6,7 +6,7 @@ There are several platforms for writing and deploying apps. Rstudio has created 
 
 Shiny divides the app to 2 component: _ui_ or user interface web page and _server_ or the engine for running the app. This app is used to assist if a stroke code should be activated. It uses the _reactive_ call within _server_ to switch between activating and deactivating code stroke.
 
-```{r Shiny ST6}
+```{r 11-App-1}
 library(shiny)
 # Define UI for application 
 ui <- bootstrapPage(

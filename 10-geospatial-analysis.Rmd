@@ -3,19 +3,38 @@
 This section deals with the use of geospatial analysis in healthcare. There is a detailed tutorial online available [here](./https://richardbeare.github.io/GeospatialStroke/
 )
 
-There are several packages avalable for obtaining geocode. The _tmaptools_ package provide free geocoding using OSM overpass API. Both _ggmap_ and _googleway_  access Google Maps API and will require a key and payment for access.
-
 ## Geocoding
 
-```{r eval=FALSE}
+There are several packages avalable for obtaining geocode or longitude and latitude of location. The _tmaptools_ package provide free geocoding using OpenStreetMap or OSM overpass API. Both _ggmap_ and _googleway_  access Google Maps API and will require a key and payment for 
+access.
+
+### OpenStreetMap
+
+This is a simple example to obtain the geocode of Monash Medical Centre. 
+However, such a simple example does not always work without the full address. There are other libraries for accessing other data from OSM such as parks, restaurants etc. 
+
+```{r 10-geospatial-analysis-1}
 library(tmaptools)
 mmc<-geocode_OSM ("monash medical centre, clayton")
 mmc
 ```
 
-The equivalent code in _ggmap_ is provided below.
+The _osmdata_ library includes function _opg_ for extracting data from Overpass query. The list is available at https://wiki.openstreetmap.org/wiki/Map_features#Transportation
 
-```{r eval=FALSE}
+```{r 10-geospatial-analysis-1-1}
+library(tidyverse )
+library(osmdata)
+library(sf)
+# build a query
+query <- opq(bbox = "Brisbane, qld, australia") %>%
+  add_osm_feature(key = "amenity", value = "community_centre")
+```
+
+### Google Maps API
+
+The equivalent code in _ggmap_ is provided below. Note that a key is required from Google Maps API.
+
+```{r 10-geospatial-analysis-2, eval=FALSE}
 library(ggmap)
 register_google(key="Your Key")
 #geocode
@@ -25,24 +44,22 @@ geocode ("monash medical centre, clayton")
 #mapdist("5 stud rd dandenong","monash medical centre")
 ```
 
-The next demonstration is the extraction of geocodes from multiple addresses embedded in a column of data wihin a dataframe. This is more efficient compared to performing geocoding line by line. An example is provided on how to create your own icon on the _leaflet_ document.
+The next demonstration is the extraction of geocodes from multiple addresses embedded in a column of data within a data frame. This is more efficient compared to performing geocoding line by line. An example is provided on how to create your own icon on the _leaflet_ document as well as taking a picture for publication.
 
-```{r geocode}
+```{r 10-geospatial-analysis-3}
 library(dplyr)
 library(tidyr) #unite verb from tidyr
 library(readr)
 library(tmaptools)
 library(leaflet)
+library(sf)
+
 clinic<-read_csv("./Data-Use/TIA_clinics.csv")
 clinic2<-clinic %>%  
   unite ("address",City:Country,sep = ",")%>%   filter(!is.na(`Clinic-Status`)) 
 
-#remove NA cells
-#clinics_geo<-geocode_OSM(clinic2$address) #geocode TIA clinic
-#save(clinics_geo,file="./Data-Use/TIAclinics_geo.Rda") #save data
-#merge 2 files with different column name
-
 load("./Data-Use/TIAclinics_geo.Rda")
+
 clinics_geo<-left_join(clinics_geo,clinic2, by=c("query"="address"))
 #create icon markers
 #icon markers
@@ -58,23 +75,27 @@ icons_red <- awesomeIcons(
   library = 'ion',
   markerColor = "red"
 )
+
 #subset 
 clinics_geo_active<-clinics_geo %>%filter(`Clinic-Status`=="Active")
 clinics_geo_inactive<-clinics_geo %>%filter(`Clinic-Status` !="Active")
 m<-leaflet(data=clinics_geo) %>% 
   addTiles() %>% #default is OSM
-    addAwesomeMarkers(lat=clinics_geo_active$lat,lng=clinics_geo_active$lon,icon=icons_blue,label = ~as.character(clinics_geo_active$query) ) %>%
-  addAwesomeMarkers(lat=clinics_geo_inactive$lat,lng=clinics_geo_inactive$lon,icon=icons_red,label = ~as.character(clinics_geo_inactive$query) ) 
+    addAwesomeMarkers(lat=clinics_geo_active$lat,lng=clinics_geo_active$lon,
+          icon=icons_blue,label = ~as.character(clinics_geo_active$query) ) %>%
+  addAwesomeMarkers(lat=clinics_geo_inactive$lat,lng=clinics_geo_inactive$lon,
+        icon=icons_red,label = ~as.character(clinics_geo_inactive$query)) 
 
 #make pics using mapshot
-mapview::mapshot(m, url = paste0(getwd(),file="./Data-Use/TIAclinic_world.html"), file = paste0(getwd(), "./Data-Use/TIAclinic_world.png"))
+mapview::mapshot(m, url = paste0(getwd(),
+  file="./Data-Use/TIAclinic_world.html"), file = paste0(getwd(), "./Data-Use/TIAclinic_world.png"))
 m
 ```
 
-Googleway had the flexibility of easily interrogating Google Maps API for time of trip and traffic condition.
+Googleway has the flexibility of easily interrogating Google Maps API for time 
+of trip and traffic condition.
 
-```{r eval=FALSE}
-library(googleway)
+```{r 10-geospatial-analysis-4, eval=FALSE}
 library(googleway)
 key="Your Key"
 #trip to MMC
@@ -82,23 +103,169 @@ key="Your Key"
 google_distance("5 stud rd dandenong","monash medical centre", key=key, departure_time=as.POSIXct("2019-12-03 08:15:00 AEST"),traffic_model = "optimistic")
 ```
 
-There are several methods for reading the shapefile data. Previously _rgdal_ library was used. This approach creates files which can be described as S4 object in that there are slots for different data. The simple feature _sf_ approach is much easier to handle and the data can easily be subsetted and merged if needed.
+
+## Sp and sf objects
+
+There are several methods for reading the shapefile data. Previously _rgdal_ library was used. This approach creates files which can be described as S4 
+object in that there are slots for different data. The spatial feature _sf_ approach is much easier to handle and the data can easily be subset and 
+merged if needed. An example of conversion between _sp_ and _sf_ is provided.
+
+Here, base R plot is used to illustrate the shapefile of Melbourne and after parcellation into Voronois, centred by the hospital location.
+
+```{r 10-geospatial-analysis-5, warning=F}
+
+library(dismo)
+library(ggvoronoi)
+library(tidyverse)
+library(sf)
+
+par(mfrow=c(1,2)) #plot 2 objects in 1 row
+msclinic<-read.csv("./Data-Use/msclinic.csv") %>% filter(clinic==1, metropolitan==1)
+
+#convert to spatialpointdataframe
+coordinates(msclinic) <- c("lon", "lat")
+#proj4string(msclinic) <- CRS("+proj=longlat +datum=WGS84")
+
+proj4string(msclinic) <- CRS("+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs")
+
+#create voronoi from msclinic data
+#msclinic object is in sp
+msv<-voronoi(msclinic)
+
+#create voronoi from msclinic data
+#object is in sp
+msv<-voronoi(msclinic)
+
+#subset Greater Melbourne
+Melb<-st_read("./Data-Use/GCCSA_2016_AUST.shp") %>% filter(STE_NAME16=="Victoria",GCC_NAME16=="Greater Melbourne")
+
+#transform sf to sp object
+Melb<-as(Melb,Class="Spatial")
+plot(Melb)
+
+#voronoi bound by greater melbourne
+vor <- dismo::voronoi(msclinic, ext=extent(Melb))
+
+#intersect is present in base R, dplyr, raster, lubridate etc
+r <- raster::intersect(vor, Melb)
+
+#r<-intersect(msv,gccsa_fsp)
+
+#
+msclinic$hospital<-as.character(msclinic$hospital)
+plot(r, col=rainbow(length(r)), lwd=3)
+
+#sp back to sf
+#error with epsg conversion back
+msclinic_sf<-st_as_sf(msclinic,crs=4283)
+
+
+```
+
+
+###
+
+Obtain the Brisbane data as _sf_ object.
+
+```{r 10-geospatial-analysis-5-1}
+ComCentre <- osmdata_sf(query)
+names(ComCentre$osm_points)
+```
+
+Extract the centroid and polygons. Check that the coordinate reference system is EPSG 4326 or World Geodetic System (WGS) 84.
+
+```{r 10-geospatial-analysis-5-2}
+
+ComPoint<-ComCentre$osm_points %>% filter(amenity=="community_centre")
+
+ComPoly <- ComCentre$osm_polygons %>%
+  st_centroid()
+
+Com <- bind_rows(ComPoly, ComPoint)
+st_crs(Com)
+```
+
+Plot the map of community centres in Ballarat with _tmap_. The view argument in _tmap_mode_ set this plotting to interactive viewing with  _tmap_ with 
+_leaflet_. The _leaflet_ library can be called directly using _tmap_leaflet_
+
+```{r 10-geospatial-analysis-5-3}
+#extract bounding box for Brisbane
+
+Ballarat <- getbb("Brisbane, australia", format_out = "sf_polygon")$multipolygon
+
+
+library(tmap)
+
+#set interactive view
+tmap_mode("view")
+
+#plot outline of Ballarat
+  tm_shape(Brisbane)+
+ tm_borders()+
+
+  #plot community centres
+tm_shape(Com) +
+  tm_dots()
+
+  
+```
+
 
 ## Thematic map
-In the first chapter we provided a thematic map example with _ggplot2_. here we will illustrate with _mapview_. 
 
-```{r map}
+In the first chapter we provided a thematic map example with _ggplot2_. here we will illustrate with _mapview_ library using open data on Finland. 
+
+
+```{r 10-geospatial-analysis-6}
+library(geofi)
+library(ggplot2)
+library(tmap)
+library(tidyverse)
+
+library(tidyr)
+library(pxweb)
+library(janitor)
+
+#data  on Finland
+#https://pxnet2.stat.fi/PXWeb/pxweb/en/Kuntien_avainluvut/
+#Kuntien_avainluvut__2021/kuntien_avainluvut_2021_viimeisin.px/table/
+#tableViewLayout1/
+FinPop<-readxl::read_xlsx("./Data-Use/Kuntien avainluvut_20210704-153529.xlsx", skip = 2)
+
+FinPop2<-FinPop[-c(1),] #remove data for entire Finland
+
+#get shapefile for municipality
+municipalities <- get_municipalities(year = 2020, scale = 4500) #sf object)
+
+#join shapefile and population data
+municipalities2<-right_join(municipalities, FinPop2, by=c("name"="...1")) %>%
+  rename(Pensioner=`Proportion of pensioners of the population, %, 2019`,Age65=`Share of persons aged over 64 of the population, %, 2020`) %>% na.omit()
+
+#plot map using mapview
+mapview::mapview(municipalities2["Age65"],layer.name="Percentage Age>65")
+
+
+```
+
+This example illustrates how to add arguments in _mapview_
+
+```{r 10-geospatial-analysis-6-1}
 library(mapview)
 library(sf)
 library(tmaptools)
+
 #NY Shape file
 NYsf<-st_read("./Data-Use/Borough_Boundaries/geo_export_7d3b2726-20d8-4aa4-a41f-24ba74eb6bc0.shp")
+
 #NY subway -does not go to Staten Island
 NYsubline<-st_read("./Data-Use/NYsubways/geo_export_147781bc-e472-4c12-8cd2-5f9859f90706.shp")
+
 #NY subway stations
 NYsubstation<-st_read("./Data-Use/NYsubways/geo_export_0dab2fcf-79b8-409a-b940-7c98778a4418.shp")
+
 #list of NY hospitals
 Hosp<-c("North Shore University Hospital","Long Island Jewish Medical Centre","Staten Island University Hospital","Lennox Hill Hospital","Long Island Jewish Forest Hills","Long Island Jewish Valley Stream","Plainview Hospital","Cohen Children's Medical Center","Glen Cove Hospital","Syosset Hospital")
+
 #geocode NY hospitals and return sf object
 Hosp_geo<-geocode_OSM(paste0(Hosp,",","New York",",","USA"),as.sf = TRUE)
 
@@ -110,16 +277,133 @@ mapview(NYsf, zcol="boro_name")+
       mapview(Hosp_geo, zcol="query", cex=3)
 ```
 
+The example shown under Data wrangling on how to extract data from pdf is now put to use to create thematic map of stroke number per region in Denmark.
+
+```{r 10-geospatial-analysis-6-2}
+library(dplyr)
+library(tidyverse)
+library(sf)
+library(eurostat)
+library(leaflet)
+library(mapview)
+library(tmaptools)
+
+#####################code to generate HospLocations.Rda
+load ("./Data-Use/europeRGDK.Rda")
+
+#create data on hospitals
+#hosp_addresses <- c(
+#  AarhusHospital = "aarhus university hospital, aarhus, Denmark",
+#  AalborgHospital = "Hobrovej 18-22 9100 aalborg, Denmark",
+#  HolstebroHospital = "Lægårdvej 12 7500 Holstebro, Holstebro, Denmark",   VejleHospital="Vejle Sygehus,Beriderbakken 4, Vejle, Denmark",
+#  EsbjergHospital="Esbjerg Sygehus, Esbjerg, Denmark",
+#SoenderborgHospital="Sydvang 1C 6400 Sønderborg, Denmark",
+#OdenseHospital="Odense Sygehus, Odense, Denmark",   
+#RoskildeHospital="Roskilde Sygehus,  Roskilde, Denmark",  
+#BlegdamsvejHospital="Rigshospitalet blegdamsvej, 9 Blegdamsvej, København, Denmark",  
+#GlostrupHospital="Rigshospitalet Glostrup, Glostrup, Denmark")
+
+#geocode hospitals using OpenStreetMap. This function works better with street addresses
+#HospLocations <- tmaptools::geocode_OSM(hosp_addresses, as.sf=TRUE)
+
+#convert data into sf object
+#HospLocations <- sf::st_transform(HospLocations,           sf::st_crs(europeRGDK)) 
+
+#CSC comprehensive stroke centre
+#PSC primary stroke centre
+#HospLocations$Center<-c("CSC", "PSC", "PSC", "PSC", "PSC", "PSC", "CSC", "PSC", "CSC", "PSC")
+
+#save HospLocations
+#save(HospLocations, "HospLocations.Rda")
+
+load("./Data-Use/HospLocations.Rda")
+
+##https://ec.europa.eu/eurostat/web/nuts/background
+load("./Data-Use/euro_nuts2_sf.Rda")
+DKnuts2_sf<- euro_nuts2_sf%>% filter(str_detect(NUTS_ID,"^DK"))
+
+#convert pdf to csv file
+dk<-read.csv("./Data-Use/denmarkstrokepdf.csv")
+
+#extract only data on large regions=NUTS2
+dk2<-dk[c(4:8),]
+
+#clean up column X.1 containing stroke data
+#remove numerator before back slash then remove number before slash sign
+dk2$strokenum<-str_replace(dk2$X.1,"[0-9]*","") %>%
+  str_replace("/","\\") %>% as.numeric()
+dk2$Uoplyst<-str_replace(dk2$Uoplyst,"SjÃ¦lland","Sjælland")
+
+#merge sf file for DK nuts2 with stroke number
+DKnuts2_sf2<-right_join(DKnuts2_sf,dk2,by=c("NUTS_NAME"="Uoplyst"))
+
+#add population from Statistics Denmark 2018 
+DKnuts2_sf2$pop<-c(589148,1822659,835024, 1313596,1220763)
+DKnuts2_sf2$male<-c(297679,894553,416092,657817,610358)
+DKnuts2_sf2$maleper<-round(with(DKnuts2_sf2,pop/male),2)
+
+#plot map
+mapview(DKnuts2_sf2["strokenum"], layer.name="Stroke Number") +mapview(HospLocations, zcol="Center", layer.name="Hospital Designation")
+
+```
+
+### Calculate distance to Hospital-OpenStreetMap
+
+Determine distance hospital to centroid of kommunes rather than the larger regions of Denmark. This can be performed with OpenStreetMap or Google Maps API.
+
+```{r 10-geospatial-analysis-7, warning=F}
+
+dist_to_loc <- function (geometry, location){
+    units::set_units(st_distance(st_centroid (geometry), location)[,1], km)
+}
+
+#set distance 10 km
+#change to 100 km
+dist_range <- units::set_units(100, km)
+
+##
+europeRGDK <- mutate(europeRGDK,
+       DirectDistanceToAarhus = dist_to_loc(geometry,HospLocations["AarhusHospital", ]),
+       DirectDistanceToAalborg     = dist_to_loc(geometry,HospLocations["AalborgHospital", ]),
+       DirectDistanceToHolstebro     = dist_to_loc(geometry,HospLocations["HolstebroHospital", ]),
+       DirectDistanceToVejle     = dist_to_loc(geometry,HospLocations["VejleHospital", ]),
+       DirectDistanceToEsbjerg     = dist_to_loc(geometry,HospLocations["EsbjergHospital", ]),
+       DirectDistanceToSoenderborg = dist_to_loc(geometry,HospLocations["SoenderborgHospital", ]),
+       DirectDistanceToOdense     = dist_to_loc(geometry,HospLocations["OdenseHospital", ]),
+       DirectDistanceToRoskilde     = dist_to_loc(geometry,HospLocations["RoskildeHospital", ]),
+       DirectDistanceToBlegdamsvej     = dist_to_loc(geometry,HospLocations["BlegdamsvejHospital", ]),
+       DirectDistanceToGlostrup     = dist_to_loc(geometry,HospLocations["GlostrupHospital", ]),
+       #
+       DirectDistanceToNearest   = pmin(DirectDistanceToAarhus,
+      DirectDistanceToAalborg,DirectDistanceToHolstebro,
+      DirectDistanceToVejle,DirectDistanceToEsbjerg, DirectDistanceToSoenderborg,DirectDistanceToOdense,
+      DirectDistanceToRoskilde,DirectDistanceToBlegdamsvej,
+      DirectDistanceToGlostrup))
+
+StrokeHosp <- filter(europeRGDK,                                               DirectDistanceToNearest < dist_range) %>%
+        mutate(Postcode = as.numeric(COMM_ID)) 
+
+head(StrokeHosp)
+```
+
 ## Spatial regression
 
-This is data published in Jama 29/4/2020 on COVD-19 in New York. The New York borough shapefiles were obtained from New York Open Data at https://data.cityofnewyork.us/City-Government/Borough-Boundaries/tqmj-j8zm. For those wishing to evaluate other datasets, there's lung and lip cancer data in SpatialEpi library, leukemia in DClusterm library. Key aspect of spatial regression is that neighbouring regions are similar and distant regions are less so. It uses the _polyn2nb_ in _spdep_ library to create the neighbourhood weight. The map of residual for the New York data does not suggest spatial association of residuals. The Moran's I is used to test for global spatial autocorrelation among adjacent regions in multidimensional space. It is related to the number of regions and sum of all spatial weights.
+This is data published in Jama 29/4/2020 on COVD-19 in New York. The New York borough shapefiles were obtained from New York Open Data at https://data.cityofnewyork.us/City-Government/Borough-Boundaries/tqmj-j8zm. For those wishing to evaluate other datasets, there's lung and lip cancer data in SpatialEpi library, leukemia in DClusterm library. Key aspect of spatial regression is that neighbouring regions are similar and distant regions are less so. It uses the _polyn2nb_ in _spdep_ library to create the neighbourhood 
+weight. The map of residual for the New York data does not suggest spatial association of residuals. 
 
-```{r new york}
+The Moran's I is used to test for global spatial autocorrelation among adjacent regions in multidimensional space. Moran's I requires calculation of neighbourhood. It is related to the number of regions and sum of all spatial weights.
+
+
+### New York COVID-19 mortality
+
+The example below illustrate the need to look at the data. It is not possible to perform spatial regression given the small size of the areal data (4 connected boroughs); Staten Island does not have adjoining border with the others nor share subway system. An intriguing possibility is that areal data analysis at the neighbourhood level would allow a granular examination of socioeconomic effect of COVID-19 on mortality data. To plot the railway lines with _tmap_ the argument _tm_lines_ is required whereas the argument _tm_polygons_ is better suited for plotting the shape file. It 
+
+```{r 10-geospatial-analysis-8, warning=F}
 library(leaflet)
 library(SpatialEpi)
 library(spdep)
 library(spatialreg) #some of spdep moved to spatialreg
-library(ggplot2)
+library(tidyverse)
 library(tmap)
 library(sf)
 library(dplyr)
@@ -132,13 +416,17 @@ Age65=c(12.8,13.9,16.5,15.7,16.2),
 White=c(25.1,46.6,59.2,39.6,75.1),
 Hispanic=c(56.4,19.1,25.9,28.1,18.7),
 Afro.American=c(38.3,33.5,16.9,19.9,11.5),
+Asian=c(4.6,13.4,14,27.5,11),
+Others=c(36.8,10.4,15.4,17,5.2),
 Income=c(38467,61220,85066,69320,82166),
 Beds=c(336,214,534,144,234),
 COVIDtest=c(4599,2970,2844,3800,5603),
 COVIDhosp=c(634,400,331,560,370),
 COVIDdeath=c(224,181,122,200,143),
-COVIDdeathlab=c(173,132,91,154,117)
-  ) %>% 
+COVIDdeathlab=c(173,132,91,154,117),
+Diabetes=c(16,27,15,22,25),
+Obesity=c(32,12,8,11,8),
+Hypertension=c(36,29,23,28,25)) %>% 
   #reverse prevalence per 100000 to raw
   mutate(Age65raw=round(Age65/100*Pop,0),
                Bedsraw=round(Beds/100000*Pop,0),
@@ -148,123 +436,337 @@ COVIDdeathlab=c(173,132,91,154,117)
 #Expected
 rate<-sum(dfj$COVIDdeathraw)/sum(dfj$Pop)
 dfj$Expected<-with(dfj, Pop*rate )
+
 #SMR standardised mortality ratio
 dfj$SMR<-with(dfj, COVIDdeathraw/Expected)
-#NY Shape file
+
+#NY Shape file - see this file open from above chunk
 NYsf<-st_read("./Data-Use/Borough_Boundaries/geo_export_7d3b2726-20d8-4aa4-a41f-24ba74eb6bc0.shp")
+
+#join dataset
 NYsf<-left_join(NYsf, dfj,by=c("boro_name"="Borough"))
+
 #contiguity based neighbourhood
 NY.nb<-poly2nb(NYsf) 
 is.symmetric.nb(NY.nb) # TRUE
+
 #NY subway 
 NYsubline<-st_read("./Data-Use/NYsubways/geo_export_147781bc-e472-4c12-8cd2-5f9859f90706.shp")
+
 #raw data
-tm_shape(NYsf) + tm_polygons(col='SMR',title='COVID raw')
+tm_shape(NYsf) + 
+  tm_polygons(col='SMR',title='COVID raw') +
+  tm_shape(NYsubline)+tm_lines(col='name')
+```
+
+The standardized mortality ratio (ratio of mortality divided by expected value for each borough) for the boroughs were: Bronx (1.245), Brooklyn (1.006), Manhattan (0.678)    Queens (1.111) and Staten Island (0.794). The Figure shows a strong relationship between standardized mortality ratio and Income (R2=0.816). 
+
+```{r 10-geospatial-analysis-8-1, warning=F}
 #plot regression lines linear vs robust linear
-ggplot(data=NYsf,aes(x=Pop,y=COVIDdeath)) + geom_point() + geom_smooth(method='lm',col='darkblue',fill='blue') + geom_smooth(method='rlm',col='darkred',fill='red')
+ggplot(data=NYsf,aes(x=Income,y=COVIDdeath)) + geom_point() + geom_smooth(method='lm',col='darkblue',fill='blue') + geom_smooth(method='rlm',col='darkred',fill='red')
+```
+
+Standardized mortality ratio and Income among different ethnic groups in Boroughs of New York.
+
+```{r 10-geospatial-analysis-8-2, warning=F}
+
+#varies by ethinicty
+dfj_long<-pivot_longer(data=dfj, names_to = "Ethnicity", values_to = "Popsize",cols=c(White,Afro.American,Asian,Hispanic,Others))
+
+commonplot<-list(
+  scale_size_continuous(name = "Population size"),xlab("Income (Thousand)"),facet_wrap(~Ethnicity,nrow=2)
+)
+ggplot(data=dfj_long, mapping=aes(x=Income/1000, y=SMR, size=Popsize,colour=Borough))+geom_point()+commonplot
+```
+
+Robust regression to obtain residual for plotting with thematic maps. 
+
+```{r 10-geospatial-analysis-8-3}
 #robust linear models
 NYsf$resids <- rlm(COVIDdeathraw~Pop+Age65raw,data=NYsf)$res
+
 #tmap robust linear model-residual
-tm_shape(NYsf) + tm_polygons(col='resids',title='Residuals')+tm_style("col_blind")
+#plot using color blind argument
+par(mfrow=c(2,1))
+tm_shape(NYsf) + tm_polygons(col='resids',title='Residuals')
+tm_shape(NYsf) + tm_polygons(col='resids',title='Residuals')+
+  tm_style("col_blind")
+
 #create spatial weights for neighbour lists
 r.id<-attr(NYsf,"region.id")
 lw <- nb2listw(NY.nb,zero.policy = TRUE) #W=row standardised
+```
+
+In this example, the Moran's I test suggest that the null test can be rejected. This implies random distribution of stroke across the regions of Denmark.
+
+```{r 10-geospatial-analysis-8-3-1}
 #globaltest spatial autocorrelation using Moran I test from spdep
 gm<-moran.test(NYsf$SMR,listw = lw , na.action = na.omit, zero.policy = T)
 gm
+```
+
+There's no evidence of spatial autocorrelation at local level. Note that this 
+data is too small and may not be the ideal to evaluate local Moran's.
+
+```{r 10-geospatial-analysis-8-3-2}
 #local test of autocorrelation
-lm<-localmoran(NYsf$SMR,listw = nb2listw(NY.nb, zero.policy = TRUE, style = "C") , na.action = na.omit, zero.policy = T)
+lm<-localmoran(NYsf$SMR,listw = nb2listw(NY.nb, zero.policy = TRUE, 
+          style = "C") , na.action = na.omit, zero.policy = T)
+
+lm
 ```
 
-Spatial regression with spdep. The spatial filtering removes spatial dependency for regressionanalysis.
+### Danish Stroke Registry
 
-```{r spatial regression}
+We now return to spatial regression with the data from Danish stroke registry described above. First we will calculate the SMR 
+
+```{r 10-geospatial-analysis-8-4}
+
+#Expected
+rate<-sum(DKnuts2_sf2$strokenum)/sum(DKnuts2_sf2$pop)
+DKnuts2_sf2$Expected<-with(DKnuts2_sf2, pop*rate )
+
+#SMR standardised mortality ratio
+DKnuts2_sf2$SMR<-with(DKnuts2_sf2, strokenum/Expected)
+
+tm_shape(DKnuts2_sf2) + 
+  tm_polygons(col='SMR',title='Stroke') 
+```
+
+Now we plot the neighborhood weight to see if the Zealand island is linked to Jutland peninsula. The data is in the .nb file. It looks like we may need to recalculate the neighborhood as there are bridges between Zealand and Zealand. This is different situation from Staten Island and the other boroughs of New York.
+
+```{r 10-geospatial-analysis-8-5}
+
+#contiguity based neighbourhood
+DKnut2.nb<-poly2nb(DKnuts2_sf2) 
+DKnut2.nb
+
+is.symmetric.nb(DKnut2.nb) 
+```
+
+Plotting in base R with _sf_ object requires extracting the geometry and coordinates. Need to modify the link between Zealand and Jutland.
+
+```{r 10-geospatial-analysis-8-5-1}
+plot(st_geometry(DKnuts2_sf2))
+plot(DKnut2.nb,coords=st_coordinates(st_centroid(st_geometry(DKnuts2_sf2))),
+     add=TRUE,pch=16,col='darkred')
+```
+
+The solution is provided in stack overflow. 
+https://gis.stackexchange.com/questions/413159/how-to-assign-a-neighbour-status-to-unlinked-polygons
+
+```{r 10-geospatial-analysis-8-5-2}
+
+DKconnect <- function(polys, nb, distance="centroid"){
+    
+    if(distance == "centroid"){
+        coords = sf::st_coordinates(sf::st_centroid(sf::st_geometry(polys)))
+        dmat = as.matrix(dist(coords))
+    }else if(distance == "polygon"){
+        dmat = sf::st_distance(polys) + 1 # offset for adjacencies
+        diag(dmat) = 0 # no self-intersections
+    }else{
+        stop("Unknown distance method")
+    }
+    
+    gfull = igraph::graph.adjacency(dmat, weighted=TRUE, mode="undirected")
+    gmst = igraph::mst(gfull)
+    edgemat = as.matrix(igraph::as_adj(gmst))
+    edgelistw = spdep::mat2listw(edgemat)
+    edgenb = edgelistw$neighbour
+    attr(edgenb,"region.id") = attr(nb, "region.id")
+    allnb = spdep::union.nb(nb, edgenb)
+    allnb
+}
+
+#run function
+DKnut2_connected.nb = DKconnect(DKnuts2_sf2,DKnut2.nb)
+
+plot(st_geometry(DKnuts2_sf2))
+plot(DKnut2_connected.nb,
+     coords=st_coordinates(st_centroid(st_geometry(DKnuts2_sf2))),
+     add=TRUE,pch=16,col='darkred')
+
+#create spatial weights for neighbour lists
+r.id<-attr(DKnuts2_sf2,"id")
+lw <- nb2listw(DKnut2_connected.nb,zero.policy = TRUE) #W=row standardised
+
+```
+
+
+Perform robust regression
+
+```{r 10-geospatial-analysis-8-5-3}
+#robust linear models
+DKnuts2_sf2$resids <- MASS::rlm(SMR~maleper,data=DKnuts2_sf2)$res
+
+#tmap robust linear model-residual
+#plot using color blind argument
+tm_shape(DKnuts2_sf2) + tm_polygons(col='resids',title='Residuals')+
+  tm_style("col_blind")
+```
+
+Check for spatial autocorrelation 
+
+```{r 10-geospatial-analysis-8-5-4}
+#globaltest spatial autocorrelation using Moran I test from spdep
+gm<-moran.test(DKnuts2_sf2$SMR,listw = lw , 
+               na.action = na.omit, zero.policy = T)
+gm
+```
+
+Local test of autocorrelation
+
+```{r 10-geospatial-analysis-8-5-5}
+#local test of autocorrelation
+lm<-localmoran(DKnuts2_sf2$SMR,
+    listw = nb2listw(DKnut2_connected.nb, zero.policy = TRUE, 
+          style = "C") , na.action = na.omit, zero.policy = T)
+lm
+```
+
+Spatial regression with spdep. The spatial filtering removes spatial dependency for regression analysis.
+
+```{r 10-geospatial-analysis-8-6, eval=F}
 ##spdep & spatialreg
-fit.ols<-lm(SMR~Age65raw+Income, data=NYsf, listw=lw,zero.policy=T, type="lag", method="spam")
+fit.ols<-lm(SMR~maleper, data=DKnuts2_sf2, 
+            listw=lw,zero.policy=T, type="lag", method="spam")
+
 summary(fit.ols)
-#SAR - Lag model
-fit.lag<-lagsarlm(SMR~Age65raw+Income, data=NYsf, listw=lw,zero.policy=T, type="lag", method="spam")
-summary(fit.lag, Nagelkerke=T)
-#Spatial Durbin Model
-fit.durb<-lagsarlm(SMR~Age65raw+Income,data=NYsf, listw=lw,zero.policy=T, type="mixed", method="spam")
-summary(fit.durb, Nagelkerke=T)
-#Spatial Durbin Error Model
-fit.errdurb<-errorsarlm(SMR~Age65raw+Income, data=NYsf, listw=lw,zero.policy=T,etype="emixed", method="spam")
-summary(fit.errdurb, Nagelkerke=T)
-#SAC Model
-fit.sac<-sacsarlm(SMR~Age65raw+Income,data=NYsf, listw=lw,zero.policy=T, type="sac", method="MC")
-summary(fit.sac, Nagelkerke=T)
-#spatial filtering
-NYFilt<-SpatialFiltering(SMR~Age65raw+Income, data=NYsf,nb=NY.nb,zero.policy = TRUE,style="W")
-NYlm<-lm(SMR~Age65raw+Income+fitted(NYFilt),data = NYsf)
-summary(NYlm)
 ```
 
-This section uses Bayesian modeling for regression with fitting of the model by Integrated Nested Lapace Approximation (INLA). https://www.r-bloggers.com/spatial-data-analysis-with-inla/. For those wanting to analyse leukemia in New York instead of COVID-19, the dataset _NY8_ is available from _DClusterm_. INLA approximates the posterior distribution as latent Gaussian Markov random field. In this baseline analysis, the poisson model is performed without any random effect terms.
+SAR - Lag model
 
-```{r inla poisson no random}
+```{r 0-geospatial-analysis-8-7, eval=F}
+fit.lag<-lagsarlm(SMR~maleper, data=DKnuts2_sf2, 
+                  listw=lw,zero.policy=T, type="lag", method="spam")
+
+summary(fit.lag, Nagelkerke=T)
+```
+
+Spatial Durbin Model
+
+```{r 10-geospatial-analysis-8-8, eval=F}
+#spatialreg
+
+fit.durb<-lagsarlm(SMR~maleper,data=DKnuts2_sf2, 
+                   listw=lw,zero.policy=T, type="mixed", method="spam")
+
+summary(fit.durb, Nagelkerke=T)
+```
+
+Spatial Durbin Error Model
+
+```{r 10-geospatial-analysis-8-9, eval=F}
+fit.errdurb<-errorsarlm(SMR~maleper, data=DKnuts2_sf2, listw=lw,zero.policy=T,etype="emixed", method="spam")
+
+summary(fit.errdurb, Nagelkerke=T)
+```
+
+SAC Model
+
+```{r 10-geospatial-analysis-8-10, eval=F}
+fit.sac<-sacsarlm(SMR~maleper,data=DKnuts2_sf2, 
+                  listw=lw,zero.policy=T, type="sac", method="MC")
+
+summary(fit.sac, Nagelkerke=T)
+```
+
+spatial filtering
+
+```{r 10-geospatial-analysis-8-11, eval=F}
+#function from spatialreg
+#Set ExactEV=TRUE to use exact expectations and variances rather than the expectation and variance of Moran's I from the previous iteration, default FALSE
+
+DKFilt<-SpatialFiltering(SMR~maleper, 
+        data=DKnuts2_sf2,
+        nb=DKnut2_connected.nb,
+        #ExactEV = TRUE,
+        zero.policy = TRUE,style="W")
+
+
+```
+
+### INLA
+
+This section uses Bayesian modeling for regression with fitting of the model by Integrated Nested Lapace Approximation (INLA). https://www.r-bloggers.com/spatial-data-analysis-with-inla/. For those wanting 
+to analyse leukemia in New York instead of COVID-19, the dataset _NY8_ is available from _DClusterm_. INLA approximates the posterior distribution as 
+latent Gaussian Markov random field. In this baseline analysis, the poisson 
+model is performed without any random effect terms.
+
+```{r 10-geospatial-analysis-9, eval=F}
 library(INLA)
-nb2INLA("NY.graph", NY.nb)
+nb2INLA("DKnut2.graph", DKnut2_connected.nb)
 #This create a file called ``LDN-INLA.adj'' with the graph for INLA
-NY.adj <- paste(getwd(),"/NY.graph",sep="")
+
+DK.adj <- paste(getwd(),"/DK.graph",sep="")
+
 #Poisson model with no random latent effect-ideal baseline model
-m1<-inla(COVIDdeathraw~ 1+Age65raw+Income, data=NYsf, family="poisson",
-         E=NYsf$Expected,control.predictor = list(compute = TRUE),
-  control.compute = list(dic = TRUE, waic = TRUE) )
+m1<-inla(SMR~ 1+maleper, data=DKnuts2_sf2, family="poisson",
+         E=DKnuts2_sf2$Expected,control.predictor = list(compute = TRUE),
+  control.compute = list(dic = TRUE, waic = TRUE), verbose = T )
+
 R1<-summary(m1)
 ```
 
-In this next analysis, the poisson model was repeated with random effect terms. This step was facilitated by adding the index term.
+In this next analysis, the Poisson model was repeated with random effect terms. This step was facilitated by adding the index term.
 
-```{r inla poisson random}
+```{r 10-geospatial-analysis-9-1, eval=F}
 #Poisson model with random effect 
 #index to identify random effect ID
-NYsf$ID <- 1:nrow(NYsf)
-m2<-inla(COVIDdeathraw~ 1+ Age65raw+Income +f(ID, model = "iid"), data=NYsf, family="poisson",
-         E=NYsf$Expected,control.predictor = list(compute = TRUE),
+DKnuts2_sf2$ID <- 1:nrow(DKnuts2_sf2)
+m2<-inla(SMR~ 1+ maleper +f(ID, model = "iid"), data=DKnuts2_sf2, family="poisson",
+         E=DKnuts2_sf2$Expected,control.predictor = list(compute = TRUE),
   control.compute = list(dic = TRUE, waic = TRUE) )
 R2<-summary(m2)
-NYsf$FIXED.EFF <- m1$summary.fitted[, "mean"]
-NYsf$IID.EFF <- m2$summary.fitted[, "mean"]
+DKnut2_sf2$FIXED.EFF <- m1$summary.fitted[, "mean"]
+DKnut2_sf2$IID.EFF <- m2$summary.fitted[, "mean"]
 
 #plot regression on map
-tSMR<-tm_shape(NYsf)+tm_polygons("SMR")+tm_shape(NYsubline)+tm_lines("black")
-tFIXED<-tm_shape(NYsf)+tm_polygons("FIXED.EFF")
-tIID<-tm_shape(NYsf)+tm_polygons("IID.EFF")
+tSMR<-tm_shape(DKnuts2_sf2)+tm_polygons("SMR")
+tFIXED<-tm_shape(DKnuts2_sf2)+tm_polygons("FIXED.EFF")
+tIID<-tm_shape(DKnuts2_sf2)+tm_polygons("IID.EFF")
 ```
 
-This next paragraph involves the use of spatial random effects in regression models. Examples include conditional autoregressive (CAR) and intrinsic CAR (ICAR) 
+This next paragraph involves the use of spatial random effects in regression models. Examples include conditional autoregressive (CAR) and intrinsic CAR 
+(ICAR) 
 
-```{r inla spatial random ICAR}
+```{r 10-geospatial-analysis-9-2, eval=F}
 # Create sparse adjacency matrix
-NY.mat <- as(nb2mat(NY.nb, style = "B",zero.policy = TRUE), "Matrix") #S=variance stabilise
+DK.mat <- as(nb2mat(DKnut2_connected.nb, 
+                    style = "B",zero.policy = TRUE),"Matrix") 
+
+#S=variance stabilise
 # Fit model
-m.icar <- inla(COVIDdeathraw ~ 1+Age65raw+Income+   
-    f(ID, model = "besag", graph = NY.mat),
-  data = NYsf, E = NYsf$Expected, family ="poisson",
+m.icar <- inla(SMR ~ 1+maleper+   
+    f(ID, model = "besag", graph = DK.mat),
+  data = DKnuts2_sf2, E = DKnuts2_sf2$Expected, family ="poisson",
   control.predictor = list(compute = TRUE),
   control.compute = list(dic = TRUE, waic = TRUE))
+
 R3<-summary(m.icar)
 ```
 
-The Besag-York-Mollie (BYM) now accounts for spatial dependency of neighbours. It includes random effect from ICA and index.
+The Besag-York-Mollie (BYM) now accounts for spatial dependency of neighbours. 
+It includes random effect from ICA and index.
 
-```{r inla spatial random BYM}
-m.bym = inla(COVIDdeathraw ~ -1+ Age65raw+Income+   
-    f(ID, model = "bym", graph = NY.mat),
-  data = NYsf, E = NYsf$Expected, family ="poisson",
+```{r 10-geospatial-analysis-9-3, eval=F}
+m.bym = inla(SMR ~ -1+ maleper+   
+    f(ID, model = "bym", graph = DK.mat),
+  data = DKnuts2_sf2, E = DKnuts2_sf2$Expected, family ="poisson",
   control.predictor = list(compute = TRUE),
   control.compute = list(dic = TRUE, waic = TRUE))
+
 R4<-summary(m.bym)
 ```
 
-```{r spatial random Leroux}
-ICARmatrix <- Diagonal(nrow(NY.mat), apply(NY.mat, 1, sum)) - NY.mat
-Cmatrix <- Diagonal(nrow(NYsf), 1) -  ICARmatrix
+```{r 10-geospatial-analysis-9-4, eval=F}
+ICARmatrix <- Diagonal(nrow(DK.mat), apply(DK.mat, 1, sum)) - DK.mat
+Cmatrix <- Diagonal(nrow(DKnuts2_sf2), 1) -  ICARmatrix
 max(eigen(Cmatrix)$values)
-m.ler = inla(COVIDdeathraw ~ -1+Age65raw+Income+ 
+m.ler = inla(SMR ~ -1+maleper+ 
     f(ID, model = "generic1", Cmatrix = Cmatrix),
-  data = NYsf, E = NYsf$Expected, family ="poisson",
+  data = DKnuts2_sf2, E = DKnuts2_sf2$Expected, family ="poisson",
   control.predictor = list(compute = TRUE),
   control.compute = list(dic = TRUE, waic = TRUE))
 R5<-summary(m.ler)
@@ -272,11 +774,11 @@ R5<-summary(m.ler)
 
 Spatial econometric model usch as spatial lag model includes covariates and autoregres on the response variable.
 
-```{r spatial random SAR}
+```{r 10-geospatial-analysis-9-5, eval=F}
 #X
-mmatrix <- model.matrix(COVIDdeathraw ~ 1, NYsf)
+mmatrix <- model.matrix(SMR ~ 1, DKnuts2_sf2)
 #W
-W <- as(nb2mat(NY.nb, style = "W", zero.policy = TRUE), "Matrix")
+W <- as(nb2mat(DKnut2_connected.nb, style = "W", zero.policy = TRUE), "Matrix")
 #Q
 Q.beta = Diagonal(n = ncol(mmatrix), x = 0.001)
 #Range of rho
@@ -296,14 +798,16 @@ hyper.slm = list(
       prior = "loggamma", param = c(0.01, 0.01)),
       rho = list(initial=0, prior = "logitbeta", param = c(1,1))
 )
+
 #SLM model
-m.slm <- inla( COVIDdeathraw ~ -1+Age65raw+Income+
+m.slm <- inla( SMR ~ -1+maleper+
      f(ID, model = "slm", args.slm = args.slm, hyper = hyper.slm),
-   data = NYsf, family = "poisson",
-   E = NYsf$Expected,
+   data = DKnuts2_sf2, family = "poisson",
+   E = DKnuts2_sf2$Expected,
    control.predictor = list(compute = TRUE),
    control.compute = list(dic = TRUE, waic = TRUE)
 )
+
 R6<-summary(m.slm)
 marg.rho.internal <- m.slm$marginals.hyperpar[["Rho for ID"]]
 marg.rho <- inla.tmarginal( function(x) {
@@ -313,18 +817,20 @@ inla.zmarginal(marg.rho, FALSE)
 plot(marg.rho, type = "l", main = "Spatial autocorrelation")
 ```
 
-Model selection
+Spatial model selection
 
-```{r model selection}
-NYsf$ICAR <- m.icar$summary.fitted.values[, "mean"]
-NYsf$BYM <- m.bym$summary.fitted.values[, "mean"]
-NYsf$LEROUX <- m.ler$summary.fitted.values[, "mean"]
-NYsf$SLM <- m.slm$summary.fitted.values[, "mean"]
+```{r 10-geospatial-analysis-9-6, eval=F}
+DKnut2_sf2$ICAR <- m.icar$summary.fitted.values[, "mean"]
+DKnut2_sf2$BYM <- m.bym$summary.fitted.values[, "mean"]
+DKnut2_sf2$LEROUX <- m.ler$summary.fitted.values[, "mean"]
+DKnut2_sf2$SLM <- m.slm$summary.fitted.values[, "mean"]
 
 labels<-c("Fixed","IID", "ICAR","BYM","LEROUX","SLM")
-Marginal_Likelihood<-c(R1$mlik[1],R2$mlik[1],R3$mlik[1],R4$mlik[1],R5$mlik[1],R6$mlik[1])
+Marginal_Likelihood<-c(R1$mlik[1],R2$mlik[1],R3$mlik[1],R4$mlik[1],R5$mlik[1],
+                       R6$mlik[1])
 Marginal_Likelihood<-round(Marginal_Likelihood,2)
-WAIC<-c(R1$waic[[1]],R2$waic[[1]],R3$waic[[1]],R4$waic[[1]],R5$waic[[1]],R6$waic[[1]])
+WAIC<-c(R1$waic[[1]],R2$waic[[1]],R3$waic[[1]],R4$waic[[1]],R5$waic[[1]],
+        R6$waic[[1]])
 WAIC<-round(WAIC,2)
 DIC<-c(R1$dic[[1]],R2$dic[[1]],R3$dic[[1]],R4$dic[[1]],R5$dic[[1]],R6$dic[[1]])
 DIC<-round(DIC,2)
@@ -332,36 +838,39 @@ Results<-data.frame(labels,Marginal_Likelihood,WAIC,DIC)
 knitr::kable(Results)
 
 #plot maps
-tICAR<-tm_shape(NYsf)+tm_polygons("ICAR")
-tBYM<-tm_shape(NYsf)+tm_polygons("BYM")
-tLEROUX<-tm_shape(NYsf)+tm_polygons("LEROUX")
-tSLM<-tm_shape(NYsf)+tm_polygons("SLM")
+tICAR<-tm_shape(DKnut2_sf2)+tm_polygons("ICAR")
+tBYM<-tm_shape(DKnut2_sf2)+tm_polygons("BYM")
+tLEROUX<-tm_shape(DKnut2_sf2)+tm_polygons("LEROUX")
+tSLM<-tm_shape(DKnut2_sf2)+tm_polygons("SLM")
 #arrange in grid using tmap arrange
 current.mode <- tmap_mode("plot")
 tmap_arrange(tFIXED,tIID,tICAR,tBYM,tLEROUX,tSLM)
 tmap_mode(current.mode)
 ```
 
-This section uses Bayesian modeling for regression with fitting of the model by stan. It is built on examples provided at https://rpubs.com/chrisbrunsdon/carstan. 
+### Stan
 
-```{r rstan}
-library(rstan)
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
+```{r 10-geospatial-analysis-10}
 
-set.seed(80147)
-rescale <- function(x) (x - mean(x))/(quantile(x,0.975) - quantile(x,0.025))
-x <- rescale(NYsf$Pop)
-y <- NYsf$COVIDdeathraw
-N <- length(y)
-#lm_result <- stan('lm.stan')
-#lm_result
-#stan_dens(lm_result)
-#lm_df <- as.data.frame(lm_result)
-#save(lm_df,file="lm_df.Rda")
-#load("lm_df.Rda")
-#ggplot(lm_df,aes(x=alpha,y=beta)) + geom_point(alpha=0.4,col='indianred') + geom_density2d(col='darkblue')
+library(brms)
+ 
+#S=variance stabilise
+# Fit model
+
+#brm.lag<- brm (COVIDdeathraw ~ 1+Age65raw+Income+sar(NY.nb, type = "lag"),
+#               data = DKnut2_sf2, data2 = list(NY.nb = NY.nb),
+#            chains = 2, cores = 2)
+
+
+
+
 ```
+
+## Machine learning
+
+Up until now we have used frequentist and Bayesian spatial regression methods. Spatial data can also be analysed using machine learning such as random forest. 
 
 ## Spatio-temporal regression
 
+Spatio-temporal regression combines a spatial model with a temporal model. In 
+many cases of low disease incidene in each region it may not be possible to identify any temporal trend at a regional level. 

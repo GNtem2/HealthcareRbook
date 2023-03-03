@@ -1,13 +1,25 @@
 # Machine learning
 
+A key aspect of machine learning is cross validation to evaluate the model. It repeatedly evaluate the model based on different subsets of the model and using different parameters to select the optimal parameters. The models are compared against subset of the data. The _caret_ library is an excellent tool for performing model selection. 
+
 ## Decision tree analysis
-There are several different approaches to performing decision tree analyses. The most famous method CART is implemented in R as rpart. This method uses the Gini coeffient to partition the root into branches. The second approaches uses chi-square test to partition the tree. Decision tree may also reveal complex intreactions (relationship) among the predictors in a way that regression analyses do not easily reveal.
+
+Decision tree method generates a logical flow diagram that resembles a tree. 
+This triangulated diagram, with repeated partitioning of the original data into smaller groups (nodes) on a yes or no basis, resembles clinical reasoning. By 
+way of contrast, regression methods generate significant predictors but it's not clear how those predictors enter the sequential nature of clinical reasoning. Regression models assume that all of the variables are required at once to formulate an accurate prediction. This would make some of the elements of any model from regression analysis superfluous.
+
+There are several different approaches to performing decision tree analyses. The most famous method CART is implemented in R as _rpart_. The second approaches 
+uses chi-square test to partition the tree, available from the _party_ library. Decision tree may also reveal complex intreactions (relationship) among the predictors in a way that regression analyses do not easily reveal.
+
+
 
 ### Information theory driven
 
-The tree is grown using a “divide and conquer” strategy, with repeated partitioning of the original data into smaller groups (nodes) on a yes or no basis. The method uses a splitting rule built around the notion of “purity.” A node in the tree is defined as pure when all the elements belong to one class. When there is impurity in the node, a split occurs to maximize reduction in “impurity.” In some cases, the split may be biased toward attributes that contain many different ordinal levels or scales. Thus, the selection of an attribute as the root node may vary according to the splitting rule and the scaling of the attribute.  The decision tree package rpart does tolerate certain degree of missing number because the data are split using the available data for that attribute to calculate the Gini index (rather than the entire cohort). One major advantage of _rpart_ is the presentation of the classification rules in the easily interpretable form of a tree. The hierarchical nature of the decision tree is similar to many decision processes [@pmid29559951].
+The tree is grown using a “divide and conquer” strategy, with repeated partitioning of the original data into smaller groups (nodes) on a yes or no basis. The method uses a splitting rule built around the notion of “purity.” A node in the tree is defined as pure when all the elements belong to one class. When there is impurity in the node, a split occurs to maximize reduction in “impurity.” In some cases, the split may be biased toward attributes that 
+contain many different ordinal levels or scales. Thus, the selection of an attribute as the root node may vary according to the splitting rule and the scaling of the attribute.  The decision tree package rpart does tolerate certain degree of missing number because the data are split using the available data for that attribute to calculate the Gini index (rather than the entire cohort). One major advantage of _rpart_ is the presentation of the classification rules in 
+the easily interpretable form of a tree. The hierarchical nature of the decision tree is similar to many decision processes [@pmid29559951].
 
-```{r part tree2}
+```{r 05-machinelearning-1, warning=F}
 library(rpart)
 library(rattle)
 library(rpart.plot)
@@ -18,12 +30,12 @@ treLeukemia<-rpart(Status~., data=Leukemia)
 fancyRpartPlot(treLeukemia)
 ```
 
-
 ### Conditional decision tree
 
-The conditional decision tree approach has been proposed to be  superior to CART method because that method uses information criterion for partitioning and which can lead to overﬁtting.The scenario of overﬁtting describes model which works well on training data but less so with new data.The conditional approach by _party_ is less prone to overﬁtting as it includes signiﬁcance testing [@pmid30761063].
+The conditional decision tree approach has been proposed to be  superior to CART method because that method uses information criterion for partitioning and which can lead to overﬁtting.The scenario of overﬁtting describes model which works 
+well on training data but less so with new data.The conditional approach by _party_ is less prone to overﬁtting as it includes signiﬁcance testing [@pmid30761063].
  
-```{r party tree}
+```{r 05-machinelearning-2, warning=F}
 library(party)
 data("aSAH", package = "pROC")
 colnames(aSAH)
@@ -33,36 +45,122 @@ plot(treeSAH,type = "simple",main = "Conditional Inference for aSAH")
 ```
 
 ### criticisms of decision tree
+
 Overfitting and prone to chosing variable with many levels are some disadvantage of _decision tree_. Decision tree do not handle collinearity issues well and the related method of _random forest_ is proposed below.
  
 ## Random Forest
-Both gradient boost machine and random forest are examples of tree-based method with the former based on boosting of the residuals of the model and the latter based on bagging with random selection (rows and columns) of multiple subsets of the data. As such random forest regression ensembles the model from multiple decision trees. The trees are created by obtaining multiple subset of the data (random selection of data by rows and columns). Decision tree comes at certain disadvantage such as overfitting. Random forest avoids the problems of single decision tree analyses by aggregating the results of multiple trees obtained by performing analysis on random subsets of the original data. This method is different from the bootstrapping procedure that can be used in decision tree which may not change the data structure; hence the trees can look very similar. A major drawback to random forest is that the hierarchical nature of the trees is lost. As such this method is seen as a black box tool and is less commonly embraced in the medical literature. One way us to use  an interpretable machine learning tool _iml_ [@10.21105/joss.00786] (Shapley values) tool to aid interpretation of the model. This method uses ideas from coalition game theory to fairly distribute the contribution of the coalition of covariates to the random forest model. 
+
+Both gradient boost machine and random forest are examples of tree-based method with the former based on boosting of the residuals of the model and the latter based on bagging with random selection (rows and columns) of multiple subsets of the data. As such random forest regression ensembles the model from multiple decision trees. The trees are created by obtaining multiple subset of the data (random selection of data by rows and columns). Decision tree comes at certain disadvantage such as overfitting. Random forest avoids the problems of single decision tree analyses by aggregating the results of multiple trees obtained by performing analysis on random subsets of the original data. This method is different from the bootstrapping procedure that can be used in decision tree 
+which may not change the data structure; hence the trees can look very similar. Random forest is available as _randomForest_ or _ranger_ or via _caret_.
+
+A major drawback to random forest is that the hierarchical nature of the trees 
+is lost. As such this method is seen as a black box tool and is less commonly embraced in the medical literature. One way us to use  an interpretable machine learning tool _iml_ [@10.21105/joss.00786] (Shapley values) tool to aid interpretation of the model. This method uses ideas from coalition game theory 
+to fairly distribute the contribution of the coalition of covariates to the 
+random forest model. 
+
+The machine learning models are tuned using _caret_ library.
+
+```{r 05-machinelearning-3}
+
+#https://topepo.github.io/caret/index.html
+library(caret)
+
+data("BreastCancer",package = "mlbench")
+#The Breast Cancer data contains NA as well as factors
+#note Class is benign or malignant of class factor
+#column Bare.nuclei removed due to NA
+BreastCancer<-BreastCancer[,-c(1,7)]
+
+#split data using caTools. 
+#The next example will use createDataPartition from caret
+set.seed(123)
+split = caTools::sample.split(BreastCancer$Class, SplitRatio = 0.75)
+Train = subset(BreastCancer, split == TRUE)
+Test = subset(BreastCancer, split == FALSE)
+
+
+# specify that resampling method is 
+rf_control <- trainControl(## 10-fold CV
+                           method = "cv",
+                           number = 10)
+
+#scaling data is performed here under preProcess
+#note that ranger handles the outcome variable as factor
+rf <- caret::train(Class ~ ., 
+                    data = Train, 
+                  method = "ranger",
+                 trControl=rf_control,
+                 preProcess = c("center", "scale"),
+                 tuneLength = 10, verbose=F)
+
+
+summary(rf)
+pred_rf<-predict(rf,BreastCancer)
+confusionMatrix(pred_rf, BreastCancer$Class)
+roc_rf<-pROC::roc(BreastCancer$Class, as.numeric(pred_rf))
+roc_rf
+
+
+```
 
 ## Gradient Boost Machine
 
-Gradient boost machine is available as gradient boost machine and extreme gradient boost machine.
+Gradient boost machine is available as _gradient boost machine_gbm_. 
 
-```{r XGB}
+```{r 05-machinelearning-4}
+
+#the breast cancer data from random forest is used here
+
+# specify that the resampling method is 
+gbm_control <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 10)
+
+#scaling data is performed here under preProcess
+#note that ranger handles the outcome variable as factor
+gbm <- caret::train(Class ~ ., 
+                    data = Train, 
+                  method = "gbm",
+                 trControl=gbm_control,
+                 preProcess = c("center", "scale"),
+                 tuneLength = 10)
+
+
+summary(gbm)
+pred_gbm<-predict(gbm,BreastCancer)
+confusionMatrix(pred_gbm, BreastCancer$Class)
+roc_gbm<-pROC::roc(BreastCancer$Class, as.numeric(pred_gbm))
+roc_gbm
+
+
+```
+
+### Extreme gradient boost machine
+
+In the examples above, the outcome variable is treated as a factor. Extreme gradient boost machine _xgboost_ requires conversion to numeric variable. 
+
+```{r 05-machinelearning-4-1}
 library(xgboost)
 library(caret)
 
 data("BreastCancer",package = "mlbench")
+#predict breast cancer
 
 BreastCancer$Class<-as.character(BreastCancer$Class)
 BreastCancer$Class[BreastCancer$Class=="benign"]<-0
 BreastCancer$Class[BreastCancer$Class=="malignant"]<-1
-#BreastCancer$Class<-as.numeric(BreastCancer$Class)
+BreastCancer$Class<-as.numeric(BreastCancer$Class)
 
 #remove ID column
-#remove column a=with NA
+#remove column a=with NA 
+#remaining 9 columns
 #convert multiple columns to numeric
 #lapply output a list
 BreastCancer2<-lapply(BreastCancer[,-c(1,7)], as.numeric)
 BreastCancer2<-as.data.frame(BreastCancer2)
 
-
 set.seed(1234)
-parts = createDataPartition(BreastCancer2, p = 0.7, list=F)
+parts = createDataPartition(BreastCancer2$Class, p = 0.75, list=F)
 train = BreastCancer2[parts, ]
 test = BreastCancer2[-parts, ]
 
@@ -79,7 +177,8 @@ xgboost_test = xgb.DMatrix(data=X_test, label=as.matrix(y_test))
 # nthread is the number of CPU threads we use
 # nrounds is the number of passes on the data
 
-model <- xgboost(data = xgboost_train, max.depth = 2, eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic", verbose = 2)                           
+#the function xgboost exist in xgboost and rattle
+model <- xgboost::xgboost(data = xgboost_train, max.depth = 2, eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic", verbose = 2)                           
 summary(model)
 
 #use model to make predictions on test data
@@ -93,30 +192,18 @@ print(head(prediction))
 err <- mean(as.numeric(pred_test > 0.5) != y_test)
 print(paste("test-error=", err))
 
-#xgb.plot.tree(model = model, trees = 1:10)
-
-
+#plot of the first 2 trees
+xgb.plot.tree(model = model, trees = 1:2)
 
 ```
 
 ## KNN
 
-K nearest neighbour is available from the _caret_ library.
+K nearest neighbour (KNN) uses ‘feature similarity based on measure of distance between data points to make prediction. The K in KNN refers to the number of neighbours to define the case for similarity. K nearest neighbour is available from the _caret_ library.
 
-```{r KNN}
+```{r 05-machinelearning-5}
+
 library(caret)
-
-```
-
-## Support vector machine
-
-In brief, support vector machine regression (SVR) can be seen as a way to enhance data which may not be easily separated in its native space. It manipulates data from low dimension to higher dimension in feature space and which can reveal relationship not discernible in low dimensional space. It does this around the hyperparameter controlling the margin of the data from a fitted line in a way not dissimilar from fitting a regression line based on minimising least squares. The default setting is radial basis function.
-
-```{r SVM Classification}
-library(e1071)
-library(caTools)
-library(caret)
-library(iml)
 
 data("BreastCancer",package = "mlbench")
 colnames(BreastCancer)
@@ -127,16 +214,74 @@ BreastCancer<-BreastCancer[,-c(1,7)]
 
 #split data
 set.seed(123)
-split = sample.split(BreastCancer$Class, SplitRatio = 0.75)
+split = caTools::sample.split(BreastCancer$Class, SplitRatio = 0.75)
 Train = subset(BreastCancer, split == TRUE)
 Test = subset(BreastCancer, split == FALSE)
+
+#grid of values to test in cross-validation.
+knn_Grid <-  expand.grid(k = c(1:15))
+
+knn_Control <- trainControl(method = "cv",
+                           number = 10, 
+                           # repeats = 10, # uncomment for repeatedcv 
+                           ## Estimate class probabilities
+                           classProbs = TRUE,
+                           ## Evaluate performance using 
+                           ## the following function
+                           summaryFunction = twoClassSummary)
+
+#scaling data is performed here under preProcess
+
+knn <- caret::train(Class ~ ., 
+                    data = Train, 
+                  method = "knn",
+                 trControl=knn_Control,
+                 tuneGrid=knn_Grid,
+                 #optimise with roc metric
+                 metric="ROC")
+
+
+summary(knn)
+pred_knn<-predict(knn,Test)
+confusionMatrix(pred_knn, Test$Class)
+roc_knn<-pROC::roc(Test$Class, as.numeric(pred_knn))
+roc_knn
+
+#https://plotly.com/r/knn-classification/
+
+pdb <- cbind(Test[,-9], Test[,9])
+pdb <- cbind(pdb, pred_knn)
+
+fig <- plotly::plot_ly(data = pdb,
+    x = ~as.numeric(Test$Cl.thickness), 
+    y = ~as.numeric(Test$Epith.c.size), 
+    type = 'scatter', mode = 'markers',color = ~pred_knn, colors = 'RdBu', 
+    symbol = ~Test$Class, split = ~Test$Class, 
+    symbols = c('square-dot','circle-dot'), 
+    marker = list(size = 12, line = list(color = 'black', width = 1)))
+
+fig
+
+```
+
+## Support vector machine
+
+In brief, support vector machine regression (SVR) can be seen as a way to 
+enhance data which may not be easily separated in its native space. It 
+manipulates data from low dimension to higher dimension in feature space and 
+which can reveal relationship not discernible in low dimensional space. It does this around the hyperparameter controlling the margin of the data from a fitted line in a way not dissimilar from fitting a regression line based on minimising least squares. The default setting is radial basis function.
+
+```{r 05-machinelearning-6}
+library(e1071)
+library(caret)
+
+# The Breast cancer data is used again from knn
 
 trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
 
 #scaling data is performed here under preProcess
 
-
-svm_Linear <- train(Class ~ ., 
+svm_Linear <- caret::train(Class ~ ., 
                     data = Train, 
                   method = "svmLinear",
                  trControl=trctrl,
@@ -147,7 +292,649 @@ svm_Linear <- train(Class ~ .,
 summary(svm_Linear)
 pred<-predict(svm_Linear,BreastCancer)
 confusionMatrix(pred, BreastCancer$Class)
-roc_svm<-roc(BreastCancer$Class, as.numeric(pred))
+roc_svm<-pROC::roc(BreastCancer$Class, as.numeric(pred))
+roc_svm
+
+```
+
+
+### Survival analysis using random forest
+
+Random forest can be used for performing survival analysis using _ranger_, _randomforestSRC_. The example below is an example using the lung cancer trial.
+
+```{r 05-machinelearning-7}
+#data from survival package on NCCTG lung cancer trial
+#https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
+data(cancer, package="survival")
+
+#time in days
+#status censored=1, dead=2
+#sex:Male=1 Female=2
+
+library(ranger)
+library(tidyverse)
+library(survival)
+
+cancer2<-cancer %>% dplyr::select(time, status, age,sex, ph.ecog) %>% na.omit()  
+
+survival_formula<-formula(paste('Surv(', 'time', ',', 'status', ') ~ ','age+sex+ph.ecog'))
+  
+survival_forest <- ranger(survival_formula,
+                         data = cancer2,  
+                         seed = 1234,
+                         importance = 'permutation',
+                         mtry = 2,
+                         verbose = TRUE,
+                         num.trees = 200,
+                         write.forest=TRUE)
+
+print("error:"); print(survival_forest$prediction.error)
+
 
 
 ```
+
+Print variable importance
+
+```{r 05-machinelearning-7-1}
+sort(survival_forest$variable.importance)
+
+```
+
+Probability of survival  
+
+```{r 05-machinelearning-7-2}
+plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
+lines(survival_forest$unique.death.times, survival_forest$survival[56,], col='blue')
+```
+
+
+
+```{r 05-machinelearning-7-3}
+
+plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
+for (x in c(2:100)) {
+  lines(survival_forest$unique.death.times, survival_forest$survival[x,], col='red')
+}
+```
+
+
+
+## Non-negative matrix factorisation
+
+Non-negative matrix factorisation is an unsupervised machine learning method, which seeks to explain the observed clinical features using smaller number of basis components (hidden variables). A matrix V of dimension m x n is factorise 
+to 2 matrices W and H. W has dimensions m x k an H has dimensions n x k. For 
+topic modeling in the chapter of text mining, V matrix is the document term matrix. Each row of H is the word embedding and the columns pf W represent the weight.  
+
+The interpretation of NMF components is similar to, but often more natural than, related methods such as factor analysis and principal component analysis. The non-negativity constraint in NMF leads to a simple “parts-based” interpretation  and has been successfully used in facial recognition, metagene pattern 
+discovery, and market research.  For a clinical example, the matrix for NMF decomposition consists of rows of hospitals and their service availability. 
+
+The example below used the recommended procedure to estimate the factorization rank, based on stability of the cophenetic correlation coefficient and the residual error, prior to performing the NMF analysis. The data were permuted and the factorization rank computed. These data were used as reference for selecting factorization rank to minimize the chance of overfitting. 
+
+```{r 05-machinelearning-8, warning=F}
+
+library(NMF,quietly = TRUE)
+library(tidyverse)
+edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")
+df<-edge[,c(2:dim(edge)[2])]
+row.names(df)<-edge[,1] #bipartite matrix
+#select columns#remove distance data
+df_se<-edge[,c(2:16)]
+row.names(df_se)<-edge[,1] #bipartite matrix
+#south eastern hospitals
+#select rows
+df_se<-df_se[c(1,6,7,11,12,13,14,17,19,20,24,31,33,34,35),]
+
+
+#estimate factorisation rank-prevent overfitting
+estim.r <- nmf(df_se, 2:6, nrun = 10, seed = 123456)
+plot(estim.r)
+consensusmap(estim.r)
+
+```
+
+The optimal number of rank for this data is likely to be 4.
+
+```{r 05-machinelearning-8-1}
+#Using the data above we can use which argument to find the order
+#since the starting point is 2 we just need to add 1
+Rank=which(estim.r$measures$cophenetic==max(estim.r$measures$cophenetic))+1
+
+model<-nmf(df_se, Rank,nrun=100)
+pmodel<-predict(model,prob=TRUE)
+coefmap(model)
+basismap(model)
+consensusmap(model)
+
+```
+
+## Formal concept analysis
+
+This is an unsupervised machine learning method which takes an input matrix of objects and attributes (binary values) and seeks to find the hierarchy of relations. Each concept shares a set of attributes with other objects and each sub-concept shares a smaller set of attributes with a subset of the objects. A Hasse diagram is used to display the hierarchy of relations.
+
+First we will illustrate with a simple relationship among fruit. Note in this example there is no close set for apple and pear, as both share the attribute of green color. There is a close set for the tropical fruit mango and and banana.
+
+There are several libraries for FCA. Here we will use _multiplex_. The _fcaR_ library can also handle fuzzy data.
+
+```{r 05-machinelearning-9}
+
+library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
+library(Rgraphviz) #plot hasse diagram
+
+fr<-data.frame(Fruit=c("Apple", "Banana","Pear", "Mango"),
+                 round=c(1,0,0,0),
+                 cylindrical=c(0,1,0,0),
+                 yellow=c(0,1,0,1),
+                 red=c(1,0,1,1),
+                 green=c(1,0,1,0), #color when ripe
+                 tropical=c(0,1,0,1),
+               large_seed=c(0,0,0,1)
+)
+
+df<-fr[,c(2:dim(fr)[2])]
+row.names(df)<-fr[,1] #bipartite matrix
+
+#perform Galois derivations between partially ordered subsets
+#galois(df_se',labeling = "full")
+gf <- galois(df, labeling = "reduced")
+
+#partial ordering of concept
+po<-partial.order(gf,type="galois")
+diagram(po, main="Hasse diagram of partial order - Fruit") 
+
+#lattice  diagram with reduced context
+diagram.levels(po)
+```
+
+Next we illustrate FCA in network of hospitals in South-Eastern Melbourne. The objects are the hospitals and the attributes are the services available in those hospitals.
+
+```{r 05-machinelearning-9-1}
+
+#library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
+#library(Rgraphviz) #plot hasse diagram
+
+#install BiocManager::install("Rgraphviz")
+
+edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")
+df<-edge[,c(2:dim(edge)[2])]
+row.names(df)<-edge[,1] #bipartite matrix
+
+#select columns#remove distance data
+df_se<-edge[,c(2:16)]
+row.names(df_se)<-edge[,1] #bipartite matrix
+
+#south eastern hospitals
+#select rows
+df_se<-df_se[c(1,6,7,11,12,13,14,17,19,20,24,31,33,34,35),]
+
+#perform Galois derivations between partially ordered subsets
+#galois(df_se',labeling = "full")
+gf <- galois(df_se, labeling = "reduced")
+#partial ordering of concept
+po<-partial.order(gf,type="galois")
+diagram(po, main="Hasse diagram of partial order with reduced context") 
+
+#lattice  diagram with reduced context
+diagram.levels(po)
+```
+
+## Evolutionary Algorithm
+
+Evolutionary algorithm are search method which take the source of inspiration 
+from nature such as evolution and survival of the fittest. These are seen as heuristic based method. The results from evolutionary algorithm shouldn't be compared unless all conditions set are the same. In essence the findings are similar under the same conditions. 
+
+### Simulated Annealing
+
+This method uses idea in metallurgy whereby metal is heated and then cooled to alter its property.
+
+```{r 05-machinelearning-10, eval=F}
+#SA section is set not to run as the analysis takes a long time.
+# a saved run is provided below
+
+data("BreastCancer",package = "mlbench")
+colnames(BreastCancer)
+
+#check for duplicates
+sum(duplicated(BreastCancer))
+
+#remove duplicates
+#keep Id to avoid creation of new duplicates
+BreastCancer1<-unique(BreastCancer) #reduce 699 to 691 rows
+
+#convert multiple columns to numeric
+#lapply output a list
+BreastCancer2<-lapply(BreastCancer1[,-c(7,11)], as.numeric) #list
+BreastCancer2<-as.data.frame(BreastCancer2)
+BreastCancer2$Class<-BreastCancer1$Class
+
+x=BreastCancer2[,-10]
+y=BreastCancer2$Class
+
+
+sa_ctrl <- safsControl(functions = rfSA,
+                       method = "repeatedcv",
+                       repeats = 3, #default is 5
+                       improve = 50)
+
+set.seed(10)
+glm_sa <- safs(x = x, y = y,
+              iters = 5, #default is 250
+              safsControl = sa_ctrl, method="glm")
+
+#save(glm_sa,file="Logistic_SimulatedAnnealing.Rda")
+
+#############################################
+#
+#Simulated Annealing Feature Selection
+#
+#691 samples
+#9 predictors
+#2 classes: 'benign', 'malignant' 
+#
+#Maximum search iterations: 5 
+#Restart after 50 iterations without improvement (0 restarts on average)
+#
+#Internal performance values: Accuracy, Kappa
+#Subset selection driven to maximize internal Accuracy 
+#
+#External performance values: Accuracy, Kappa
+#Best iteration chose by maximizing external Accuracy 
+#External resampling method: Cross-Validated (10 fold, repeated 3 times) 
+
+#During resampling:
+#  * the top 5 selected variables (out of a possible 9):
+#    Bl.cromatin (56.7%), Id (46.7%), Cl.thickness (43.3%), Epith.c.size (43.3%), #Marg.adhesion (43.3%)
+#  * on average, 3.5 variables were selected (min = 2, max = 5)
+#
+#In the final search using the entire training set:
+#   * 2 features selected at iteration 5 including:
+#     Cl.thickness, Cell.size  
+#   * external performance at this iteration is
+#
+#   Accuracy       Kappa 
+#     0.9314      0.8479 
+
+```
+
+```{r 05-machinelearning-10-1}
+
+load("./Logistic_SimulatedAnnealing.Rda")
+
+#plot output of simulated annealing
+plot(glm_sa)
+```
+
+### Genetic Algorithm
+
+Genetic algorithm is a machine learning tool based on ideas from Darwin’s 
+concept of natural selection. It is based on mutation, crossover and selection. Genetic algorithm can be used in any situation. The issue is in finding the fitness function to evaluate the output. Since it does not depend on gradient descent algorithm, it is less likely to be stuck in local minima compared to 
+other machine learning methods. Genetic algorithm is available in R as part of _caret_ and _GA_ libraries. Genetic algorithm can be used to optimise feature selection for regression modelling at the expense of much longer running time. 
+
+One potential issue with using cross-validation in genetic algorithm for feature selection is that it would be not right to use it again when feeding this data into another machine learning method.
+
+```{r 05-machinelearning-11, eval=F}
+#GA
+library(caret)
+
+data("BreastCancer",package = "mlbench")
+colnames(BreastCancer)
+
+#check for duplicates
+sum(duplicated(BreastCancer))
+
+#remove duplicates
+#keep Id to avoid creation of new duplicates
+BreastCancer1<-unique(BreastCancer) #reduce 699 to 691 rows
+
+#convert multiple columns to numeric
+#lapply output a list
+BreastCancer2<-lapply(BreastCancer1[,-c(7,11)], as.numeric) #list
+BreastCancer2<-as.data.frame(BreastCancer2)
+BreastCancer2$Class<-BreastCancer1$Class
+
+
+#check for NA
+anyNA(BreastCancer2)
+
+split = caTools::sample.split(BreastCancer2$Class, SplitRatio = 0.7)
+Train = subset(BreastCancer2, split == TRUE)
+Test = subset(BreastCancer2, split == FALSE)
+
+x=Train[,-10]
+y=Train$Class
+
+#cross validation indicates the number of cycle of the procedure from randomly generating new population of chromosome to mutate child chromosome.
+
+ga_ctrl <- gafsControl(functions = rfGA,
+                       method = "cv",
+                       repeats = 3, # default is 10
+                       genParallel=TRUE, # Use parallel programming
+                       allowParallel = TRUE
+                       )
+
+## Use the same random number seed as the RFE process
+## so that the same CV folds are used for the external
+## resampling. 
+
+set.seed(10)
+system.time(glm_ga <- gafs(x = x, y = y,
+              iters = 5, #recommended is 200
+              gafsControl = ga_ctrl, method="glm"))
+
+#save(glm_ga,file="Logistic_GeneticAlgorithm.Rda")
+
+################################################################
+# The output of glm_ga
+#Genetic Algorithm Feature Selection
+
+#484 samples
+#9 predictors
+#2 classes: 'benign', 'malignant' 
+
+#Maximum generations: 5 
+#Population per generation: 50 
+#Crossover probability: 0.8 
+#Mutation probability: 0.1 
+#Elitism: 0 
+#
+#Internal performance values: Accuracy, Kappa
+#Subset selection driven to maximize internal Accuracy 
+#
+#External performance values: Accuracy, Kappa
+#Best iteration chose by maximizing external Accuracy 
+#External resampling method: Cross-Validated (10 fold) 
+#
+#During resampling:
+#  * the top 5 selected variables (out of a possible 9):
+#    Cell.shape (100%), Cl.thickness (100%), Epith.c.size (100%), 
+Normal.nucleoli #(100%), Id (90%)
+#  * on average, 6.7 variables were selected (min = 5, max = 8)
+#
+#In the final search using the entire training set:
+#   * 7 features selected at iteration 2 including:
+#     Cl.thickness, Cell.shape, Marg.adhesion, Epith.c.size, Bl.cromatin ... 
+#   * external performance at this iteration is
+#
+#   Accuracy       Kappa 
+#     0.9691      0.9328 
+#
+
+```
+
+The output from the Genetic Algorithm is plotted as  mean fitness by 
+generations. This plot  shows the internal and external accuracy estimate from cross validation.
+
+```{r 05-machinelearning-11-1}
+
+load("./Logistic_GeneticAlgorithm.Rda")
+#plot output of genetic algorithm 
+plot(glm_ga)
+
+```
+
+## Manifold learning
+
+### T-Stochastic Neighbourhood Embedding
+
+T-Stochastic Neighbourhood Embedding (TSNE) is a maifold learning method which seeks to transform the complex data into low (2) dimensions while maintaining 
+the distance between neighbouring objects. The distance between data points are can be measured using Euclidean distance or other measures of distance. The transformed data points are conditional probabilities that represents similarities. The original description of TSNE used PCA as a first step to speed up computation and reduce noise.
+
+This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of 
+TSNE are not intended for machine learning. TSNE is implemented in R as _Rtsne_. The perplexity parameter allows tuning of the proximity of the data points.  The PCA step can be performed within _Rtsne_ by setting the _pca_ argument. The default number of iterations or max_iter is 1000.
+
+```{r 05-machinelearning-12, warning=F}
+library(Rtsne)
+library(ggplot2)
+library(mice) #impute missing data
+
+data("BreastCancer",package = "mlbench")
+colnames(BreastCancer)
+
+#check for duplicates
+sum(duplicated(BreastCancer))
+
+#remove duplicates
+#keep Id to avoid creation of new duplicates
+BreastCancer1<-unique(BreastCancer) #reduce 699 to 691 rows
+
+#impute missing data
+#m is number of multiple imputation, default is 5
+#output is a list
+imputed_Data <- mice(BreastCancer1, m=5, maxit = 5, method = 'pmm', seed = 500)
+
+#choose among the 5 imputed dataset
+completeData <- complete(imputed_Data,2)
+
+#convert multiple columns to numeric
+#lapply output a list
+BreastCancer2<-lapply(completeData[,-c(11)], as.numeric) #list
+BreastCancer2<-as.data.frame(BreastCancer2)
+BreastCancer2$Class<-BreastCancer1$Class
+
+BC_unique <- unique(BreastCancer2) # Remove duplicates
+set.seed(42) # Sets seed for reproducibility
+tsne_out <- Rtsne(as.matrix(BC_unique[,-11]), 
+        normalize = T, #normalise data
+        pca=T, dims = 3, #pca before analysis
+        perplexity=20, #tuning
+        verbose=FALSE) # Run TSNE
+#plot(tsne_out$Y,col=BC_unique$Class,asp=1)
+
+# Add a new column with color
+mycolors <- c('red', 'blue')
+BC_unique$color <- mycolors[ as.numeric(BC_unique$Class) ]
+
+rgl::plot3d(x=tsne_out$Y[,1], y=tsne_out$Y[,2], z=tsne_out$Y[,3], type = 'p', col=BC_unique$color, size=8)
+#rgl::legend3d("topright", legend = names(mycolors), pch = 16, col = colors, cex=1, inset=c(0.02))
+```
+
+
+The example with Breast cancer didn't turn out as well. Let's try TSNE with the iris dataset.
+
+```{r 05-machinelearning-12-1}
+#TSNE
+
+data(iris)
+#5 columns
+
+Iris_unique <- unique(iris) # Remove duplicates
+set.seed(42) # Sets seed for reproducibility
+tsne_out <- Rtsne(as.matrix(Iris_unique[,-5]), dims = 2, perplexity=10, verbose=FALSE) # Run TSNE
+plot(tsne_out$Y,col=Iris_unique$Species,asp=1)
+```
+
+
+### Self organising map
+
+Self organising map is an unsupervised machine learning method and is excellent for viewing complex data in low dimensional space i.e. a data reduction method. SOM is available as part of _kohonen_ library. It uses competitive learning to adjust its weight in contrast to other neural network approaches. Each node is evaluated to participate in the neural network. Input vectors that are close to each other in high dimensional space are mapped to be close to each other in low dimensional space.
+
+The codes below are modified from https://rpubs.com/AlgoritmaAcademy/som for use in aanalysis of iris data.
+
+```{r 05-machinelearning-13}
+library(kohonen)
+
+#unsupervised SOM
+#use iris dataset 150 x 5
+
+set.seed(100)
+
+#convert to numeric matrix
+iris.train <- as.matrix(scale(iris[,-5]))
+
+# grid should be smaller than dim(iris) 150 x5
+#xdim =10 and ydim=10 would be < 120
+iris.grid <- somgrid(xdim = 10, ydim = 10, topo = "hexagonal")
+
+#som model
+iris.model <- som(iris.train, iris.grid, rlen = 500, radius = 2.5, keep.data = TRUE, dist.fcts = "euclidean")
+
+plot(iris.model, type = "mapping", pchs = 19, shape = "round")
+
+```
+
+
+```{r 05-machinelearning-13-1}
+
+plot(iris.model, type = "codes", main = "Codes Plot", palette.name = rainbow)
+```
+
+The plot of training shows that the distance between nodes reached a plateau 
+after 300 iterations.
+
+```{r 05-machinelearning-13-2}
+
+plot(iris.model, type = "changes")
+
+```
+
+Supervised SOM is now performed with the same iris data.
+
+```{r 05-machinelearning-14}
+#SOM
+
+set.seed(100)
+int <- sample(nrow(iris), nrow(iris)*0.8)
+train <- iris[int,]
+test <- iris[-int,]
+
+# scaling data
+trainX <- scale(train[,-5])
+testX <- scale(test[,-5], center = attr(trainX, "scaled:center"))
+
+# make label
+#iris$species is already of class factor
+
+train.label <- train[,5]
+test.label <- test[,5]
+test[,5] <- 916
+testXY <- list(independent = testX, dependent = test.label)
+
+# make a train data sets that scaled
+# convert them to be a numeric matrix 
+iris.train <- as.matrix(scale(train[,-5]))
+
+set.seed(100)
+
+# grid should be smaller than dim(train) 120 x5
+#xdim =10 and ydim=10 would be < 120
+iris.grid <- somgrid(xdim = 10, ydim = 10, topo = "hexagonal")
+
+#som model
+iris.model <- som(iris.train, iris.grid, rlen = 500, radius = 2.5, keep.data = TRUE, dist.fcts = "euclidean")
+
+class <- xyf(trainX, classvec2classmat(train.label), iris.grid, rlen = 500)
+
+plot(class, type = "changes")
+
+pred <- predict(class, newdata = testXY)
+table(Predict = pred$predictions[[2]], Actual = test.label)
+```
+
+Determine number of clusters.
+
+```{r 05-machinelearning-14-1}
+library(factoextra)
+
+fviz_nbclust(iris.model$codes[[1]], kmeans, method = "wss")
+```
+
+```{r 05-machinelearning-14-2}
+set.seed(100)
+clust <- kmeans(iris.model$codes[[1]], 6)
+plot(iris.model, type = "codes", bgcol = rainbow(9)[clust$cluster], 
+     main = "Cluster SOM")
+add.cluster.boundaries(iris.model, clust$cluster)
+
+```
+
+
+## Deep learning
+
+Deep learning is a neural network with many layers: inner, multiple hidden and outer layer. Deep learning methods can be supervised or unsupervised. It uses gradient descent algorithm in search for the solution. One potential issue that 
+it may be stuck in a local minima rather than the global minima.  
+
+There are several R libraries for performing deep learning. It's worth checking out the installation requirement as some require installing the library in 
+python and uses the _reticulate_ library to perform analysis. The examples used here are R libraries including _RSNNS_.
+
+### Multiplayer Perceptron
+
+Multilayer perceptron is a type of deep learning. . It passes information in one direction from inner to hidden and outer layer and hence is referred to as feed forward artificial neural network. It trains the data using a loss function 
+which adapt to the parameter and optimise according to the specified learning rate. Overfitting is minimised by using an L2 regularisation penalty, termed alpha. 
+
+For tabular data, deep learning may not necessarily be better than other machine learning method. By contrast, deep learning may be better for unstructured data.
+
+
+```{r 05-machinelearning-15}
+library(caret)
+library(RSNNS)
+
+data("BreastCancer",package = "mlbench")
+colnames(BreastCancer)
+
+#remove ID column
+#remove column a=with NA 
+#alternative is to impute
+BreastCancer<-BreastCancer[,-c(1,7)]#remaining 9 columns
+
+#convert multiple columns to numeric
+#lapply output a list
+BreastCancer2<-lapply(BreastCancer[,-c(9)], as.numeric)
+BreastCancer2<-as.data.frame(BreastCancer2)
+BreastCancer2<-merge(BreastCancer2, BreastCancer$Class)
+
+#note Class is benign or malignant of class factor
+#column Bare.nuclei removed due to NA
+
+#split data
+set.seed(123)
+
+BreastCancer2Values <- BreastCancer2[,c(1:8)]
+BreastCancer2Targets <- decodeClassLabels(BreastCancer2[,9])
+
+#this returns the orginal file as a list
+BreastCancer2 <- splitForTrainingAndTest(BreastCancer2Values, BreastCancer2Targets, ratio=0.15) #ratio is percentage for test data
+BreastCancer2 <- normTrainingAndTestSet(BreastCancer2) #put out a list object
+
+model <- mlp(BreastCancer2$inputsTrain, 
+             BreastCancer2$targetsTrain, 
+             size=5, #number of unit in hidden layer 
+             learnFuncParams=c(0.1), 
+              maxit=50, #number of iteration to learn
+             inputsTest=BreastCancer2$inputsTest, targetsTest=BreastCancer2$targetsTest)
+
+summary(model)
+weightMatrix(model)
+extractNetInfo(model)
+
+par(mfrow=c(2,2))
+plotIterativeError(model)
+
+predictions <- predict(model,BreastCancer2$inputsTest)
+
+plotRegressionError(predictions[,2], BreastCancer2$targetsTest[,2])
+
+confusionMatrix(BreastCancer2$targetsTrain,fitted.values(model))
+confusionMatrix(BreastCancer2$targetsTest,predictions)
+
+plotROC(fitted.values(model)[,2], BreastCancer2$targetsTrain[,2])
+plotROC(predictions[,2], BreastCancer2$targetsTest[,2])
+
+probs <- predictions / rowSums(predictions)
+
+#confusion matrix with 402040-method
+confusionMatrix(BreastCancer2$targetsTrain, encodeClassLabels(fitted.values(model),                                                      method="402040", l=0.4, h=0.6))
+
+```
+
+
+
+### CNN
+
+Convolution neural network or CNN is an artifical neural network method that is well suited to classification of image data. CNN is able to develop an internal representation of the image.
+
+### RNN
+
+Recurrent neural network or RNN is an artifical neural network method that is 
+well suited to data with repeated patterns such as natural language processing. However, this architecture is less suited for tabular or imaging data.
+
+### Reinforcement learning

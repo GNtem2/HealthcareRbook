@@ -1,16 +1,128 @@
 # Multivariate Analysis
 
-The following section illustrates the different methods in multivariate analyses. These methods are not to be confused with the more simple multivariable analyses.
+The following section illustrates the different methods in multivariate analyses. These methods are not to be confused with the more multivariable analyses discussed under Statistics.
+
+## Multivariate regression
+
+### Penalised regression
+
+We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) [@pmid23838753]. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
+
+
+```{r 04-multivariate-analysis-2, warning=F}
+
+library(mice)
+
+data("BreastCancer",package = "mlbench")
+colnames(BreastCancer)
+
+#check for duplicates
+sum(duplicated(BreastCancer))
+
+#remove duplicates
+#keep Id to avoid creation of new duplicates
+#BreastCancer1<-unique(BreastCancer) #reduce 699 to 691 rows
+
+#impute missing data
+#m is number of multiple imputation, default is 5
+#output is a list
+imputed_Data <- mice(BreastCancer, m=5, maxit = 5, method = 'pmm', seed = 500)
+
+#choose among the 5 imputed dataset
+completeData <- complete(imputed_Data,2)
+
+#convert multiple columns to numeric
+#lapply output a list
+BreastCancer2<-lapply(completeData[,-c(11)], as.numeric) #list
+BreastCancer2<-as.data.frame(BreastCancer2)
+BreastCancer2$Class<-BreastCancer$Class
+
+#convert factor to numeric for calculatin of vif
+BreastCancer2$Class<-as.character(BreastCancer2$Class)
+BreastCancer2$Class[BreastCancer2$Class=="benign"]<-0
+BreastCancer2$Class[BreastCancer2$Class=="malignant"]<-1
+BreastCancer2$Class<-as.numeric(BreastCancer2$Class)
+
+BC <- unique(BreastCancer2) # Remove duplicates
+
+#check correlation
+library(ggcorrplot)
+ggcorrplot(cor(BC),
+    p.mat=cor_pmat(BC),hc.order=T, type="lower", colors=c("red","white","blue"),tl.cex = 8)
+
+```
+
+### MARS
+
+Multivariate adaptive regression spline (MARS) is a non-linear regression method that fits a set of splines (hinge functions) to each of the predictor variables i.e. different hinge function for different variables [@pmid8548103]. As such, 
+the method can be used to plot the relationship between each variable and 
+outcome. Use in this way, the presence of any threshold effect on the predictors can be graphically visualized. The MARS method is implemented in R programming environment in the _earth_ package.
+
+```{r 04-multivariate-analysis-3, warning=F}
+
+library(earth)
+
+BC<-BC[-1]
+
+Fit<-earth(Class ~.,data= BC,
+           nfold=10,ncross=30, varmod.method = "none",
+           glm=list(family=binomial))
+
+plotmo(Fit)
+summary(Fit)
+```
+
+
+### Mixed modelling
+
+In a standard regression analysis, the data is assumed to be random. Mixed 
+models assume that there are more than one source of random variability in the data. This is expressed in terms of fixed and random effects. Mixed modeling is 
+a useful technique for handling multilevel or group data. The intraclass correlation (ICC) is used to determine if a multilevel analysis is necessary ie 
+if the infarct volume varies among the surgeon or not. ICC is the between group variance to the total variance. If the ICC approaches zero then a simple regression model would suffice.
+
+There are several R packages for performing mixed modling such as _lme4_. Mixed modeling in meta-regression is illustrated in the section on Metaanalysis. An example of mixed model using Bayesian approach with INLA is provided in the [Bayesian section](INLA, Stan and BUGS)
+
+#### Random intercept model
+
+In a random intercept  or fixed slope multilevel model the slope or gradient of the fitted lines are assumed to be parallel to each other and the intercept 
+varies for different groups. This can be the case of same treatment effect on animal experiments performed by different technician or same treatment in different clusters of hospitals. There are several approached to performing analysis with random intercept model. The choice of the model depends on the reason for performing the analysis. For example, the maximum likelihood 
+estimation (MLE) method is better than restricted maximum likelihood (RMLE) in that it generates estimates for fixed effects and model comparison. RMLE is preferrred if there are outliers. 
+
+
+#### Random slope model
+
+In a random slope model, the slopes are not paralleled 
+
+
+### Trajectory modelling
+
+Trajectory analysis attempts to group the behaviour of the subject of interest over time. There are several different approaches to trajectory analysis: data 
+in raw form or after orthonal transformation of the data in principal component analysis. Trajectory analysis is different from mixed modelling in that it examines group behaviour. The output of trajectory analysis is only the 
+beginning of the modeling analysis. For example, the analysis may identify that there are 3 groups. These groups are labelled as group A, B and C. The next step would be to use the results in a modelling analysis of your choice.
+
+A useful library for performing trajectory analysis is _akmedoids_. This library anchored the analysis around the median value. The analysis requires the data in long format. The _traj_ library is similar to the one in _Stata_. It uses 
+several steps including factor and cluster analyses to idetify groups. The 
+_traj_ model prefers data in wide format.
+
 
 ## Principal component analysis
 
-Principal component analysis (PCA) is a data dimension reduction method which can be applied to a large dataset to determine the latent variables (principal components) which best represent that set of data. A brief description of the method is described here and a more detailed description of the method can be found in review [@pmid10703049]. The usual approach to PCA involves eigen analysis of a covariance matrix or singular value decomposition of a data matrix. 
+Principal component analysis (PCA) is a data dimension reduction method which 
+can be applied to a large dataset to determine the latent variables (principal components) which best represent that set of data. A brief description of the method is described here and a more detailed description of the method can be found in review [@pmid10703049]. The usual approach to PCA involves eigen 
+analysis of a covariance matrix or singular value decomposition. 
 
-PCA estimates an orthogonal transformation (variance maximising) to convert a set of observations of correlated variables into a set of values of uncorrelated (orthogonal) variables called principal components. The first extracted principle component aligns in the direction that contains most of the variance of observed variables. The next principal component is orthogonal to the first principle component and contains the second most of spread of variance. The next component contains the third most of spread, and so on.  The latter principal components are likely to represent noise and are discarded. Expressing this in terms of our imaging data, each component yields a linear combination of ‘ischemic’ voxels that covary with each other. These components can be interpreted as patterns of ischemic injury. The unit of measurement in PCA images is the covariance of the data. 
+PCA estimates an orthogonal transformation (variance maximising) to convert a 
+set of observations of correlated variables into a set of values of uncorrelated (orthogonal) variables called principal components. The first extracted 
+principal component aligns in the direction that contains most of the variance 
+of observed variables. The next principal component is orthogonal to the first principle component and contains the second most of spread of variance. The next component contains the third most of spread, and so on.  The latter principal components are likely to represent noise and are discarded. Expressing this in terms of our imaging data, each component yields a linear combination of ‘ischemic’ voxels that covary with each other. These components can be 
+interpreted as patterns of ischemic injury. The unit of measurement in PCA 
+images is the covariance of the data. 
 
-In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principle components. 
+In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principal components. 
 
-Based on cosine rule, principle components from different data are similar if values approach 1 and dissimilar if values approach 0 [@pmid22551679].
+Based on cosine rule, principal components from different data are similar if values approach 1 and dissimilar if values approach 0 [@pmid22551679].
+
+There are situations in which PCA may not work well if there is non-linear relationship in the data.
 
 ## Independent component analysis
 
@@ -18,28 +130,54 @@ Independent component analysis is different from PCA in that it seeks components
 
 ## Partial least squares
 
-There are several versions of partial least squares (PLS). A detailed mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix [@pmid15531609]. For the purposes of exposition we will describe the individual components of the method. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of dependent variables (neurological outcome scores). Each voxel can take on a value of 1 (representing involvement by infarction) or 0 (representing absence of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. Linear least squares regression of the latent variables produces coefﬁcients or beta weights for the latent variables at each voxel location in the brain in stereotaxic coordinate space.[@pmid19660556]
+There are several versions of partial least squares (PLS). A detailed 
+mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix [@pmid15531609]. For the purposes of 
+exposition we will describe the individual components of the method. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of 
+dependent variables (neurological outcome scores). Each voxel can take on a 
+value of 1 (representing involvement by infarction) or 0 (representing absence 
+of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. 
+Linear least squares regression of the latent variables produces coefﬁcients or beta weights for the latent variables at each voxel location in the brain in stereotaxic coordinate space.[@pmid19660556]
 
-The colon dataset containing microarray data comes with the _plsgenomics_ library [@pmid28968879]. The analysis involves partitioning the data into training and test set. the classification data is in the Y column.
+The colon dataset containing microarray data comes with the _plsgenomics_ 
+library [@pmid28968879]. The analysis involves partitioning the data into 
+training and test set. The classification data is in the Y column. This example 
+is provided by the _plsgenomics_ library
 
-```{r pls}
+```{r 04-multivariate-analysis-4, warning=F}
 library(plsgenomics)
+
 data("Colon")
 class(Colon) #list
 #62 samples 2000 genes
+#Outcome is in Y column as 1 and 2. 62 rows
+#2000 gene names
+
 dim(Colon$X) 
+
 #heatmap
 matrix.heatmap(cbind(Colon$X,Colon$y))
+
 #
 IndexLearn <- c(sample(which(Colon$Y==2),12),sample(which(Colon$Y==1),8))
 Xtrain <- Colon$X[IndexLearn,] 
 Ytrain <- Colon$Y[IndexLearn] 
 Xtest <- Colon$X[-IndexLearn,]
+
 # preprocess data 
 resP <- preprocess(Xtrain= Xtrain, Xtest=Xtest,Threshold = c(100,16000),Filtering=c(5,500), log10.scale=TRUE,row.stand=TRUE)
+
+# Determine optimum h and lambda
+hlam <- gsim.cv(Xtrain=resP$pXtrain,Ytrain=Ytrain,hARange=c(7,20),
+              LambdaRange=c(0.1,1),hB=NULL)
+
 # perform prediction by GSIM 
-res <- gsim(Xtrain=resP$pXtrain,Ytrain= Ytrain,Xtest=resP$pXtest,Lambda=10,hA=50,hB=NULL)
+# lambda is the ridge regularization parameter from the cross validation
+res <- gsim(Xtrain=resP$pXtrain, 
+            Ytrain= Ytrain,Xtest=resP$pXtest,
+            Lambda=hlam$Lambda,hA=hlam$hA,hB=NULL)
 res$Cvg 
+
+#difference between predicted and observed
 sum(res$Ytest!=Colon$Y[-IndexLearn])
 ```
 

@@ -5,7 +5,7 @@
 Bayes Theorem deals with the impact of information update on current belief expresses in terms of probability. P(A|B) is the posterior probability of A given knowledge of B. P(A) is the prior probability. P(B|A) is the conditional probability of B given A.
 P(A|B)=P(B|A) x P(A)/P(B)
 
-Bayes’ theorem can be expressed in terms of odds and post-test probabilities. This concept had been used in the analysis of the post-test probabilities of stroke related to the use of ABCD2409. In this case the likelihood ratio and pretest probability of stroke in patients with TIA is used to calculate the post-test probability.
+Bayes’ theorem can be expressed in terms of odds and post-test probabilities. This concept had been used in the analysis of the post-test probabilities of stroke related to the use of ABCD2. In this case the likelihood ratio and pretest probability of stroke in patients with TIA is used to calculate the post-test probability.
 
 Table 13.	2 x 2 table
 	Disease +	Disease -
@@ -18,7 +18,7 @@ The true negative rate (TNR)  can be expressed as conditional  probability P(T-|
  
 In the setting of ABCD2, the pre-test odds is derived from cases of TIA and stroke outcome at 90 days. 
  
-The positive likelihood ratio (PLR) in this case is derived from the sensitivity of ABCD2 for stroke and the one minus specificity of ABCD for stroke. One can interpret the likelihood ratio in terms of Bayes theorem781.
+The positive likelihood ratio (PLR) in this case is derived from the sensitivity of ABCD2 for stroke and the one minus specificity of ABCD for stroke. One can interpret the likelihood ratio in terms of Bayes theorem.
  
 To derive the post-test odds, the PLR is multiplied by the pre-test odds at the voxel level. The post-test odds is given by the product of the pre-test odds and the likelihood ratio. 
  
@@ -54,45 +54,63 @@ The Markov chain describes a chain of memoryless states which transit from one s
 
 ## INLA, Stan and BUGS
 
-In the example here, the GBD 2016 life time risk of stroke is re-used. The model is shown next to the simple linear regression. INLA is used to infer the probability of a set of data given the defined parameters. In the regression example below the linear regression return coefficient of 0.788 and the INLA version returns a mean value of 0.789 as well. Note that INLA methods do not provide p-values.
+In the example here, the GBD 2016 life time risk of stroke is re-used. The model is shown next to the simple linear regression. INLA is used to infer the probability of a set of data given the defined parameters. In the regression example below the linear regression return coefficient of 0.788 and the INLA version returns a mean value of 0.789 as well. Note that Bayesian methods do not provide p-values.
 
-```{r inla linear regression}
+### Linear regression
+
+```{r 07-Bayesian-analysis-1}
 library(INLA)
 load("./Data-Use/world_stroke.Rda")
+
+#perform ordinary linear regression for comparison
 fit<-lm(LifeExpectancy~MeanLifetimeRisk, data =world_sfdf)
 summary(fit)
-
-#need to subset data as world_sfdf is of class "sf"         "tbl_df"     "tbl" "data.frame"
-fitINLA<-inla(LifeExpectancy~MeanLifetimeRisk, family = "gaussian", data =world_sfdf[,c(23,12)])
-summary(fitINLA)
-
-
-#mixed model analysis
-
-# Set prior on precision
-prec.prior <- list(prec = list(param = c(0.001, 0.001)))
-
-world_sfdf$Continent <- relevel(as.factor(world_sfdf$Continent), "OCEANIA")
-
-fitCont<-inla(LifeExpectancy~1+ MeanLifetimeRisk+f(Continent,  model = "iid",
-    hyper = prec.prior), data =world_sfdf[,c(23,12, 15)], control.predictor = list(compute = TRUE))
-
-summary(fitCont)
-  
 ```
 
 
+```{r 07-Bayesian-analysis-1-1}
+
+#need to subset data as world_sfdf is of class "sf"         "tbl_df"     "tbl" "data.frame"
+fitINLA<-inla(LifeExpectancy~MeanLifetimeRisk, family = "gaussian", data =world_sfdf[,c(23,12)])
+
+summary(fitINLA)
+```
+Performing Bayesian analysis with _rstan_ can be tricky as the text file for the stan code require an empty line at the end. The _brms_ library contains the same precompiled _stan_ code and is easier to run.
+
+```{r 07-Bayesian-analysis-1-2}
+library(brms)
+fitBRM<-brm(LifeExpectancy~MeanLifetimeRisk,  data =world_sfdf[,c(23,12)])
+
+summary(fitBRM)
+```
+
+Extract the posterior samples for plotting.
+
+```{r 07-Bayesian-analysis-1-3}
+library(tidyverse)
+post_samples_BRM <- brms::posterior_samples(fitBRM) 
+
+post_samples_BRM %>% 
+  select(-lp__) %>% 
+  pivot_longer(cols = everything()) %>% 
+  ggplot(aes(x = value)) +
+  geom_density() +
+  facet_wrap(~name, scales = "free")
+```
+
+### Logistic regression
 
 This example illustrates the use of INLA for logistic regression.
 
-```{r INLA logistic}
+```{r 07-Bayesian-analysis-2, warning=F}
 
-library(INLA)
+#library(INLA)
 data("BreastCancer",package = "mlbench")
 colnames(BreastCancer)
 
 #note Class is benign or malignant of class factor
 #need to convert this to numeric values
+
 
 #first convert to character
 BreastCancer$Class<-as.character(BreastCancer$Class)
@@ -100,18 +118,109 @@ BreastCancer$Class<-as.character(BreastCancer$Class)
 BreastCancer$Class[BreastCancer$Class=="benign"]<-0
 BreastCancer$Class[BreastCancer$Class=="malignant"]<-1
 
+
+
+#convert factors to numeric
+BreastCancer2<-lapply(BreastCancer[,-c(1,7)], as.numeric)
+BreastCancer2<-as.data.frame(BreastCancer2)
+
+#return Class to data
 #convert character back to numeric
-BreastCancer$Class<-as.numeric(BreastCancer$Class)
-Dx<-inla(Class ~Epith.c.size+Cl.thickness+Cell.shape, family="binomial", data = BreastCancer)
+BreastCancer2$Class<-as.numeric(BreastCancer$Class)
+
+Dx<-inla(Class ~Epith.c.size+Cl.thickness+Cell.shape, family="binomial", 
+         data = BreastCancer2)
 
 summary(Dx)
+```
+
+The same data is used for logistic regression with stan.
+
+```{r 07-Bayesian-analysis-2-1, warning=F}
+DxBRM<-brm(Class ~Epith.c.size+Cl.thickness+Cell.shape, 
+           family=bernoulli(link = "logit"), data = BreastCancer2)
+
+summary(DxBRM)
+```
+
+
+Extract the posterior sample from logistic regression.
+
+```{r  07-Bayesian-analysis-2-2, warning=F}
+post_samples_DxBRM <- brms::posterior_samples(DxBRM)
+
+post_samples_DxBRM %>% 
+  select(-lp__) %>% 
+  pivot_longer(cols = everything()) %>% 
+  ggplot(aes(x = value)) +
+  geom_density() +
+  facet_wrap(~name, scales = "free")
+
+```
+
+### Mixed model
+
+Plotting world_sfdf to identify characteristics of the data
+
+```{r 07-Bayesian-analysis-3, warning=F}
+
+ggplot(data=world_sfdf, aes(x=LifeExpectancy, y=MeanLifetimeRisk,
+              color=Income, shape=Continent))+                                               
+  geom_point()+
+  geom_jitter()
+
+```
+
+
+Intercept model with INLA
+
+```{r 07-Bayesian-analysis-3-1}
+
+# Set prior on precision
+prec.prior <- list(prec = list(param = c(0.001, 0.001)))
+
+Inla_Income<-inla(MeanLifetimeRisk~1+LifeExpectancy+f(Income,  
+    model = "iid",
+    hyper = prec.prior), 
+    data =world_sfdf[,c(23,12, 15, 20)], 
+    control.predictor = list(compute = TRUE))
+
+summary(Inla_Income)
+  
+```
+
+Intercept model with BRMS
+
+```{r 07-Bayesian-analysis-3-2}
+
+BRMS_Income <- brm(MeanLifetimeRisk ~ 1 + LifeExpectancy+(1 | Income), 
+                              data   = world_sfdf, 
+                              warmup = 100, 
+                              iter   = 200, 
+                              chains = 2, 
+                              inits  = "random",
+                              cores  = 2)  #use 2 CPU cores simultaneously instead of just 1.
+
+summary(BRMS_Income)
+```
+
+```{r  07-Bayesian-analysis-3-3, warning=F}
+post_samples_BRMS_Income <- brms::posterior_samples(BRMS_Income)
+
+post_samples_BRMS_Income %>% 
+  select(-lp__) %>% 
+  pivot_longer(cols = everything()) %>% 
+  ggplot(aes(x = value)) +
+  geom_density() +
+  facet_wrap(~name, scales = "free")
+
 ```
 
 ### Bayesian Metaanalysis 
 
 A Bayesian approach towards metaanalysis is provided below using the package _meta4diag_ [@2015arXiv151206220G]. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the _mada_ package which does not provide a bivariate method for performing summary sensitivity and specificity. 
 
-```{r Bayesian INLA Metaanalysis}
+```{r 07-Bayesian-analysis-4}
 library(meta4diag)
 library(INLA)
 
@@ -130,7 +239,7 @@ SROC(res, crShow = T)
 
 Forest plot of sensitivity using the _meta4diag_ package.
 
-```{r Sensitivity INLA}
+```{r 07-Bayesian-analysis-4-1}
 #sensitivity is specified under accuracy.type
 #note that there are several different forest plot: mada, metafor, meta4diag
 meta4diag::forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
@@ -142,7 +251,7 @@ meta4diag::forest(res, accuracy.type="sens", est.type="mean", p.cex="scaled", p.
 
 Forest plot of specificity using the _meta4diag_ package.
 
-```{r Specificity INLA}
+```{r 07-Bayesian-analysis-4-2}
 #specificity is specified under accuracy.type
 #note that there are several different forest plot: mada, metafor, meta4diag
 meta4diag::forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
@@ -156,7 +265,7 @@ meta4diag::forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.
 
 The example below is provided by _hesim_.
 
-```{r Hesim}
+```{r 07-Bayesian-analysis-5}
 library("hesim")
 library("data.table")
 strategies <- data.table(strategy_id = c(1, 2))

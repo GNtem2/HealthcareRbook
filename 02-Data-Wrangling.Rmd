@@ -1,18 +1,20 @@
 # Data Wrangling
 
-This section deals with the nitty gritty of data analysis. There's no nice plots like the previous chapter. In fact, this data wrangling is the major aspect of data science. Sometimes, it's worth spending time on _stack overflow_ to look at similar problems that others have and the approaches to solving them. Useful blogs are available at https://www.r-bloggers.com/.
+This section deals with the nitty gritty of data analysis. There's no nice plots like the previous chapter. In fact, this data wrangling is the major aspect of data science. 
 
 ## Data 
 
-This section on atomic vector, arrays, matrix and list is often considered boring and ignored. 
+This section on atomic vector, arrays, matrix and list is often considered 
+boring and ignored. 
 
 ### Vector, Arrays, Matrix
 
 #### Vector and list
 
-All elements of an atomic vector and arrays are the same. List can contain different types of data. A complex example of a structured list is the _json_ format shown below. In base R, _c_ is a function for creating a vector or list. The function _list_ can also be used to create list. It is best to avoid using _c_ when assigning a name to a dataframe or vector [@Wickham2019].
+All elements of an atomic vector and arrays are the same. List can contain different types of data. A complex example of a structured list is the _json_ format shown below. In base R, _c_ is a function for creating a vector or list. The function _list_ can also be used to create list. It is best to avoid using 
+_c_ when assigning a name to a dataframe or vector [@Wickham2019].
 
-```{r vector}
+```{r 02-Data-Wrangling-1}
 a<-c(1,2,3)
 is.vector(a)
 class(a) #numeric vector
@@ -28,9 +30,11 @@ is.list(e) #TRUE
 
 #### Matrix and Arrays
 
-Arrays are arranged in matrix of rows and columns of a single data type. Later in this chapter, we will illustrate the importance of arrays for manipulating MRI scans. A volumetric mri scan, there are 3 dimenions _[,,]_. The first column is the sagittal sequence, second column is the coronal sequence and the third column is the axial sequence. In the example below, this knowledge of arrays can be used to reverse the ordering of information on MRI scan (flip on it axis between left and right)
+Arrays are arranged in matrix of rows and columns of a single data type. Later 
+in this chapter, we will illustrate the importance of arrays for manipulating 
+MRI scans. A volumetric mri scan, there are 3 dimenions _[,,]_. The first column is the sagittal sequence, second column is the coronal sequence and the third column is the axial sequence. In the example below, this knowledge of arrays can be used to reverse the ordering of information on MRI scan (flip on it axis between left and right)
 
-```{r matrix and arrays}
+```{r 02-Data-Wrangling-1-1}
 #vector
 vector1<-c(1,2,3)
 vector2<-c(4,5,6,7,8,9)
@@ -45,7 +49,7 @@ is.array(array1)
 
 Arrays can be accessed by indexing its structure.
 
-```{r indexing arrays}
+```{r 02-Data-Wrangling-1-2}
 #first row of array1
 array1[,,1]
 #second row of array1
@@ -61,7 +65,7 @@ array2[,,2]
 
 The _apply_ function works on data in array format.
 
-```{r array maths}
+```{r 02-Data-Wrangling-2}
 #sum data across rows ie c(1)
 apply(array1,c(1),sum)
 #sum data across columns(2)
@@ -75,7 +79,7 @@ apply(array1,c(1,2),sum)
 
 The call _lapply_ applies a function to a list. In the section below of medical images the _lapply_ funcrion will be used to creates a list of nifti files and which can be opened painlessly with additional call to _readNIfTI_. Here a more simple example is used.
 
-```{r lapply example, warning=F}
+```{r 02-Data-Wrangling-2-1}
 a<-c(1,2,3,4,5,6,7,8)
 lapply(a, function(x) x^3)
 ```
@@ -84,7 +88,7 @@ lapply(a, function(x) x^3)
 
 The call _sapply_ applies a function to a vector, matrix or list. It returns the results in the form of a matrix.
 
-```{r Sapply example, warning=F}
+```{r 02-Data-Wrangling-2-2, warning=F}
 a<-c(1,2,3,4)
 sapply(a, function(x) x^2)
 
@@ -94,25 +98,27 @@ sapply(a, function(x) x^2)
 
 The _tapply_ function applies a function to a subset of the data.
 
-```{r tapply example}
+```{r 02-Data-Wrangling-2-3}
 
 dat.array1<-as.data.frame.array(array1) 
 dat.array1$V6<- dat.array1$V6 %% 2
 tapply(dat.array1$V1, dat.array1$V6, sum) 
 ```
 
-The _rapply_ function is applied to a list, contingent on the second argument. In this example, only numeric values are evaluated.
+The _rapply_ function is applied to a list, contingent on the second argument. 
+In this example, only numeric values are evaluated.
 
-```{r rapply}
+```{r 02-Data-Wrangling-2-4}
 a<-c(1,2,3.4,D,5)
 rapply(a, function(x) x*2, class="numeric")
 ```
 
 ### Simple function
 
-a function is written by creating name of function, calling on _function_ (x) and brackets to define function.
+a function is written by creating name of function, calling on _function_ (x) 
+and brackets to define function.
 
-```{r simple function}
+```{r 02-Data-Wrangling-3}
 # function sun
 ArithSum<-function (x) {
   sum(x)
@@ -122,7 +128,7 @@ ArithSum(vector1)
 ```
 ### for loop
 
-```{r For loop}
+```{r 02-Data-Wrangling-4}
 vector2<-c(4,5,6)
 for (i in vector2){
   print(i)
@@ -131,7 +137,7 @@ for (i in vector2){
 
 The _next_ command can be used to modify the loop. This simple example removes even number
 
-```{r next loop}
+```{r 02-Data-Wrangling-4-1}
 for(i in vector2){
   if(!i %% 2){
     next
@@ -146,7 +152,7 @@ for(i in vector2){
 Often one assumes that opening Rstudio is sufficient to locate the file and run the analysis. One way of doing this at the console is to click on _Session_ tab, then _Set Working Directory_ to location of file. Another way of doing this seemlessly is to use the library _here_. It is easy to find the files in your directory using the _list.files()_ call.
 
 
-```{r list files}
+```{r 02-Data-Wrangling-4-02}
 #list all files in a directory then
 #list.files()
 #list files matching pattern
@@ -157,7 +163,7 @@ list.files(pattern=".Rmd")
 
 Data frame is a convenient way of formatting data in table format. It is worth checking the structure of data. Some libraries prefer to work with data in data frame while others prefer matrix or array structure.
 
-```{r Dataframe}
+```{r 02-Data-Wrangling-5}
 a<-c(1,2,3)
 b<-c("apple","orange","banana")
 e<-data.frame(a,b)
@@ -166,16 +172,31 @@ rownames(e)
 
 ### Excel data
 
-Excel data are stored as csv, xls and xlsx.  Csv files can be open in base R using _read.csv_ function or using _readr_ library and _read_csv function_. I would urge you to get used to manipulating data in R as the codes serve as a way to keep track with the change in data. The original xcel data should not be touched outside of R. A problem with excel data is that its autocorrect function change provenance of genomic data eg SEPT1, MARCH1. SEPT1 is now relabeled as SEPTIN1.
+Excel data are stored as csv, xls and xlsx.  Csv files can be open in base R 
+using _read.csv_ function or using _readr_ library and _read_csv function_. I would urge you to get used to manipulating data in R as the codes serve as a way to keep track with the change in data. The original xcel data should not be touched outside of R. A problem with excel data is that its autocorrect function change provenance of genomic data eg SEPT1, MARCH1. SEPT1 is now relabeled as SEPTIN1.
 
+```{r 02-Data-Wrangling-5-1, eval=F}
+A<-read.csv("File.csv")
 
+B<-readr::read_csv ("File.csv")
+```
+
+The _readxl_ library can be used to open files ending in xls and xlsx.
+
+```{r 02-Data-Wrangling-5-2, eval=F}
+
+C<-readxl::read_xlsx("File.xlsx",skip=1) #skip first row 
+
+D<-readxl::read_xlsx("File.xlsx",sheet=2) #read data from sheet 2
+```
 
 #### Date and time
 
 Date and time can be handle in base R. The library _lubridate_ is useful for parsing date data. It is possible to get an overview of the functions of the library by typing _help(package=lubridate)_. Errors with parsing can occur if there are characters in the column containing date data. 
 
-```{r Date character}
+```{r 02-Data-Wrangling-6}
 library(dplyr)
+
 dfdate<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),
                    "Result"=c(4,5,6))
 class(dfdate$DateofEvent)
@@ -190,9 +211,10 @@ class(dfdate$DateofEvent2)
 dfdate$DateofEvent2
 ```
 
-Problem can occur when date and time are located in separate columns. The first issue is that time data is assigned a default date 1899-12-30. This error occurs as the base date in MS Office is 1899-12-30. This issue can be compounded when there are 2 time data eg a patient has stroke onset at 22:00 and is scanned at 02:00. The data become 1899-12-31 22:00 and 1899-12-31 02:00. In this case it implies that scanning occurs before stroke onset. This could have been solved at the data collection stage by having 2 separate date colums. There are several solutions inclusing _ifelse_ but care must be taken with this argument. Note that _ifelse_ argument convert date time data to numeric class. This can be resolved by embedding _ifelse_ statement within _as.Date_ argument. This argument requires _origin_ argument. The logic argument may fail when the default date differ eg 1904-02-08 02:00. In this case 1904-02-08 02:00 is greater than 1899-12-31 22:00.
+Problem can occur when date and time are located in separate columns. The first issue is that time data is assigned a default date 1899-12-30. This error occurs as the base date in MS Office is 1899-12-30. This issue can be compounded when there are 2 time data eg a patient has stroke onset at 22:00 and is scanned at 02:00. The data become 1899-12-31 22:00 and 1899-12-31 02:00. In this case it implies that scanning occurs before stroke onset. This could have been solved at the data collection stage by having 2 separate date colums. There are several solutions inclusing _ifelse_ but care must be taken with this argument. Note 
+that _ifelse_ argument convert date time data to numeric class. This can be resolved by embedding _ifelse_ statement within _as.Date_ argument. This argument requires _origin_ argument. The logic argument may fail when the default date differ eg 1904-02-08 02:00. In this case 1904-02-08 02:00 is greater than 1899-12-31 22:00.
 
-```{r date time}
+```{r 02-Data-Wrangling-6-1}
 library(lubridate)
 library(tidyverse)
 
@@ -216,13 +238,14 @@ df %>% select(-Scan_date) %>% gt::gt()
 ```
 
 
-One way of storing data in R format is to save the file as .Rda. This format will ensure that no one can accidentally rewrite or delete a number. For very large data, it's quicker to save as .Rda file than as csv file.
+One way of storing data in R format is to save the file as .Rda. This format 
+will ensure that no one can accidentally rewrite or delete a number. For very large data, it's quicker to save as .Rda file than as csv file.
 
 ### Foreign data
 
 The foreign library is traditionally use to handle data from _SPSS_ (.sav), _Stata_ (.dta) and _SAS_ (.sas). One should look at the ending in the file to determine the necessary library. 
 
-```{r eval=FALSE}
+```{r 02-Data-Wrangling-7, eval=FALSE}
 library(foreign)
 #write and read Stata
 write.dta(dfdate,file="./Data-Use/dfdate_temp.dta")
@@ -233,9 +256,12 @@ a
 The _foreign_ library can handle older _SAS_ files but not the current version. The current version of _SAS_ file requires _sas7bdat_. The clue is the file ends in .sas7bdat.
 
 ### json format
-Json is short for JavaScript object Notification. These files have a hierarchical structured format.  The json file is in text format amd can also be examined using _Notepad_. These files can be read using the _RJSONIO_ or _rjson_ libraries in R.
 
-```{r address}
+Json is short for JavaScript object Notification. These files have a 
+hierarchical structured format.  The json file is in text format amd can also be examined using _Notepad_. These files can be read using the _RJSONIO_ or _rjson_ 
+libraries in R.
+
+```{r 02-Data-Wrangling-8}
 library(RJSONIO)
 j<-fromJSON("./Data-Use/0411.geojson")
 j<-lapply(j, function(x) {
@@ -249,7 +275,7 @@ k<-as.data.frame(do.call("cbind",j)) #list to data frame
 
 R can handle a variety of different data format. Medical images are stored as _DICOM_ files for handling and converted to _nifti_ files for analysis. The workhorses are the _oro.dicom_ and _oro.nifti_ libraries. Nifti is an S4 class object with multiple slots for data type. These slots can be accessed by typing the @ after the handle of the file.
 
-```{r create nifti}
+```{r 02-Data-Wrangling-9}
 library(oro.nifti)
 set.seed(1234)
 dims = rep(5, 3)
@@ -262,23 +288,26 @@ neurobase::ortho2(SimIm)
 
 ## Tidy data
 
-Attention to collection of data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
+Attention to collection of data is important as it shows the way for performing analysis. In general each row represents on variable and each column represents 
+an attribute of that variables. Sometimes there is a temptation to embed 2 types of attributes into a column. 
 
-```{r variables}
-df2<-data.frame(Var=c("test positive","test negative"), Result=c(5, 10))
+```{r 02-Data-Wrangling-10}
+df2<-data.frame(Sex=c("Male","Female"), Test=c("positive 5 negative 5",
+                        " negative 0 negative 10"))
 df2
 ```
 
-The above example should be entered this way. This change allows one to group variables by Test status: 'positive' or 'negative'. One can easily perform a t test here (not recommend in this case as the data contains only 2 rows).
+The above example should be entered this way. This change allows one to group variables by Test status: 'positive' or 'negative'. One can easily perform a 
+t-test here (not recommend in this case as the data contains only 2 rows).
 
-```{r variables2}
-df2<-data.frame(Test=c("positive","negative"), Result=c(5, 10))
+```{r 02-Data-Wrangling-10-1}
+df2<-data.frame(Sex=c("Male","Female"), `Test Positive` =c(5,0), `Test Negative`=c(5, 10))
 df2
 ```
 
-The below example is about collapsing of column using the base R. 
+The below example is illustrate how to collapse columns when using base R. 
 
-```{r collapsing column}
+```{r 02-Data-Wrangling-11}
 dfa<-data.frame(City=c("Melbourne","Sydney","Adelaide"),
                 State=c("Victoria","NSW","South Australia"))
 #collapsing City and State columns and generate new column address
@@ -289,7 +318,7 @@ dfa
 
 This example is same as above but uses verbs from _tidyr_. This is useful for collapsing address for geocoding. 
 
-```{r unite}
+```{r 02-Data-Wrangling-11-1}
 library(tidyr)
 dfa1<-dfa %>% unite ("new_address",City:State,sep = ",")
 dfa1
@@ -297,31 +326,65 @@ dfa1
 
 Using the data above, let's split the column address
 
-```{r separate}
+```{r 02-Data-Wrangling-12}
 library(tidyr)
-dfa2<-dfa %>% separate(addresses, c("City2", "State2"))
+dfa2<-dfa1 %>% separate(addresses, c("City2", "State2"))
 dfa2
 ```
 
 ### Factors
 
-There are several types of factors in R: ordered and not ordered. It is important to pay attention to how factors are coded. Sometimes, male is represented as 1 and female as 0. Sometimes, female is represented as 2. This discussion may seems trivial but a paper had been retracted in a high impact factor journal Jama because of miscoding of the trial assignment 1 and 2 rather than the assignment of 0 and 1. This error led to reversing the results with logistic regression [@pmid31593277]. This error led to report that an outpatient management program for chronic obstructive pulmonary disease resulted in fewer admissions. Below is an example which can occur when data is transformed into factor and back to number. Note that the coding goes from 0 and 1 to 2 and 1.
+There are several types of factors in R: ordered and not ordered. It is 
+important to pay attention to how factors are coded. Sometimes, male is represented as 1 and female as 0. Sometimes, female is represented as 2. This discussion may seems trivial but a paper had been retracted in a high impact factor journal Jama because of miscoding of the trial assignment 1 and 2 rather than the assignment of 0 and 1. This error led to reversing the results with logistic regression [@pmid31593277]. This error led to report that an outpatient management program for chronic obstructive pulmonary disease resulted in fewer admissions. Below is an example which can occur when data is transformed into factor and back to number. Note that the coding goes from 0 and 1 to 2 and 1.
 
 In certain analyses, the libraries prefer to use the dependent  or outcome variable as binary coding in numeric format eg logistic regression and random forest. The library _e1071_ for performing support vector machine prefers the outcome variable as factor.
 
-```{r factors}
+```{r 02-Data-Wrangling-13}
 library(Stat2Data)
 data("Leukemia") #treatment of leukemia
+
+Leukemia %>% dplyr::glimpse()
+```
+
+The variable Resp is now a factor with levels 0 and 1
+
+```{r 02-Data-Wrangling-13-1-1}
 Leukemia$Resp
 Leukemia$Response.factor<-as.factor(Leukemia$Resp)
-Leukemia$Response.factor
+head(Leukemia$Response.factor)
+```
+
+Note in the conversion back to numeric 'dummy' values, the data takes the form 1 and 2. This has changed the dummy values of 0 and 1. It is important to examine the data before running analysis.
+
+```{r 02-Data-Wrangling-13-2}
 Leukemia$Response.numeric<-as.numeric(Leukemia$Response.factor)
 Leukemia$Response.numeric
 ```
 
+For variables which are characters but considered as factors, it is necessary to convert to class character before converting to dummy values.
+
+```{r 02-Data-Wrangling-13-3}
+data("BreastCancer", package="mlbench")
+BreastCancer %>% glimpse()
+```
+
+The steps for conversion are illustrated below. Conversion of multiple columns 
+of factors and ordered factors can be done in one step using _lapply_ function. This will be described much further below. 
+
+```{r 02-Data-Wrangling-13-3-1}
+BreastCancer$Class<-as.character(BreastCancer$Class)
+BreastCancer$Class[BreastCancer$Class=="benign"]<-0
+BreastCancer$Class[BreastCancer$Class=="malignant"]<-1
+BreastCancer$Class<-as.numeric(BreastCancer$Class)
+head(BreastCancer$Class)
+
+```
+
+
+
 This illustration describes conversion of a continuous variable into orderly factors.
 
-```{r ordered factors}
+```{r 02-Data-Wrangling-13-4}
 library(Stat2Data)
 data("Leukemia") #treatment of leukemia
 #partition Age into 8 ordered factors
@@ -332,9 +395,10 @@ class(Leukemia$AgeCat)
 
 ### Multiple files
 
-Merging of files can be done using _dplyr_ to perform _inner_join_, _outer_join_, _left_join_ and _right_join_. Note that this can also be done in base R or using syntax of _data.table_. These files can be joined using  _%>%_ operator.
+Merging of files can be done using _dplyr_ to perform _inner_join_, 
+_outer_join_, _left_join_ and _right_join_. Note that this can also be done in base R or using syntax of _data.table_. These files can be joined using  _%>%_ operator.
 
-```{r Join}
+```{r 02-Data-Wrangling-14}
 DF1<-data.frame(ID=c(1,2,3),Age=c(20,30,40))
 DF2<-data.frame(ID=c(1,2,3),Sex=c(1,0,0))
 DF3<-data.frame(ID=c(1,2,3), Diabetes=c(1,1,0))
@@ -347,11 +411,17 @@ DF <-DF1 %>% left_join(DF2, by="ID") %>% left_join(DF3, by="ID")
 
 ### Pivot
 
-A variety of different expressions are used to describe data format such as wide and long formats. In some case the distinction between such formats is not clear. The verbs for performing these operations are _pivot_wide_, _pivot_long_. Again _data.table_ uses different verbs such as _cast_ and _melt_. In general, most regression analyses are performed with data in wide format. In this case each row represents a unique ID.  Longitudinal analyses are performed with data in long format. In this format, there are several rows with the same ID. In the next Chapter on Statistics, an example of data generated in wide format and coverted to long format using _plyr_. Here we will demonstrate the use of _tidyr_ to pivot loner or wider. 
+A variety of different expressions are used to describe data format such as wide and long formats. In some case the distinction between such formats is not 
+clear. The verbs for performing these operations are _pivot_wide_, _pivot_long_. Again _data.table_ uses different verbs such as _cast_ and _melt_. In general, most regression analyses are performed with data in wide format. In this case 
+each row represents a unique ID.  Longitudinal analyses are performed with data 
+in long format. In this format, there are several rows with the same ID. In the next Chapter on Statistics, an example of data generated in wide format and coverted to long format using _plyr_. Here we will demonstrate the use of 
+_tidyr_ to pivot loner or wider. 
 
-The best way to think about how data should be presented is that data is analyzed according to columns not rows. The data below is extracted from CDC COVID website. Details are given below under Web scraping on how this task was performed.
+The best way to think about how data should be presented is that data is 
+analyzed according to columns not rows. The data below is extracted from CDC 
+COVID website. Details are given below under Web scraping on how this task was performed.
 
-```{r Pivot}
+```{r 02-Data-Wrangling-15}
 library(dplyr)
 library(tidyr)
 library(stringr)
@@ -370,11 +440,12 @@ head(usa_long,6)
 
 ## Regular Expressions
 
-Here is a short tutorial on regular expression. We will begin using base R. This section is based on experience trying to clean a data frame containing many words used to describe one disease or one drug.
+Here is a short tutorial on regular expression. We will begin using base R. This section is based on experience trying to clean a data frame containing many 
+words used to describe one disease or one drug.
 
 ### base R
 
-```{r base-R-example}
+```{r 02-Data-Wrangling-16}
 #create example dataframe
 df<-data.frame(
   drug=c("valium 1mg","verapamil sr","betaloc zoc","tramadol","valium (diazepam)"),
@@ -382,9 +453,10 @@ df<-data.frame(
 df
 ```
 
-Now that we have a data frame, we can use pattern matching to replace part of phrase. This step can be done simply using _gsub_ command. First create a list so that the computer searches the phrases in the list.
+Now that we have a data frame, we can use pattern matching to replace part of phrase. This step can be done simply using _gsub_ command. First create a list 
+so that the computer searches the phrases in the list.
 
-```{r gsub}
+```{r 02-Data-Wrangling-16-1}
 #create list to remove phrase
 redun=c("1mg", "zoc", "sr")
 pat=paste0("\\b(",paste0(redun,collapse = "|"),")\\b")
@@ -397,9 +469,10 @@ df$infection1<-gsub(pat,"",df$infection)
 df$infection1
 ```
 
-This section deals with meta-characterers. Examples of meta-characters include $ . + * ? ^ () {} []. These meta-characters requires the double back slashes \\.
+This section deals with meta-characterers. Examples of meta-characters include 
+$ . + * ? ^ () {} []. These meta-characters requires the double back slashes \\.
 
-```{r metacharacter}
+```{r 02-Data-Wrangling-16-02}
 #create list to remove phrase
 redun=c("1mg", "zoc", "sr")
 pat=paste0("\\b(",paste0(redun, collapse = "|"),")\\b")   
@@ -413,7 +486,7 @@ df$drug2
 
 Back to our data frame df, we want to remove or change the different words accounting for pneumonia.
 
-```{r list}
+```{r 02-Data-Wrangling-16-3}
 redunc=c("\\.")
 redunc1=c("respiratory tract infection", "tracheobronchitis", "aspiration")
 pat=paste0("\\b(",paste0(redunc,collapse = "|"),")\\b")
@@ -427,7 +500,7 @@ df$infection2
 
 The following examples are taken from excel after conversion from pdf. In the process of conversion errors were introduced in the conversion from pdf to excel. A full list of the options available can be found at https://stringr.tidyverse.org/articles/regular-expressions.html
 
-```{r bracket}
+```{r 02-Data-Wrangling-17}
 library(stringr)
 #error introduced by double space 
 a<-c("8396 (7890 to 8920)","6 301 113(6 085 757 to 6 517 308)",
@@ -450,9 +523,10 @@ b<-str_replace(a,"\n","") %>%
 b
 ```
 
-Another example. This time the 2 numbers in the column are separated by a slash sign. Supposed you want to keep the denominator. The first remove the number before the slash sign. The _*_ metacharacter denotes the action occurs at the end.
+Another example. This time the 2 numbers in the column are separated by a slash sign. Supposed you want to keep the denominator. The first remove the number before the slash sign. The _*_ metacharacter denotes the action occurs at the 
+end.
 
-```{r slash}
+```{r 02-Data-Wrangling-18}
 df.d<-data.frame(seizure.rate=c("59/90", "90/100", "3/23"))
 df.d$seizure.number<-str_replace(df.d$seizure.rate,"[0-9]*","") 
 df.d$seizure.number
@@ -460,7 +534,7 @@ df.d$seizure.number
 
 Now combine with the next step to remove the slash sign. 
 
-```{r slash2}
+```{r 02-Data-Wrangling-18-1}
 #We used [0-9] to denote any number from 0 to 9. For text, one can use [A-Z].
 df.d$seizure.number<-str_replace(df.d$seizure.rate,"^[0-9]*","")%>%
   str_replace("/","\\")
@@ -469,14 +543,15 @@ df.d$seizure.number
 
 Removing the denominator requires a different approach. First remove the last number then the slash sign. 
 
-```{r slash3}
+```{r 02-Data-Wrangling-18-02}
 df.d$case<-str_replace(df.d$seizure.rate,"/[0-9]*"," ")
 df.d$case
 ```
 
-The example below has several words mixed in numeric vector columns. The words are a mixture of upper and lower cases. Note that "NA" is treated as a word character while _NA_ is treated as Not Available by R. This recognition is important as removing them requires different actions. Character "NA" can be removed by _str_replace_ while _NA_ requires _is.na_ operator. 
+The example below has several words mixed in numeric vector columns. The words 
+are a mixture of upper and lower cases. Note that "NA" is treated as a word character while _NA_ is treated as Not Available by R. This recognition is important as removing them requires different actions. Character "NA" can be removed by _str_replace_ while _NA_ requires _is.na_ operator. 
 
-```{r multiple words}
+```{r 02-Data-Wrangling-19}
 A<-c(1,2,3,"NA",4,"no COW now")
 B<-c(1,2,NA,4,"NA","check")
 C<-c(1,"not now",2,3, NA ,5)
@@ -503,16 +578,19 @@ D$A5<-str_to_lower(D$A) %>% str_replace("\\s","") %>%
 D$A6<-str_to_lower(D$A) %>% str_replace_all("\\s","") %>% 
     str_replace("[a-z]+","")
 
-#now combine into vector. Note the use of c to combine the vector and replace the comma with equal sign
+#now combine into vector. Note the use of c to combine the vector and replace 
+#the comma with equal sign
 D$A7<-str_to_lower(D$A) %>%
  str_replace_all(c("\\s"="","[a-z]+"=""))
 
 D
 ```
 
-The lessons from above can be combine in when creating data frame. The _mutate_if_ function enable multiple columns to be changed. One problem to handle adding multiple columns which contain _NA_ is the use of _rowSums_ and _dplyr::select_. These examples are illustrated below.
+The lessons from above can be combine in when creating data frame. The 
+_mutate_if_ function enable multiple columns to be changed. One problem to 
+handle adding multiple columns which contain _NA_ is the use of _rowSums_ and _dplyr::select_. These examples are illustrated below.
 
-```{r mutate}
+```{r 02-Data-Wrangling-20}
 #use the mutate function 
 
 E<-data.frame(A,B,C) %>%
@@ -533,23 +611,29 @@ E<-data.frame(A,B,C) %>%
 
 Sometimes, you may only want to keep the number and ignore the words in the column. This can be done using the _str_extract_ function.
 
-```{r extract}
+```{r 02-Data-Wrangling-21}
 
 df.e<-data.frame(disability=c("1 - No significant disability despite symptoms; able to carry out all usual duties and activities","5 - Severe disability, bedridden, incontinent and requiring constant nursing care and attention","
-1 - No significant disability despite symptoms; able to carry out all usual duties and activities"))
+1 - No significant disability despite symptoms; able to carry out all usual 
+duties and activities"))
 df.e$disability2<-str_extract(df.e$disability,"\\w") #extract number
 ```
 
 ## PDF to xcel
 
-Sometimes data from public government sites come in PDF form instead of excel. Conversion from pdf to excel or text can be difficult especially with special character eg Danish. There are several libraries for doing this: _pdftables_ (require API key) and _pdftools_. The example below uses _pdftools_. Documentation for _pdftools_ is available at https://docs.ropensci.org/pdftools/. The document is the 2018 Danish Stroke Registry report. The _tabulizer_ package is excellent for converting table data. However, _tabulizer_ package depends on _rJava_ and requires deft handling. 
+Sometimes data from public government sites come in PDF form instead of excel. Conversion from pdf to excel or text can be difficult especially with special character eg Danish. There are several libraries for doing this: _pdftables_ (require API key) and _pdftools_. The example below uses _pdftools_. 
+available at https://docs.ropensci.org/pdftools/. The document is the 2018 
+Danish Stroke Registry report. The _tabulizer_ package is excellent for 
+converting table data. However, _tabulizer_ package depends on _rJava_ and requires deft handling. 
 
-```{r pdf}
+```{r 02-Data-Wrangling-22}
 library(pdftools)
 txt<-pdf_text("./Data-Use/4669_dap_aarsrapport-2018_24062019final.pdf")
 cat(txt[17]) #browse data page 13+4 filler pages
 
-screenshot13<-pdf_render_page("./Data-Use/4669_dap_aarsrapport-2018_24062019final.pdf", page =17)
+screenshot13<-
+  pdf_render_page("./Data-Use/4669_dap_aarsrapport-2018_24062019final.pdf", 
+                  page =17)
 png::writePNG(screenshot13, "./Data-Use/Danish-Stroke-page13.png")
 
 knitr::include_graphics("./Data-Use/Danish-Stroke-page13.png")
@@ -558,9 +642,13 @@ knitr::include_graphics("./Data-Use/Danish-Stroke-page13.png")
 
 ### Scanned text or picture
 
-Importing data from scanned text will require use of Optical Character Recognition (OCR). The _tesseract_ library provides an R interface for OCR. In the example below, a picture is taken from same CDC website containing mortality data  (https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/04102020/nchs-data.html). The screenshot of this website was then cleaned in _paint_. The data is available in the Data-Use folder.
+Importing data from scanned text will require use of Optical Character 
+Recognition (OCR). The _tesseract_ library provides an R interface for OCR. In 
+the example below, a picture is taken from same CDC website containing mortality data (https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/04102020/
+nchs-data.html). The screenshot of this website was then cleaned in _paint_. 
+The data is available in the Data-Use folder.
 
-```{r tesseract}
+```{r 02-Data-Wrangling-23}
 library(tesseract)
 eng <- tesseract("eng") #english
 text <- tesseract::ocr("./Data-Use/Covid_PNG100420.png", engine = eng)
@@ -569,37 +657,48 @@ cat(text)
 
 ## Web scraping
 
-The readers may ask why web scraping for healthcare. A pertinent example related to COVID-19 data is provided below. The library _rvest_ is helpful at scraping data from an internet page. The _rvest_ library assumes that web contents have xml document-tree representation. The different options available for web scraping with _rvest_ are available at the website https://rvest.tidyverse.org/reference/. The user can use CSS selectors to scrape content. The library _Rselenium_ is also useful for web scraping. For dynamic web page, the library _CasperJS_ library does a better job especially if the data contain embedded java script. 
+The readers may ask why web scraping for healthcare. A pertinent example related to COVID-19 data is provided below. The library _rvest_ is helpful at scraping data from an internet page. The _rvest_ library assumes that web contents have 
+xml document-tree representation. The different options available for web 
+scraping with _rvest_ are available at the website https://rvest.tidyverse.org/reference/. The user can use CSS selectors to scrape content. The library _Rselenium_ is also useful for web scraping. For dynamic 
+web page, the library _CasperJS_ library does a better job especially if the 
+data contain embedded java script. 
 
-The library _cdccovidview_ provides access to the CDC website on COVID-19. In the example below, we will try to this manually. Data from CDC website on COVID-19 is downloaded, cleaned and saved in csv format. It is important to pay attention to the data. The first row contains header and is removed. There are several columns with commas. These commas can be removed using the exercises above. Further the data is updated on weekly basis. As such the data needs to be converted into a date time format using _lubridate_. 
+The library _cdccovidview_ provides access to the CDC website on COVID-19. In 
+the example below, we will try to this manually. Data from CDC website on 
+COVID-19 is downloaded, cleaned and saved in csv format. It is important to pay attention to the data. The first row contains header and is removed. There are several columns with commas. These commas can be removed using the exercises above. Further the data is updated on weekly basis. As such the data needs to be converted into a date time format using _lubridate_. 
 
-```{r scrape}
+```{r 02-Data-Wrangling-24}
 library(rvest)
 library(tidyverse)
 #assign handle to web page accessed 12/4/20
-cdc<-read_html("https://www.cdc.gov/coronavirus/2019-ncov/covid-data/covidview/04102020/nchs-data.html")
+#cdc<-read_html("https://www.cdc.gov/coronavirus/2019-ncov/covid-data/
+#               covidview/04102020/nchs-data.html")
 # scrape all div tags
-html_tag <- cdc %>% html_nodes("div")
+#html_tag <- cdc %>% html_nodes("div")
 # scrape header h1 tags
-html_list<-html_tag %>% html_nodes("h1") %>% html_text()
+#html_list<-html_tag %>% html_nodes("h1") %>% html_text()
 #there is only one table on this web page
-Table1<- cdc %>% html_node("table") %>% html_table(fill = TRUE)
+#Table1<- cdc %>% html_node("table") %>% html_table(fill = TRUE)
 #Table1 has a header row
-Table1<-Table1[-1,]
+#Table1<-Table1[-1,]
 #The data in the Total Deaths column has a comma 
-Table1$Total.Deaths<-as.numeric(gsub(",","",Table1$`Total Deaths`))
+#Table1$Total.Deaths<-as.numeric(gsub(",","",Table1$`Total Deaths`))
 #now combine the year and week column to Date
-Table1$Date<-lubridate::parse_date_time(paste(Table1$Year, Table1$Week, 'Mon', sep="/"),'Y/W/a')
+#Table1$Date<-lubridate::parse_date_time(paste(Table1$Year, Table1$Week, 'Mon', sep="/"),'Y/W/a')
 #there are still commas remaining in some columns. This is a useful exercise for the reader. A solution is provided in the next example.  
 #write.csv(Table1,file="./Data-Use/Covid_Table100420.csv")
 ```
 
-The next example is from the CDC COVID-19 website. It poses a different challenges as there are several columns with the same names. In this case we will rename the column by index. There are several columns containing commas. Rather than removing column by column we will write a function with lapply to do it over the table. the apply function returns a matrix whereas lapply returns a dataframe. There is one column containing percentage enclosed in a bracket. This can be removed using the example above on metacharacter ie using doule back slash in front of bracket and again at close of bracket.
+The next example is from the CDC COVID-19 website. It poses a different 
+challenges as there are several columns with the same names. In this case we 
+will rename the column by index. There are several columns containing commas. Rather than removing column by column we will write a function with lapply to do it over the table. the apply function returns a matrix whereas lapply returns a dataframe. There is one column containing percentage enclosed in a bracket. This can be removed using the example above on metacharacter ie using doule back slash in front of bracket and again at close of bracket.
 
-```{r covid-us}
+```{r 02-Data-Wrangling-25}
 library(rvest)
 library(tidyverse)
-cdc<-read_html("https://www.cdc.gov/mmwr/volumes/69/wr/mm6915e4.htm?s_cid=mm6915e4_w")
+cdc<-
+read_html("https://www.cdc.gov/mmwr/volumes/69/wr/mm6915e4.htm?s_cid=mm6915e4_w")
+
 # scrape all div tags
 html_tag <- cdc %>% html_nodes("div")
 # scrape header h1 tags
@@ -626,7 +725,7 @@ Table2<-as.data.frame(lapply(Table2, function(x)
 
 This section provides a brief introduction to manipulating nifti files.
 
-```{r nifti}
+```{r 02-Data-Wrangling-26}
 library(oro.nifti)
 mca<-readNIfTI("./Data-Use/mca_notpa.nii.gz", reorient = FALSE) 
 print(mca)
@@ -642,7 +741,7 @@ image(mca[,,35])
 
 These arrays of medical images should be treated no differently from any other arrays. The imaging data are stored as arrays within the _.Data_ slot in nifti. Data are stored as rows, columns and slices. Data can be subset using the square bracket. The image is referred to x (right to left), y (front to back), z (superior to inferior).
 
-```{r image array}
+```{r 02-Data-Wrangling-26-1}
 library(oro.nifti)
 #extract data as array using @ function
 img<-readNIfTI("./Data-Use/mca_notpa.nii.gz", reorient = FALSE) 
@@ -668,7 +767,11 @@ DWIsplit<-function(D) {
   b1000k<-k[,,,2] #dim(b1000k) [1] 384 384  32
   writeNIfTI(b1000k,"b1000")
 }
+```
 
+Measurement of volume requires knowing dimensions of voxel.
+
+```{r 2-Data-Wrangling-26-1-1}
 #measure volume
 #A="Pt8_Flair_seg_VOI_t0.nii"
 
@@ -679,14 +782,19 @@ VoxelDim<-function(A){
 Volume<-sum(img>.5)*VoxDim[2]*VoxDim[3]*VoxDim[4]/1000
 Volume
 }
+```
 
 
-#write image to file
-#writeNIfTI(img2, "tt")
-#unsigned angle between 2 vectors k and k1
+Find unsigned angle between 2 vectors k and k1
+
+```{r 2-Data-Wrangling-26-1-2}
 
 Morpho::angle.calc(k,k1)
+```
 
+Determine centre of gravity of an object.
+
+```{r 2-Data-Wrangling-26-1-3}
 #centre of gravity
 neurobase::cog(img)
 ```
@@ -695,7 +803,7 @@ neurobase::cog(img)
 
 This is an illustration of simple operation such as addition. It can be extended to multiple files.
 
-```{r math nifti}
+```{r 2-Data-Wrangling-26-2}
 #stack arrays
 k2<-cbind(k,k1)
 dim(k2) ### [1] 902629      2
@@ -714,7 +822,7 @@ neurobase::ortho2(k3)
 
 This example uses 25 files. Rather than open one file at a time use list and pattern matching.
 
-```{r average nifti}
+```{r 02-Data-Wrangling-26-3, warning=F}
 library(oro.nifti)
 library(abind)
 library(CHNOSZ)
@@ -751,9 +859,9 @@ pca_mca<-prcomp(scale(m.listarray))
 
 ```
 
-One way of handling imaging data for multivariate analysis is to flatten the image. This can be done by using _as.vector_ function.
+One way of handling imaging data for multivariate analysis is to flatten the image. 
 
-```{r flatten 3D}
+```{r 02-Data-Wrangling-26-4, warning=F}
 #flatten 3D
 niivector = as.vector(img[,,])
 
@@ -781,9 +889,10 @@ mca.pca<-prcomp(newmcaarray, center = T, scale. = T)
 
 ### tar file
 
-Image files can be large and are often stored as tar files. The _tar_ (tgz file), _untar_, _zip_ (gz file) and _unzip_ function are from the _utils_ library. The _readNIfTI_ call can open gz file without the need to call _unzip_ function.
+Image files can be large and are often stored as tar files. The _tar_ 
+(tgz file), _untar_, _zip_ (gz file) and _unzip_ function are from the _utils_ library. The _readNIfTI_ call can open gz file without the need to call _unzip_ function.
 
-```{r tar file}
+```{r 02-Data-Wrangling-26-5}
 colin_1mm<-untar("./Data-Use/colin_1mm.tgz")
 colinIm<-readNIfTI("colin_1mm") #1 x 1 x 1
 class(colinIm)
@@ -801,7 +910,7 @@ neurobase::ortho2(epi_t2)
 
 There are many different libraries for performing registration.
 
-```{r registration}
+```{r 02-Data-Wrangling-26-6}
 library(RNiftyReg)
 #example from RNiftyReg
 #source <- readNifti(system.file("extdata", "epi_t2.nii.gz", package="RNiftyReg"))
@@ -838,7 +947,7 @@ ica1000.rescale<-rescale(ica1000,c(2,2,2))
 
 Label a parcellated region in AAL atlas
 
-```{r label atlas}
+```{r 02-Data-Wrangling-26-7}
 library(rgl)
 library(misc3d)
 library(MNITemplate)

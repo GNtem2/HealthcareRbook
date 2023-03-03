@@ -3,7 +3,7 @@
 ## Discrete Event Simulations
 The example below is a based on examples provided in the _simmer_ website.
 
-```{r simmer}
+```{r 08-operational-research-1}
 library(simmer)
 library(parallel)
 library(simmer.plot)
@@ -46,7 +46,7 @@ plot(env,what="arrivals",metric="flow_time")
 
 There are several different libraries useful for linear programming. The _lpSolve_ library is used here as illustration.
 
-```{r Linear Pogramming}
+```{r 08-operational-research-2}
 library(lpSolve)
 
 #solve using linear programming
@@ -105,7 +105,7 @@ opt$solution
   
 ```
 #Estimate for day (Value of objective function at optimal point)
-```{r echo=FALSE, message=FALSE}
+```{r 08-operational-research-2-1, echo=FALSE, message=FALSE}
 opt$objval
 
 #Urgent cases estimate
@@ -117,7 +117,7 @@ sunday <- 2
 
 #Estimate EEG per month based on staff EFT- only 3.5 of 5.7
 
-```{r echo=FALSE, message=FALSE}
+```{r 08-operational-research-2-2, echo=FALSE, message=FALSE}
 estimate_week <- 5*opt$objval + saturday + sunday
 estimate_month <- 4*estimate_week
 estimate_month
@@ -128,7 +128,7 @@ estimate_month
 The median number of hours per fortnight is 127 + 8 (for urgent EEG)
 The median number of sessions is 36 + 4 for weekend
 
-```{r Session}
+```{r 08-operational-research-2-3}
 t=c(189.9370, 168.4725, 186.1128, 194.3047, 193.2593, 184.1915, 174.7920, 176.8964, 204.1324, 190.5459, 187.4211, 181.3592, 188.0941, 173.4730, 183.4212, 181.8803, 197.2092, 183.0857, 174.7203, 149.6084, 178.6238, 178.2982, 179.9899, 180.5452, 165.4464, 175.8635, 188.0470, 187.1038, 176.0725, 189.5796, 184.8708, 197.6775, 179.7429, 184.8719, 174.9163, 194.0854, 178.4370, 189.0127, 191.6685, 168.9936, 170.7558, 182.9075, 173.2931, 161.7117, 166.2627, 176.6619, 187.4424, 196.0481, 170.1041, 201.6837, 206.3890, 183.1897, 187.7450, 170.2805, 200.0915, 172.9868, 179.6910, 189.4723, 190.2622, 154.0683, 191.1630, 187.4863, 177.4675, 200.0806)
 
 num_sessions=t/5
@@ -151,7 +151,7 @@ text(135, 15, paste0("Neurologist Hours=", " " , round(median(neurologists_h))))
 Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19 in 2020. This forecast is an example and is not meant to be used in practice as mortality from COVID depends on the number of factors including infected cases, age, socioeconomic group, and comorbidity. 
 
 
-```{r Forecasting}
+```{r 08-operational-research-3}
 library(tidyverse)
 library(prophet)
 library(hrbrthemes)
@@ -202,7 +202,7 @@ Customer churns or turnover is an issue of interest in marketing. The corollary 
 
 ## Process mapping
 
-```{r mermaid}
+```{r 08-operational-research-4}
 library(DiagrammeR)
 a.plot<-mermaid("
         graph TB
@@ -236,7 +236,7 @@ a.plot<-mermaid("
 a.plot
 ```
 
-```{r bupaR}
+```{r 08-operational-research-5}
 library(bupaR)
 ```
 
@@ -246,7 +246,7 @@ library(bupaR)
 
 ### Cost
 
-```{r Hesim Cost}
+```{r 08-operational-research-6}
 
 library("hesim")
 library("data.table")
@@ -274,7 +274,7 @@ print(hesim_dat)
 
 Data from WHO on mortality rate can be extracted directly from WHO or by calling _get_who_mr_ in _heemod_ library.
 
-```{r heemod}
+```{r 08-operational-research-7}
 
 library(heemod)
 
@@ -282,7 +282,7 @@ library(heemod)
 
 There are several data in BCEA library.
 
-```{r bcea}
+```{r 08-operational-research-8}
 library(BCEA)
 
 #use Vaccine data from BCEA

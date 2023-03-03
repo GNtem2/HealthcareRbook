@@ -6,9 +6,10 @@ This section is not intended as a textbook on statistics. Rather it demonstrates
 
 ### Parametric tests
 
-T-test is the workhorse for comparing if 2 datasets are have the same distribution. Performing t-test in R requires data from 2 columns: one containing the variables for comparison and one to label the group. There are different forms of t-test depending on whether the two samples are paired or unpaired.  In general, the analysis takes the form of $t=\frac{\mu_1 - \mu_2}{variance}$. It is recommended to check the distribution of the data by using histogram. For this exercise, we will use the simulated data from ECR trials. The grouping variable is the trial assignment. 
+T-test is the workhorse for comparing if 2 datasets are have the same distribution. Performing t-test in R requires data from 2 columns: one 
+containing the variables for comparison and one to label the group. There are different forms of t-test depending on whether the two samples are paired or unpaired.  In general, the analysis takes the form of $t=\frac{\mu_1 - \mu_2}{variance}$. It is recommended to check the distribution of the data by using histogram. For this exercise, we will use the simulated data from ECR trials. The grouping variable is the trial assignment. 
 
-```{r eval=FALSE}
+```{r 03-Statistics-1}
 #comparison of early neurological recovery (ENI) by tral (T)
 dtTrial<-read.csv("./Data-Use/dtTrial_simulated.csv")
 t.test(dtTrial$ENI~dtTrial$T)
@@ -18,13 +19,15 @@ t.test(dtTrial$ENI~dtTrial$T)
 
 Chi-squared and Fisher-exact tests can be done by using the _table_ function for setting up the count data into 2 x 2 contingency table or confusion matrix. The formula for the Chi-squared test takes on a familiar form $\chi^2=\frac{(observed-expected)^2}{expected}$. In this example we will use the data above.
 
-```{r eval=FALSE}
+```{r 03-Statistics-1-1}
 table(dtTrial$HT,dtTrial$T)
 chisq.test(dtTrial$HT,dtTrial$T)
 ```
-The Wilcoxon rank sum test is performed with continuous data organised in the same way as the t-test. There are several different approaches to performing Wilcoxon rank sum test. The _coin_ package allows handling of ties.
 
-```{r eval=FALSE}
+The Wilcoxon rank sum test is performed with continuous data organised in the 
+same way as the t-test. There are several different approaches to performing Wilcoxon rank sum test. The _coin_ package allows handling of ties.
+
+```{r 03-Statistics-2}
 library(coin)
 wilcox.test(ENI~T, data=dtTrial)
 ```
@@ -35,29 +38,37 @@ There are many different form of regression methods. A key principle is that the
 
 ### Brief review of matrix
 
-A vector is has length one. A matrix is an ordered array in 2 dimensions. A tensor is an ordered array in 3 dimensions. 
+A vector is has length one. A matrix is an ordered array in 2 dimensions. A 
+tensor is an ordered array in 3 dimensions. 
 
-A matrix in which the columns are linearly related are said to be rank deficient. The rank of a given matrix is an expression of the number of linearly independent columns of that matrix. Given that row rank and column rank are equivalent, rank deficiency of a matrix is expressed as the difference between the lesser of the number of rows and columns, and the rank of the matrix. A matrix with rank of 1 is likely to be linearly related. 
+A matrix in which the columns are linearly related are said to be rank 
+deficient. The rank of a given matrix is an expression of the number of linearly independent columns of that matrix. Given that row rank and column rank are equivalent, rank deficiency of a matrix is expressed as the difference between 
+the lesser of the number of rows and columns, and the rank of the matrix. 
+A matrix with rank of 1 is likely to be linearly related. 
 
 ### Linear (least square) regression
 
-Least square regression uses the geometric properties of Euclidean geometry to identify the line of best. The sum of squares $SSE$ is $\sum(observed-expected)^2$. The $R^2$ is a measure of the fit of the model. It is given by $1-\frac{SS_(res)}{SS_(total)}$. Low $R^2$ indicates a poorly fitted model and high $R^2$ indicates excellent fitting. The assumption here is that the outcome variable is a continuous variable.
+Least square regression uses the geometric properties of Euclidean geometry to identify the line of best. The sum of squares $SSE$ is $\sum(observed-expected)^2$. The $R^2$ is a measure of the fit of the model. It 
+is given by $1-\frac{SS_(res)}{SS_(total)}$. Low $R^2$ indicates a poorly fitted model and high $R^2$ indicates excellent fitting. The assumption here is that 
+the outcome variable is a continuous variable.
 
-```{r linear}
+```{r 03-Statistics-3, warning=F}
 library(ggplot2)
 load("./Data-Use/world_stroke.Rda")
 
-ggplot(world_sfdf, aes(x=LifeExpectancy,y=MeanLifetimeRisk))+geom_smooth(method="lm", aes(Group=Income, linetype=Income))+geom_point()+xlab("Life Expectancy")
+ggplot(world_sfdf, aes(x=LifeExpectancy,y=MeanLifetimeRisk))+
+  geom_smooth(method="lm", aes(Group=Income, linetype=Income))+geom_point()+xlab("Life Expectancy")
 ```
 
 ### Logistic regression
 
-For outcome that are binary in nature such as yes or no, then least square regression is not appropriate. There are no close form solution for this analysis and a numerical approach using maximum likelihood approach is needed. When examining the results of logistic regression one is often enchanted by the large odds ratio. It is important to look at the metrics of model calibration (discussed below). A clue to a poorly calibrated model is the observation that the width of the confidence interval for odds ratio is wide.
+For outcome that are binary in nature such as yes or no, then least square regression is not appropriate. There are no close form solution for this 
+analysis and a numerical approach using maximum likelihood approach is needed. When examining the results of logistic regression one is often enchanted by the large odds ratio. It is important to look at the metrics of model calibration 
+(discussed below). A clue to a poorly calibrated model is the observation that 
+the width of the confidence interval for odds ratio is wide.
 
-The _glm_ function does not provide pseudoR2 value. One way to obtain it is to perform the regression for the intercept only model and one for the final model then pseudoR2 is given by _1-L1/L0_. The _rms_ package provide pseudoR2, Brier score and C-statistics. The importance of the covariates can be explained using Shapley values, shown bvelow.
 
-
-```{r Logistic}
+```{r 03-Statistics-4, warning=F}
 
 #glm
 data("BreastCancer",package = "mlbench")
@@ -70,11 +81,6 @@ DCa<-glm(Class~., data=BreastCancer2)
 
 summary(DCa)
 
-#lrm
-library(rms)
-
-DCa_rms<-lrm(Class~., data=BreastCancer2)
-DCa_rms
 
 ```
 
@@ -82,64 +88,123 @@ DCa_rms
 
 A high _$R^2$ suggests that the linear regression model is well calibrated. This metric is often not displayed but should be sought when interpreting the data.
 
-The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016].
+The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with 
+calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016].
 
-Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high generalized R2 value suggests a well-calibrated regression model.
+Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well 
+calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high 
+generalized $R^2$ value suggests a well-calibrated regression model. Running regression through the _rms_ or _PredictABEL_ library provide these results. The  generalized $R^2$ can be obtained manually from base R by running an intercept only model and again with covariates. It is given by $1-\frac{L1}{L0}$. 
+
+```{r 03-Statistics-4-1, warning=F}
+
+#lrm on logistic regression analysis for Breast Cancer
+library(rms)
+DCa_rms<-lrm(Class~., data=BreastCancer2)
+DCa_rms
+```
+
 
 #### Measuring Improvement in Regression Models 
 
-The net reclassification improvement  (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI were performed using _PredictABEL_ . [@pmid28579970][@pmid26796056]
+The net reclassification improvement  (NRI) and integrated discrimination improvement (IDI) have been proposed as more sensitive metrics of improvement in model discrimination.The NRI can be considered as a percentage reclassiﬁcation 
+for the risk categories and the IDI is the mean difference in predicted probabilities between 2 models (constructed from cases with disease and without disease). The NRI and IDI scores are expressed as fractions and can be converted to percentage by multiplying 100.The continuous NRI and IDI can be performed 
+using _PredictABEL_ [@pmid28579970][@pmid26796056].
 
 #### Shapley value
 
-We can use ideas from game theory relating to fair distribution of proﬁt in coalition games; the coalition (co-operative) game in this case can be interpreted as contribution of the covariates to the model. The Shapley value regression method calculates the marginal contribution of each covariate as the average of all permutations of the coalition of the covariates containing the covariate of interest minus the coalition without the covariate of interest. The advantage of this approach is that it can handle multicollinearity (relatedness) among the covariates.
+We can use ideas from game theory relating to fair distribution of proﬁt in coalition games; the coalition (co-operative) game in this case can be 
+interpreted as contribution of the covariates to the model. The Shapley value regression method calculates the marginal contribution of each covariate as the average of all permutations of the coalition of the covariates containing the covariate of interest minus the coalition without the covariate of interest. The advantage of this approach is that it can handle multicollinearity (relatedness) among the covariates.
 
-From the logistic regression above cell thickness and cromatin have the highest coeffient and lowest p value. By contrast the Shapley values show that cell shape and marg adhesion make the largest impact on the model.
+The feature importance is used to assess the impact of the features on the 
+model's decision
 
-```{r Shapley regression}
+```{r 03-Statistics-5, warning=F}
 
 #this section takes the output from logistic regression above.
-
 library(iml)
 X = BreastCancer2[which(names(BreastCancer2) != "Class")]
 predictor = Predictor$new(DCa, data = X, y = BreastCancer2$Class)
 imp = FeatureImp$new(predictor, loss = "mae")
 plot(imp)
+```
 
-#plot interactions
-interact <- Interaction$new(predictor)
-plot(interact)
+From the logistic regression above cell thickness and cromatin have the highest coefficient and lowest p value. This is the same as feature importance. By contrast the Shapley values show that cell shape and marg adhesion make the largest impact on the model when considering the contribution to the model after considering all the contribution by different coalitions.
 
+```{r 03-Statistics-5-1}
 #explain with game theory
 shapley <- Shapley$new(predictor, x.interest = X[1, ])
 shapley$plot()
 
 ```
 
+#### ICE
+
+The individual conditional expectation (ICE) curves is the plot of the 
+expectation fof the predictive value for each observation at the unique value 
+for the feature.
+
+```{r 03-Statistics-5-2}
+
+#feature is the covariate of interest
+par(mfrow=c(1,2))
+eff_thick <- FeatureEffect$new(predictor, 
+                         feature = "Cl.thickness", 
+                         method = "ice",
+                         center.at = 0)
+
+plot(eff_thick)
+
+
+
+
+```
+
+
 ##### Interaction 
 
-When describing interaction terms it is recommended that the results be expressed as β coefficients rather than as odds ratio. 
+Interactions is plotted here using lollipop bar. The _ggalt_ library can be used to create this type of plot with _geom_lollipop_. The strength of interaction is measured using Friedman's H-statistics. The H-statistics ranges from 0 to 1 with 
+1 indicating the overall interaction strength. In the case with Breast Cancer data, the interaction strength is low. 
+
+When describing interaction terms it is recommended that the results be 
+expressed as β coefficients rather than as odds ratio.
+
+```{r 03-Statistics-5-3}
+#plot interactions
+interact <- Interaction$new(predictor)
+plot(interact)
+```
+
+
+
+
+
+ 
 
 #### Propensity matching
 
 A common misconception is that the multiple regression adjust for imbalance in covariates. This issue was observed in the pivotal NINDS alteplase trial. The results of the trial has since been accepted with re-analysis of this trial.
 
-Propensity matchine is an important technique to adjust for imbalance in covariates between 2 arms. There are concerns with mis-use of this technique such as difference in placebo arms from multiple sclerosis trials [@10.1001/jamaneurol.2020.0678]. It is proposed that this technique should be used only if all the confounders are measurable. This situation may not be satisfied if the data were accrued at different period, in different continent etc.
+Propensity matching is an important technique to adjust for imbalance in covariates between 2 arms. There are concerns with mis-use of this technique 
+such as difference in placebo arms from multiple sclerosis trials [@10.1001/jamaneurol.2020.0678]. It is proposed that this technique should be 
+used only if all the confounders are measurable. This situation may not be satisfied if the data were accrued at different period, in different continent etc.
 
 ## Special types of regression
 
 ### Ordinal regression
 
-Ordinal regression is appropriate when the outcome variable is in the form of ordered categorical values. For example, the Rankin scale of disability is bounded between the values of 0 and 6. This type of analysis uses the proportional odds model and the requirement for this model is stringent. When examining results of ordinal regression check that the authors provide this metric, the Brant test. The Brant test assesses the parallel regression assumption. Ordinal regression is performed using _polr_ function in _MASS_ library. The Brant test is available in the _Brant_ library.
+Ordinal regression is appropriate when the outcome variable is in the form of ordered categorical values. For example, the Rankin scale of disability is 
+bounded between the values of 0 and 6. This type of analysis uses the 
+proportional odds model and the requirement for this model is stringent. When examining results of ordinal regression check that the authors provide this metric, the Brant test. The Brant test assesses the parallel regression assumption. Ordinal regression is performed using _polr_ function in _MASS_ library. The Brant test is available in the _Brant_ library.
 
 ### Survival analysis
 
-Survival analysis is useful when dealing with time to event data. The Cox model assesses the hazard of outcome between two groups. The assumption of this model is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested [@10.1093/biomet/81.3.515]
+Survival analysis is useful when dealing with time to event data. The Cox model assesses the hazard of outcome between two groups. The assumption of this model 
+is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested [@10.1093/biomet/81.3.515]. In the section on clinical trial we illustrate how the results can be converted to numbers needed to treat.
 
-```{r Survival analysis}
+```{r 03-Statistics-6}
 
 library(survival)
-
+library(survminer)
 #data from survival package on NCCTG lung cancer trial
 #https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
 data(cancer, package="survival")
@@ -152,11 +217,35 @@ sfit<- coxph(Surv(time, status) ~ age+sex+ph.ecog, data = cancer)
 summary(sfit)
 ```
 
+Test proportional hazard assumption. The finding below shows that the covariates do not violate proportional hazard assumption. 
+
+```{r 03-Statistics-6-1}
+cox.zph(sfit)
+```
+
+Plot fit of survival model
+
+```{r 03-Statistics-6-2}
+ggcoxdiagnostics(sfit, type = "deviance", 
+ ox.scale = "linear.predictions")
+```
+
+Forest plot of outcome from survival analysis
+
+```{r 03-Statistics-6-3}
+ggforest(sfit)
+
+ 
+
+```
+
 ### Quantile regression
 
-Least spare regression is appropriate when the data is homoscedascity or the error term remain constant. This can be seen as the data varies around the fitted line. Homoscedascity implies that the data is homogenous. Quantile regression is appropriate when the distribution of the data is non-normal and it is more appropriate to look at the conditional median of the dependent variable. There are several libraries for this task _quantreg_ and bayesian libraries. In the example below, the life time risk of stroke is regresed against life expectancy using lest square and quantile regression. 
+Least spare regression is appropriate when the data is homoscedascity or the 
+error term remain constant. This can be seen as the data varies around the 
+fitted line. Homoscedascity implies that the data is homogenous. Quantile regression is appropriate when the distribution of the data is non-normal and it is more appropriate to look at the conditional median of the dependent variable. There are several libraries for this task _quantreg_ and Bayesian libraries. In the example below, the life time risk of stroke is regressed against life expectancy using lest square and quantile regression. 
 
-```{r Quantile}
+```{r 03-Statistics-7}
 library(quantreg)
 library(ggplot2)
 
@@ -182,56 +271,24 @@ ggplot(world_sfdf,  aes(x=LifeExpectancy,y=MeanLifetimeRisk))+
 #annotate("text",x=60, y=27, label=paste0("least square =",                        round(lsfit_sum$coefficients[1],2) ,"+", round(lsfit_sum$coefficients[2],2),"x ","Life Expectancy"),color="red")+ annotate("text",x=75, y=12,label=paste0("quantile =",round(rqfit_sum$coefficients[1],2), " + ", round(rqfit_sum$coefficients[2],2)," x ","Life Expectancy"),color="blue")
 ```
 
-### Penalised regression
-
-We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) [@pmid23838753]. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
-
-```{r eval=FALSE}
-library(stepPlr)
-
-```
- 
 
 ##### Non-negative regression
 In certain situations, it is necessary to constrain the analysis so that the regression coefifcients are non-negative. For example, when regressing brain regions against infarct volume, there is no reason believe that a negative coefficient attributable to a brain region is possible. Non-negative regression can be performed in R using _nnls_. 
 
-```{r eval=FALSE}
-library(nnls)
-```
 
 ### Poisson regression
 
-Poisson regression is used when dealing with number of event over time or distance such as number of new admissions or new cases of hepatitis or TIA over time. An assumption of the Poisson distribution is that the mean & lambda; and variance &lambda; are the same. 
+Poisson regression is used when dealing with number of event over time or 
+distance such as number of new admissions or new cases of hepatitis or TIA over time. An assumption of the Poisson distribution is that the mean & lambda; and variance &lambda; are the same. 
 
 A special case of Poisson regression is the negative binomial regression. This latter method is used when the variance is greater than the mean pf the data or over-dispersed data. Negative binomial regression can be applied to number of 'failure' event over time. Here 'failure' has a lose definition and can be stroke recurrence after TIA or cirrhosis after hepatitis C infection. 
 
 Zero-inflated data occurs when there is an abundance of zeroes in the data (true and excess zeroes).
 
-### MARS
-
-Multivariate adaptive regression spline (MARS) is a non-linear regression method that fits a set of splines (hinge functions) to each of the predictor variables i.e. different hinge function for different variables [@pmid8548103]. As such, the method can be used to plot the relationship between each variable and outcome. Use in this way, the presence of any threshold effect on the predictors can be graphically visualized. The MARS method is implemented in R programming environment in the _earth_ package.
-
 ### Conditional logistic regression
 
-### Mixed modelling
-In a standard regression analysis, the data is assumed to be random. Mixed models assume that there are more than one source of random variability in the data. This is expressed in terms of fixed and random effects. Mixed modeling is a useful technique for handling multilevel or group data. The intraclass correlation (ICC) is used to determine if a multilevel analysis is necessary ie if the infarct volume varies among the surgeon or not. ICC is the between group variance to the total variance. If the ICC approaches zero then a simple regression model would suffice.
-
-There are several R packages for performing mixed modling such as _lme4_. Mixed modeling in meta-regression is illustrated in the section on Metaanalysis. An example of mixed model using Bayesian approach with INLA is provided in the [Bayesian section](INLA, Stan and BUGS)
-
-#### Random intercept model
-
-In a random intercept  or fixed slope multilevel model the slope or gradient of the fitted lines are assumed to be parallel to each other and the intercept varies for different groups.
-
-
-#### Random slope model
-
-In a random slope model, the slopes are not paralleled 
-
-
-### Trajectory modelling
-Trajectory analysis attempts to group the behaviour of the subject of interest over time. There are several different approaches to trajectory analysis: data in raw form or after orthonal transformation of the data in principal component analysis. Trajectory analysis is different from mixed modelling in that it examines group behaviour. The output of trajectory analysis is only the beginning of the modeling analysis. For example, the analysis may identify that there are 3 groups. These groups are labelled as group A, B and C. The next step would be to use the results in a modelling analysis of your choice.
-
-A useful library for performing trajectory analysis is _akmedoids_. This library anchored the analysis around the median value. The analysis requires the data in long format. The _traj_ library is similar to the one in _Stata_. It uses several steps including factor and cluster analyses to idetify groups. The _traj_ model prefers data in wide format.
+Conditional logistical regression model should be used when the aim is to 
+compare pair of objects from the same patient. Examples include left and right arms or left and right carotid arteries. This method is available from _clogit_ in _survival_. 
 
 ### Multinomial modelling
 
@@ -239,20 +296,23 @@ Multinomial modelling is used when the outcome categorical variables are not ord
 
 ## Sample size estimation
 
-Clinicians are often frustrated about sample size and power estimation for a study, grant or clinical trial. This aspect is scrutinised by ethics committee and in peer review process for journals. Luckily, R provides several packages for sample size amd power estimation: _pwr_ library. Cohen has written reference textbook on this subject [@COHEN1977179]. 
+Clinicians are often frustrated about sample size and power estimation for a study, grant or clinical trial. This aspect is scrutinised by ethics committee 
+and in peer review process for journals. Luckily, R provides several packages 
+for sample size amd power estimation: _pwr_ library. Cohen has written reference textbook on this subject [@COHEN1977179]. 
 
 ### Proportion
 
-```{r sample ttest}
+```{r 03-Statistics-8}
 library(pwr)
 #ttest-d is effect size 
 #d = )mean group1 -mean group2)/variance
 pwr.t.test(n=300,d=0.2,sig.level=.05,alternative="greater") 
 ```
 
-We provided an example below for generating power of clinical trial. Examples are taken from a paper on sample size estimation for phase II trials [@pmid16931782].
+We provided an example below for generating power of clinical trial. Examples 
+are taken from a paper on sample size estimation for phase II trials [@pmid16931782].
 
-```{r proportion}
+```{r 03-Statistics-9}
 library(pwr)
 #h is effect size. effect size of 0.5 is very large 
 #sample size
@@ -262,9 +322,9 @@ pwr.2p.test(h=0.5,n=50,sig.level=0.05,alternative="two.sided")
 pwr.2p.test(h=0.1,n=50,sig.level=0.05,alternative="two.sided")
 ```
 
-The ouput of the sample size calculation can be put into a table or plot.
+The output of the sample size calculation can be put into a table or plot.
 
-```{r sample plot}
+```{r 03-Statistics-10}
 library(pwr)
 #pwr.2p.test(h=0.3,n=80,sig.level=0.05,alternative="two.sided")
 h <- seq(.1,.5,.1) #from 0.1 to 0.3 by 0.05
@@ -305,9 +365,13 @@ legend("topright", title="Power", as.character(p),
 
 #### Non-inferiority
 
-Non-inferiority trials may offer information in a way that a traditional superiority design do not. The design may be interested in other aspect of the treatment such as cost and lower toxicity [@pmid26080342]. Examples of non-inferiority trial designs include antibiotics versus surgery for appendicitis [@pmid26080338]. There are concerns with reporting of noninferiority trial. Justification for the margin provided in 27.6% [@pmid25781447]. The following describes a trial design where it's expected that drug will result in a certain outcome _p1_ and the control arm _p2_ and the ratio of subject in treatment to control arm is _k_. The difference in outcome is _delta_. The margin is defined as non-inferior if <0.  
+Non-inferiority trials may offer information in a way that a traditional superiority design do not. The design may be interested in other aspect of the treatment such as cost and lower toxicity [@pmid26080342]. Examples of non-inferiority trial designs include antibiotics versus surgery for 
+appendicitis [@pmid26080338]. There are concerns with reporting of 
+noninferiority trial. Justification for the margin provided in 27.6% [@pmid25781447]. The following describes a trial design where it's expected that drug will result in a certain outcome _p1_ and the control arm _p2_ and the 
+ratio of subject in treatment to control arm is _k_. The difference in outcome 
+is _delta_. The margin is defined as non-inferior if <0.  
 
-```{r noninferiority}
+```{r 03-Statistics-11}
 library(TrialSize)
 TwoSampleProportion.NIS(alpha=.05, 
                         beta=.8,
@@ -321,7 +385,7 @@ TwoSampleProportion.NIS(alpha=.05,
 
 ### Logistic regression
 
-```{r logistic}
+```{r 03-Statistics-12}
 library(powerMediation)
 #continuous predictor
 #p1=event rate
@@ -332,7 +396,7 @@ powerLogisticCon(n=317, p1=0.5, OR=exp(0.405), alpha=0.05)
 
 Sample size for survival studies can be performed using _powerSurvEpi_ or _gsDesign_.
 
-```{r Survival}
+```{r 03-Statistics-13}
 library(powerSurvEpi)
 
 #sample size
@@ -362,7 +426,7 @@ ssizeCT.default(power = 0.8, k = .8, pE = 0.085,
 
 The power for general linear model can be calculated using the _pwr.f2.test_ function.
 
-```{r regression}
+```{r 03-Statistics-14}
 library(pwr)
 #u=degrees of freedom for numerator
 #v=degrees of freedomfor denominator
@@ -371,16 +435,39 @@ library(pwr)
 ```
 
 
+## Interpreting clinical trials
+
+A key issue in interpreting of clinical trials is that the relative risk 
+reduction or relative hazard risk are provided. An example is the result of the ACAS asymptomatic carotid artery trial is often quoted as showing 50% risk reduction. In fact, there was 2% annual risk of ipsilateral stroke in the 
+medical and 1% risk in the surgical arm. The absolute risk reduction or ARR was 
+1% per year. However, the 50% relative risk reduction is often quoted to explain to patients. In this case, the NNT is given by $\frac{1}{ARR}$ or $\frac{1}{0.01}=100$
+
+Calculation for hazard ratio requires knowledge of the outcome of the placebo group and the hazard ratio or _HR_. The formula using the binomial theorem is $p=1-q$ where q is given by the ratio of outcome and numbers recruited in the placebo group. The formula is taken from [@pmid32404155] . The NNT is given 
+$\frac{1}{[p^{HR}-p}$ . We illustrated this using data from metaanalysis on aspirin use in stroke in Lancet 2016. There were 45 events among 16053 patients 
+in the control group. The HR was 0.44. The NNT from this formula $\frac{1}{.9971968^.44-.9971968}$ was 637. 
+
 
 ## Metaanalysis
 
-During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the metaanalysis. It is not well known outside of statistics journal that the bivariate analysis is the preferred method of metaanalysis of diagnostic study [@pmid16168343]. By contrast, the majority of metaanalysis of diagnostic study uses the univariate method of Moses and Littenberg [@pmid8210827]. This issue will be expanded below.
+During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the metaanalysis. It is not well known outside of statistics journal 
+that the bivariate analysis is the preferred method of metaanalysis of 
+diagnostic study [@pmid16168343]. By contrast, the majority of metaanalysis of diagnostic study uses the univariate method of Moses and Littenberg [@pmid8210827]. This issue will be expanded below.
 
 ### PRISMA
 
 The PRISMA statement is useful for understanding the search strategy and the papers removed and retained in the metaanalysis. An example of generating the statement is provided below in R. The example given here is from a paper on the use of spot sign to predict enlargment of intracerebral hemorrhage [@pmid31272327].
 
-```{r prisma}
+### Conversion of mean and median
+
+One issue with performing metaanalysis is that one paper may report mean and another report median age. This calculation is provided in BMC Medical Research Methodology 2005, 5:13 doi:10.1186/1471-2288-5-13. The formula for the mean is given by $\frac{a+2m+b}{4}$ where _m_ is the median, _a_ is the upper and _b_ is the lower range. The variance is given by $S^2=\frac{1}{12}(\frac{(a+2m+b)^2}{4}+{(b-a)^2})$. This formula requires examination of the data such as the figure to obtain the upper and lower range.
+
+### Inconsistency I2
+
+The inconsistency $I^2$ index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low 
+and greater than 75% as high heterogeneity. This test can be performed using metafor package . The presence of high $I^2$ suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. The $I^2$ value for the TIA clinic study is 34.41%. As such meta-regression is not needed for that study. By contrast, the $I^2$ is much higher for the spot sign study, necessitating metaregression.
+
+
+```{r 03-Statistics-15}
 library(PRISMAstatement)
 #example from Spot sign paper. Stroke 2019
 prisma(found = 193,
@@ -397,9 +484,11 @@ prisma(found = 193,
 
 ### Metaanalysis of proportion
 
-This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $\frac{p \times (1-p)}{n}$. The term $z$ is given    by $1-\frac{\alpha}{2}$ quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to the Wald method. It has an extra term $z^2/n$. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method [@doi:10.1080/00031305.1998.10480550]. Brown and colleagues proposed the use of the Wilson method [@brown2001]
+This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $\frac{p \times (1-p)}{n}$. The term $z$ is given    by $1-\frac{\alpha}{2}$ quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This 
+approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to 
+the Wald method. It has an extra term $z^2/n$. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method [@doi:10.1080/00031305.1998.10480550]. Brown and colleagues proposed the use of the Wilson method [@brown2001]
 
-```{r Metafor}
+```{r 03-Statistics-16}
 
 library(metafor) #open software metafor
 #create data frame dat
@@ -432,10 +521,29 @@ text(1.4,7.5, "Proportion [95% CI]", pos=2)
 par(op)
 ```
 
-Exact 95% confidence interval for proportion is provided below using the data above. This solution was provided on _stack overflow_. 
+Exact 95% confidence interval for proportion is provided below using the TIA 
+data above. This solution was provided on _stack overflow_. This is performed using the _binomial.test_ function.
 
-```{r Metafor exact confidence interval}
+```{r 03-Statistics-16-1}
+
+#exact confidence interval
+sapply(split(dat, dat$model), function(x) binom.test(x$xi, x$ni)$conf.int)
+```
+
+The data needs to be transposed using _t_ function. This generates one column 
+for lower and another for upper CI. Note that sapply returns a matrix or array 
+and the column names have to be assigned.
+
+```{r 03-Statistics-16-2}
+#the data
 tmp <- t(sapply(split(dat, dat$model), function(x) binom.test(x$xi, x$ni)$conf.int))
+tmp
+```
+
+The exact confidence is now put back into the dat data frame.
+
+```{r Statistics-16-3}
+
 dat$ci.lb <- tmp[,1] #adding column to data frame dat
 dat$ci.ub <- tmp[,2] #adding column to data frame dat
 
@@ -463,84 +571,237 @@ text( 1,   7.5, "Proportion [95% CI]", pos=2)
 
 ### Bivariate Metaanalysis
 
-The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)[@pmid8210827] . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the withinstudy correlation [@pmid16168343]. Additionally, the bivariate method also accounts for the between-study correlation in sensitivity and specificity. Bivariate analysi is performed using _mada_ package.
+The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)[@pmid8210827] . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the within study correlation [@pmid16168343]. Additionally, the bivariate method also accounts 
+for the between-study correlation in sensitivity and specificity. Bivariate analysis is performed using _mada_ package. A Bayesian library for bivariate analysis _meta4diag_ is illustrated later.
 
-The example below is taken from a metaanalysis of spot sign as predictor expansion of intracerebral hemorrhage [@pmid31272327]. The data for this analysis is available in the Data-Use sub-folder.
+The example below is taken from a metaanalysis of spot sign as predictor 
+expansion of intracerebral hemorrhage [@pmid31272327]. The data for this 
+analysis is available in the Data-Use sub-folder.
 
-```{r bivariate}
+```{r 03-Statistics-17, warning=F}
 library(mada)
-Dat<-read.csv("./Data-Use/ss150718.csv")
-#remove duplicates
-dat<-subset(Dat, Dat$retain=="yes") 
-(ss<-reitsma(dat))
+#spot sign data
+Data<-read.csv("./Data-Use/ss150718.csv")
+
+#remove duplicates using subset
+#another way is to use filter from dplyr
+Dat<-subset(Data, Data$retain=="yes") 
+(ss<-reitsma(Dat))
 summary(ss)
-AUC(reitsma(data = dat))
+AUC(reitsma(data = Dat))
 sumss<-SummaryPts(ss,n.iter = 10^3) #bivariate pooled LR
 summary(sumss)
 ```
 
+### Metaanalysis of clinical trial.
+
+Fixed effect (Peto or Mantel-Haenszel) approaches assume that the population is the same for all studies and thus each study is the source of error. Random 
+effect (DerSimonian Laird) assumes an additional source of error between studies.The random effect approach results in more conservate estimate of effect size confidence interval. A criticism of DerSimnonian and Laird approach is that it is prone to type I error especially when the number of number of studies is small (n<20) or moderate heterogeneity. It's estimated that 25% of the 
+significant findings with DerSimonian Laird method may be non-significant with Hartung-Knapp method (BMC Medical Research Methodology 2014, 14:25). The Hartung-Knapp method (Stat Med 2001;20:3875-89) estimate the between studies variance and treat it as fixed. It employs quantile of t-distribution rather 
+than normal distribution. The Hartung-Knapp method is available in meta and metafor package.
+
+The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals. Subsequently a meta-analysis in J Am Heart Assoc. 2019;8:e013543. DOI: 10.1161/JAHA.119.013543 reported that contrary to the 
+earlier meta-analysis, Omega-3 lowers the risk of cardiovascular diseases with effect related to dose. The analysis using DerSimonian Laird and Hartung Knapp method is illustrated below.
+
+```{r 03-Statistics-17-1, warning=F}
+library(tidyverse)
+library(metafor)
+
+#Omega 3 data
+Year=c(2010,2014,2010,2007,2010,2010,2013,2008,2012,1999)
+Trials=c("DOIT","AREDS-2","SU.FOL.OM3","JELIS","Alpha Omega","OMEGA","R&P","GISSI-HF","ORIGIN","GISSI-P")
+Treatment=c(29,213,216,262,332,534,733,783,1276,1552)
+Treatment.per=c(10.3,9.9,17.2,2.8,13.8,27.7,11.7,22.4,20.3,27.4)
+Control=c(35,208,211,324,331,541,745,831,1295,1550)
+Control.per=c(12.5,10.1,16.9,3.5,13.6,28.6, 11.9,23.9,20.7,27.3)
+
+#combine into data frame
+rct<-data.frame(Year,Trials,Treatment,Treatment.per,Control,Control.per) %>%
+  mutate(Treatment.number=round(Treatment*100/Treatment.per,0),
+         Control.number=round(Control*100/Control.per,0)) %>%
+  rename(ai=Treatment,n1i=Treatment.number,ci=Control,
+         n2i=Control.number,study=Trials,year=Year)
+
+
+#peto's fixed effect method
+res <- rma.peto(ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=rct)
+print(res, digits=2)
+result<-predict(res, transf=exp, digits=2)
+#forest plot
+metafor::forest(res, targs=list(study=rct$study), 
+main="RCT of Omega3 fatty acid for cardiovascular disease-Peto")
+```
+
+The funnel plot is used here to illustrate presence or absence publication bias. In this case the funnel plot reflects the same findings as the low $I^2$ value. There is one outlier. We will explore this further with the _GOSH_ plot below.
+
+
+```{r 03-Statistics-17-2}
+# funnel plot 
+funnel(res, refline=0, level=c(90, 95, 99), 
+       shade=c("white", "gray", "darkgray"))
+
+```
+
+Random effect (DerSimonian Laird) assumes an additional source of error between studies when calculating odds ratio.
+
+```{r 03-Statistics-17-3}
+#DL
+datO3 <- escalc(measure = "OR",ai=ai, n1i=n1i, ci=ci, n2i=n2i,data=rct)
+res.DL<-rma(yi,vi, method = "DL",data=datO3)
+metafor::forest(res.DL,main="RCT of Omega3 fatty acid for cardiovascular disease-DL")
+```
+
+DerSimonian Laird method may not be appropriate for metaanalysis with small 
+number of studies . The recommendation is to use the Hartung Knapp random effect method. This analysis show that inspite of the small sample size the significant findings remain.
+
+```{r 03-Statistics-17-4, warning=F}
+#Hartung-ignore error message
+res.HK<-rma.uni(yi,vi=1/vi,method="FE",knha=TRUE,data=datO3)
+metafor::forest(res.HK,main="RCT of Omega3 fatty acid for cardiovascular disease-HK")
+```
+
+Subgroup analysis is one way of exploring the data for group effect. Metaregression is illustrated later.
+
+```{r 03-Statistics-17-5, warning=F}
+#create subgroups for Omega 3 trial based on year of publication
+rct1<-rct[1:5,]
+rct2<-rct[6:10,]
+rct1$group[rct1$year>=1999]<-"wide"
+rct2$group[rct2$year>=1999]<-"narrow"
+rct3<-rbind(rct1,rct2)
+
+datO3$group<-rct3$group
+#plot subgroups
+res.group <- rma(yi, vi, mods = ~ group, data=datO3)
+res.wide<- rma(yi, vi, subset=(group=="wide"), data=datO3)
+res.wide
+res.narrow<- rma(yi, vi, subset=(group=="narrow"), data=datO3)
+res.narrow
+#https://stackoverflow.com/questions/39392706/using-the-r-forestplot-package-
+#is-there-a-way-to-assign-variable-colors-to-boxe
+
+#confidence interval
+rmeta_conf <- 
+  structure(list(
+    mean  = c(NA, NA, exp(-0.0676), exp(-0.0266),  NA, exp(-0.0352)), 
+    lower = c(NA, NA, exp(-0.1873), exp(-0.0715),  NA, exp(-0.0753)),
+    upper = c(NA, NA, exp(0.0520), exp(0.0183),  NA, exp(0.0049))),
+    .Names = c("mean", "lower", "upper"), 
+    row.names = c(NA, -6L), 
+    class = "data.frame")
+
+#table data
+tabletext<-cbind(c("","Trials","wide","narrow",NA,"Summary"),
+    c("Events","(Drugs)",sum(filter(datO3,group=="wide")$ai),
+      sum(filter(datO3,group=="narrow")$ai),NA,NA),
+    c("Events","(Control)",sum(filter(datO3,group=="wide")$ci),
+      sum(filter(datO3,group=="narrow")$ci),NA,NA),     
+    c("","OR","0.934","0.974",NA,"0.965")
+                 )
+#use forestplot as another library to perform forest plot
+library(forestplot)
+ forestplot(tabletext, 
+       rmeta_conf,new_page = TRUE,
+       is.summary=c(TRUE,TRUE,rep(FALSE,8),TRUE),
+       clip=c(0.1,2.5), 
+       xlog=TRUE, 
+       col=fpColors(box="royalblue",line="darkblue", summary="royalblue"))
+
+
+```
+
+Baujat plot is another method in addition to funnel  plot explore heterogeneity
+
+```{r 03-Statistics-17-6}
+# adjust margins so the space is better used
+
+par(mar=c(5,4,2,2))
+# create Baujat plot to explore source of heterogeneity
+baujat(res.DL, xlim=c(0,20), ylim=c(0,0.2))
+```
+
+
+GOSH plot explores study heterogeneity using output of fixed effect model for 
+all possible subsets
+
+```{r 03-Statistics-17-7}
+
+## fit FE model to all possible subsets
+# uses output from DL analysis
+
+sav <- gosh(res.DL)
+ 
+### create GOSH plot
+### red points for subsets that include and blue points
+### for subsets that exclude study 16 (the ISIS-4 trial)
+
+plot(sav, out=dim(rct)[1], breaks=100)
+
+```
+
+
+
 ### Metaregression
 
-```{r Metaregression by year, warning=F}
+```{r 03-Statistics-17-8}
+
+#separate metaregression for tsens and tfpr
+
+#tsens - setting single or multicentre for spot sign metaanalysis
+dat1<-subset(Dat, Dat$result_id==1 )
+(metass<-reitsma(dat1, formula = cbind(tsens,tfpr)~PubYear+Study.type+Setting+Quality.assessment)) 
+summary(metass)
+
+
+#tfpr - setting single or multicentre for spot sign metaanalysis
+dat1<-subset(Dat, Dat$result_id==1 )
+(metassfull<-reitsma(dat1, formula = cbind(tsens,tfpr)~
+        PubYear+clinical+Study.type+CTA6hrs+Setting+Quality.assessment)) 
+summary(metassfull)
+```
+
+```{r 03-Statistics-17-9, warning=F}
+
+#using output from spot sign
 #plot year against tsens
 library(ggplot2)
 library(lubridate)
 ssr<-as.data.frame(ss$residuals)
 #convert character to year
-ssr$Year<-as.Date(as.character(dat$PubYear),"%Y")
-ssr$Quality<-dat$Quality.assessment
+ssr$Year<-as.Date(as.character(Dat$PubYear),"%Y")
+ssr$Quality<-Dat$Quality.assessment
 ggplot(ssr, aes(x=ssr$Year,y=ssr$tsens))+geom_point()+
   scale_x_date()+geom_smooth(method="lm")+
   ggtitle("Relationship between transformed sensitivity and Publication Year")+
   labs(x="Year",y="transformed sensitivity")
 ```
 
-### Bayesian Metaanalysis 
-
-A Bayesian approach towards metaanalysis is provided below using the package _meta4diag_ [@2015arXiv151206220G]. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the _mada_ package which does not provide a bivariate method for performing summary sensitivity and specificity. 
-
-```{r Bayesian-metaanalysis}
-library(meta4diag)
-library(INLA)
-#the dat data comes from the metaregression on spot sign above
-res <- meta4diag(data = dat) 
-SROC(res, crShow = T)
-```
-
-
-
-```{r Metaanalysis sensitivity}
-#sensitivity
-meta4diag::forest(res, accuracy.type="sens", est.type="mean", 
-                  p.cex="scaled", p.pch=15, p.col="black",
-    nameShow="right", dataShow="center", estShow="left", text.cex=1,
-    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
-    cut=TRUE, intervals=c(0.025,0.975),
-    main="Forest plot of Sensitivity", main.cex=1.5, axis.cex=1)
-```
-
-```{r Metaanalysis Specificity}
-#specificity
-meta4diag::forest(res, accuracy.type="spec", est.type="mean", p.cex="scaled", p.pch=15, p.col="black",
-    nameShow="right", dataShow="center", estShow="left", text.cex=1,
-    shade.col="gray", arrow.col="black", arrow.lty=1, arrow.lwd=1,
-    cut=TRUE, intervals=c(0.025,0.975),
-    main="Forest plot of Specificity", main.cex=1.5, axis.cex=1)
-```
-
-#### Inconsistency I2
-
-The inconsistency $I^2$ index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low and greater than 75% as high heterogeneity. This test can be performed using metafor package . The presence of high $I^2$ suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. 
-
 #### summary Positive and Negative Likelihood Ratio
 
-Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al[@pmid8309035] a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test result for a range of possible values of baseline risk. 
+Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive 
+rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity 
+to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with target disorder compared with the 
+likelihood that the same result would be expected in a patient without target disorder. Using the recommendation by Jaeschke et al[@pmid8309035] a 
+high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. 
+PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk. The pooled likelihood ratios were used to calculate post-test odds according to Bayes’ Theorem and post-test probabilities of outcome after a positive test 
+result for a range of possible values of baseline risk. 
+
+Data from likelihood ratio can be used to create Fagan's normogram.
+
+```{r 03-Statistics-18, eval=F}
+#The code for this is available at
+#"https://raw.githubusercontent.com/achekroud/nomogrammer/master/nomogrammer.r"
+library(nomogrammer)
+p<-nomogrammer(Prevalence = .234, Plr = 4.85, Nlr = 0.49)
+p+ggtitle("Fagan's normogram for Spot Sign and ICH growth")
+#ggsave(p,file="Fagan_SpotSign.png",width=5.99,height=3.99,units="in")
+```
 
 ## Data simulation
 
 Data simulation is an important aspects of data science. The example below is taken from our experience trying to simulate data from recent clot retrieval trials in stroke [@pmid25517348,@pmid25671797]. Simulation is performed using _simstudy_ library. 
 
-```{r simstudy}
+```{r 03-Statistics-19, warning=F}
 library (simstudy)
 library(tidyverse)
 #T is Trial
@@ -549,7 +810,7 @@ tdef <- defData(varname = "T", dist = "binary", formula = 0.5)
 #baseline NIHSS 13 in TPA and 17 in ECR
 tdef <- defData(tdef, varname = "ENI", dist = "normal", formula = .8-.52*T, variance = .1)
 #baseline NIHSS 13 in TPA and 17 in ECR
-tdef <- defData(tdef, varname = "Y0", dist = "normal", formula = 13, variance = 1)
+tdef <- defData(tdef, varname = "Y0", dist = "normal", formula=13, variance = 1)
 tdef <- defData(tdef, varname = "Y1", dist = "normal", formula = "Y0- 5 - 5 * T >5",variance = 1)
 tdef <- defData(tdef, varname = "Y2", dist = "normal", formula = "Y0 - 5 - 5- 9* T>0",variance = 1)
 tdef <- defData(tdef, varname = "Y3", dist = "normal", formula = "Y0 - 5 - 5 -2- 12 * T>0", 
@@ -562,7 +823,8 @@ tdef <- defData(tdef,varname = "Diabetes", dist = "binary", formula = .23-.17*T)
 tdef <- defData(tdef,varname = "HT", dist = "binary", formula = .66-.06*T)
 #generate data frame
 dtTrial <- genData(500, tdef)
-dtTime <- addPeriods(dtTrial, nPeriods = 4, idvars = "id", timevars = c("Y0", "Y1", "Y2","Y3"), timevarName = "Y")
+dtTime <- addPeriods(dtTrial, nPeriods = 4, idvars = "id", 
+            timevars = c("Y0", "Y1", "Y2","Y3"), timevarName = "Y")
 dtTime
 
 #check  that 2 groups are similar at start but not at finish

@@ -1,58 +1,515 @@
 # Machine Learning Part 2
 
-## Non-negative matrix factorisation
+This section deals with handling of text data and machine learning. R has several excellent libraries such as _tm_, _tidytext_, _textmineR_ and _quanteda_ for handling text data. 
 
-## Formal concept analysis
+## Bag of words
 
-```{r fca}
+Bag of words or unigram analysis describe data in which words in a sentence were separated or tokenised. Within this bag of words the order of words within the document is not retained. Depending on how this process is performed the negative connotation may be loss. Consider "not green" and after cleaning of the document, only the color "green" remain.
 
-library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
-library(Rgraphviz) #plot hasse diagram
+The following codes illustrate the processing steps to clean up a document. These include turning words to lower case as R is case sensitive. Next stop word filter  is used to remove phrases like "I", "he", "she", "they" etc.
 
-#install BiocManager::install("Rgraphviz")
 
-edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")
-df<-edge[,c(2:dim(edge)[2])]
-row.names(df)<-edge[,1] #bipartite matrix
-#select columns#remove distance data
-df_se<-edge[,c(2:16)]
-row.names(df_se)<-edge[,1] #bipartite matrix
-#south eastern hospitals
-#select rows
-df_se<-df_se[c(1,6,7,11,12,13,14,17,19,20,24,31,33,34,35),]
-#perform Galois derivations between partially ordered subsets
-#galois(df_se',labeling = "full")
-gf <- galois(df_se, labeling = "reduced")
-#partial ordering of concept
-po<-partial.order(gf,type="galois")
-diagram(po, main="Hasse diagram of partial order with reduced context") 
-#lattice  diagram with reduced context
-diagram.levels(po)
+### TFIDF
+
+Term frequency defines the frequency of a term in a document. The document frequency defines how often a term is used across document. The inverse document frequency can be seen as a weight to decrease the importance of commonly words used across documents. Term frequency inverse document frequency is a process used to down weight common terms and highlight important terms in the document.
+
+In the example under topic modeling, an example of creating _tfidf_ is shown. Other packages like _tidytext_, _textmineR_ have functions for creating _tfidf_
+
+
+### Extracting data from web
+
+This is an example using _RISmed_ library to extract data from PubMed on electronic medcical record and text mining for 2021.
+
+```{r 06-machinelearningpt2-1, warning=F}
+
+#library(adjutant)
+library(RISmed)
+library(ggplot2)
+library(dplyr)
+library(SnowballC)
+library(wordcloud)
+library(lattice)
+library(tm)
+
+library (dplyr)
+library(tidytext)
+library(tidyr)
+library(stringr)
 ```
 
-## Evolutionary Algorithm
+The function to extract data from PubMed.
 
-### Simulated Annealing
+```{r 06-machinelearningpt2-1-1, eval=F}
+#search 25/9/21
+query<-"electronic medical record + text mining"
+ngs_search <- EUtilsSummary(query, type="esearch",db = "pubmed",mindate=2016, maxdate=2018, retmax=30000)
+summary(ngs_search)
+QueryCount(ngs_search)
+ngs_records <- EUtilsGet(ngs_search)
+#save(ngs_records,file="ngs_records.Rda")
 
-### Genetic Algorithm
 
-Genetic algorithm is a machine learning tool based on ideas from Darwin’s concept of natural selection. It is based on mutation, crossover and selection. Genetic algorithm is available in R as part of _caret_ and _GA_ libraries. Genetic algorithm can be used to optimise feature selection for regression modelling at the expense of longer running time.
+```
 
-## Manifold learning
+Data such as tear of publications can be easily extracted.
 
-### T-Stochastic Neighbourhood Embedding
+```{r 06-machinelearningpt2-1-2}
+#reload saved search
+load("./Data-Use/EMR_Textmiing_ngs_records.Rda")
 
-T-Stochastic Neighbourhood Embedding (TSNE) is a visualisation method which seeks to transform the complex data into low (2) dimensions while maintaining the distance between neighbouring objects. This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of TSNE are not intended for machine learning. TSNE is implemented in R as _Rtsne_.
+#year
+years <- YearPubmed(ngs_records)
+ngs_pubs_count <- as.data.frame(table(years))
+ 
+total <- NULL
+for (i in 2020:2021){
+peryear <- EUtilsSummary("", type="esearch", db="pubmed", mindate=i, maxdate=i)
+total[i] <- QueryCount(peryear)
+}
 
-```{r rtsne}
-library(Rtsne)
+year <- 2020:2021
+total_pubs_count<- as.data.frame(cbind(year,total[year]))
+names(total_pubs_count) <- c("year","Total_publications")
+names(ngs_pubs_count) <-  c("year","NGS_publications")
+pubs_year <-  merge(ngs_pubs_count,total_pubs_count,by="year")
+pubs_year$NGS_publications_normalized <-  pubs_year$NGS_publications *100000 / pubs_year$Total_publications
+
+#write.table(pubs_year,"NGS_publications_per_year.txt",quote=F,sep="\t",
+#row.names=F)
+ 
+#journal 
+journal <- ISOAbbreviation(ngs_records)
+ngs_journal_count <- as.data.frame(table(journal))
+ngs_journal_count_top25 <- ngs_journal_count[order(-ngs_journal_count[,2]),][1:25,]
+ 
+journal_names <- paste(ngs_journal_count_top25$journal,"[jo]",sep="")
+ 
+total_journal <- NULL
+for (i in journal_names){
+perjournal <- EUtilsSummary(i, type='esearch', db='pubmed',mindate=2020, maxdate=2021)
+total_journal[i] <- QueryCount(perjournal)
+}
+#save(total_journal,file="total_journal.Rda")
+ 
+journal_ngs_total <- cbind(ngs_journal_count_top25,total_journal)
+names(journal_ngs_total) <- c("journal","NGS_publications","Total_publications")
+journal_ngs_total$NGS_publications_normalized <- journal_ngs_total$NGS_publications / journal_ngs_total$Total_publications
+ 
+#write.table(journal_ngs_total,"NGS_publications_per_journal.txt",quote=F,
+#sep="\t",row.names=F)
+
+
+pubs_per_year <- read.table("NGS_publications_per_year.txt",header = T,sep="\t")
+pubs_per_journal <- read.table("NGS_publications_per_journal.txt",header = T,sep="\t")
+
+```
+
+Create list for high and low impact factor journals
+
+```{r 06-machinelearningpt2-1-3}
+#extract title and abstract
+pubmed_data <- data.frame('Pmid'=PMID(ngs_records),
+    'Year'=YearPubmed(ngs_records),'Title'=ArticleTitle(ngs_records),
+    'Journal'=MedlineTA(ngs_records),'Abstract'=AbstractText(ngs_records))
+
+#abstract is a column in pybmed_data data frame
+pubmed_data$Abstract <- as.character(pubmed_data$Abstract)
+pubmed_data$Abstract <- gsub(",", " ", pubmed_data$Abstract, fixed = TRUE)
+
+####
+
+#partition data to high and low impact factor journals
+#high impact factor journals list
+#note Lancet includes Lancet Neurology etc
+hi <- pubmed_data[grepl("Lancet|Neurology|N Engl J Med|Ann Neurol", pubmed_data$Journal),]
+ 
+
+#low impact factor journals list
+li <- pubmed_data[grepl("Mult Scler|Int J MS Care|J Neurol|Cochrane|BMC|
+                        PLoS|BMJ Open", pubmed_data$Journal),]
+
+ 
+#join
+hia<-paste(hi$Abstract, collapse="")
+lia<-paste(li$Abstract,collapse="")
+ 
+
+
+
+
 ```
 
 
-## Deep learning
+Plot of journal publications normalised by year.
 
-Multilayer perceptron is a type of deep learning with an inner, multiple hidden and an outer layer. It passes information in one direction from inner to hidden and outer layer and hence is referred to as feed forward artificial neural network. It trains the data using a loss function which adapt to the parameter and optimise according to the specified learning rate. Overfitting is minimised by using an L2 regularisation penalty, termed alpha. 
+```{r 06-machinelearningpt2-1-4}
+#ggplot
+ggplot(pubs_per_year,aes(year, NGS_publications_normalized)) + geom_line (colour="blue",size=2) +
+xlab("Year") +
+ylab("NGS/100000 articles")+expand_limits(x=c(2020,2028))+
+ggtitle("NGS PubMed articles")
+ 
+ggplot(pubs_per_journal,aes(journal, NGS_publications,fill=journal)) + geom_bar(stat="identity")+
+coord_flip()+
+theme(legend.position="none")
+```
 
-CNN
+Plot of journal publications normalised by journal.
 
-RNN
+```{r 06-machinelearningpt2-1-5}
+ggplot(pubs_per_journal ,aes(journal, 
+    NGS_publications_normalized,fill=journal)) + geom_bar(stat="identity")+
+coord_flip()+
+theme(legend.position="none")
+
+```
+
+Corpus
+
+The steps in processing and creating a Corpus from _tm_ library is illustrated. 
+
+```{r 06-machinelearningpt2-1-6, warning=F}
+
+# create list of stop-words
+myStopwords=c("It","mg","kg","µgl","=","journals","medline","embase","ebsco",
+  "cinahl", "background","method","results","conclusion","http","web","i","ii",
+  "iii","ci","jan","january","feb","february","march","april","may","june",
+  "july","august", "sept","september","oct","october","nov","november","dec",
+  "december")
+
+#corpus = Corpus(VectorSource(all))
+myCorpus = VCorpus(VectorSource(pubmed_data$Abstract))
+myCorpus <- tm_map(myCorpus, content_transformer(tolower))
+myCorpus <- tm_map(myCorpus, removeNumbers)
+myCorpus <- tm_map(myCorpus, removePunctuation)
+myCorpus <- tm_map(myCorpus, removeWords, stopwords ("english"),lazy=TRUE)
+myCorpus<- tm_map(myCorpus,removeWords,myStopwords)
+myCorpus <- tm_map(myCorpus, stripWhitespace, lazy=TRUE)
+
+# document term matrix
+dtm <- DocumentTermMatrix(myCorpus,control = list(wordLengths=c(3, 20)))
+#ensure non non zero entry
+rowTotals <- apply(dtm , 1, sum) #Find the sum of words in each Document
+dtm1   <- dtm[rowTotals> 0, ]  
+
+# create term-document matrix
+tdm <- TermDocumentMatrix(myCorpus,control = list(wordLengths=c(3, 20)))
+#ensure non non zero entry
+rowTotals <- apply(tdm , 1, sum) #Find the sum of words in each Document
+tdm1   <- tdm[rowTotals> 0, ]  
+```
+
+Here, the same preprocessing steps are performed using _tidytext_.
+
+```{r 06-machinelearningpt2-1-7, warning=F}
+
+mystopwords=bind_rows(data.frame(word= c("It","mg","kg","journals","medline","embase","ebsco","cinahl","background",
+  "method","results","conclusion","http","web","i","ii","iii","ci",
+  "jan","january","feb","february","march","april","may","june","july","august",
+  "sept","september","oct","october","nov","november","dec","december"),
+  lexicon=c("custom")),stop_words)
+
+
+#the abstract from the pubmed data is extracted
+abs<-pubmed_data$Abstract
+abs<-iconv(abs, to = 'utf-8')
+abs <- (abs[!is.na(abs)])
+abCorpus<-VCorpus(VectorSource(abs))
+ab<-tidy(abCorpus)
+
+#token words
+ab_word<-ab %>% unnest_tokens(word,text) %>%
+  mutate(word = gsub("[^A-Za-z ]","",word)) %>% 
+  filter(word != "") %>%
+  #remove stopwords from customised list
+  anti_join(mystopwords) 
+
+#check if there are unnecessary words
+#View(ab_word %>% count (word, sort=T))
+
+
+```
+
+## Wordcloud
+
+A trick with wordcloud is setting the right number of words, the range of size 
+of the words to be plotted.
+
+```{r 06-machinelearningpt2-1-8, warning=F}
+
+par(mfrow=c(1,2))
+ab_word%>% count(word) %>% 
+        with(wordcloud(word,n,min.freq = 20, 
+        #min.freq specifies the threshold for words to be plotted
+        # scale is a vector of length 2 to indicate the range of size of words            # max.words is the maximum number of words to be plotted
+        # rot.per is the proportion of words with 90 degrees rotation                 
+        max.words = 100, colors = brewer.pal(8, "Dark2")), 
+        scale = c(1,.2), per.rot = 0.4)
+
+
+m <- as.matrix(tdm1)
+	v <- sort(rowSums(m),decreasing=TRUE)
+	d <- data.frame(word = names(v),freq=v)
+	
+wordcloud(d$word,d$freq, min.freq = 20, max.words = 100, scale=c(2,.3),           colors = brewer.pal(8, "Dark2"), per.rot = 0.4, )
+
+
+```
+
+
+Plot Wordcloud with negative and positive sentiment from _Bing_ library. Other sentiment libraries include _afinn_, _loughran_ and _nrc_.
+
+```{r 06-machinelearningpt2-1-9, warning=F}
+library(reshape2)
+ab_word %>% inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort=TRUE) %>%
+  acast(word~sentiment,value.var = "n",fill=0) %>%
+  comparison.cloud(colors = c("blue","red"),
+                   title.size = 2,
+                   max.words = 100, scale=c(2,.5))
+```
+
+graph analysis of word relationship
+
+```{r 06-machinelearningpt2-1-10, warning=F}
+library(extrafont)
+library(igraph)
+library(ggraph)
+library(widyr)
+library(viridis)
+
+#abstract
+ab_word_cors <- 
+  ab_word %>% 
+  mutate(section = row_number() %/% 10) %>%
+  filter(section > 0) %>%
+  filter(!word %in% stop_words$word) %>%
+  group_by(word) %>%
+  filter(n() >= 20) %>%
+  pairwise_cor(word, section, sort = TRUE)
+
+ab_word_cors %>%
+  filter(correlation > .5) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) + geom_node_point(color ="#27408b", size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void(base_family="Roboto")+
+  labs(title="  Pairs of words in publications on electronic medical record and Text mining ")
+
+```
+
+
+## Bigram analysis
+
+```{r 06-machinelearningpt2-1-11}
+ab_bigrams <- ab %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+  mutate(bigram = gsub("[^A-Za-z ]","", bigram)) %>% 
+  filter(bigram != "") 
+
+
+bigrams_separated <- ab_bigrams %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% mystopwords$word) %>%
+  filter(!word2 %in% mystopwords$word)
+
+
+bigram_counts <- bigrams_filtered %>% 
+  count(word1, word2, sort = TRUE)
+
+bigrams_united <- bigrams_filtered %>%
+  unite(bigram, word1, word2, sep = " ")
+bigrams_united
+
+
+bigram_graph <- bigram_counts %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+bigram_graph
+
+
+```
+
+The relationship among the bigrams are illustrated here.
+
+```{r 06-machinelearningpt2-1-12}
+library(tidygraph)
+as_tbl_graph(bigram_graph)
+
+set.seed(2017)
+#plot(bigram_graph)
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link() +
+  geom_node_point(color = "red") +
+  geom_node_text(aes(label = name), size=3,vjust = 1, hjust = 1)
+
+```
+
+## Trigram
+
+```{r 06-machinelearningpt2-1-13}
+ab_trigrams <- ab %>%
+  unnest_tokens(trigram, text, token = "ngrams", n = 2) %>%
+  mutate(trigram = gsub("[^A-Za-z ]","", trigram)) %>% 
+  filter(trigram != "") 
+
+trigrams_separated <- ab_trigrams %>%
+  separate(trigram, c("word1", "word2","word3"), sep = " ")
+
+trigrams_filtered <- trigrams_separated %>%
+  filter(!word1 %in% mystopwords$word) %>%
+  filter(!word2 %in% mystopwords$word) %>%
+filter(!word3 %in% mystopwords$word)
+
+trigram_counts <- trigrams_filtered %>% 
+  count(word1, word2, word3, sort = TRUE)
+
+trigram_counts
+
+
+trigrams_united <- trigrams_filtered %>%
+  unite(trigram, word1, word2, word3, sep = " ")
+trigrams_united
+
+
+trigram_graph <- trigram_counts %>%
+  filter(n > 10) %>%
+  graph_from_data_frame()
+trigram_graph
+
+
+```
+
+The relationship among the trigrams are illustrated here.
+
+```{r 06-machinelearningpt2-1-14}
+
+as_tbl_graph(trigram_graph)
+
+set.seed(2017)
+#plot(trigram_graph)
+ggraph(trigram_graph, layout = "fr") +
+  geom_edge_link() +
+  geom_node_point(color = "red") +
+  geom_node_text(aes(label = name), size=3,vjust = 1, hjust = 1)
+
+```
+
+## Topic modeling or thematic analysis
+
+Two methods for unsupervised thematic analysis, NMF and probabilistic topic 
+model, are illustrated. 
+
+                    
+
+### Probabilistic topic model
+
+Probabilistic topic modelling is a machine learning method that generates topics or discovers themes among a collection of documents. This step was performed 
+using the Latent Dirichlet Allocation algorithm via the _topicmodels_ package in R. An issue with topic modeling is that the number of topics are not known. It 
+can be estimated empirically or by examining the harmonic means of the log
+likelihood .
+
+```{r 06-machinelearningpt2-2}
+library(slam)
+library(topicmodels)
+
+#ensure non non zero entry
+rowTotals <- apply(dtm , 1, sum) #Find the sum of words in each Document
+dtm1   <- dtm[rowTotals> 0, ]  
+
+#create tfidf using slam library
+term_tfidf <-
+  + tapply(dtm$v/row_sums(dtm)[dtm$i],dtm$j,mean) * 
+  + log2(nDocs(dtm)/col_sums(dtm>0))
+
+#remove frequent words
+dtm1 <-dtm1[,term_tfidf>=median(term_tfidf)] 
+#dtm <-dtm[,term_tfidf>=0.0015]
+```
+
+Estimate the number of topics based on the log likelihood of P(topics|documents) at each iterations
+
+```{r 06-machinelearningpt2-2-1}
+
+#find k
+harmonicMean <- function(logLikelihoods, precision=2000L) {
+  library("Rmpfr")
+  llMed <- median(logLikelihoods)
+  as.double(llMed - log(mean(exp(-mpfr(logLikelihoods,
+                                       prec = precision) + llMed))))
+}
+## estimate k
+k = 20
+burnin = 1000
+iter = 1000
+keep=50
+fitted <- LDA(dtm1, k = k, method = "Gibbs",control = list(burnin = burnin, 
+                  iter = iter, keep = keep) )
+# where keep indicates that every keep iteration the log-likelihood is evaluated and stored. This returns all log-likelihood values including burnin, i.e., these need to be omitted before calculating the harmonic mean:
+logLiks <- fitted@logLiks[-c(1:(burnin/keep))]
+
+# assuming that burnin is a multiple of keep and
+harmonicMean(logLiks)
+
+# generate numerous topic models with different numbers of topics
+sequ <- seq(5, 50, 5) # in this case a sequence of numbers from 5 to 50, by 5.
+fitted_many <- lapply(sequ, function(k) LDA(dtm1, k = k, method = "Gibbs",
+        control = list(burnin = burnin, iter = iter, keep = keep) ))
+# extract logliks from each topic
+logLiks_many <- lapply(fitted_many, function(L)  L@logLiks[-c(1:(burnin/keep))])
+
+# compute harmonic means
+hm_many <- sapply(logLiks_many, function(h) harmonicMean(h))
+
+# inspect
+plot(sequ, hm_many, type = "l")
+# compute optimum number of topics
+sequ[which.max(hm_many)]
+```
+
+The previous analysis show that there are 40 topics. For ease of illustrations 
+LDA is perform with 5 topics.
+
+```{r 06-machinelearningpt2-2-2}
+#perform LDA
+lda_EHR <- LDA(dtm1, k = 10, 
+         method="Gibbs",          control=list(seed=1234,burnin=1000,thin=100,iter=1000))
+
+#extract topics terms and beta weights
+EHR_topics <- tidy(lda_EHR, matrix = "beta")
+
+#view data by topics
+EHR_top_terms <- EHR_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% 
+  ungroup() %>%
+  arrange(topic, -beta)
+
+EHR_top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+```
+
+Compare differences in words between topics.
+
+```{r 06-machinelearningpt2-2-3}
+beta_wide <- EHR_topics %>%
+  mutate(topic = paste0("topic", topic)) %>%
+  pivot_wider(names_from = topic, values_from = beta) %>% 
+  filter(topic1 > .001 | topic2 > .001) %>%
+  mutate(log_ratio = log2(topic2 / topic1))
+
+
+```
+
+### NMF
+
+In the previous chapter, NMF was used as a method to cluster data. Here, it can be framed as a method for topic modeling. The term document matrix is used.
+
