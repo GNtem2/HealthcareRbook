@@ -421,7 +421,7 @@ The best way to think about how data should be presented is that data is
 analyzed according to columns not rows. The data below is extracted from CDC 
 COVID website. Details are given below under Web scraping on how this task was performed.
 
-```{r 02-Data-Wrangling-15}
+```{r 02-Data-Wrangling-15, warning=F}
 library(dplyr)
 library(tidyr)
 library(stringr)
@@ -611,7 +611,7 @@ E<-data.frame(A,B,C) %>%
 
 Sometimes, you may only want to keep the number and ignore the words in the column. This can be done using the _str_extract_ function.
 
-```{r 02-Data-Wrangling-21}
+```{r 02-Data-Wrangling-21, warning=F}
 
 df.e<-data.frame(disability=c("1 - No significant disability despite symptoms; able to carry out all usual duties and activities","5 - Severe disability, bedridden, incontinent and requiring constant nursing care and attention","
 1 - No significant disability despite symptoms; able to carry out all usual 
@@ -755,6 +755,11 @@ img2<-img
 #find available of slots
 slotNames(img)
 img2@.Data <- k1
+```
+
+Arrays can be manipulated to split an image into 2 images. Below is a function to split B0 and B1000 images from diffusion series.
+
+```{r 02-Data-Wrangling-26-1-1}
 
 #split dwi file into b0 and b1000
 #assume that b1000 is the second volume
@@ -771,7 +776,7 @@ DWIsplit<-function(D) {
 
 Measurement of volume requires knowing dimensions of voxel.
 
-```{r 2-Data-Wrangling-26-1-1}
+```{r 2-Data-Wrangling-26-1-2}
 #measure volume
 #A="Pt8_Flair_seg_VOI_t0.nii"
 
@@ -787,14 +792,14 @@ Volume
 
 Find unsigned angle between 2 vectors k and k1
 
-```{r 2-Data-Wrangling-26-1-2}
+```{r 2-Data-Wrangling-26-1-3}
 
 Morpho::angle.calc(k,k1)
 ```
 
 Determine centre of gravity of an object.
 
-```{r 2-Data-Wrangling-26-1-3}
+```{r 2-Data-Wrangling-26-1-4}
 #centre of gravity
 neurobase::cog(img)
 ```
@@ -820,7 +825,7 @@ neurobase::ortho2(k3)
 
 ### Average
 
-This example uses 25 files. Rather than open one file at a time use list and pattern matching.
+This example uses 25 files. Rather than open one file at a time create a list from pattern matching.
 
 ```{r 02-Data-Wrangling-26-3, warning=F}
 library(oro.nifti)
@@ -837,19 +842,37 @@ length(mca.list)
 
 #note lapply returns a list
 mca.list.nii <- lapply(mca.list, readNIfTI)
+```
 
-#view each image
+This example illustrates how to view the first image in the list.
+
+```{r 02-Data-Wrangling-26-3-1, warning=F}
+#view each image in the list
 neurobase::ortho2(mca.list.nii[[1]])
+```
+
+In this example, the first 3 segmented images are averaged and viewed.
+
+```{r 02-Data-Wrangling-26-3-2, warning=F}
+#view average image
 mca_ave3<-(mca.list.nii[[1]]+mca.list.nii[[2]]+mca.list.nii[[3]])/3
 neurobase::ortho2(mca_ave3)
+```
 
+The output below is the same as above but is perforemd on arrays.
+
+```{r 02-Data-Wrangling-26-3-3, warning=F}
 #extract multiple arrays using lapply
 mca.list.array<-lapply(mca.list.nii, img_data)
 
 #average 3 arrays
 m3<-(mca.list.array[[2]]+mca.list.array[[2]]+mca.list.array[[3]])/3
 neurobase::ortho2(m3)
+```
 
+Arrays can be extracted from list using _list2array_ function.
+
+```{r 02-Data-Wrangling-26-3-4, warning=F}
 #bind multiple array by CHNOSZ
 m.listarray<-list2array(mca.list.array)#91 109  91  25
 
@@ -863,7 +886,7 @@ One way of handling imaging data for multivariate analysis is to flatten the ima
 
 ```{r 02-Data-Wrangling-26-4, warning=F}
 #flatten 3D
-niivector = as.vector(img[,,])
+niivector = as.vector(img[,,]) #902629
 
 #Create empty array of same size to fill up
 niinew = array(0, dim=dim(img))
@@ -873,32 +896,24 @@ niinew = array(niivector, dim=dim(img))
 
 #confirm
 neurobase::ortho2(niinew)
-
-#convert the list above to array
-newmcaarray<-list2array(mca.list.nii)
-
-dim(newmcaarray)
-#[1]  91 109  91  29
-
-mcavector = as.vector(newmcaarray[,,,])
-
-mca.pca<-prcomp(newmcaarray, center = T, scale. = T)
-
-
 ```
+
 
 ### tar file
 
 Image files can be large and are often stored as tar files. The _tar_ 
-(tgz file), _untar_, _zip_ (gz file) and _unzip_ function are from the _utils_ library. The _readNIfTI_ call can open gz file without the need to call _unzip_ function.
+(tgz file), _untar_, _zip_ (gz file) and _unzip_ function are from the _utils_ library. 
 
-```{r 02-Data-Wrangling-26-5}
+```{r 02-Data-Wrangling-26-5, warning=F}
 colin_1mm<-untar("./Data-Use/colin_1mm.tgz")
 colinIm<-readNIfTI("colin_1mm") #1 x 1 x 1
 class(colinIm)
 neurobase::ortho2(colinIm)
+```
 
-#
+The _readNIfTI_ call can open gz file without the need to call _unzip_ function.
+
+```{r 02-Data-Wrangling-26-5-`, warning=F}
 library(RNiftyReg)
 epi_t2<- readNIfTI(system.file("extdata", "epi_t2.nii.gz", package="RNiftyReg"))
 class(epi_t2)
@@ -910,7 +925,7 @@ neurobase::ortho2(epi_t2)
 
 There are many different libraries for performing registration.
 
-```{r 02-Data-Wrangling-26-6}
+```{r 02-Data-Wrangling-26-6, warning=F}
 library(RNiftyReg)
 #example from RNiftyReg
 #source <- readNifti(system.file("extdata", "epi_t2.nii.gz", package="RNiftyReg"))
@@ -947,7 +962,7 @@ ica1000.rescale<-rescale(ica1000,c(2,2,2))
 
 Label a parcellated region in AAL atlas
 
-```{r 02-Data-Wrangling-26-7}
+```{r 02-Data-Wrangling-26-7, warning=F}
 library(rgl)
 library(misc3d)
 library(MNITemplate)
