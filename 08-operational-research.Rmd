@@ -1,16 +1,121 @@
 # Operational Research
 
-## Discrete Event Simulations
-The example below is a based on examples provided in the _simmer_ website.
+## Queueing theory
 
-```{r 08-operational-research-1}
+Queueing theory describes the movement of a queue such as customer arrival in bank, shop or emergency department. It seeks to balance supply and demand for a service. It begun with the study queue waiting on Danish telephones in 1909.
+
+Little's theorem describes the linear relationship between the number of customer _L_ to the customer arrival rate $\lambda$ and the customer served per time peiod, $\mu$.
+
+Queueing system is described in terms of Kendall’s notation, M/M/c/k, with exponential arrival time. Using this terminology, MM1 system has 1 server and infinite queue. An MM/2/3 system has 2 (c) servers and 1 (k-c) position in the queue. The M refers to Markov chain. 
+
+An example of a single server providing full service is a car wash. Example of a single multiphase server include different single stations in bank of withdrawing, deposit, information  A counter at the airport or train station for economy and business passengers is considered multiserver single phase queue. A laundromat with different queues for washing and drying is an example of multiphase multiservers.
+
+A traditional queue at a shop can also be seen as first in first out with the first customer served first and leave first. An issue with FIFO is that people may queue early such as overnight queue for the latest iPhone. Alternatives include last in first out queue and priority queueing in emergency department.
+
+
+Let's create a simple queue with 2 customers arriving per minute and 3 customers served per minute. The PO is the probability that the server is idle. 
+
+```{r 08-operational-research-1, warning=F}
+
+library(queueing)
+
+lambda <- 2 # 2 customers arriving per minute
+mu <- 3 # 3 customers served per minute
+
+# MM1 
+
+mm1 <- NewInput.MM1(lambda = 2, mu = 3, n = 0)
+
+# Create queue class object
+mm1_out <- QueueingModel(mm1)
+
+# Report
+Report(mm1_out)
+
+# Summary
+summary(mm1_out)
+
+```
+```{r 08-operational-research-1-1, warning=F}
+
+curve(dpois(x, mm1$lambda),
+      from = 0, 
+      to = 20, 
+      type = "b", 
+      lwd = 2,
+      xlab = "Number of customers",
+      ylab = "Probability",
+      main = "Poisson Distribution for Arrival Process",
+      ylim = c(0, 0.4),
+      n = 21)
+
+```
+
+Lets examine M/M/3 queue with exponential inter-arrival times, exponential service times and 3 servers.
+
+```{r 08-operational-research-2, warning=F}
+
+library(queuecomputer)
+
+n <- 100
+arrivals <- cumsum(rexp(n, 1.9))
+service <- rexp(n)
+
+mm3 <- queue_step(arrivals = arrivals, service = service, servers = 3)
+
+```
+
+Plot the arrival and departure times
+
+```{r 08-operational-research-2-1, warning=F}
+plot(mm3)[1]
+
+```
+Plot waiting time
+
+```{r 08-operational-research-2-2, warning=F}
+plot(mm3)[2]
+
+```
+
+Plot customer in queue
+
+```{r 08-operational-research-2-3, warning=F}
+plot(mm3)[3]
+
+```
+
+Plot customer and server status
+
+```{r 08-operational-research-2-4, warning=F}
+plot(mm3)[4]
+
+```
+
+Plot arrival and departure time
+
+```{r 08-operational-research-2-5, warning=F}
+plot(mm3)[5]
+
+```
+## Discrete Event Simulations
+
+Discrete event simulation can be consider as modeling a complexity of system with multiple processes over time. This is different from continuous modeling of a system which evolve continuously with time. Discrete event simulation can be apply to the study of queue such as bank teller with a first in first out system.
+
+### Simulate capacity of system
+
+The example below is a based on examples provided in the _simmer_ website for laundromat.
+
+```{r 08-operational-research-3, warning=F}
 library(simmer)
 library(parallel)
 library(simmer.plot)
+
 NUM_ANGIO <- 1  # Number of machines for performing ECR
 ECRTIME <- 1     # hours it takes to perform ECR~ 90/60
 T_INTER <- 13 # new patient every ~365*24/700 hours
-SIM_TIME <- 24*30     # Simulation time in 30 days
+SIM_TIME <- 24*30     # Simulation time over 30 days
+
 # setup
 set.seed(42)
 env <- simmer()
@@ -32,29 +137,227 @@ env %>%
   add_generator("patient", patient, function() sample((T_INTER-2):(T_INTER+2), 1)) %>%
   # start the simulation
   run(SIM_TIME)
+```
+
+Plot the schematics of the simulation.
+
+```{r 08-operational-research-3-1, warning=F}
 plot(patient)
+```
+Plot resource usage
+
+```{r 08-operational-research-3-2, warning=F}
 resource <- get_mon_resources(env)
 plot(resource)
+```
+Total queue size
+
+```{r 08-operational-research-3-3, warning=F}
 sum(resource$queue) #total queue size
-sum(resource$queue==2) #number of people in queue
-sum(resource$queue==1)
+```
+Number of people in queue of size 1
+
+```{r 08-operational-research-3-4, warning=F}
+sum(resource$queue==1) #number of people in queue
+```
+
+Number of peope in queue of size 2
+
+```{r 08-operational-research-3-5}
+sum(resource$queue==2)
+```
+
+Plot arrival versus flow
+
+```{r 08-operational-research-3-6, warning=F}
 #View(get_mon_arrivals(env))
 plot(env,what="arrivals",metric="flow_time")
 ```
 
+Next we simulate the process of running a stroke code. In this simulation the activities occur sequentially.
+
+```{r 08-operational-research-4}
+#simulate ST6
+patient <- trajectory("patients' path") %>%
+  ## add an intake activity - nurse arrive first on scene in ED to triage
+  #seize specify priority
+  seize("ed nurse", 1) %>%
+  #timeout return one random value from 5 mean+/-5 SD 
+  timeout(function() rnorm(1,5,5)) %>%
+  release("ed nurse", 1) %>%
+  
+  ## add a registrar activity - stroke registrar arrive after stroke code
+  seize("stroke reg", 1) %>%
+  timeout(function() rnorm(1, 10,5)) %>%
+  release("stroke reg", 1) %>%
+  
+  #add CT scanning - the process takes 15 minutes
+  seize("CT scan", 1) %>%
+  timeout(function() rnorm(1, 15,15)) %>%
+  release("CT scan", 1) %>%
+  
+    #stroke reg re-enter
+    #seize("stroke reg", 1) %>%
+    #timeout(function() rnorm(1, 10,5)) %>%
+    #release("stroke reg", 1) %>%
+  #branch
+  
+  ## add stroke consultant - to review scan and makes decision
+  
+  seize("stroke consultant", 1) %>%
+  timeout(function() rnorm(1, 5,10)) %>%
+  release("stroke consultant", 1) %>%
+  
+  ## add a thrombectomy decision activity
+  seize("inr", 1) %>%
+  timeout(function() rnorm(1, 5,5)) %>%
+  release("inr", 1) 
+
+envs <- mclapply(1:100, function(i) {
+  simmer("SuperDuperSim") %>%
+    add_resource("ed nurse", 1) %>%
+    add_resource("stroke reg", 1) %>%
+    add_resource("CT scan", 1) %>%
+    add_resource("stroke consultant", 1) %>%
+    add_resource("inr", 1) %>%
+    add_generator("patient", patient, function() rnorm(1, 10, 2)) %>%
+    run(100) %>%
+    wrap()
+})
+```
+
+Plot patient flow
+
+```{r 08-operational-research-4-1, warning=F}
+
+plot(patient)
+
+```
+
+```{r 08-operational-research-4-2, warning=F}
+#plot.simmer
+resources <- get_mon_resources(envs)
+
+#
+p1<-plot(resources, metric = "usage", 
+         c("ed nurse","stroke reg","CT scan", "stroke                         consultant","inr"), 
+         items = "serve")
+
+#resource usage
+p2<-plot(get_mon_resources(envs[[6]]), metric = "usage", "stroke consultant", items = "server", steps = TRUE)
+
+#resource utilisation
+p3<-plot(resources, metric="utilization", c("ed nurse", "stroke reg","CT scan"))
+
+#Flow time evolution
+arrivals <- get_mon_arrivals(envs)
+p4<-plot(arrivals, metric = "flow_time")
+
+#combine plot
+gridExtra::grid.arrange(p1,p2, p3,p4)
+```
+
+
+```{r 08-operational-research-4-3, warning=F}
+#
+activity<-get_mon_arrivals(envs)
+
+plot(activity,metric="activity_time")
+```
+
+Now we will fork another path in the patient flow
+
+```{r 08-operational-research-4-4, warning=F}
+
+```
+
+
+### Queuing network
+
+```{r 08-operational-research-5}
+
+mean_pkt_size <- 100        # bytes
+lambda1 <- 2                # pkts/s
+lambda3 <- 0.5              # pkts/s
+lambda4 <- 0.6              # pkts/s
+rate <- 2.2 * mean_pkt_size # bytes/s
+
+# set an exponential message size of mean mean_pkt_size
+set_msg_size <- function(.)
+  set_attribute(., "size", function() rexp(1, 1/mean_pkt_size))
+
+# seize an M/D/1 queue by id; the timeout is function of the message size
+md1 <- function(., id)
+  seize(., paste0("md1_", id), 1) %>%
+  timeout(function() get_attribute(env, "size") / rate) %>%
+  release(paste0("md1_", id), 1)
+
+```
+
+
+```{r 08-operational-research-5-1}
+
+to_queue_1 <- trajectory() %>%
+  set_msg_size() %>%
+  md1(1) %>%
+  leave(0.25) %>%
+  md1(2) %>%
+  branch(
+    function() (runif(1) > 0.65) + 1, continue=c(F, F),
+    trajectory() %>% md1(3),
+    trajectory() %>% md1(4)
+  )
+
+to_queue_3 <- trajectory() %>%
+  set_msg_size() %>%
+  md1(3)
+
+to_queue_4 <- trajectory() %>%
+  set_msg_size() %>%
+  md1(4)
+
+```
+
+```{r 08-operational-research-5-3}
+env <- simmer()
+for (i in 1:4) env %>% 
+  add_resource(paste0("md1_", i))
+env %>%
+  add_generator("arrival1_", to_queue_1, function() rexp(1, lambda1), mon=2) %>%
+  add_generator("arrival3_", to_queue_3, function() rexp(1, lambda3), mon=2) %>%
+  add_generator("arrival4_", to_queue_4, function() rexp(1, lambda4), mon=2) %>%
+  run(4000)
+
+```
+
+```{r 08-operational-research-5-4}
+res <- get_mon_arrivals(env, per_resource = TRUE) %>%
+  subset(resource %in% c("md1_3", "md1_4"), select=c("name", "resource"))
+
+arr <- get_mon_arrivals(env) %>%
+  transform(waiting_time = end_time - (start_time + activity_time)) %>%
+  transform(generator = regmatches(name, regexpr("arrival[[:digit:]]", name))) %>%
+  merge(res)
+
+aggregate(waiting_time ~ generator + resource, arr, function(x) sum(x)/length(x))
+get_n_generated(env, "arrival1_") + get_n_generated(env, "arrival4_")
+aggregate(waiting_time ~ generator + resource, arr, length)
+
+```
+
 ## Linear Programming
 
-There are several different libraries useful for linear programming. The _lpSolve_ library is used here as illustration.
+Linear programming is an optimisation process to maximise profit and minimise cost with multiple parts of the model having linear relationship. There are several different libraries useful for linear programming. The _lpSolve_ library is used here as illustration.
 
-```{r 08-operational-research-2}
+```{r 08-operational-research-6}
 library(lpSolve)
 
 #solve using linear programming
-n <-2.5 # Numbers of techs
-set_up_eeg <- 40 # min
-to_do_eeg <- 30 # min
-clean_equipment <- 10 #min
-annotate_eeg <- 10 #min
+n <-2.5 # Numbers of techs. 1 EFT means a person is employed for 40 hours a week and 0.5 EFT means a person is employed for 20 hours a week.
+set_up_eeg <- 40 # 40 minutes
+to_do_eeg <- 30 # 30 minutes
+clean_equipment <- 20 # 20 minutes
+annotate_eeg <- 10 # 10 minutes
 
 # put some error for EEG time
 # if error=1 that mean NO errors happen
@@ -104,45 +407,33 @@ opt$solution
   
   
 ```
-#Estimate for day (Value of objective function at optimal point)
-```{r 08-operational-research-2-1, echo=FALSE, message=FALSE}
+
+Estimate for day (Value of objective function at optimal point)
+
+```{r 08-operational-research-6-1, echo=FALSE, message=FALSE}
 opt$objval
-
-#Urgent cases estimate
-
-saturday <-2
-sunday <- 2
-
 ```
 
-#Estimate EEG per month based on staff EFT- only 3.5 of 5.7
+Estimate EEG per month based on staff EFT- only 2.5 
 
-```{r 08-operational-research-2-2, echo=FALSE, message=FALSE}
+```{r 08-operational-research-6-2, echo=FALSE, message=FALSE}
+
+#Urgent cases estimate
+saturday <-2
+sunday <- 2
 estimate_week <- 5*opt$objval + saturday + sunday
 estimate_month <- 4*estimate_week
 estimate_month
 ```
+Assuming that the time spend on a report by neurologists (1 report = 30 min) then in a 3.5 hour session a neurologist can report 7 EEG.
 
-## Plots
 
-The median number of hours per fortnight is 127 + 8 (for urgent EEG)
-The median number of sessions is 36 + 4 for weekend
+```{r 08-operational-research-6-3}
 
-```{r 08-operational-research-2-3}
-t=c(189.9370, 168.4725, 186.1128, 194.3047, 193.2593, 184.1915, 174.7920, 176.8964, 204.1324, 190.5459, 187.4211, 181.3592, 188.0941, 173.4730, 183.4212, 181.8803, 197.2092, 183.0857, 174.7203, 149.6084, 178.6238, 178.2982, 179.9899, 180.5452, 165.4464, 175.8635, 188.0470, 187.1038, 176.0725, 189.5796, 184.8708, 197.6775, 179.7429, 184.8719, 174.9163, 194.0854, 178.4370, 189.0127, 191.6685, 168.9936, 170.7558, 182.9075, 173.2931, 161.7117, 166.2627, 176.6619, 187.4424, 196.0481, 170.1041, 201.6837, 206.3890, 183.1897, 187.7450, 170.2805, 200.0915, 172.9868, 179.6910, 189.4723, 190.2622, 154.0683, 191.1630, 187.4863, 177.4675, 200.0806)
+neurologist_session=estimate_week/7
 
-num_sessions=t/5
-  
-# Time spend on a report by neurologists (1 report = 30 min)
-neurologists_h <- num_sessions*3.5
-#print(neurologists_h)
+neurologist_session
 
-# Histogram for Estimate Neurologists Time, hours per 2 weeks
-hist(neurologists_h,
-     main="Estimate Neurologists Time, hours per 2 weeks",
-     xlab="Hours per 2 weeks",
-     col="magenta")
-text(135, 15, paste0("Neurologist Hours=", " " , round(median(neurologists_h))))
 
 ```
 
@@ -151,7 +442,7 @@ text(135, 15, paste0("Neurologist Hours=", " " , round(median(neurologists_h))))
 Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19 in 2020. This forecast is an example and is not meant to be used in practice as mortality from COVID depends on the number of factors including infected cases, age, socioeconomic group, and comorbidity. 
 
 
-```{r 08-operational-research-3}
+```{r 08-operational-research-7}
 library(tidyverse)
 library(prophet)
 library(hrbrthemes)
@@ -197,12 +488,12 @@ forecast_p <- plot(m, forecast) +
 
 ### Customer churns
 
-Customer churns or turnover is an issue of interest in marketing. The corollary within healthcare are patients attendance at outpatient clinics, Insurance. The classical method used is GLM.
+Customer churns or turnover is an issue of interest in marketing. The corollary within healthcare is patients attendance at outpatient clinics, Insurance. The classical method used is GLM.
 
 
 ## Process mapping
 
-```{r 08-operational-research-4}
+```{r 08-operational-research-8}
 library(DiagrammeR)
 a.plot<-mermaid("
         graph TB
@@ -236,7 +527,7 @@ a.plot<-mermaid("
 a.plot
 ```
 
-```{r 08-operational-research-5}
+```{r 08-operational-research-9}
 library(bupaR)
 ```
 
@@ -246,7 +537,7 @@ library(bupaR)
 
 ### Cost
 
-```{r 08-operational-research-6}
+```{r 08-operational-research-10}
 
 library("hesim")
 library("data.table")
@@ -274,7 +565,7 @@ print(hesim_dat)
 
 Data from WHO on mortality rate can be extracted directly from WHO or by calling _get_who_mr_ in _heemod_ library.
 
-```{r 08-operational-research-7}
+```{r 08-operational-research-11}
 
 library(heemod)
 
@@ -282,7 +573,7 @@ library(heemod)
 
 There are several data in BCEA library.
 
-```{r 08-operational-research-8}
+```{r 08-operational-research-12}
 library(BCEA)
 
 #use Vaccine data from BCEA

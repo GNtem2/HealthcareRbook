@@ -4,6 +4,8 @@ The following section illustrates the different methods in multivariate analyses
 
 ## Multivariate regression
 
+Multivariable and multivariate regression are often used interchangeably. Some use the term multivariate when there are more than one dependent variables. Mulivariable regression refers to linear, logistic or survival curve analysis in the previous chapter.  Multivariate regression refers to nested models or longitudinal models or more complex type of analyses described below.
+
 ### Penalised regression
 
 We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) [@pmid23838753]. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle  was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.
@@ -105,6 +107,27 @@ several steps including factor and cluster analyses to idetify groups. The
 _traj_ model prefers data in wide format.
 
 
+### Generalized estimating equation (GEE)
+
+GEE is used for analysis of longitudinal or clustered data. GEE is preferred when the idea is to discover the group effect or population average (marginal) log odds [@pmid20220526]. This is contrast with the mixed model approach to evaluate the average subject via maximum likelihood estimation. The fitting for mixed model is complex compare to GEE and can breakdown. The library for performing GEE is _gee_ or _geepack_.
+
+```{r 04-multivariate-analysis-4, warning=F}
+library(tidyverse)
+library(gee)
+
+#open simulated data from previous chapter
+dtTime<-read.csv("./Data-Use/dtTime_simulated.csv")
+
+
+
+fit<-gee(ENI~T+Diabetes+NIHSS,
+         id=id, 
+         corstr = "unstructured",
+         data=dtTrial_long)
+
+
+```
+
 ## Principal component analysis
 
 Principal component analysis (PCA) is a data dimension reduction method which 
@@ -143,7 +166,7 @@ library [@pmid28968879]. The analysis involves partitioning the data into
 training and test set. The classification data is in the Y column. This example 
 is provided by the _plsgenomics_ library
 
-```{r 04-multivariate-analysis-4, warning=F}
+```{r 04-multivariate-analysis-5, warning=F}
 library(plsgenomics)
 
 data("Colon")
@@ -180,4 +203,6 @@ res$Cvg
 #difference between predicted and observed
 sum(res$Ytest!=Colon$Y[-IndexLearn])
 ```
+
+## Causal inference
 
