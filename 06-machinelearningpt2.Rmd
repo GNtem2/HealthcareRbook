@@ -13,7 +13,7 @@ The following codes illustrate the processing steps to clean up a document. Thes
 
 Term frequency defines the frequency of a term in a document. The document frequency defines how often a term is used across document. The inverse document frequency can be seen as a weight to decrease the importance of commonly words used across documents. Term frequency inverse document frequency is a process used to down weight common terms and highlight important terms in the document.
 
-In the example under topic modeling, an example of creating _tfidf_ is shown. Other packages like _tidytext_, _textmineR_ have functions for creating _tfidf_
+In the example under [topic modeling][Topic modeling or thematic analysis], an example of creating _tfidf_ is shown. Other packages like _tidytext_, _textmineR_ have functions for creating _tfidf_
 
 
 ### Extracting data from web

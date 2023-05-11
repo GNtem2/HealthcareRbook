@@ -1153,7 +1153,7 @@ neurobase::ortho2(result$image)
 
 ```
 
-Output from _RNiftyReg_ are _niftiImage_ object. They can be converted to _oro.nifti_ object using _nii2oro_ function.
+Output from _RNiftyReg_ are _niftiImage_ objects. They can be converted to _oro.nifti_ objects using _nii2oro_ function.
 
 ```{r 02-Data-Wrangling-29-1, warning=F}
 
@@ -1184,7 +1184,7 @@ Resampling an image to different dimensions. This example is different from abov
 
 ```{r 02-Data-Wrangling-30-1, warning=F}
 
-ica1000.rescale<-RNiftyReg::rescale(ica1000,c(2,2,2))
+ica1000.rescale<-RNiftyReg::rescale(ica1000,c(.5,.5,.5))
 
 ica1000
 
@@ -1196,11 +1196,15 @@ ica1000.rescale
 
 ### MNI template 
 
-There are several different MRI templates. The well known one is the MNI 152 template [@pmid11545704]. This was developed from male right-handed medical students.
+There are several different MRI templates. The well known one is the MNI 152 template [@pmid11545704]. This was developed from male right-handed medical students. The MNI 152 is also known as International Consortium for Brain Mapping (ICBM) 152.
+
+#### Atlases
+
+A list of available atlases for human and animals is available at https://loni.usc.edu/research/atlases. 
 
 #### AAL atlas
 
-The automated anatomical labeling (AAL) atlas contains 45 volume of interest [@pmid11771995]. The atlas is aligned to MNI 152 coordinates.
+The automated anatomical labeling (AAL) atlas of activation contains 45 volume of interest in each hemisphere [@pmid11771995]. The atlas is aligned to MNI 152 coordinates. The updated AAL has additional parcellation of orbitofrontal cortex. AAL3 update includes further parcellation of thalamus.
 
 ```{r 02-Data-Wrangling-31, warning=F}
 library(rgl)
@@ -1293,6 +1297,25 @@ rf <- colorRampPalette(rev(brewer.pal(11,'Spectral')))
 cols <- rf(length(unique_labs))
 
 neurobase::ortho2(eve_labels, col = cols, breaks = c(-1, breaks))
+```
+
+#### Sensorimotor tract atlas
+
+Template for corticofugal tracts from primary motor cortex, dorsal premotor cortex, ventral premotor cortex, supplementary motor area (SMA), pre-supplementary motor area (preSMA), and primary somatosensory cortex is available from [@pmid28334314]. Below is an illustration of the M1 tract obtained from LRNLAB.
+
+```{r 02-Data-Wrangling-33, warning=F}
+
+RightM1<-readNifti("./Ext-Data/Right-M1-S-MATT.nii")
+
+neurobase::ortho2(RightM1)
+
+#to down weight the voxel from 1 mm to 2 mm
+RightM1.rescale<-RNiftyReg::rescale(RightM1,c(.5,.5,.5))
+
+RightM1o<-nii2oro(RightM1)
+
+#dimensions of RightM1o (182 218 182) and eve_labels (181 217 181) are dissimilar
+#overlay(eve_labels, y=RightM1o, z=90,plot.type="single")
 ```
 
 Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).

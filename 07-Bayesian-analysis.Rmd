@@ -66,7 +66,7 @@ load("./Data-Use/world_stroke.Rda")
 fit<-lm(LifeExpectancy~MeanLifetimeRisk, data =world_sfdf)
 summary(fit)
 ```
-
+Here the output of Bayesian analysis contrasts with the frequentist output above.
 
 ```{r 07-Bayesian-analysis-1-1}
 

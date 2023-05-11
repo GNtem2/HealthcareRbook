@@ -55,7 +55,7 @@ plot(davis.fit,pie=TRUE,rand.eff="sociality",labels=TRUE)
 
 ## Centrality Measures
 
-The nodes in this case are variables such as ASPECTS regions, demographic and risk factors. This graph below uses data from a paper on the use of PageRank. In Figure 1 of that papera graph of 4 variables were used to illustrate the PageRank method for searching brain regions related to disability [@pmid25961856].
+The nodes in this case are variables such as ASPECTS regions, demographic and risk factors. This graph below uses data from a paper on the use of PageRank where a graph of 4 variables were used to illustrate the PageRank method for searching brain regions related to disability [@pmid25961856].
 
 ```{r 09-graph-theory-4}
 #the network data is provided above on ASPECTS regions

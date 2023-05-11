@@ -1,3 +1,170 @@
+--- 
+title: "Applications of R in Healthcare"
+author: "Thanh Phan"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: GNtem2/HealthcareRbook
+description: "This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook."
+---
+
+# Preamble
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Introduction to R {#intro}
+
+Placeholder
+
+
+## Plot using base R
+## ggplot2
+### Histogram
+### Bar plot
+### Pie chart
+### Scatter plot
+### arrange plot in grids
+### Line plot
+### Facet wrap
+### Polygons
+### Gantt chart
+### Heatmap
+## ggplot2 extra
+### Alluvial and Sankey diagram
+### Survival plot
+### ggraph and tidygraph
+### ggparty-decision tree
+### ggROC- ROC curve
+### Map 
+#### Thematic map
+#### tmap
+#### Voronoi
+### ggwordcloud
+### gganimate
+### ggneuro
+## plotly
+### Scatter plot with plotly
+### Bar plot with plotly
+### Heatmap
+### map
+
+<!--chapter:end:01-intro.Rmd-->
+
+
+# Data Wrangling
+
+Placeholder
+
+
+## Data 
+### Vector, Arrays, Matrix
+#### Vector and list
+#### Matrix and Arrays
+### apply, lapply, sapply
+#### apply
+#### lapply
+#### sapply
+#### tapply
+### Simple function
+### for loop
+### Functional
+#### Mapply
+## Data storage
+### Data frame
+### Excel data
+#### Date and time
+### Foreign data
+### json format
+## Tidy data
+### Factors
+### Multiple files
+### Pivot
+## Regular Expressions
+### base R
+### stringr
+## PDF to xcel
+### Scanned text or picture
+## Web scraping
+## Manipulating Medical Images
+### DICOM and nifti format
+### Manipulating array of medical images
+### Combining arrays
+### Math operation on multidimensional array
+### Math operation on list
+### Vectorising nifti object
+### tar file
+### Image registration
+### Rescaling
+### MNI template 
+#### Atlases
+#### AAL atlas
+### add text
+### add text
+#### Eve template
+#### Sensorimotor tract atlas
+
+<!--chapter:end:02-Data-Wrangling.Rmd-->
+
+
+# Statistics
+
+Placeholder
+
+
+## Univariable analyses
+### Parametric tests
+### Non-parametric tests
+## Regression
+### Brief review of matrix
+### Linear (least square) regression
+### Logistic regression
+#### Discrimination and Calibration
+#### Measuring Improvement in Regression Models 
+#### Shapley value
+#### ICE
+##### Interaction 
+#### Propensity matching
+## Special types of regression
+### Ordinal regression
+### Survival analysis
+### Quantile regression
+##### Non-negative regression
+### Poisson regression
+### Conditional logistic regression
+### Multinomial modelling
+## Sample size estimation
+### Proportion
+#### Non-inferiority
+### Logistic regression
+### Survival studies
+### Multiple regression
+## Interpreting clinical trials
+### NNT from ARR
+### NNT from odds ratio
+### NNT from hazard ratio
+### NNT from metaananlysis
+## Metaanalysis
+### PRISMA
+### Conversion of mean and median
+### Inconsistency I2
+### Metaanalysis of proportion
+### Bivariate Metaanalysis
+### Metaanalysis of clinical trial.
+### Metaregression
+#### summary Positive and Negative Likelihood Ratio
+## Data simulation
+
+<!--chapter:end:03-Statistics.Rmd-->
+
 # Multivariate Analysis
 
 The following section illustrates the different methods in multivariate analyses. These methods are not to be confused with the more multivariable analyses discussed under Statistics.
@@ -235,4 +402,177 @@ sum(res$Ytest!=Colon$Y[-IndexLearn])
 ```
 
 ## Causal inference
+
+
+<!--chapter:end:04-multivariate-analysis.Rmd-->
+
+
+# Machine learning
+
+Placeholder
+
+
+## Decision tree analysis
+### Information theory driven
+### Conditional decision tree
+### criticisms of decision tree
+## Random Forest
+### Random survival forest
+## Gradient Boost Machine
+### Extreme gradient boost machine
+## KNN
+## Support vector machine
+### Survival analysis using random forest
+## Non-negative matrix factorisation
+## Formal concept analysis
+## Evolutionary Algorithm
+### Simulated Annealing
+### Genetic Algorithm
+## Manifold learning
+### T-Stochastic Neighbourhood Embedding
+### Self organising map
+## Deep learning
+### Multiplayer Perceptron
+### CNN
+### RNN
+### Reinforcement learning
+
+<!--chapter:end:05-machinelearning.Rmd-->
+
+
+# Machine Learning Part 2
+
+Placeholder
+
+
+## Bag of words
+### TFIDF
+### Extracting data from web
+## Wordcloud
+## Bigram analysis
+## Trigram
+## Topic modeling or thematic analysis
+### Probabilistic topic model
+### NMF
+
+<!--chapter:end:06-machinelearningpt2.Rmd-->
+
+
+# Bayesian Analysis
+
+Placeholder
+
+
+## Baysian belief
+### Conditional probability
+#### Bayes Rule
+#### Conditional independence
+## Markov model
+## INLA, Stan and BUGS
+### Linear regression
+### Logistic regression
+### Mixed model
+### Bayesian Metaanalysis 
+### Cost
+
+<!--chapter:end:07-Bayesian-analysis.Rmd-->
+
+
+# Operational Research
+
+Placeholder
+
+
+## Queueing theory
+## Discrete Event Simulations
+### Simulate capacity of system
+### Queuing network
+## Linear Programming
+## Forecasting
+### Bed requirement
+### Length of stay
+### Customer churns
+## Process mapping
+## Supply chains
+## Health economics
+### Cost
+
+<!--chapter:end:08-operational-research.Rmd-->
+
+
+# Graph Theory
+
+Placeholder
+
+
+## Special graphs 
+### Laplacian matrix
+### Bimodal (bipartite) graph
+## Centrality Measures
+### Local centrality measures
+### Global centrality measures
+#### Page Rank
+## Community
+## Visualising graph
+### Visnetwork
+### Large graph
+## Social Media and Network Analysis
+### Twitter
+### Youtube
+
+<!--chapter:end:09-graph-theory.Rmd-->
+
+
+# Geospatial analysis
+
+Placeholder
+
+
+## Geocoding
+### OpenStreetMap
+### Google Maps API
+## Sp and sf objects
+## Thematic map
+### Calculate distance to Hospital-OpenStreetMap
+## Spatial regression
+### New York COVID-19 mortality
+### Danish Stroke Registry
+### INLA
+### Stan
+## Machine learning in spatial analysis
+## Spatio-temporal regression
+
+<!--chapter:end:10-geospatial-analysis.Rmd-->
+
+
+# App
+
+Placeholder
+
+
+## Brief introduction to Shiny app
+
+<!--chapter:end:11-App.Rmd-->
+
+
+# Appendix
+
+Placeholder
+
+
+## Brief introduction to Matrix
+## Regression
+### Linear regression
+#### Leasts squares
+#### Collinearity
+#### weighted least squares
+### Logistic regression
+
+<!--chapter:end:12-Appendix.Rmd-->
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+
+<!--chapter:end:13-references.Rmd-->
 

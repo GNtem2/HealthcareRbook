@@ -199,7 +199,7 @@ proportional odds model and the requirement for this model is stringent. When ex
 ### Survival analysis
 
 Survival analysis is useful when dealing with time to event data. The Cox model assesses the hazard of outcome between two groups. The assumption of this model 
-is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested [@10.1093/biomet/81.3.515]. In the section on clinical trial we illustrate how the results can be converted to numbers needed to treat.
+is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested based on the weighted Schoenfeld residuals[@10.1093/biomet/81.3.515]. In the next chapter on machine learning, an illustration of [random survival forest][Random survival forest] is provided. In the section on [clinical trial][Interpreting clinical trials] we illustrate how the results can be converted to numbers needed to treat.
 
 ```{r 03-Statistics-6, warning=F}
 
@@ -213,11 +213,11 @@ data(cancer, package="survival")
 #status censored=1, dead=2
 #sex:Male=1 Female=2
 
-sfit<- coxph(Surv(time, status) ~ age+sex+ph.ecog, data = cancer)
+sfit<- coxph(Surv(time, status) ~ age+sex+ph.ecog+ph.karno+wt.loss, data = cancer)
 summary(sfit)
 ```
 
-Test proportional hazard assumption. The finding below shows that the covariates do not violate proportional hazard assumption. 
+Test proportional hazard assumption. The finding below shows that inclusion of covariate ph.karno violate proportional hazard assumption. 
 
 ```{r 03-Statistics-6-1, warning=F}
 cox.zph(sfit)
@@ -234,10 +234,21 @@ Forest plot of outcome from survival analysis
 
 ```{r 03-Statistics-6-3, warning=F}
 ggforest(sfit)
+```
 
- 
+An alternative way to display the output from Cox regression is to use _forestmodel_ library .
+
+```{r 03-Statistics-6-4, warning=F}
+forestmodel::forest_model(sfit)
+```
+
+The pseudoR2 for Cox regression model proposed by Royston can be evaluated
+
+```{r 03-Statistics-6-5, warning=F}
+royston(sfit)
 
 ```
+
 
 ### Quantile regression
 
@@ -474,7 +485,7 @@ The PRISMA statement is useful for understanding the search strategy and the pap
 
 ### Conversion of mean and median
 
-One issue with performing metaanalysis is that one paper may report mean and another report median age. This calculation is provided in BMC Medical Research Methodology 2005, 5:13 doi:10.1186/1471-2288-5-13. The formula for the mean is given by $\frac{a+2m+b}{4}$ where _m_ is the median, _a_ is the upper and _b_ is the lower range. The variance is given by $S^2=\frac{1}{12}(\frac{(a+2m+b)^2}{4}+{(b-a)^2})$. This formula requires examination of the data such as the figure to obtain the upper and lower range.
+One issue with performing metaanalysis is that one paper may report mean and another report median age. The formula for the mean is given by $\frac{a+2m+b}{4}$ where _m_ is the median, _a_ is the upper and _b_ is the lower range [@pmid25524443]. The variance is given by $S^2=\frac{1}{12}(\frac{(a+2m+b)^2}{4}+{(b-a)^2})$. This formula requires examination of the data such as the figure to obtain the upper and lower range.
 
 ### Inconsistency I2
 
@@ -499,9 +510,7 @@ prisma(found = 193,
 
 ### Metaanalysis of proportion
 
-This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $\frac{p \times (1-p)}{n}$. The term $z$ is given    by $1-\frac{\alpha}{2}$ quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This 
-approach is useful for handling when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to 
-the Wald method. It has an extra term $z^2/n$. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method [@doi:10.1080/00031305.1998.10480550]. Brown and colleagues proposed the use of the Wilson method [@brown2001]
+This is an example of metaanalysis of stroke recurrence following management in rapid TIA clinic. A variety of different methods for calculating the 95% confidence interval of the binomial distribution. The mean of the binomial distribution is given by p and the variance by $\frac{p \times (1-p)}{n}$. The term $z$ is given    by $1-\frac{\alpha}{2}$ quantile of normal distribution. A standard way of calculating the confidence interval is the Wald method $p\pm z\times \sqrt{\frac{p \times(1-p)}{n}}$. The Freeman-Tukey double arcsine transformation tries to transform the data to a normal distribution. This approach is useful when occurence of event is rare. The exact or Clopper-Pearson method is suggested as the most conservative of the methods for calculating confidence interval for proportion. It is based on cumulative properties of the binomial distribution. The Wilson method has similarities to the Wald method. It has an extra term $z^2/n$. There are many different methods for calculating the confidence interval for proportions. Investigators such as Agresti proposed that approximate methods are better than exact method [@doi:10.1080/00031305.1998.10480550]. Brown and colleagues proposed the use of the Wilson method [@brown2001]
 
 ```{r 03-Statistics-16, warning=F}
 
@@ -587,7 +596,7 @@ text( 1,   7.5, "Proportion [95% CI]", pos=2)
 ### Bivariate Metaanalysis
 
 The univariate method of Moses-Shapiro-Littenberg combines these measures (sensitivity and specificity) into a single measure of accuracy (diagnostic odds ratio)[@pmid8210827] . This approach has been criticized for losing data on sensitivity and specificity of the test. Similar to the univariate method, the bivariate method employs a random effect to take into account the within study correlation [@pmid16168343]. Additionally, the bivariate method also accounts 
-for the between-study correlation in sensitivity and specificity. Bivariate analysis is performed using _mada_ package. A Bayesian library for bivariate analysis _meta4diag_ is illustrated later.
+for the between-study correlation in sensitivity and specificity. Bivariate analysis is performed using _mada_ package. A [Bayesian library][Bayesian Metaanalysis] for bivariate analysis _meta4diag_ is illustrated later.
 
 The example below is taken from a metaanalysis of spot sign as predictor 
 expansion of intracerebral hemorrhage [@pmid31272327]. The data for this 
@@ -611,12 +620,9 @@ summary(sumss)
 ### Metaanalysis of clinical trial.
 
 Fixed effect (Peto or Mantel-Haenszel) approaches assume that the population is the same for all studies and thus each study is the source of error. Random 
-effect (DerSimonian Laird) assumes an additional source of error between studies.The random effect approach results in more conservate estimate of effect size confidence interval. A criticism of DerSimnonian and Laird approach is that it is prone to type I error especially when the number of number of studies is small (n<20) or moderate heterogeneity. It's estimated that 25% of the 
-significant findings with DerSimonian Laird method may be non-significant with Hartung-Knapp method (BMC Medical Research Methodology 2014, 14:25). The Hartung-Knapp method (Stat Med 2001;20:3875-89) estimate the between studies variance and treat it as fixed. It employs quantile of t-distribution rather 
-than normal distribution. The Hartung-Knapp method is available in meta and metafor package.
+effect (DerSimonian Laird) assumes an additional source of error between studies.The random effect approach results in more conservate estimate of effect size confidence interval. A criticism of DerSimnonian and Laird approach is that it is prone to type I error especially when the number of number of studies is small (n<20) or moderate heterogeneity. It's estimated that 25% of the significant findings with DerSimonian Laird method may be non-significant with Hartung-Knapp method (BMC Medical Research Methodology 2014, 14:25). The Hartung-Knapp method (Stat Med 2001;20:3875-89) estimate the between studies variance and treat it as fixed. It employs quantile of t-distribution rather than normal distribution. The Hartung-Knapp method is available in meta and metafor package.
 
-The data is from Jama Cardiology 2020 on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals. Subsequently a meta-analysis in J Am Heart Assoc. 2019;8:e013543. DOI: 10.1161/JAHA.119.013543 reported that contrary to the 
-earlier meta-analysis, Omega-3 lowers the risk of cardiovascular diseases with effect related to dose. The analysis using DerSimonian Laird and Hartung Knapp method is illustrated below.
+The data is from Jama Cardiology on Associations of Omega-3 Fatty Acid Supplement Use With Cardiovascular Disease Risks Meta-analysis of 10 Trials Involving 77917 Individuals [@pmid29387889]. Subsequently a meta-analysis [@pmid31567003] reported that contrary to the earlier meta-analysis, Omega-3 lowers the risk of cardiovascular diseases with effect related to dose. The analysis using DerSimonian Laird and Hartung Knapp method is illustrated below.
 
 ```{r 03-Statistics-17-1, warning=F}
 library(tidyverse)

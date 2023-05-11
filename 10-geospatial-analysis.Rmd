@@ -168,7 +168,7 @@ msclinic_sf<-st_as_sf(msclinic,crs=4283)
 Obtain the Brisbane data as _sf_ object.
 
 ```{r 10-geospatial-analysis-5-1}
-ComCentre <- osmdata_sf(query)
+ComCentre <- osmdata::osmdata_sf(query)
 names(ComCentre$osm_points)
 ```
 
@@ -191,7 +191,7 @@ _leaflet_. The _leaflet_ library can be called directly using _tmap_leaflet_
 ```{r 10-geospatial-analysis-5-3}
 #extract bounding box for Brisbane
 
-Ballarat <- getbb("Brisbane, australia", format_out = "sf_polygon")$multipolygon
+Ballarat <- osmdata::getbb("Brisbane, australia", format_out = "sf_polygon")$multipolygon
 
 
 library(tmap)
@@ -200,7 +200,7 @@ library(tmap)
 tmap_mode("view")
 
 #plot outline of Ballarat
-  tm_shape(Brisbane)+
+  tm_shape(Ballarat)+
  tm_borders()+
 
   #plot community centres
@@ -728,8 +728,7 @@ tFIXED<-tm_shape(DKnuts2_sf2)+tm_polygons("FIXED.EFF")
 tIID<-tm_shape(DKnuts2_sf2)+tm_polygons("IID.EFF")
 ```
 
-This next paragraph involves the use of spatial random effects in regression models. Examples include conditional autoregressive (CAR) and intrinsic CAR 
-(ICAR) 
+This next paragraph involves the use of spatial random effects in regression models. Examples include conditional autoregressive (CAR) and intrinsic CAR (ICAR). 
 
 ```{r 10-geospatial-analysis-9-2, eval=F}
 # Create sparse adjacency matrix
@@ -866,7 +865,7 @@ library(brms)
 
 ```
 
-## Machine learning
+## Machine learning in spatial analysis
 
 Up until now we have used frequentist and Bayesian spatial regression methods. Spatial data can also be analysed using machine learning such as random forest. 
 

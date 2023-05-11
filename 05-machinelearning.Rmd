@@ -60,7 +60,7 @@ random forest model.
 
 The machine learning models are tuned using _caret_ library.
 
-```{r 05-machinelearning-3}
+```{r 05-machinelearning-3, warning=F}
 
 #https://topepo.github.io/caret/index.html
 library(caret)
@@ -103,11 +103,78 @@ roc_rf
 
 ```
 
+### Random survival forest
+
+Random survival forest example is provided below using _rfsrc_ library. The _survex_ library is used for explanation on the model.
+
+```{r 05-machinelearning-3-1, warning=F}
+library(survival)
+library(survminer)
+library(randomForestSRC)
+library(survex)
+library(dplyr)
+#data from survival package on NCCTG lung cancer trial
+#https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
+data(cancer, package="survival")
+
+#time in days
+#status censored=1, dead=2
+#sex:Male=1 Female=2
+
+cancer2<- cancer %>% mutate(
+  status=ifelse(status==1,0,1)) %>%
+  rename(Dead=status, Days=time)
+
+time=cancer2$Days
+status=cancer2$Dead
+
+RF<- rfsrc(Surv(Days, Dead) ~ age+sex+ph.ecog+ph.karno+wt.loss, data = cancer2)
+
+#specify library to avoid confusion with dplyr
+explainer<-survex::explain(RF)
+
+```
+
+
+Dynamic AUC
+
+```{r 05-machinelearning-3-2, warning=F}
+y <- explainer$y
+times <- explainer$times
+
+surv <- explainer$predict_survival_function(RF, explainer$data, times)
+
+cd_auc(y, surv = surv, times = times)
+
+```
+
+
+Plot variable importance for random survival forest using permutation of features and measure impact on Brier score.
+
+```{r 05-machinelearning-3-3, warning=F}
+
+ModelRF<-survex::model_parts(explainer)
+
+
+plot(ModelRF)
+
+
+```
+
+Plot partial dependence
+
+```{r 05-machinelearning-3-4, warning=F}
+Model_PD<-model_profile(explainer)
+plot(Model_PD)
+```
+
+
+
 ## Gradient Boost Machine
 
 Gradient boost machine is available as _gradient boost machine_gbm_. 
 
-```{r 05-machinelearning-4}
+```{r 05-machinelearning-4, warning=F}
 
 #the breast cancer data from random forest is used here
 
@@ -139,7 +206,7 @@ roc_gbm
 
 In the examples above, the outcome variable is treated as a factor. Extreme gradient boost machine _xgboost_ requires conversion to numeric variable. 
 
-```{r 05-machinelearning-4-1}
+```{r 05-machinelearning-4-1, warning=F}
 library(xgboost)
 library(caret)
 
@@ -201,7 +268,7 @@ xgb.plot.tree(model = model, trees = 1:2)
 
 K nearest neighbour (KNN) uses ‘feature similarity based on measure of distance between data points to make prediction. The K in KNN refers to the number of neighbours to define the case for similarity. K nearest neighbour is available from the _caret_ library.
 
-```{r 05-machinelearning-5}
+```{r 05-machinelearning-5, warning=F}
 
 library(caret)
 
@@ -271,7 +338,7 @@ enhance data which may not be easily separated in its native space. It
 manipulates data from low dimension to higher dimension in feature space and 
 which can reveal relationship not discernible in low dimensional space. It does this around the hyperparameter controlling the margin of the data from a fitted line in a way not dissimilar from fitting a regression line based on minimising least squares. The default setting is radial basis function.
 
-```{r 05-machinelearning-6}
+```{r 05-machinelearning-6, warning=F}
 library(e1071)
 library(caret)
 
@@ -302,7 +369,7 @@ roc_svm
 
 Random forest can be used for performing survival analysis using _ranger_, _randomforestSRC_. The example below is an example using the lung cancer trial.
 
-```{r 05-machinelearning-7}
+```{r 05-machinelearning-7, warning=F}
 #data from survival package on NCCTG lung cancer trial
 #https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
 data(cancer, package="survival")
@@ -336,21 +403,21 @@ print("error:"); print(survival_forest$prediction.error)
 
 Print variable importance
 
-```{r 05-machinelearning-7-1}
+```{r 05-machinelearning-7-1, warning=F}
 sort(survival_forest$variable.importance)
 
 ```
 
 Probability of survival  
 
-```{r 05-machinelearning-7-2}
+```{r 05-machinelearning-7-2, warning=F}
 plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
 lines(survival_forest$unique.death.times, survival_forest$survival[56,], col='blue')
 ```
 
 
 
-```{r 05-machinelearning-7-3}
+```{r 05-machinelearning-7-3, warning=F}
 
 plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
 for (x in c(2:100)) {
@@ -395,7 +462,7 @@ consensusmap(estim.r)
 
 The optimal number of rank for this data is likely to be 4.
 
-```{r 05-machinelearning-8-1}
+```{r 05-machinelearning-8-1, warning=F}
 #Using the data above we can use which argument to find the order
 #since the starting point is 2 we just need to add 1
 Rank=which(estim.r$measures$cophenetic==max(estim.r$measures$cophenetic))+1
@@ -416,7 +483,7 @@ First we will illustrate with a simple relationship among fruit. Note in this ex
 
 There are several libraries for FCA. Here we will use _multiplex_. The _fcaR_ library can also handle fuzzy data.
 
-```{r 05-machinelearning-9}
+```{r 05-machinelearning-9, warning=F}
 
 library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
 library(Rgraphviz) #plot hasse diagram
@@ -448,7 +515,7 @@ diagram.levels(po)
 
 Next we illustrate FCA in network of hospitals in South-Eastern Melbourne. The objects are the hospitals and the attributes are the services available in those hospitals.
 
-```{r 05-machinelearning-9-1}
+```{r 05-machinelearning-9-1, warning=F}
 
 #library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
 #library(Rgraphviz) #plot hasse diagram

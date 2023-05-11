@@ -158,7 +158,6 @@ library(ggplot2)
 qplot(Age, data=Leukemia, bins=8)
 ```
 
-
 Now a more complex version of histogram with ggplot with color added.
 
 ```{r 01-intro-3-1}
@@ -825,8 +824,7 @@ n
 
 The _ggplot2_ and _sf_ libraries are extended to include drawing of voronoi. Voronoi is a special type of polygon. It can be seen as a mathematical approach 
 to partition regions such that all points within the polygons are closest (depending on distance metrics) to the seed points. Voronoi has been used in disease mapping (John Snow mapping of Broad Street Cholera outbreak) and meteorology (Alfred Thiessen polygon method for measuring rainfall in basin). 
-This is a more complex coding task. It uses the _geom_voronoi_ call from _gggvoronoi_ library. Some libraries have vignettes to help you implement the codes. The vignette in the _ggvoronoi_ library can be called using _vignette("ggvoronoi")_. The _osmdata_ library will be used to provide map from OpenStreetMap. A related library is _OpenStreetMap_. The latter library uses raster file whereas _osmdata_ provides vectorised map data. In the chapter on Geospatial Analysis we will expand on this theme with interactive map. One issue with the use of voronoi is that there are infinite sets and so a boundary needs 
-to set. In the example below, the boundary was set for Greater Melbourne.
+This is a more complex coding task. It uses the _geom_voronoi_ call from _ggvoronoi_ library. Some libraries have vignettes to help you implement the codes. The vignette in the _ggvoronoi_ library can be called using _vignette("ggvoronoi")_. The _osmdata_ library will be used to provide map from OpenStreetMap. A related library is _OpenStreetMap_. The latter library uses raster file whereas _osmdata_ provides vectorised map data. In the chapter on Geospatial Analysis we will expand on this theme with interactive map. One issue with the use of voronoi is that there are infinite sets and so a boundary needs to set. In the example below, the boundary was set for Greater Melbourne.
 
 ```{r 01-intro-20}
 library(dplyr)
@@ -938,7 +936,7 @@ ggortho(colinIm)
 Plotly has its own API and uses _Dash_ to upload the figure on the web. It has additional ability for interaction as well as create a video. Examples are provided with calling plotly directly or via _ggplot2_. In the examples below, 
 the plots are performed using _ggplot2_ and then pass onto _plotly_ using _ggplotly_ function. The example uses the Leukemia dataset from _Stat2Data_ library. 
 
-### Scatter plot  
+### Scatter plot with plotly
 
 The plotly syntax uses a _~_ after the _=_ symbol to identify a variable for plotting.
 
@@ -955,9 +953,9 @@ plot_ly(x=~Age,y=~Smear, #percentage of blast
 
 ```
 
-### Bar plot
+### Bar plot with plotly
 
-Plotly can uses a ggplot object direcly.
+Plotly can uses a ggplot object directly.
 
 ```{r 01-intro-24-1}
 #using the epilepsy data in p generated above for bar plot
