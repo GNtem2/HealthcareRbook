@@ -241,3 +241,10 @@ vectorising-nifti-object
 mni-template
 aal-atlas
 eve-template
+atlases
+sensorimotor-tract-atlas
+random-survival-forest
+scatter-plot-with-plotly
+bar-plot-with-plotly
+machine-learning-in-spatial-analysis
+section

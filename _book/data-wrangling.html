@@ -24,7 +24,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2023-03-23" />
+<meta name="date" content="2023-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,8 +161,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.9" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.9</b> ggneuro</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.4.1</b> Scatter plot</a></li>
-<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.4.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-with-plotly"><i class="fa fa-check"></i><b>2.4.1</b> Scatter plot with plotly</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-with-plotly"><i class="fa fa-check"></i><b>2.4.2</b> Bar plot with plotly</a></li>
 <li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.4.3</b> Heatmap</a></li>
 <li class="chapter" data-level="2.4.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.4.4</b> map</a></li>
 </ul></li>
@@ -267,7 +267,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1.2" data-path="machine-learning.html"><a href="machine-learning.html#conditional-decision-tree"><i class="fa fa-check"></i><b>6.1.2</b> Conditional decision tree</a></li>
 <li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
+<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="machine-learning.html"><a href="machine-learning.html#random-survival-forest"><i class="fa fa-check"></i><b>6.2.1</b> Random survival forest</a></li>
+</ul></li>
 <li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="machine-learning.html"><a href="machine-learning.html#extreme-gradient-boost-machine"><i class="fa fa-check"></i><b>6.3.1</b> Extreme gradient boost machine</a></li>
 </ul></li>
@@ -370,7 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#inla"><i class="fa fa-check"></i><b>11.4.3</b> INLA</a></li>
 <li class="chapter" data-level="11.4.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#stan"><i class="fa fa-check"></i><b>11.4.4</b> Stan</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#machine-learning-1"><i class="fa fa-check"></i><b>11.5</b> Machine learning</a></li>
+<li class="chapter" data-level="11.5" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#machine-learning-in-spatial-analysis"><i class="fa fa-check"></i><b>11.5</b> Machine learning in spatial analysis</a></li>
 <li class="chapter" data-level="11.6" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>11.6</b> Spatio-temporal regression</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>12</b> App</a><ul>
@@ -781,12 +783,12 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
 <span id="cb99-12"><a href="data-wrangling.html#cb99-12"></a>)</span>
 <span id="cb99-13"><a href="data-wrangling.html#cb99-13"></a></span>
 <span id="cb99-14"><a href="data-wrangling.html#cb99-14"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Scan_date) <span class="op">%&gt;%</span><span class="st"> </span>gt<span class="op">::</span><span class="kw">gt</span>()</span></code></pre></div>
-<div id="orpwgnixds" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="lsyhqbldvm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#orpwgnixds .gt_table {
+#lsyhqbldvm .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -811,7 +813,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-left-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_heading {
+#lsyhqbldvm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -823,7 +825,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-right-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_title {
+#lsyhqbldvm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -835,7 +837,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-bottom-width: 0;
 }
 
-#orpwgnixds .gt_subtitle {
+#lsyhqbldvm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -847,13 +849,13 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-top-width: 0;
 }
 
-#orpwgnixds .gt_bottom_border {
+#lsyhqbldvm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_col_headings {
+#lsyhqbldvm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -868,7 +870,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-right-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_col_heading {
+#lsyhqbldvm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -888,7 +890,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   overflow-x: hidden;
 }
 
-#orpwgnixds .gt_column_spanner_outer {
+#lsyhqbldvm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -900,15 +902,15 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   padding-right: 4px;
 }
 
-#orpwgnixds .gt_column_spanner_outer:first-child {
+#lsyhqbldvm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#orpwgnixds .gt_column_spanner_outer:last-child {
+#lsyhqbldvm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#orpwgnixds .gt_column_spanner {
+#lsyhqbldvm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -920,7 +922,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   width: 100%;
 }
 
-#orpwgnixds .gt_group_heading {
+#lsyhqbldvm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -945,7 +947,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   vertical-align: middle;
 }
 
-#orpwgnixds .gt_empty_group_heading {
+#lsyhqbldvm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -960,15 +962,15 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   vertical-align: middle;
 }
 
-#orpwgnixds .gt_from_md > :first-child {
+#lsyhqbldvm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#orpwgnixds .gt_from_md > :last-child {
+#lsyhqbldvm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#orpwgnixds .gt_row {
+#lsyhqbldvm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -987,7 +989,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   overflow-x: hidden;
 }
 
-#orpwgnixds .gt_stub {
+#lsyhqbldvm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1000,7 +1002,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   padding-right: 5px;
 }
 
-#orpwgnixds .gt_stub_row_group {
+#lsyhqbldvm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1014,11 +1016,11 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   vertical-align: top;
 }
 
-#orpwgnixds .gt_row_group_first td {
+#lsyhqbldvm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#orpwgnixds .gt_summary_row {
+#lsyhqbldvm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1028,16 +1030,16 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   padding-right: 5px;
 }
 
-#orpwgnixds .gt_first_summary_row {
+#lsyhqbldvm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_first_summary_row.thick {
+#lsyhqbldvm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#orpwgnixds .gt_last_summary_row {
+#lsyhqbldvm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1047,7 +1049,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-bottom-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_grand_summary_row {
+#lsyhqbldvm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1057,7 +1059,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   padding-right: 5px;
 }
 
-#orpwgnixds .gt_first_grand_summary_row {
+#lsyhqbldvm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1067,11 +1069,11 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-top-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_striped {
+#lsyhqbldvm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#orpwgnixds .gt_table_body {
+#lsyhqbldvm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1080,7 +1082,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-bottom-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_footnotes {
+#lsyhqbldvm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1094,7 +1096,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-right-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_footnote {
+#lsyhqbldvm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1103,7 +1105,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   padding-right: 5px;
 }
 
-#orpwgnixds .gt_sourcenotes {
+#lsyhqbldvm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1117,7 +1119,7 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   border-right-color: #D3D3D3;
 }
 
-#orpwgnixds .gt_sourcenote {
+#lsyhqbldvm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1125,60 +1127,60 @@ that <em>ifelse</em> argument convert date time data to numeric class. This can 
   padding-right: 5px;
 }
 
-#orpwgnixds .gt_left {
+#lsyhqbldvm .gt_left {
   text-align: left;
 }
 
-#orpwgnixds .gt_center {
+#lsyhqbldvm .gt_center {
   text-align: center;
 }
 
-#orpwgnixds .gt_right {
+#lsyhqbldvm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#orpwgnixds .gt_font_normal {
+#lsyhqbldvm .gt_font_normal {
   font-weight: normal;
 }
 
-#orpwgnixds .gt_font_bold {
+#lsyhqbldvm .gt_font_bold {
   font-weight: bold;
 }
 
-#orpwgnixds .gt_font_italic {
+#lsyhqbldvm .gt_font_italic {
   font-style: italic;
 }
 
-#orpwgnixds .gt_super {
+#lsyhqbldvm .gt_super {
   font-size: 65%;
 }
 
-#orpwgnixds .gt_footnote_marks {
+#lsyhqbldvm .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#orpwgnixds .gt_asterisk {
+#lsyhqbldvm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#orpwgnixds .gt_slash_mark {
+#lsyhqbldvm .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#orpwgnixds .gt_fraction_numerator {
+#lsyhqbldvm .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#orpwgnixds .gt_fraction_denominator {
+#lsyhqbldvm .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1905,7 +1907,7 @@ will rename the column by index. There are several columns containing commas. Ra
 <span id="cb208-3"><a href="data-wrangling.html#cb208-3"></a></span>
 <span id="cb208-4"><a href="data-wrangling.html#cb208-4"></a><span class="co">#length of list</span></span>
 <span id="cb208-5"><a href="data-wrangling.html#cb208-5"></a><span class="kw">length</span>(mca.list)</span></code></pre></div>
-<pre><code>## [1] 29</code></pre>
+<pre><code>## [1] 42</code></pre>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="data-wrangling.html#cb210-1"></a><span class="co">#read multiple files using lapply function</span></span>
 <span id="cb210-2"><a href="data-wrangling.html#cb210-2"></a></span>
 <span id="cb210-3"><a href="data-wrangling.html#cb210-3"></a><span class="co">#use lappy to read in the nifti files</span></span>
@@ -1993,7 +1995,8 @@ will rename the column by index. There are several columns containing commas. Ra
 <pre><code>##  [1]   0.000   0.000   0.000   0.000  69.000   3.624   8.768  58.200 326.760
 ## [10]   1.608   0.000   3.904   3.328  66.776 106.976  70.928  26.912  11.768
 ## [19]  17.592  14.720 151.872  87.528   0.000  24.192  80.248 152.792  69.552
-## [28]  25.576   0.000</code></pre>
+## [28]  25.576   0.000   8.644   4.230   3.781   3.643   5.720   5.061   8.644
+## [37]   4.230   3.781   3.643   5.720   5.061  43.968</code></pre>
 </div>
 <div id="vectorising-nifti-object" class="section level3">
 <h3><span class="header-section-number">3.7.6</span> Vectorising nifti object</h3>
@@ -2070,7 +2073,7 @@ will rename the column by index. There are several columns containing commas. Ra
 ## - 1 x 1 x 1 mm per voxel</code></pre>
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="data-wrangling.html#cb244-1"></a>neurobase<span class="op">::</span><span class="kw">ortho2</span>(result<span class="op">$</span>image)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/02-Data-Wrangling-29-1.png" width="672" /></p>
-<p>Output from <em>RNiftyReg</em> are <em>niftiImage</em> object. They can be converted to <em>oro.nifti</em> object using <em>nii2oro</em> function.</p>
+<p>Output from <em>RNiftyReg</em> are <em>niftiImage</em> objects. They can be converted to <em>oro.nifti</em> objects using <em>nii2oro</em> function.</p>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-wrangling.html#cb245-1"></a>otarget&lt;-<span class="kw">nii2oro</span>(target)</span>
 <span id="cb245-2"><a href="data-wrangling.html#cb245-2"></a>oimage&lt;-<span class="kw">nii2oro</span>(result<span class="op">$</span>image)</span>
 <span id="cb245-3"><a href="data-wrangling.html#cb245-3"></a></span>
@@ -2093,7 +2096,7 @@ will rename the column by index. There are several columns containing commas. Ra
 <span id="cb248-5"><a href="data-wrangling.html#cb248-5"></a>neurobase<span class="op">::</span><span class="kw">ortho2</span>(colin_like)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/02-Data-Wrangling-30-1.png" width="672" /></p>
 <p>Resampling an image to different dimensions. This example is different from above in which rescaling is performed as part of registration to higher resolution image. Here the <em>rescale</em> function from <em>RNiftyReg</em> library is used to change the dimensions from 1x1x1 mm to 2x2x2 mm.</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="data-wrangling.html#cb249-1"></a>ica1000.rescale&lt;-RNiftyReg<span class="op">::</span><span class="kw">rescale</span>(ica1000,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="data-wrangling.html#cb249-1"></a>ica1000.rescale&lt;-RNiftyReg<span class="op">::</span><span class="kw">rescale</span>(ica1000,<span class="kw">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">5</span>))</span>
 <span id="cb249-2"><a href="data-wrangling.html#cb249-2"></a></span>
 <span id="cb249-3"><a href="data-wrangling.html#cb249-3"></a>ica1000</span></code></pre></div>
 <pre><code>## Image array of mode &quot;double&quot; (6.9 Mb)
@@ -2102,16 +2105,20 @@ will rename the column by index. There are several columns containing commas. Ra
 <div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="data-wrangling.html#cb251-1"></a><span class="co">#compare with rescale</span></span>
 <span id="cb251-2"><a href="data-wrangling.html#cb251-2"></a></span>
 <span id="cb251-3"><a href="data-wrangling.html#cb251-3"></a>ica1000.rescale</span></code></pre></div>
-<pre><code>## Image array of mode &quot;double&quot; (55.1 Mb)
-## - 182 x 218 x 182 voxels
-## - 1 x 1 x 1 mm per voxel</code></pre>
+<pre><code>## Image array of mode &quot;double&quot; (855.6 Kb)
+## - 45 x 54 x 45 voxels
+## - 4 x 4 x 4 mm per voxel</code></pre>
 </div>
 <div id="mni-template" class="section level3">
 <h3><span class="header-section-number">3.7.10</span> MNI template</h3>
-<p>There are several different MRI templates. The well known one is the MNI 152 template <span class="citation">(Mazziotta J <a href="#ref-pmid11545704" role="doc-biblioref">2001</a>)</span>. This was developed from male right-handed medical students.</p>
+<p>There are several different MRI templates. The well known one is the MNI 152 template <span class="citation">(Mazziotta J <a href="#ref-pmid11545704" role="doc-biblioref">2001</a>)</span>. This was developed from male right-handed medical students. The MNI 152 is also known as International Consortium for Brain Mapping (ICBM) 152.</p>
+<div id="atlases" class="section level4">
+<h4><span class="header-section-number">3.7.10.1</span> Atlases</h4>
+<p>A list of available atlases for human and animals is available at <a href="https://loni.usc.edu/research/atlases" class="uri">https://loni.usc.edu/research/atlases</a>.</p>
+</div>
 <div id="aal-atlas" class="section level4">
-<h4><span class="header-section-number">3.7.10.1</span> AAL atlas</h4>
-<p>The automated anatomical labeling (AAL) atlas contains 45 volume of interest <span class="citation">(Tzourio-Mazoyer N <a href="#ref-pmid11771995" role="doc-biblioref">2002</a>)</span>. The atlas is aligned to MNI 152 coordinates.</p>
+<h4><span class="header-section-number">3.7.10.2</span> AAL atlas</h4>
+<p>The automated anatomical labeling (AAL) atlas of activation contains 45 volume of interest in each hemisphere <span class="citation">(Tzourio-Mazoyer N <a href="#ref-pmid11771995" role="doc-biblioref">2002</a>)</span>. The atlas is aligned to MNI 152 coordinates. The updated AAL has additional parcellation of orbitofrontal cortex. AAL3 update includes further parcellation of thalamus.</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="data-wrangling.html#cb253-1"></a><span class="kw">library</span>(rgl)</span>
 <span id="cb253-2"><a href="data-wrangling.html#cb253-2"></a><span class="kw">library</span>(misc3d)</span>
 <span id="cb253-3"><a href="data-wrangling.html#cb253-3"></a><span class="kw">library</span>(MNITemplate)</span>
@@ -2180,7 +2187,7 @@ will rename the column by index. There are several columns containing commas. Ra
 <span id="cb259-20"><a href="data-wrangling.html#cb259-20"></a><span class="co">#rglwidget()</span></span></code></pre></div>
 </div>
 <div id="eve-template" class="section level4">
-<h4><span class="header-section-number">3.7.10.2</span> Eve template</h4>
+<h4><span class="header-section-number">3.7.10.3</span> Eve template</h4>
 <p>The Eve template is from John Hopkins <span class="citation">(“Atlas-Based Whole Brain White Matter Analysis Using Large Deformation Diffeomorphic Metric Mapping: Application to Normal Elderly and Alzheimer’s Disease Participants.” <a href="#ref-pmid19385016" role="doc-biblioref">2009</a>)</span>. It is a single subject high resolution white matter atlas that has been morphed into MNI 152 coordinates. The atlas is parcellated into 176 regions based on ICBM-DTI-81 atlas.</p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-wrangling.html#cb260-1"></a><span class="kw">library</span>(EveTemplate)</span>
 <span id="cb260-2"><a href="data-wrangling.html#cb260-2"></a></span>
@@ -2212,11 +2219,26 @@ will rename the column by index. There are several columns containing commas. Ra
 <span id="cb263-10"><a href="data-wrangling.html#cb263-10"></a></span>
 <span id="cb263-11"><a href="data-wrangling.html#cb263-11"></a>neurobase<span class="op">::</span><span class="kw">ortho2</span>(eve_labels, <span class="dt">col =</span> cols, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, breaks))</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/02-Data-Wrangling-32-1-1.png" width="672" /></p>
+</div>
+<div id="sensorimotor-tract-atlas" class="section level4">
+<h4><span class="header-section-number">3.7.10.4</span> Sensorimotor tract atlas</h4>
+<p>Template for corticofugal tracts from primary motor cortex, dorsal premotor cortex, ventral premotor cortex, supplementary motor area (SMA), pre-supplementary motor area (preSMA), and primary somatosensory cortex is available from <span class="citation">(Derek B Archer <a href="#ref-pmid28334314" role="doc-biblioref">2018</a>)</span>. Below is an illustration of the M1 tract obtained from LRNLAB.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-wrangling.html#cb264-1"></a>RightM1&lt;-<span class="kw">readNifti</span>(<span class="st">&quot;./Ext-Data/Right-M1-S-MATT.nii&quot;</span>)</span>
+<span id="cb264-2"><a href="data-wrangling.html#cb264-2"></a></span>
+<span id="cb264-3"><a href="data-wrangling.html#cb264-3"></a>neurobase<span class="op">::</span><span class="kw">ortho2</span>(RightM1)</span></code></pre></div>
+<p><img src="Applications-of-R-in-Healthcare_files/figure-html/02-Data-Wrangling-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="data-wrangling.html#cb265-1"></a><span class="co">#to down weight the voxel from 1 mm to 2 mm</span></span>
+<span id="cb265-2"><a href="data-wrangling.html#cb265-2"></a>RightM1.rescale&lt;-RNiftyReg<span class="op">::</span><span class="kw">rescale</span>(RightM1,<span class="kw">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">5</span>))</span>
+<span id="cb265-3"><a href="data-wrangling.html#cb265-3"></a></span>
+<span id="cb265-4"><a href="data-wrangling.html#cb265-4"></a>RightM1o&lt;-<span class="kw">nii2oro</span>(RightM1)</span>
+<span id="cb265-5"><a href="data-wrangling.html#cb265-5"></a></span>
+<span id="cb265-6"><a href="data-wrangling.html#cb265-6"></a><span class="co">#dimensions of RightM1o (182 218 182) and eve_labels (181 217 181) are dissimilar</span></span>
+<span id="cb265-7"><a href="data-wrangling.html#cb265-7"></a><span class="co">#overlay(eve_labels, y=RightM1o, z=90,plot.type=&quot;single&quot;)</span></span></code></pre></div>
 <p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure <a href="#fig:nice-fig"><strong>??</strong></a>. Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table <a href="data-wrangling.html#tab:nice-tab">3.1</a>.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-wrangling.html#cb264-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb264-2"><a href="data-wrangling.html#cb264-2"></a>  df, <span class="dt">caption =</span> <span class="st">&#39;Table containing uncleaned data above&#39;</span>,</span>
-<span id="cb264-3"><a href="data-wrangling.html#cb264-3"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></span>
-<span id="cb264-4"><a href="data-wrangling.html#cb264-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-wrangling.html#cb266-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb266-2"><a href="data-wrangling.html#cb266-2"></a>  df, <span class="dt">caption =</span> <span class="st">&#39;Table containing uncleaned data above&#39;</span>,</span>
+<span id="cb266-3"><a href="data-wrangling.html#cb266-3"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></span>
+<span id="cb266-4"><a href="data-wrangling.html#cb266-4"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nice-tab">Table 3.1: </span>Table containing uncleaned data above</caption>
 <colgroup>
@@ -2280,10 +2302,10 @@ will rename the column by index. There are several columns containing commas. Ra
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="data-wrangling.html#cb265-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb265-2"><a href="data-wrangling.html#cb265-2"></a>  Table2, <span class="dt">caption =</span> <span class="st">&#39;Table containing cleaned data above&#39;</span>,</span>
-<span id="cb265-3"><a href="data-wrangling.html#cb265-3"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></span>
-<span id="cb265-4"><a href="data-wrangling.html#cb265-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="data-wrangling.html#cb267-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb267-2"><a href="data-wrangling.html#cb267-2"></a>  Table2, <span class="dt">caption =</span> <span class="st">&#39;Table containing cleaned data above&#39;</span>,</span>
+<span id="cb267-3"><a href="data-wrangling.html#cb267-3"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></span>
+<span id="cb267-4"><a href="data-wrangling.html#cb267-4"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nice-tab2">Table 3.2: </span>Table containing cleaned data above</caption>
 <colgroup>
@@ -2870,6 +2892,9 @@ will rename the column by index. There are several columns containing commas. Ra
 </div>
 <div id="ref-pmid19385016">
 <p>“Atlas-Based Whole Brain White Matter Analysis Using Large Deformation Diffeomorphic Metric Mapping: Application to Normal Elderly and Alzheimer’s Disease Participants.” 2009. <em>Neuroimage</em> 46 (2): 486–99. <a href="https://doi.org/10.1016/j.neuroimage.2009.01.002">https://doi.org/10.1016/j.neuroimage.2009.01.002</a>.</p>
+</div>
+<div id="ref-pmid28334314">
+<p>Derek B Archer, Stephen A Coombes, David E Vaillancourt. 2018. “A Template and Probabilistic Atlas of the Human Sensorimotor Tracts Using Diffusion Mri.” <em>Cerebral Cortex</em> 28 (5): 1685–99. <a href="https://doi.org/10.1093/cercor/bhx066">https://doi.org/10.1093/cercor/bhx066</a>.</p>
 </div>
 <div id="ref-pmid11545704">
 <p>Mazziotta J, Evans A, Toga A. 2001. “A Probabilistic Atlas and Reference System for the Human Brain: International Consortium for Brain Mapping (Icbm).” <em>Philos Trans R Soc Lond B Biol Sci</em> 356 (1412): 1293–1322. <a href="https://doi.org/10.1098/rstb.2001.0915">https://doi.org/10.1098/rstb.2001.0915</a>.</p>
