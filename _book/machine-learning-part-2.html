@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Machine Learning Part 2 | Applications of R in Healthcare</title>
   <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Machine Learning Part 2 | Applications of R in Healthcare" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="GNtem2/HealthcareRbook" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2023-03-02" />
+<meta name="date" content="2024-02-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,8 @@
   
 <link rel="prev" href="machine-learning.html"/>
 <link rel="next" href="bayesian-analysis.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,23 +49,24 @@
 
 
 
-
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -85,13 +86,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -104,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -116,6 +117,11 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -135,9 +141,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a><ul>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction to R</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#plot-using-base-r"><i class="fa fa-check"></i><b>2.1</b> Plot using base R</a></li>
-<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.2</b> ggplot2</a><ul>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#ggplot2"><i class="fa fa-check"></i><b>2.2</b> ggplot2</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="intro.html"><a href="intro.html#histogram"><i class="fa fa-check"></i><b>2.2.1</b> Histogram</a></li>
 <li class="chapter" data-level="2.2.2" data-path="intro.html"><a href="intro.html#bar-plot"><i class="fa fa-check"></i><b>2.2.2</b> Bar plot</a></li>
 <li class="chapter" data-level="2.2.3" data-path="intro.html"><a href="intro.html#pie-chart"><i class="fa fa-check"></i><b>2.2.3</b> Pie chart</a></li>
@@ -149,156 +157,236 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.9" data-path="intro.html"><a href="intro.html#gantt-chart"><i class="fa fa-check"></i><b>2.2.9</b> Gantt chart</a></li>
 <li class="chapter" data-level="2.2.10" data-path="intro.html"><a href="intro.html#heatmap"><i class="fa fa-check"></i><b>2.2.10</b> Heatmap</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.3</b> ggplot2 extra</a><ul>
+<li class="chapter" data-level="2.3" data-path="intro.html"><a href="intro.html#ggplot2-extra"><i class="fa fa-check"></i><b>2.3</b> ggplot2 extra</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="intro.html"><a href="intro.html#alluvial-and-sankey-diagram"><i class="fa fa-check"></i><b>2.3.1</b> Alluvial and Sankey diagram</a></li>
 <li class="chapter" data-level="2.3.2" data-path="intro.html"><a href="intro.html#survival-plot"><i class="fa fa-check"></i><b>2.3.2</b> Survival plot</a></li>
 <li class="chapter" data-level="2.3.3" data-path="intro.html"><a href="intro.html#ggraph-and-tidygraph"><i class="fa fa-check"></i><b>2.3.3</b> ggraph and tidygraph</a></li>
 <li class="chapter" data-level="2.3.4" data-path="intro.html"><a href="intro.html#ggparty-decision-tree"><i class="fa fa-check"></i><b>2.3.4</b> ggparty-decision tree</a></li>
-<li class="chapter" data-level="2.3.5" data-path="intro.html"><a href="intro.html#ggroc--roc-curve"><i class="fa fa-check"></i><b>2.3.5</b> ggROC- ROC curve</a></li>
-<li class="chapter" data-level="2.3.6" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.3.6</b> Map</a></li>
-<li class="chapter" data-level="2.3.7" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.3.7</b> ggwordcloud</a></li>
-<li class="chapter" data-level="2.3.8" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.3.8</b> gganimate</a></li>
-<li class="chapter" data-level="2.3.9" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.9</b> ggneuro</a></li>
+<li class="chapter" data-level="2.3.5" data-path="intro.html"><a href="intro.html#map"><i class="fa fa-check"></i><b>2.3.5</b> Map</a></li>
+<li class="chapter" data-level="2.3.6" data-path="intro.html"><a href="intro.html#ggwordcloud"><i class="fa fa-check"></i><b>2.3.6</b> ggwordcloud</a></li>
+<li class="chapter" data-level="2.3.7" data-path="intro.html"><a href="intro.html#gganimate"><i class="fa fa-check"></i><b>2.3.7</b> gganimate</a></li>
+<li class="chapter" data-level="2.3.8" data-path="intro.html"><a href="intro.html#ggneuro"><i class="fa fa-check"></i><b>2.3.8</b> ggneuro</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-1"><i class="fa fa-check"></i><b>2.4.1</b> Scatter plot</a></li>
-<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-1"><i class="fa fa-check"></i><b>2.4.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.4" data-path="intro.html"><a href="intro.html#plotly"><i class="fa fa-check"></i><b>2.4</b> plotly</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="intro.html"><a href="intro.html#scatter-plot-with-plotly"><i class="fa fa-check"></i><b>2.4.1</b> Scatter plot with plotly</a></li>
+<li class="chapter" data-level="2.4.2" data-path="intro.html"><a href="intro.html#bar-plot-with-plotly"><i class="fa fa-check"></i><b>2.4.2</b> Bar plot with plotly</a></li>
 <li class="chapter" data-level="2.4.3" data-path="intro.html"><a href="intro.html#heatmap-1"><i class="fa fa-check"></i><b>2.4.3</b> Heatmap</a></li>
 <li class="chapter" data-level="2.4.4" data-path="intro.html"><a href="intro.html#map-1"><i class="fa fa-check"></i><b>2.4.4</b> map</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a><ul>
-<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a><ul>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data Wrangling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data"><i class="fa fa-check"></i><b>3.1</b> Data</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="data-wrangling.html"><a href="data-wrangling.html#vector-arrays-matrix"><i class="fa fa-check"></i><b>3.1.1</b> Vector, Arrays, Matrix</a></li>
-<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-lapply-sapply"><i class="fa fa-check"></i><b>3.1.2</b> apply, lapply, sapply</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-wrangling.html"><a href="data-wrangling.html#operators"><i class="fa fa-check"></i><b>3.1.2</b> Operators</a></li>
 <li class="chapter" data-level="3.1.3" data-path="data-wrangling.html"><a href="data-wrangling.html#simple-function"><i class="fa fa-check"></i><b>3.1.3</b> Simple function</a></li>
 <li class="chapter" data-level="3.1.4" data-path="data-wrangling.html"><a href="data-wrangling.html#for-loop"><i class="fa fa-check"></i><b>3.1.4</b> for loop</a></li>
+<li class="chapter" data-level="3.1.5" data-path="data-wrangling.html"><a href="data-wrangling.html#apply-lapply-sapply"><i class="fa fa-check"></i><b>3.1.5</b> apply, lapply, sapply</a></li>
+<li class="chapter" data-level="3.1.6" data-path="data-wrangling.html"><a href="data-wrangling.html#functional"><i class="fa fa-check"></i><b>3.1.6</b> Functional</a></li>
+<li class="chapter" data-level="3.1.7" data-path="data-wrangling.html"><a href="data-wrangling.html#iteration"><i class="fa fa-check"></i><b>3.1.7</b> Iteration</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a><ul>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-storage"><i class="fa fa-check"></i><b>3.2</b> Data storage</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#data-frame"><i class="fa fa-check"></i><b>3.2.1</b> Data frame</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#excel-data"><i class="fa fa-check"></i><b>3.2.2</b> Excel data</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#foreign-data"><i class="fa fa-check"></i><b>3.2.3</b> Foreign data</a></li>
 <li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#json-format"><i class="fa fa-check"></i><b>3.2.4</b> json format</a></li>
-<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.2.5</b> DICOM and nifti format</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a><ul>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-data"><i class="fa fa-check"></i><b>3.3</b> Tidy data</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#factors"><i class="fa fa-check"></i><b>3.3.1</b> Factors</a></li>
 <li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#multiple-files"><i class="fa fa-check"></i><b>3.3.2</b> Multiple files</a></li>
-<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#pivot"><i class="fa fa-check"></i><b>3.3.3</b> Pivot</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#tidy-evaluation"><i class="fa fa-check"></i><b>3.3.3</b> Tidy evaluation</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#pivot-wide-and-long"><i class="fa fa-check"></i><b>3.3.4</b> Pivot wide and long</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#regular-expressions"><i class="fa fa-check"></i><b>3.4</b> Regular Expressions</a><ul>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#regular-expressions"><i class="fa fa-check"></i><b>3.4</b> Regular Expressions</a>
+<ul>
 <li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#base-r"><i class="fa fa-check"></i><b>3.4.1</b> base R</a></li>
 <li class="chapter" data-level="3.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#stringr"><i class="fa fa-check"></i><b>3.4.2</b> stringr</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#pdf-to-xcel"><i class="fa fa-check"></i><b>3.5</b> PDF to xcel</a><ul>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#pdf-to-xcel"><i class="fa fa-check"></i><b>3.5</b> PDF to xcel</a>
+<ul>
 <li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#scanned-text-or-picture"><i class="fa fa-check"></i><b>3.5.1</b> Scanned text or picture</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#web-scraping"><i class="fa fa-check"></i><b>3.6</b> Web scraping</a></li>
-<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-medical-images"><i class="fa fa-check"></i><b>3.7</b> Manipulating Medical Images</a><ul>
-<li class="chapter" data-level="3.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-array-of-medical-images"><i class="fa fa-check"></i><b>3.7.1</b> Manipulating array of medical images</a></li>
-<li class="chapter" data-level="3.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operations"><i class="fa fa-check"></i><b>3.7.2</b> Math operations</a></li>
-<li class="chapter" data-level="3.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#average"><i class="fa fa-check"></i><b>3.7.3</b> Average</a></li>
-<li class="chapter" data-level="3.7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#tar-file"><i class="fa fa-check"></i><b>3.7.4</b> tar file</a></li>
-<li class="chapter" data-level="3.7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#image-registration"><i class="fa fa-check"></i><b>3.7.5</b> Image registration</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#medical-images"><i class="fa fa-check"></i><b>3.7</b> Medical Images</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling.html"><a href="data-wrangling.html#dicom-and-nifti-format"><i class="fa fa-check"></i><b>3.7.1</b> DICOM and nifti format</a></li>
+<li class="chapter" data-level="3.7.2" data-path="data-wrangling.html"><a href="data-wrangling.html#manipulating-array-of-medical-images"><i class="fa fa-check"></i><b>3.7.2</b> Manipulating array of medical images</a></li>
+<li class="chapter" data-level="3.7.3" data-path="data-wrangling.html"><a href="data-wrangling.html#combining-arrays"><i class="fa fa-check"></i><b>3.7.3</b> Combining arrays</a></li>
+<li class="chapter" data-level="3.7.4" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operation-on-multidimensional-array"><i class="fa fa-check"></i><b>3.7.4</b> Math operation on multidimensional array</a></li>
+<li class="chapter" data-level="3.7.5" data-path="data-wrangling.html"><a href="data-wrangling.html#math-operation-on-list"><i class="fa fa-check"></i><b>3.7.5</b> Math operation on list</a></li>
+<li class="chapter" data-level="3.7.6" data-path="data-wrangling.html"><a href="data-wrangling.html#vectorising-nifti-object"><i class="fa fa-check"></i><b>3.7.6</b> Vectorising nifti object</a></li>
+<li class="chapter" data-level="3.7.7" data-path="data-wrangling.html"><a href="data-wrangling.html#tar-file"><i class="fa fa-check"></i><b>3.7.7</b> tar file</a></li>
+<li class="chapter" data-level="3.7.8" data-path="data-wrangling.html"><a href="data-wrangling.html#image-registration"><i class="fa fa-check"></i><b>3.7.8</b> Image registration</a></li>
+<li class="chapter" data-level="3.7.9" data-path="data-wrangling.html"><a href="data-wrangling.html#rescaling"><i class="fa fa-check"></i><b>3.7.9</b> Rescaling</a></li>
+<li class="chapter" data-level="3.7.10" data-path="data-wrangling.html"><a href="data-wrangling.html#mni-template"><i class="fa fa-check"></i><b>3.7.10</b> MNI template</a></li>
+<li class="chapter" data-level="3.7.11" data-path="data-wrangling.html"><a href="data-wrangling.html#atlases"><i class="fa fa-check"></i><b>3.7.11</b> Atlases</a></li>
 </ul></li>
+<li class="chapter" data-level="3.8" data-path="data-wrangling.html"><a href="data-wrangling.html#ecg-signal-processing"><i class="fa fa-check"></i><b>3.8</b> ECG Signal processing</a></li>
+<li class="chapter" data-level="3.9" data-path="data-wrangling.html"><a href="data-wrangling.html#eeg-signal-processing"><i class="fa fa-check"></i><b>3.9</b> EEG signal processing</a></li>
+<li class="chapter" data-level="3.10" data-path="data-wrangling.html"><a href="data-wrangling.html#python"><i class="fa fa-check"></i><b>3.10</b> Python</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="data-wrangling.html"><a href="data-wrangling.html#reticulate"><i class="fa fa-check"></i><b>3.10.1</b> Reticulate</a></li>
+<li class="chapter" data-level="3.10.2" data-path="data-wrangling.html"><a href="data-wrangling.html#minconda"><i class="fa fa-check"></i><b>3.10.2</b> Minconda</a></li>
+<li class="chapter" data-level="3.10.3" data-path="data-wrangling.html"><a href="data-wrangling.html#python-environment"><i class="fa fa-check"></i><b>3.10.3</b> Python environment</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a><ul>
-<li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a><ul>
+<li class="chapter" data-level="3.11" data-path="data-wrangling.html"><a href="data-wrangling.html#matlab"><i class="fa fa-check"></i><b>3.11</b> Matlab</a></li>
+<li class="chapter" data-level="3.12" data-path="data-wrangling.html"><a href="data-wrangling.html#stata"><i class="fa fa-check"></i><b>3.12</b> Stata</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="statistics.html"><a href="statistics.html"><i class="fa fa-check"></i><b>4</b> Statistics</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="statistics.html"><a href="statistics.html#univariable-analyses"><i class="fa fa-check"></i><b>4.1</b> Univariable analyses</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="statistics.html"><a href="statistics.html#parametric-tests"><i class="fa fa-check"></i><b>4.1.1</b> Parametric tests</a></li>
 <li class="chapter" data-level="4.1.2" data-path="statistics.html"><a href="statistics.html#non-parametric-tests"><i class="fa fa-check"></i><b>4.1.2</b> Non-parametric tests</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a><ul>
+<li class="chapter" data-level="4.2" data-path="statistics.html"><a href="statistics.html#regression"><i class="fa fa-check"></i><b>4.2</b> Regression</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="statistics.html"><a href="statistics.html#brief-review-of-matrix"><i class="fa fa-check"></i><b>4.2.1</b> Brief review of matrix</a></li>
 <li class="chapter" data-level="4.2.2" data-path="statistics.html"><a href="statistics.html#linear-least-square-regression"><i class="fa fa-check"></i><b>4.2.2</b> Linear (least square) regression</a></li>
 <li class="chapter" data-level="4.2.3" data-path="statistics.html"><a href="statistics.html#logistic-regression"><i class="fa fa-check"></i><b>4.2.3</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.2.4" data-path="statistics.html"><a href="statistics.html#discrimination-and-calibration"><i class="fa fa-check"></i><b>4.2.4</b> Discrimination and Calibration</a></li>
+<li class="chapter" data-level="4.2.5" data-path="statistics.html"><a href="statistics.html#interaction"><i class="fa fa-check"></i><b>4.2.5</b> Interaction</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#special-types-of-regression"><i class="fa fa-check"></i><b>4.3</b> Special types of regression</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="statistics.html"><a href="statistics.html#ordinal-regression"><i class="fa fa-check"></i><b>4.3.1</b> Ordinal regression</a></li>
-<li class="chapter" data-level="4.3.2" data-path="statistics.html"><a href="statistics.html#survival-analysis"><i class="fa fa-check"></i><b>4.3.2</b> Survival analysis</a></li>
-<li class="chapter" data-level="4.3.3" data-path="statistics.html"><a href="statistics.html#quantile-regression"><i class="fa fa-check"></i><b>4.3.3</b> Quantile regression</a></li>
-<li class="chapter" data-level="4.3.4" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.3.4</b> Poisson regression</a></li>
-<li class="chapter" data-level="4.3.5" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.3.5</b> Conditional logistic regression</a></li>
-<li class="chapter" data-level="4.3.6" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.3.6</b> Multinomial modelling</a></li>
+<li class="chapter" data-level="4.3" data-path="statistics.html"><a href="statistics.html#confounder"><i class="fa fa-check"></i><b>4.3</b> Confounder</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="statistics.html"><a href="statistics.html#confounder-weighted-model"><i class="fa fa-check"></i><b>4.3.1</b> Confounder weighted model</a></li>
+<li class="chapter" data-level="4.3.2" data-path="statistics.html"><a href="statistics.html#propensity-matching"><i class="fa fa-check"></i><b>4.3.2</b> Propensity matching</a></li>
+<li class="chapter" data-level="4.3.3" data-path="statistics.html"><a href="statistics.html#e-values"><i class="fa fa-check"></i><b>4.3.3</b> E-values</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.4</b> Sample size estimation</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="statistics.html"><a href="statistics.html#proportion"><i class="fa fa-check"></i><b>4.4.1</b> Proportion</a></li>
-<li class="chapter" data-level="4.4.2" data-path="statistics.html"><a href="statistics.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.4.2</b> Logistic regression</a></li>
-<li class="chapter" data-level="4.4.3" data-path="statistics.html"><a href="statistics.html#survival-studies"><i class="fa fa-check"></i><b>4.4.3</b> Survival studies</a></li>
-<li class="chapter" data-level="4.4.4" data-path="statistics.html"><a href="statistics.html#multiple-regression"><i class="fa fa-check"></i><b>4.4.4</b> Multiple regression</a></li>
+<li class="chapter" data-level="4.4" data-path="statistics.html"><a href="statistics.html#causal-inference"><i class="fa fa-check"></i><b>4.4</b> Causal inference</a></li>
+<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#special-types-of-regression"><i class="fa fa-check"></i><b>4.5</b> Special types of regression</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="statistics.html"><a href="statistics.html#ordinal-regression"><i class="fa fa-check"></i><b>4.5.1</b> Ordinal regression</a></li>
+<li class="chapter" data-level="4.5.2" data-path="statistics.html"><a href="statistics.html#survival-analysis"><i class="fa fa-check"></i><b>4.5.2</b> Survival analysis</a></li>
+<li class="chapter" data-level="4.5.3" data-path="statistics.html"><a href="statistics.html#quantile-regression"><i class="fa fa-check"></i><b>4.5.3</b> Quantile regression</a></li>
+<li class="chapter" data-level="4.5.4" data-path="statistics.html"><a href="statistics.html#non-negative-regression"><i class="fa fa-check"></i><b>4.5.4</b> Non-negative regression</a></li>
+<li class="chapter" data-level="4.5.5" data-path="statistics.html"><a href="statistics.html#poisson-regression"><i class="fa fa-check"></i><b>4.5.5</b> Poisson regression</a></li>
+<li class="chapter" data-level="4.5.6" data-path="statistics.html"><a href="statistics.html#conditional-logistic-regression"><i class="fa fa-check"></i><b>4.5.6</b> Conditional logistic regression</a></li>
+<li class="chapter" data-level="4.5.7" data-path="statistics.html"><a href="statistics.html#multinomial-modelling"><i class="fa fa-check"></i><b>4.5.7</b> Multinomial modelling</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="statistics.html"><a href="statistics.html#interpreting-clinical-trials"><i class="fa fa-check"></i><b>4.5</b> Interpreting clinical trials</a></li>
-<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.6</b> Metaanalysis</a><ul>
-<li class="chapter" data-level="4.6.1" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.6.1</b> PRISMA</a></li>
-<li class="chapter" data-level="4.6.2" data-path="statistics.html"><a href="statistics.html#conversion-of-mean-and-median"><i class="fa fa-check"></i><b>4.6.2</b> Conversion of mean and median</a></li>
-<li class="chapter" data-level="4.6.3" data-path="statistics.html"><a href="statistics.html#inconsistency-i2"><i class="fa fa-check"></i><b>4.6.3</b> Inconsistency I2</a></li>
-<li class="chapter" data-level="4.6.4" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.6.4</b> Metaanalysis of proportion</a></li>
-<li class="chapter" data-level="4.6.5" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.6.5</b> Bivariate Metaanalysis</a></li>
-<li class="chapter" data-level="4.6.6" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-clinical-trial."><i class="fa fa-check"></i><b>4.6.6</b> Metaanalysis of clinical trial.</a></li>
-<li class="chapter" data-level="4.6.7" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.6.7</b> Metaregression</a></li>
+<li class="chapter" data-level="4.6" data-path="statistics.html"><a href="statistics.html#sample-size-estimation"><i class="fa fa-check"></i><b>4.6</b> Sample size estimation</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="statistics.html"><a href="statistics.html#proportion"><i class="fa fa-check"></i><b>4.6.1</b> Proportion</a></li>
+<li class="chapter" data-level="4.6.2" data-path="statistics.html"><a href="statistics.html#logistic-regression-1"><i class="fa fa-check"></i><b>4.6.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="4.6.3" data-path="statistics.html"><a href="statistics.html#survival-studies"><i class="fa fa-check"></i><b>4.6.3</b> Survival studies</a></li>
+<li class="chapter" data-level="4.6.4" data-path="statistics.html"><a href="statistics.html#multiple-regression"><i class="fa fa-check"></i><b>4.6.4</b> Multiple regression</a></li>
 </ul></li>
-<li class="chapter" data-level="4.7" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.7</b> Data simulation</a></li>
+<li class="chapter" data-level="4.7" data-path="statistics.html"><a href="statistics.html#randomised-clinical-trials"><i class="fa fa-check"></i><b>4.7</b> Randomised clinical trials</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="statistics.html"><a href="statistics.html#covariate-adjustment-in-trials"><i class="fa fa-check"></i><b>4.7.1</b> Covariate adjustment in trials</a></li>
+<li class="chapter" data-level="4.7.2" data-path="statistics.html"><a href="statistics.html#subgroup-analysis"><i class="fa fa-check"></i><b>4.7.2</b> Subgroup analysis</a></li>
+<li class="chapter" data-level="4.7.3" data-path="statistics.html"><a href="statistics.html#p-value-for-interaction"><i class="fa fa-check"></i><b>4.7.3</b> p value for interaction</a></li>
+<li class="chapter" data-level="4.7.4" data-path="statistics.html"><a href="statistics.html#interpreting-risk-reduction-in-clinical-trials"><i class="fa fa-check"></i><b>4.7.4</b> Interpreting risk reduction in clinical trials</a></li>
+<li class="chapter" data-level="4.7.5" data-path="statistics.html"><a href="statistics.html#nnt-from-arr"><i class="fa fa-check"></i><b>4.7.5</b> NNT from ARR</a></li>
+<li class="chapter" data-level="4.7.6" data-path="statistics.html"><a href="statistics.html#nnt-from-odds-ratio"><i class="fa fa-check"></i><b>4.7.6</b> NNT from odds ratio</a></li>
+<li class="chapter" data-level="4.7.7" data-path="statistics.html"><a href="statistics.html#nnt-from-risk-ratio"><i class="fa fa-check"></i><b>4.7.7</b> NNT from risk ratio</a></li>
+<li class="chapter" data-level="4.7.8" data-path="statistics.html"><a href="statistics.html#nnt-from-hazard-ratio"><i class="fa fa-check"></i><b>4.7.8</b> NNT from hazard ratio</a></li>
+<li class="chapter" data-level="4.7.9" data-path="statistics.html"><a href="statistics.html#nnt-from-metaananlysis"><i class="fa fa-check"></i><b>4.7.9</b> NNT from metaananlysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a><ul>
-<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#multivariate-regression"><i class="fa fa-check"></i><b>5.1</b> Multivariate regression</a><ul>
+<li class="chapter" data-level="4.8" data-path="statistics.html"><a href="statistics.html#diagnostic-test"><i class="fa fa-check"></i><b>4.8</b> Diagnostic test</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="statistics.html"><a href="statistics.html#sensitivity-specificity"><i class="fa fa-check"></i><b>4.8.1</b> Sensitivity, specificity</a></li>
+<li class="chapter" data-level="4.8.2" data-path="statistics.html"><a href="statistics.html#auc"><i class="fa fa-check"></i><b>4.8.2</b> AUC</a></li>
+<li class="chapter" data-level="4.8.3" data-path="statistics.html"><a href="statistics.html#likelihood-ratio"><i class="fa fa-check"></i><b>4.8.3</b> Likelihood ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="statistics.html"><a href="statistics.html#metaanalysis"><i class="fa fa-check"></i><b>4.9</b> Metaanalysis</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="statistics.html"><a href="statistics.html#quality-of-study"><i class="fa fa-check"></i><b>4.9.1</b> Quality of study</a></li>
+<li class="chapter" data-level="4.9.2" data-path="statistics.html"><a href="statistics.html#prisma"><i class="fa fa-check"></i><b>4.9.2</b> PRISMA</a></li>
+<li class="chapter" data-level="4.9.3" data-path="statistics.html"><a href="statistics.html#conversion-of-median-to-mean"><i class="fa fa-check"></i><b>4.9.3</b> Conversion of median to mean</a></li>
+<li class="chapter" data-level="4.9.4" data-path="statistics.html"><a href="statistics.html#inconsistency-i2"><i class="fa fa-check"></i><b>4.9.4</b> Inconsistency I2</a></li>
+<li class="chapter" data-level="4.9.5" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-proportion"><i class="fa fa-check"></i><b>4.9.5</b> Metaanalysis of proportion</a></li>
+<li class="chapter" data-level="4.9.6" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-continuous-data"><i class="fa fa-check"></i><b>4.9.6</b> Metaanalysis of continuous data</a></li>
+<li class="chapter" data-level="4.9.7" data-path="statistics.html"><a href="statistics.html#bivariate-metaanalysis"><i class="fa fa-check"></i><b>4.9.7</b> Bivariate Metaanalysis</a></li>
+<li class="chapter" data-level="4.9.8" data-path="statistics.html"><a href="statistics.html#metaanalysis-of-clinical-trial."><i class="fa fa-check"></i><b>4.9.8</b> Metaanalysis of clinical trial.</a></li>
+<li class="chapter" data-level="4.9.9" data-path="statistics.html"><a href="statistics.html#metaregression"><i class="fa fa-check"></i><b>4.9.9</b> Metaregression</a></li>
+</ul></li>
+<li class="chapter" data-level="4.10" data-path="statistics.html"><a href="statistics.html#data-simulation"><i class="fa fa-check"></i><b>4.10</b> Data simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#multivariate-regression"><i class="fa fa-check"></i><b>5.1</b> Multivariate regression</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#penalised-regression"><i class="fa fa-check"></i><b>5.1.1</b> Penalised regression</a></li>
 <li class="chapter" data-level="5.1.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#mars"><i class="fa fa-check"></i><b>5.1.2</b> MARS</a></li>
 <li class="chapter" data-level="5.1.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#mixed-modelling"><i class="fa fa-check"></i><b>5.1.3</b> Mixed modelling</a></li>
 <li class="chapter" data-level="5.1.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#trajectory-modelling"><i class="fa fa-check"></i><b>5.1.4</b> Trajectory modelling</a></li>
+<li class="chapter" data-level="5.1.5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#generalized-estimating-equation-gee"><i class="fa fa-check"></i><b>5.1.5</b> Generalized estimating equation (GEE)</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Principal component analysis</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#principal-component-analysis"><i class="fa fa-check"></i><b>5.2</b> Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#pca-with-mri"><i class="fa fa-check"></i><b>5.2.1</b> PCA with MRI</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#independent-component-analysis"><i class="fa fa-check"></i><b>5.3</b> Independent component analysis</a></li>
 <li class="chapter" data-level="5.4" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#partial-least-squares"><i class="fa fa-check"></i><b>5.4</b> Partial least squares</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a><ul>
-<li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a><ul>
+<li class="chapter" data-level="6" data-path="machine-learning.html"><a href="machine-learning.html"><i class="fa fa-check"></i><b>6</b> Machine learning</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="machine-learning.html"><a href="machine-learning.html#decision-tree-analysis"><i class="fa fa-check"></i><b>6.1</b> Decision tree analysis</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="machine-learning.html"><a href="machine-learning.html#information-theory-driven"><i class="fa fa-check"></i><b>6.1.1</b> Information theory driven</a></li>
 <li class="chapter" data-level="6.1.2" data-path="machine-learning.html"><a href="machine-learning.html#conditional-decision-tree"><i class="fa fa-check"></i><b>6.1.2</b> Conditional decision tree</a></li>
-<li class="chapter" data-level="6.1.3" data-path="machine-learning.html"><a href="machine-learning.html#criticisms-of-decision-tree"><i class="fa fa-check"></i><b>6.1.3</b> criticisms of decision tree</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#random-forest"><i class="fa fa-check"></i><b>6.2</b> Random Forest</a></li>
-<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#gradient-boost-machine"><i class="fa fa-check"></i><b>6.3</b> Gradient Boost Machine</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="machine-learning.html"><a href="machine-learning.html#extreme-gradient-boost-machine"><i class="fa fa-check"></i><b>6.3.1</b> Extreme gradient boost machine</a></li>
+<li class="chapter" data-level="6.2" data-path="machine-learning.html"><a href="machine-learning.html#ensemble-tree-methods"><i class="fa fa-check"></i><b>6.2</b> Ensemble tree methods</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="machine-learning.html"><a href="machine-learning.html#bagging-trees"><i class="fa fa-check"></i><b>6.2.1</b> Bagging trees</a></li>
+<li class="chapter" data-level="6.2.2" data-path="machine-learning.html"><a href="machine-learning.html#boosting-trees"><i class="fa fa-check"></i><b>6.2.2</b> Boosting trees</a></li>
+<li class="chapter" data-level="6.2.3" data-path="machine-learning.html"><a href="machine-learning.html#bayesian-trees-method"><i class="fa fa-check"></i><b>6.2.3</b> Bayesian trees method</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#knn"><i class="fa fa-check"></i><b>6.4</b> KNN</a></li>
-<li class="chapter" data-level="6.5" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.5</b> Support vector machine</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="machine-learning.html"><a href="machine-learning.html#survival-analysis-using-random-forest"><i class="fa fa-check"></i><b>6.5.1</b> Survival analysis using random forest</a></li>
+<li class="chapter" data-level="6.3" data-path="machine-learning.html"><a href="machine-learning.html#knn"><i class="fa fa-check"></i><b>6.3</b> KNN</a></li>
+<li class="chapter" data-level="6.4" data-path="machine-learning.html"><a href="machine-learning.html#support-vector-machine"><i class="fa fa-check"></i><b>6.4</b> Support vector machine</a></li>
+<li class="chapter" data-level="6.5" data-path="machine-learning.html"><a href="machine-learning.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>6.5</b> Non-negative matrix factorisation</a></li>
+<li class="chapter" data-level="6.6" data-path="machine-learning.html"><a href="machine-learning.html#formal-concept-analysis"><i class="fa fa-check"></i><b>6.6</b> Formal concept analysis</a></li>
+<li class="chapter" data-level="6.7" data-path="machine-learning.html"><a href="machine-learning.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>6.7</b> Evolutionary Algorithm</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="machine-learning.html"><a href="machine-learning.html#simulated-annealing"><i class="fa fa-check"></i><b>6.7.1</b> Simulated Annealing</a></li>
+<li class="chapter" data-level="6.7.2" data-path="machine-learning.html"><a href="machine-learning.html#genetic-algorithm"><i class="fa fa-check"></i><b>6.7.2</b> Genetic Algorithm</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="machine-learning.html"><a href="machine-learning.html#non-negative-matrix-factorisation"><i class="fa fa-check"></i><b>6.6</b> Non-negative matrix factorisation</a></li>
-<li class="chapter" data-level="6.7" data-path="machine-learning.html"><a href="machine-learning.html#formal-concept-analysis"><i class="fa fa-check"></i><b>6.7</b> Formal concept analysis</a></li>
-<li class="chapter" data-level="6.8" data-path="machine-learning.html"><a href="machine-learning.html#evolutionary-algorithm"><i class="fa fa-check"></i><b>6.8</b> Evolutionary Algorithm</a><ul>
-<li class="chapter" data-level="6.8.1" data-path="machine-learning.html"><a href="machine-learning.html#simulated-annealing"><i class="fa fa-check"></i><b>6.8.1</b> Simulated Annealing</a></li>
-<li class="chapter" data-level="6.8.2" data-path="machine-learning.html"><a href="machine-learning.html#genetic-algorithm"><i class="fa fa-check"></i><b>6.8.2</b> Genetic Algorithm</a></li>
+<li class="chapter" data-level="6.8" data-path="machine-learning.html"><a href="machine-learning.html#manifold-learning"><i class="fa fa-check"></i><b>6.8</b> Manifold learning</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="machine-learning.html"><a href="machine-learning.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>6.8.1</b> T-Stochastic Neighbourhood Embedding</a></li>
+<li class="chapter" data-level="6.8.2" data-path="machine-learning.html"><a href="machine-learning.html#self-organising-map"><i class="fa fa-check"></i><b>6.8.2</b> Self organising map</a></li>
+<li class="chapter" data-level="6.8.3" data-path="machine-learning.html"><a href="machine-learning.html#multidimensional-scaling"><i class="fa fa-check"></i><b>6.8.3</b> Multidimensional scaling</a></li>
 </ul></li>
-<li class="chapter" data-level="6.9" data-path="machine-learning.html"><a href="machine-learning.html#manifold-learning"><i class="fa fa-check"></i><b>6.9</b> Manifold learning</a><ul>
-<li class="chapter" data-level="6.9.1" data-path="machine-learning.html"><a href="machine-learning.html#t-stochastic-neighbourhood-embedding"><i class="fa fa-check"></i><b>6.9.1</b> T-Stochastic Neighbourhood Embedding</a></li>
-<li class="chapter" data-level="6.9.2" data-path="machine-learning.html"><a href="machine-learning.html#self-organising-map"><i class="fa fa-check"></i><b>6.9.2</b> Self organising map</a></li>
-</ul></li>
-<li class="chapter" data-level="6.10" data-path="machine-learning.html"><a href="machine-learning.html#deep-learning"><i class="fa fa-check"></i><b>6.10</b> Deep learning</a><ul>
-<li class="chapter" data-level="6.10.1" data-path="machine-learning.html"><a href="machine-learning.html#multiplayer-perceptron"><i class="fa fa-check"></i><b>6.10.1</b> Multiplayer Perceptron</a></li>
-<li class="chapter" data-level="6.10.2" data-path="machine-learning.html"><a href="machine-learning.html#cnn"><i class="fa fa-check"></i><b>6.10.2</b> CNN</a></li>
-<li class="chapter" data-level="6.10.3" data-path="machine-learning.html"><a href="machine-learning.html#rnn"><i class="fa fa-check"></i><b>6.10.3</b> RNN</a></li>
-<li class="chapter" data-level="6.10.4" data-path="machine-learning.html"><a href="machine-learning.html#reinforcement-learning"><i class="fa fa-check"></i><b>6.10.4</b> Reinforcement learning</a></li>
+<li class="chapter" data-level="6.9" data-path="machine-learning.html"><a href="machine-learning.html#deep-learning"><i class="fa fa-check"></i><b>6.9</b> Deep learning</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="machine-learning.html"><a href="machine-learning.html#deep-neural-network"><i class="fa fa-check"></i><b>6.9.1</b> Deep neural network</a></li>
+<li class="chapter" data-level="6.9.2" data-path="machine-learning.html"><a href="machine-learning.html#tabnet"><i class="fa fa-check"></i><b>6.9.2</b> Tabnet</a></li>
+<li class="chapter" data-level="6.9.3" data-path="machine-learning.html"><a href="machine-learning.html#cnn"><i class="fa fa-check"></i><b>6.9.3</b> CNN</a></li>
+<li class="chapter" data-level="6.9.4" data-path="machine-learning.html"><a href="machine-learning.html#rnn"><i class="fa fa-check"></i><b>6.9.4</b> RNN</a></li>
+<li class="chapter" data-level="6.9.5" data-path="machine-learning.html"><a href="machine-learning.html#reinforcement-learning"><i class="fa fa-check"></i><b>6.9.5</b> Reinforcement learning</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a><ul>
-<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#bag-of-words"><i class="fa fa-check"></i><b>7.1</b> Bag of words</a><ul>
+<li class="chapter" data-level="7" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html"><i class="fa fa-check"></i><b>7</b> Machine Learning Part 2</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#bag-of-words"><i class="fa fa-check"></i><b>7.1</b> Bag of words</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#tfidf"><i class="fa fa-check"></i><b>7.1.1</b> TFIDF</a></li>
 <li class="chapter" data-level="7.1.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#extracting-data-from-web"><i class="fa fa-check"></i><b>7.1.2</b> Extracting data from web</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#wordcloud"><i class="fa fa-check"></i><b>7.2</b> Wordcloud</a></li>
 <li class="chapter" data-level="7.3" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#bigram-analysis"><i class="fa fa-check"></i><b>7.3</b> Bigram analysis</a></li>
 <li class="chapter" data-level="7.4" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#trigram"><i class="fa fa-check"></i><b>7.4</b> Trigram</a></li>
-<li class="chapter" data-level="7.5" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#topic-modeling-or-thematic-analysis"><i class="fa fa-check"></i><b>7.5</b> Topic modeling or thematic analysis</a><ul>
+<li class="chapter" data-level="7.5" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#topic-modeling-or-thematic-analysis"><i class="fa fa-check"></i><b>7.5</b> Topic modeling or thematic analysis</a>
+<ul>
 <li class="chapter" data-level="7.5.1" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#probabilistic-topic-model"><i class="fa fa-check"></i><b>7.5.1</b> Probabilistic topic model</a></li>
 <li class="chapter" data-level="7.5.2" data-path="machine-learning-part-2.html"><a href="machine-learning-part-2.html#nmf"><i class="fa fa-check"></i><b>7.5.2</b> NMF</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html"><i class="fa fa-check"></i><b>8</b> Bayesian Analysis</a><ul>
-<li class="chapter" data-level="8.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#baysian-belief"><i class="fa fa-check"></i><b>8.1</b> Baysian belief</a><ul>
+<li class="chapter" data-level="8" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html"><i class="fa fa-check"></i><b>8</b> Bayesian Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#baysian-belief"><i class="fa fa-check"></i><b>8.1</b> Baysian belief</a>
+<ul>
 <li class="chapter" data-level="8.1.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#conditional-probability"><i class="fa fa-check"></i><b>8.1.1</b> Conditional probability</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#markov-model"><i class="fa fa-check"></i><b>8.2</b> Markov model</a></li>
-<li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a><ul>
+<li class="chapter" data-level="8.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#inla-stan-and-bugs"><i class="fa fa-check"></i><b>8.3</b> INLA, Stan and BUGS</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#linear-regression"><i class="fa fa-check"></i><b>8.3.1</b> Linear regression</a></li>
 <li class="chapter" data-level="8.3.2" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#logistic-regression-2"><i class="fa fa-check"></i><b>8.3.2</b> Logistic regression</a></li>
 <li class="chapter" data-level="8.3.3" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#mixed-model"><i class="fa fa-check"></i><b>8.3.3</b> Mixed model</a></li>
@@ -306,64 +394,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.5" data-path="bayesian-analysis.html"><a href="bayesian-analysis.html#cost"><i class="fa fa-check"></i><b>8.3.5</b> Cost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a><ul>
-<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.1</b> Discrete Event Simulations</a></li>
-<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#plots"><i class="fa fa-check"></i><b>9.3</b> Plots</a></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a><ul>
+<li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a></li>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.2</b> Discrete Event Simulations</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.2.1</b> Simulate capacity of system</a></li>
+<li class="chapter" data-level="9.2.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.2.2</b> Queuing network</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.3</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
 <li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
 <li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
 <li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
-<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a><ul>
+<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a><ul>
-<li class="chapter" data-level="10.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>10.1</b> Special graphs</a><ul>
+<li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="graph-theory.html"><a href="graph-theory.html#special-graphs"><i class="fa fa-check"></i><b>10.1</b> Special graphs</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="graph-theory.html"><a href="graph-theory.html#laplacian-matrix"><i class="fa fa-check"></i><b>10.1.1</b> Laplacian matrix</a></li>
 <li class="chapter" data-level="10.1.2" data-path="graph-theory.html"><a href="graph-theory.html#bimodal-bipartite-graph"><i class="fa fa-check"></i><b>10.1.2</b> Bimodal (bipartite) graph</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>10.2</b> Centrality Measures</a><ul>
+<li class="chapter" data-level="10.2" data-path="graph-theory.html"><a href="graph-theory.html#centrality-measures"><i class="fa fa-check"></i><b>10.2</b> Centrality Measures</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="graph-theory.html"><a href="graph-theory.html#local-centrality-measures"><i class="fa fa-check"></i><b>10.2.1</b> Local centrality measures</a></li>
 <li class="chapter" data-level="10.2.2" data-path="graph-theory.html"><a href="graph-theory.html#global-centrality-measures"><i class="fa fa-check"></i><b>10.2.2</b> Global centrality measures</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="graph-theory.html"><a href="graph-theory.html#community"><i class="fa fa-check"></i><b>10.3</b> Community</a></li>
-<li class="chapter" data-level="10.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>10.4</b> Visualising graph</a><ul>
+<li class="chapter" data-level="10.4" data-path="graph-theory.html"><a href="graph-theory.html#visualising-graph"><i class="fa fa-check"></i><b>10.4</b> Visualising graph</a>
+<ul>
 <li class="chapter" data-level="10.4.1" data-path="graph-theory.html"><a href="graph-theory.html#visnetwork"><i class="fa fa-check"></i><b>10.4.1</b> Visnetwork</a></li>
 <li class="chapter" data-level="10.4.2" data-path="graph-theory.html"><a href="graph-theory.html#large-graph"><i class="fa fa-check"></i><b>10.4.2</b> Large graph</a></li>
 </ul></li>
-<li class="chapter" data-level="10.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>10.5</b> Social Media and Network Analysis</a><ul>
+<li class="chapter" data-level="10.5" data-path="graph-theory.html"><a href="graph-theory.html#social-media-and-network-analysis"><i class="fa fa-check"></i><b>10.5</b> Social Media and Network Analysis</a>
+<ul>
 <li class="chapter" data-level="10.5.1" data-path="graph-theory.html"><a href="graph-theory.html#twitter"><i class="fa fa-check"></i><b>10.5.1</b> Twitter</a></li>
 <li class="chapter" data-level="10.5.2" data-path="graph-theory.html"><a href="graph-theory.html#youtube"><i class="fa fa-check"></i><b>10.5.2</b> Youtube</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>11</b> Geospatial analysis</a><ul>
-<li class="chapter" data-level="11.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>11.1</b> Geocoding</a><ul>
+<li class="chapter" data-level="11" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html"><i class="fa fa-check"></i><b>11</b> Geospatial analysis</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#geocoding"><i class="fa fa-check"></i><b>11.1</b> Geocoding</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
 <li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
-<li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a><ul>
+<li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>11.4</b> Spatial regression</a><ul>
+<li class="chapter" data-level="11.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatial-regression"><i class="fa fa-check"></i><b>11.4</b> Spatial regression</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#new-york-covid-19-mortality"><i class="fa fa-check"></i><b>11.4.1</b> New York COVID-19 mortality</a></li>
 <li class="chapter" data-level="11.4.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#danish-stroke-registry"><i class="fa fa-check"></i><b>11.4.2</b> Danish Stroke Registry</a></li>
 <li class="chapter" data-level="11.4.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#inla"><i class="fa fa-check"></i><b>11.4.3</b> INLA</a></li>
 <li class="chapter" data-level="11.4.4" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#stan"><i class="fa fa-check"></i><b>11.4.4</b> Stan</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#machine-learning-1"><i class="fa fa-check"></i><b>11.5</b> Machine learning</a></li>
+<li class="chapter" data-level="11.5" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#machine-learning-in-spatial-analysis"><i class="fa fa-check"></i><b>11.5</b> Machine learning in spatial analysis</a></li>
 <li class="chapter" data-level="11.6" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#spatio-temporal-regression"><i class="fa fa-check"></i><b>11.6</b> Spatio-temporal regression</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>12</b> App</a><ul>
+<li class="chapter" data-level="12" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>12</b> App</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="app.html"><a href="app.html#brief-introduction-to-shiny-app"><i class="fa fa-check"></i><b>12.1</b> Brief introduction to Shiny app</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>13</b> Appendix</a><ul>
+<li class="chapter" data-level="13" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>13</b> Appendix</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="appendix.html"><a href="appendix.html#brief-introduction-to-matrix"><i class="fa fa-check"></i><b>13.1</b> Brief introduction to Matrix</a></li>
-<li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>13.2</b> Regression</a><ul>
+<li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#regression-1"><i class="fa fa-check"></i><b>13.2</b> Regression</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression-1"><i class="fa fa-check"></i><b>13.2.1</b> Linear regression</a></li>
 <li class="chapter" data-level="13.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-3"><i class="fa fa-check"></i><b>13.2.2</b> Logistic regression</a></li>
 </ul></li>
@@ -389,25 +496,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="machine-learning-part-2" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Machine Learning Part 2</h1>
+<div id="machine-learning-part-2" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Machine Learning Part 2<a href="machine-learning-part-2.html#machine-learning-part-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This section deals with handling of text data and machine learning. R has several excellent libraries such as <em>tm</em>, <em>tidytext</em>, <em>textmineR</em> and <em>quanteda</em> for handling text data.</p>
-<div id="bag-of-words" class="section level2">
-<h2><span class="header-section-number">7.1</span> Bag of words</h2>
+<div id="bag-of-words" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Bag of words<a href="machine-learning-part-2.html#bag-of-words" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Bag of words or unigram analysis describe data in which words in a sentence were separated or tokenised. Within this bag of words the order of words within the document is not retained. Depending on how this process is performed the negative connotation may be loss. Consider “not green” and after cleaning of the document, only the color “green” remain.</p>
 <p>The following codes illustrate the processing steps to clean up a document. These include turning words to lower case as R is case sensitive. Next stop word filter is used to remove phrases like “I”, “he”, “she”, “they” etc.</p>
-<div id="tfidf" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> TFIDF</h3>
+<div id="tfidf" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> TFIDF<a href="machine-learning-part-2.html#tfidf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Term frequency defines the frequency of a term in a document. The document frequency defines how often a term is used across document. The inverse document frequency can be seen as a weight to decrease the importance of commonly words used across documents. Term frequency inverse document frequency is a process used to down weight common terms and highlight important terms in the document.</p>
-<p>In the example under topic modeling, an example of creating <em>tfidf</em> is shown. Other packages like <em>tidytext</em>, <em>textmineR</em> have functions for creating <em>tfidf</em></p>
+<p>In the example under <a href="machine-learning-part-2.html#topic-modeling-or-thematic-analysis">topic modeling</a>, an example of creating <em>tfidf</em> is shown. Other packages like <em>tidytext</em>, <em>textmineR</em> have functions for creating <em>tfidf</em></p>
 </div>
-<div id="extracting-data-from-web" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Extracting data from web</h3>
+<div id="extracting-data-from-web" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Extracting data from web<a href="machine-learning-part-2.html#extracting-data-from-web" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This is an example using <em>RISmed</em> library to extract data from PubMed on electronic medcical record and text mining for 2021.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="machine-learning-part-2.html#cb1-1"></a><span class="co">#library(adjutant)</span></span>
-<span id="cb1-2"><a href="machine-learning-part-2.html#cb1-2"></a><span class="kw">library</span>(RISmed)</span>
-<span id="cb1-3"><a href="machine-learning-part-2.html#cb1-3"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb1-4"><a href="machine-learning-part-2.html#cb1-4"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="machine-learning-part-2.html#cb1-1" tabindex="-1"></a><span class="co">#library(adjutant)</span></span>
+<span id="cb1-2"><a href="machine-learning-part-2.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(RISmed)</span>
+<span id="cb1-3"><a href="machine-learning-part-2.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="machine-learning-part-2.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
@@ -416,558 +523,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="machine-learning-part-2.html#cb5-1"></a><span class="kw">library</span>(SnowballC)</span>
-<span id="cb5-2"><a href="machine-learning-part-2.html#cb5-2"></a><span class="kw">library</span>(wordcloud)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="machine-learning-part-2.html#cb5-1" tabindex="-1"></a><span class="fu">library</span>(SnowballC)</span>
+<span id="cb5-2"><a href="machine-learning-part-2.html#cb5-2" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code></pre></div>
 <pre><code>## Loading required package: RColorBrewer</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="machine-learning-part-2.html#cb7-1"></a><span class="kw">library</span>(lattice)</span>
-<span id="cb7-2"><a href="machine-learning-part-2.html#cb7-2"></a><span class="kw">library</span>(tm)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="machine-learning-part-2.html#cb7-1" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb7-2"><a href="machine-learning-part-2.html#cb7-2" tabindex="-1"></a><span class="fu">library</span>(tm)</span></code></pre></div>
 <pre><code>## Loading required package: NLP</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;NLP&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
 ## 
 ##     annotate</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="machine-learning-part-2.html#cb11-1"></a><span class="kw">library</span> (dplyr)</span>
-<span id="cb11-2"><a href="machine-learning-part-2.html#cb11-2"></a><span class="kw">library</span>(tidytext)</span>
-<span id="cb11-3"><a href="machine-learning-part-2.html#cb11-3"></a><span class="kw">library</span>(tidyr)</span>
-<span id="cb11-4"><a href="machine-learning-part-2.html#cb11-4"></a><span class="kw">library</span>(stringr)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="machine-learning-part-2.html#cb11-1" tabindex="-1"></a><span class="fu">library</span> (dplyr)</span>
+<span id="cb11-2"><a href="machine-learning-part-2.html#cb11-2" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb11-3"><a href="machine-learning-part-2.html#cb11-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb11-4"><a href="machine-learning-part-2.html#cb11-4" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div>
 <p>The function to extract data from PubMed.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="machine-learning-part-2.html#cb12-1"></a><span class="co">#search 25/9/21</span></span>
-<span id="cb12-2"><a href="machine-learning-part-2.html#cb12-2"></a>query&lt;-<span class="st">&quot;electronic medical record + text mining&quot;</span></span>
-<span id="cb12-3"><a href="machine-learning-part-2.html#cb12-3"></a>ngs_search &lt;-<span class="st"> </span><span class="kw">EUtilsSummary</span>(query, <span class="dt">type=</span><span class="st">&quot;esearch&quot;</span>,<span class="dt">db =</span> <span class="st">&quot;pubmed&quot;</span>,<span class="dt">mindate=</span><span class="dv">2016</span>, <span class="dt">maxdate=</span><span class="dv">2018</span>, <span class="dt">retmax=</span><span class="dv">30000</span>)</span>
-<span id="cb12-4"><a href="machine-learning-part-2.html#cb12-4"></a><span class="kw">summary</span>(ngs_search)</span>
-<span id="cb12-5"><a href="machine-learning-part-2.html#cb12-5"></a><span class="kw">QueryCount</span>(ngs_search)</span>
-<span id="cb12-6"><a href="machine-learning-part-2.html#cb12-6"></a>ngs_records &lt;-<span class="st"> </span><span class="kw">EUtilsGet</span>(ngs_search)</span>
-<span id="cb12-7"><a href="machine-learning-part-2.html#cb12-7"></a><span class="co">#save(ngs_records,file=&quot;ngs_records.Rda&quot;)</span></span></code></pre></div>
 <p>Data such as tear of publications can be easily extracted.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="machine-learning-part-2.html#cb13-1"></a><span class="co">#reload saved search</span></span>
-<span id="cb13-2"><a href="machine-learning-part-2.html#cb13-2"></a><span class="kw">load</span>(<span class="st">&quot;./Data-Use/EMR_Textmiing_ngs_records.Rda&quot;</span>)</span>
-<span id="cb13-3"><a href="machine-learning-part-2.html#cb13-3"></a></span>
-<span id="cb13-4"><a href="machine-learning-part-2.html#cb13-4"></a><span class="co">#year</span></span>
-<span id="cb13-5"><a href="machine-learning-part-2.html#cb13-5"></a>years &lt;-<span class="st"> </span><span class="kw">YearPubmed</span>(ngs_records)</span>
-<span id="cb13-6"><a href="machine-learning-part-2.html#cb13-6"></a>ngs_pubs_count &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(years))</span>
-<span id="cb13-7"><a href="machine-learning-part-2.html#cb13-7"></a> </span>
-<span id="cb13-8"><a href="machine-learning-part-2.html#cb13-8"></a>total &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb13-9"><a href="machine-learning-part-2.html#cb13-9"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2020</span><span class="op">:</span><span class="dv">2021</span>){</span>
-<span id="cb13-10"><a href="machine-learning-part-2.html#cb13-10"></a>peryear &lt;-<span class="st"> </span><span class="kw">EUtilsSummary</span>(<span class="st">&quot;&quot;</span>, <span class="dt">type=</span><span class="st">&quot;esearch&quot;</span>, <span class="dt">db=</span><span class="st">&quot;pubmed&quot;</span>, <span class="dt">mindate=</span>i, <span class="dt">maxdate=</span>i)</span>
-<span id="cb13-11"><a href="machine-learning-part-2.html#cb13-11"></a>total[i] &lt;-<span class="st"> </span><span class="kw">QueryCount</span>(peryear)</span>
-<span id="cb13-12"><a href="machine-learning-part-2.html#cb13-12"></a>}</span>
-<span id="cb13-13"><a href="machine-learning-part-2.html#cb13-13"></a></span>
-<span id="cb13-14"><a href="machine-learning-part-2.html#cb13-14"></a>year &lt;-<span class="st"> </span><span class="dv">2020</span><span class="op">:</span><span class="dv">2021</span></span>
-<span id="cb13-15"><a href="machine-learning-part-2.html#cb13-15"></a>total_pubs_count&lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(year,total[year]))</span>
-<span id="cb13-16"><a href="machine-learning-part-2.html#cb13-16"></a><span class="kw">names</span>(total_pubs_count) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;Total_publications&quot;</span>)</span>
-<span id="cb13-17"><a href="machine-learning-part-2.html#cb13-17"></a><span class="kw">names</span>(ngs_pubs_count) &lt;-<span class="st">  </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>,<span class="st">&quot;NGS_publications&quot;</span>)</span>
-<span id="cb13-18"><a href="machine-learning-part-2.html#cb13-18"></a>pubs_year &lt;-<span class="st">  </span><span class="kw">merge</span>(ngs_pubs_count,total_pubs_count,<span class="dt">by=</span><span class="st">&quot;year&quot;</span>)</span>
-<span id="cb13-19"><a href="machine-learning-part-2.html#cb13-19"></a>pubs_year<span class="op">$</span>NGS_publications_normalized &lt;-<span class="st">  </span>pubs_year<span class="op">$</span>NGS_publications <span class="op">*</span><span class="dv">100000</span> <span class="op">/</span><span class="st"> </span>pubs_year<span class="op">$</span>Total_publications</span>
-<span id="cb13-20"><a href="machine-learning-part-2.html#cb13-20"></a></span>
-<span id="cb13-21"><a href="machine-learning-part-2.html#cb13-21"></a><span class="co">#write.table(pubs_year,&quot;NGS_publications_per_year.txt&quot;,quote=F,sep=&quot;\t&quot;,</span></span>
-<span id="cb13-22"><a href="machine-learning-part-2.html#cb13-22"></a><span class="co">#row.names=F)</span></span>
-<span id="cb13-23"><a href="machine-learning-part-2.html#cb13-23"></a> </span>
-<span id="cb13-24"><a href="machine-learning-part-2.html#cb13-24"></a><span class="co">#journal </span></span>
-<span id="cb13-25"><a href="machine-learning-part-2.html#cb13-25"></a>journal &lt;-<span class="st"> </span><span class="kw">ISOAbbreviation</span>(ngs_records)</span>
-<span id="cb13-26"><a href="machine-learning-part-2.html#cb13-26"></a>ngs_journal_count &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">table</span>(journal))</span>
-<span id="cb13-27"><a href="machine-learning-part-2.html#cb13-27"></a>ngs_journal_count_top25 &lt;-<span class="st"> </span>ngs_journal_count[<span class="kw">order</span>(<span class="op">-</span>ngs_journal_count[,<span class="dv">2</span>]),][<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,]</span>
-<span id="cb13-28"><a href="machine-learning-part-2.html#cb13-28"></a> </span>
-<span id="cb13-29"><a href="machine-learning-part-2.html#cb13-29"></a>journal_names &lt;-<span class="st"> </span><span class="kw">paste</span>(ngs_journal_count_top25<span class="op">$</span>journal,<span class="st">&quot;[jo]&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb13-30"><a href="machine-learning-part-2.html#cb13-30"></a> </span>
-<span id="cb13-31"><a href="machine-learning-part-2.html#cb13-31"></a>total_journal &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb13-32"><a href="machine-learning-part-2.html#cb13-32"></a><span class="cf">for</span> (i <span class="cf">in</span> journal_names){</span>
-<span id="cb13-33"><a href="machine-learning-part-2.html#cb13-33"></a>perjournal &lt;-<span class="st"> </span><span class="kw">EUtilsSummary</span>(i, <span class="dt">type=</span><span class="st">&#39;esearch&#39;</span>, <span class="dt">db=</span><span class="st">&#39;pubmed&#39;</span>,<span class="dt">mindate=</span><span class="dv">2020</span>, <span class="dt">maxdate=</span><span class="dv">2021</span>)</span>
-<span id="cb13-34"><a href="machine-learning-part-2.html#cb13-34"></a>total_journal[i] &lt;-<span class="st"> </span><span class="kw">QueryCount</span>(perjournal)</span>
-<span id="cb13-35"><a href="machine-learning-part-2.html#cb13-35"></a>}</span>
-<span id="cb13-36"><a href="machine-learning-part-2.html#cb13-36"></a><span class="co">#save(total_journal,file=&quot;total_journal.Rda&quot;)</span></span>
-<span id="cb13-37"><a href="machine-learning-part-2.html#cb13-37"></a> </span>
-<span id="cb13-38"><a href="machine-learning-part-2.html#cb13-38"></a>journal_ngs_total &lt;-<span class="st"> </span><span class="kw">cbind</span>(ngs_journal_count_top25,total_journal)</span>
-<span id="cb13-39"><a href="machine-learning-part-2.html#cb13-39"></a><span class="kw">names</span>(journal_ngs_total) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;journal&quot;</span>,<span class="st">&quot;NGS_publications&quot;</span>,<span class="st">&quot;Total_publications&quot;</span>)</span>
-<span id="cb13-40"><a href="machine-learning-part-2.html#cb13-40"></a>journal_ngs_total<span class="op">$</span>NGS_publications_normalized &lt;-<span class="st"> </span>journal_ngs_total<span class="op">$</span>NGS_publications <span class="op">/</span><span class="st"> </span>journal_ngs_total<span class="op">$</span>Total_publications</span>
-<span id="cb13-41"><a href="machine-learning-part-2.html#cb13-41"></a> </span>
-<span id="cb13-42"><a href="machine-learning-part-2.html#cb13-42"></a><span class="co">#write.table(journal_ngs_total,&quot;NGS_publications_per_journal.txt&quot;,quote=F,</span></span>
-<span id="cb13-43"><a href="machine-learning-part-2.html#cb13-43"></a><span class="co">#sep=&quot;\t&quot;,row.names=F)</span></span>
-<span id="cb13-44"><a href="machine-learning-part-2.html#cb13-44"></a></span>
-<span id="cb13-45"><a href="machine-learning-part-2.html#cb13-45"></a></span>
-<span id="cb13-46"><a href="machine-learning-part-2.html#cb13-46"></a>pubs_per_year &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;NGS_publications_per_year.txt&quot;</span>,<span class="dt">header =</span> T,<span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb13-47"><a href="machine-learning-part-2.html#cb13-47"></a>pubs_per_journal &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;NGS_publications_per_journal.txt&quot;</span>,<span class="dt">header =</span> T,<span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
 <p>Create list for high and low impact factor journals</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="machine-learning-part-2.html#cb14-1"></a><span class="co">#extract title and abstract</span></span>
-<span id="cb14-2"><a href="machine-learning-part-2.html#cb14-2"></a>pubmed_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&#39;Pmid&#39;</span>=<span class="kw">PMID</span>(ngs_records),</span>
-<span id="cb14-3"><a href="machine-learning-part-2.html#cb14-3"></a>    <span class="st">&#39;Year&#39;</span>=<span class="kw">YearPubmed</span>(ngs_records),<span class="st">&#39;Title&#39;</span>=<span class="kw">ArticleTitle</span>(ngs_records),</span>
-<span id="cb14-4"><a href="machine-learning-part-2.html#cb14-4"></a>    <span class="st">&#39;Journal&#39;</span>=<span class="kw">MedlineTA</span>(ngs_records),<span class="st">&#39;Abstract&#39;</span>=<span class="kw">AbstractText</span>(ngs_records))</span>
-<span id="cb14-5"><a href="machine-learning-part-2.html#cb14-5"></a></span>
-<span id="cb14-6"><a href="machine-learning-part-2.html#cb14-6"></a><span class="co">#abstract is a column in pybmed_data data frame</span></span>
-<span id="cb14-7"><a href="machine-learning-part-2.html#cb14-7"></a>pubmed_data<span class="op">$</span>Abstract &lt;-<span class="st"> </span><span class="kw">as.character</span>(pubmed_data<span class="op">$</span>Abstract)</span>
-<span id="cb14-8"><a href="machine-learning-part-2.html#cb14-8"></a>pubmed_data<span class="op">$</span>Abstract &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;,&quot;</span>, <span class="st">&quot; &quot;</span>, pubmed_data<span class="op">$</span>Abstract, <span class="dt">fixed =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb14-9"><a href="machine-learning-part-2.html#cb14-9"></a></span>
-<span id="cb14-10"><a href="machine-learning-part-2.html#cb14-10"></a><span class="co">####</span></span>
-<span id="cb14-11"><a href="machine-learning-part-2.html#cb14-11"></a></span>
-<span id="cb14-12"><a href="machine-learning-part-2.html#cb14-12"></a><span class="co">#partition data to high and low impact factor journals</span></span>
-<span id="cb14-13"><a href="machine-learning-part-2.html#cb14-13"></a><span class="co">#high impact factor journals list</span></span>
-<span id="cb14-14"><a href="machine-learning-part-2.html#cb14-14"></a><span class="co">#note Lancet includes Lancet Neurology etc</span></span>
-<span id="cb14-15"><a href="machine-learning-part-2.html#cb14-15"></a>hi &lt;-<span class="st"> </span>pubmed_data[<span class="kw">grepl</span>(<span class="st">&quot;Lancet|Neurology|N Engl J Med|Ann Neurol&quot;</span>, pubmed_data<span class="op">$</span>Journal),]</span>
-<span id="cb14-16"><a href="machine-learning-part-2.html#cb14-16"></a> </span>
-<span id="cb14-17"><a href="machine-learning-part-2.html#cb14-17"></a></span>
-<span id="cb14-18"><a href="machine-learning-part-2.html#cb14-18"></a><span class="co">#low impact factor journals list</span></span>
-<span id="cb14-19"><a href="machine-learning-part-2.html#cb14-19"></a>li &lt;-<span class="st"> </span>pubmed_data[<span class="kw">grepl</span>(<span class="st">&quot;Mult Scler|Int J MS Care|J Neurol|Cochrane|BMC|</span></span>
-<span id="cb14-20"><a href="machine-learning-part-2.html#cb14-20"></a><span class="st">                        PLoS|BMJ Open&quot;</span>, pubmed_data<span class="op">$</span>Journal),]</span>
-<span id="cb14-21"><a href="machine-learning-part-2.html#cb14-21"></a></span>
-<span id="cb14-22"><a href="machine-learning-part-2.html#cb14-22"></a> </span>
-<span id="cb14-23"><a href="machine-learning-part-2.html#cb14-23"></a><span class="co">#join</span></span>
-<span id="cb14-24"><a href="machine-learning-part-2.html#cb14-24"></a>hia&lt;-<span class="kw">paste</span>(hi<span class="op">$</span>Abstract, <span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb14-25"><a href="machine-learning-part-2.html#cb14-25"></a>lia&lt;-<span class="kw">paste</span>(li<span class="op">$</span>Abstract,<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p>Plot of journal publications normalised by year.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="machine-learning-part-2.html#cb15-1"></a><span class="co">#ggplot</span></span>
-<span id="cb15-2"><a href="machine-learning-part-2.html#cb15-2"></a><span class="kw">ggplot</span>(pubs_per_year,<span class="kw">aes</span>(year, NGS_publications_normalized)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span> (<span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb15-3"><a href="machine-learning-part-2.html#cb15-3"></a><span class="kw">xlab</span>(<span class="st">&quot;Year&quot;</span>) <span class="op">+</span></span>
-<span id="cb15-4"><a href="machine-learning-part-2.html#cb15-4"></a><span class="kw">ylab</span>(<span class="st">&quot;NGS/100000 articles&quot;</span>)<span class="op">+</span><span class="kw">expand_limits</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">2020</span>,<span class="dv">2028</span>))<span class="op">+</span></span>
-<span id="cb15-5"><a href="machine-learning-part-2.html#cb15-5"></a><span class="kw">ggtitle</span>(<span class="st">&quot;NGS PubMed articles&quot;</span>)</span></code></pre></div>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to adjust
-## the group aesthetic?</code></pre>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="machine-learning-part-2.html#cb17-1"></a><span class="kw">ggplot</span>(pubs_per_journal,<span class="kw">aes</span>(journal, NGS_publications,<span class="dt">fill=</span>journal)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)<span class="op">+</span></span>
-<span id="cb17-2"><a href="machine-learning-part-2.html#cb17-2"></a><span class="kw">coord_flip</span>()<span class="op">+</span></span>
-<span id="cb17-3"><a href="machine-learning-part-2.html#cb17-3"></a><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-4-2.png" width="672" /></p>
 <p>Plot of journal publications normalised by journal.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="machine-learning-part-2.html#cb18-1"></a><span class="kw">ggplot</span>(pubs_per_journal ,<span class="kw">aes</span>(journal, </span>
-<span id="cb18-2"><a href="machine-learning-part-2.html#cb18-2"></a>    NGS_publications_normalized,<span class="dt">fill=</span>journal)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)<span class="op">+</span></span>
-<span id="cb18-3"><a href="machine-learning-part-2.html#cb18-3"></a><span class="kw">coord_flip</span>()<span class="op">+</span></span>
-<span id="cb18-4"><a href="machine-learning-part-2.html#cb18-4"></a><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-5-1.png" width="672" /></p>
 <p>Corpus</p>
 <p>The steps in processing and creating a Corpus from <em>tm</em> library is illustrated.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="machine-learning-part-2.html#cb19-1"></a><span class="co"># create list of stop-words</span></span>
-<span id="cb19-2"><a href="machine-learning-part-2.html#cb19-2"></a>myStopwords=<span class="kw">c</span>(<span class="st">&quot;It&quot;</span>,<span class="st">&quot;mg&quot;</span>,<span class="st">&quot;kg&quot;</span>,<span class="st">&quot;µgl&quot;</span>,<span class="st">&quot;=&quot;</span>,<span class="st">&quot;journals&quot;</span>,<span class="st">&quot;medline&quot;</span>,<span class="st">&quot;embase&quot;</span>,<span class="st">&quot;ebsco&quot;</span>,</span>
-<span id="cb19-3"><a href="machine-learning-part-2.html#cb19-3"></a>  <span class="st">&quot;cinahl&quot;</span>, <span class="st">&quot;background&quot;</span>,<span class="st">&quot;method&quot;</span>,<span class="st">&quot;results&quot;</span>,<span class="st">&quot;conclusion&quot;</span>,<span class="st">&quot;http&quot;</span>,<span class="st">&quot;web&quot;</span>,<span class="st">&quot;i&quot;</span>,<span class="st">&quot;ii&quot;</span>,</span>
-<span id="cb19-4"><a href="machine-learning-part-2.html#cb19-4"></a>  <span class="st">&quot;iii&quot;</span>,<span class="st">&quot;ci&quot;</span>,<span class="st">&quot;jan&quot;</span>,<span class="st">&quot;january&quot;</span>,<span class="st">&quot;feb&quot;</span>,<span class="st">&quot;february&quot;</span>,<span class="st">&quot;march&quot;</span>,<span class="st">&quot;april&quot;</span>,<span class="st">&quot;may&quot;</span>,<span class="st">&quot;june&quot;</span>,</span>
-<span id="cb19-5"><a href="machine-learning-part-2.html#cb19-5"></a>  <span class="st">&quot;july&quot;</span>,<span class="st">&quot;august&quot;</span>, <span class="st">&quot;sept&quot;</span>,<span class="st">&quot;september&quot;</span>,<span class="st">&quot;oct&quot;</span>,<span class="st">&quot;october&quot;</span>,<span class="st">&quot;nov&quot;</span>,<span class="st">&quot;november&quot;</span>,<span class="st">&quot;dec&quot;</span>,</span>
-<span id="cb19-6"><a href="machine-learning-part-2.html#cb19-6"></a>  <span class="st">&quot;december&quot;</span>)</span>
-<span id="cb19-7"><a href="machine-learning-part-2.html#cb19-7"></a></span>
-<span id="cb19-8"><a href="machine-learning-part-2.html#cb19-8"></a><span class="co">#corpus = Corpus(VectorSource(all))</span></span>
-<span id="cb19-9"><a href="machine-learning-part-2.html#cb19-9"></a>myCorpus =<span class="st"> </span><span class="kw">VCorpus</span>(<span class="kw">VectorSource</span>(pubmed_data<span class="op">$</span>Abstract))</span>
-<span id="cb19-10"><a href="machine-learning-part-2.html#cb19-10"></a>myCorpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(myCorpus, <span class="kw">content_transformer</span>(tolower))</span>
-<span id="cb19-11"><a href="machine-learning-part-2.html#cb19-11"></a>myCorpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(myCorpus, removeNumbers)</span>
-<span id="cb19-12"><a href="machine-learning-part-2.html#cb19-12"></a>myCorpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(myCorpus, removePunctuation)</span>
-<span id="cb19-13"><a href="machine-learning-part-2.html#cb19-13"></a>myCorpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(myCorpus, removeWords, <span class="kw">stopwords</span> (<span class="st">&quot;english&quot;</span>),<span class="dt">lazy=</span><span class="ot">TRUE</span>)</span>
-<span id="cb19-14"><a href="machine-learning-part-2.html#cb19-14"></a>myCorpus&lt;-<span class="st"> </span><span class="kw">tm_map</span>(myCorpus,removeWords,myStopwords)</span>
-<span id="cb19-15"><a href="machine-learning-part-2.html#cb19-15"></a>myCorpus &lt;-<span class="st"> </span><span class="kw">tm_map</span>(myCorpus, stripWhitespace, <span class="dt">lazy=</span><span class="ot">TRUE</span>)</span>
-<span id="cb19-16"><a href="machine-learning-part-2.html#cb19-16"></a></span>
-<span id="cb19-17"><a href="machine-learning-part-2.html#cb19-17"></a><span class="co"># document term matrix</span></span>
-<span id="cb19-18"><a href="machine-learning-part-2.html#cb19-18"></a>dtm &lt;-<span class="st"> </span><span class="kw">DocumentTermMatrix</span>(myCorpus,<span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">wordLengths=</span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">20</span>)))</span>
-<span id="cb19-19"><a href="machine-learning-part-2.html#cb19-19"></a><span class="co">#ensure non non zero entry</span></span>
-<span id="cb19-20"><a href="machine-learning-part-2.html#cb19-20"></a>rowTotals &lt;-<span class="st"> </span><span class="kw">apply</span>(dtm , <span class="dv">1</span>, sum) <span class="co">#Find the sum of words in each Document</span></span>
-<span id="cb19-21"><a href="machine-learning-part-2.html#cb19-21"></a>dtm1   &lt;-<span class="st"> </span>dtm[rowTotals<span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, ]  </span>
-<span id="cb19-22"><a href="machine-learning-part-2.html#cb19-22"></a></span>
-<span id="cb19-23"><a href="machine-learning-part-2.html#cb19-23"></a><span class="co"># create term-document matrix</span></span>
-<span id="cb19-24"><a href="machine-learning-part-2.html#cb19-24"></a>tdm &lt;-<span class="st"> </span><span class="kw">TermDocumentMatrix</span>(myCorpus,<span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">wordLengths=</span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">20</span>)))</span>
-<span id="cb19-25"><a href="machine-learning-part-2.html#cb19-25"></a><span class="co">#ensure non non zero entry</span></span>
-<span id="cb19-26"><a href="machine-learning-part-2.html#cb19-26"></a>rowTotals &lt;-<span class="st"> </span><span class="kw">apply</span>(tdm , <span class="dv">1</span>, sum) <span class="co">#Find the sum of words in each Document</span></span>
-<span id="cb19-27"><a href="machine-learning-part-2.html#cb19-27"></a>tdm1   &lt;-<span class="st"> </span>tdm[rowTotals<span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, ]  </span></code></pre></div>
 <p>Here, the same preprocessing steps are performed using <em>tidytext</em>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="machine-learning-part-2.html#cb20-1"></a>mystopwords=<span class="kw">bind_rows</span>(<span class="kw">data.frame</span>(<span class="dt">word=</span> <span class="kw">c</span>(<span class="st">&quot;It&quot;</span>,<span class="st">&quot;mg&quot;</span>,<span class="st">&quot;kg&quot;</span>,<span class="st">&quot;journals&quot;</span>,<span class="st">&quot;medline&quot;</span>,<span class="st">&quot;embase&quot;</span>,<span class="st">&quot;ebsco&quot;</span>,<span class="st">&quot;cinahl&quot;</span>,<span class="st">&quot;background&quot;</span>,</span>
-<span id="cb20-2"><a href="machine-learning-part-2.html#cb20-2"></a>  <span class="st">&quot;method&quot;</span>,<span class="st">&quot;results&quot;</span>,<span class="st">&quot;conclusion&quot;</span>,<span class="st">&quot;http&quot;</span>,<span class="st">&quot;web&quot;</span>,<span class="st">&quot;i&quot;</span>,<span class="st">&quot;ii&quot;</span>,<span class="st">&quot;iii&quot;</span>,<span class="st">&quot;ci&quot;</span>,</span>
-<span id="cb20-3"><a href="machine-learning-part-2.html#cb20-3"></a>  <span class="st">&quot;jan&quot;</span>,<span class="st">&quot;january&quot;</span>,<span class="st">&quot;feb&quot;</span>,<span class="st">&quot;february&quot;</span>,<span class="st">&quot;march&quot;</span>,<span class="st">&quot;april&quot;</span>,<span class="st">&quot;may&quot;</span>,<span class="st">&quot;june&quot;</span>,<span class="st">&quot;july&quot;</span>,<span class="st">&quot;august&quot;</span>,</span>
-<span id="cb20-4"><a href="machine-learning-part-2.html#cb20-4"></a>  <span class="st">&quot;sept&quot;</span>,<span class="st">&quot;september&quot;</span>,<span class="st">&quot;oct&quot;</span>,<span class="st">&quot;october&quot;</span>,<span class="st">&quot;nov&quot;</span>,<span class="st">&quot;november&quot;</span>,<span class="st">&quot;dec&quot;</span>,<span class="st">&quot;december&quot;</span>),</span>
-<span id="cb20-5"><a href="machine-learning-part-2.html#cb20-5"></a>  <span class="dt">lexicon=</span><span class="kw">c</span>(<span class="st">&quot;custom&quot;</span>)),stop_words)</span>
-<span id="cb20-6"><a href="machine-learning-part-2.html#cb20-6"></a></span>
-<span id="cb20-7"><a href="machine-learning-part-2.html#cb20-7"></a></span>
-<span id="cb20-8"><a href="machine-learning-part-2.html#cb20-8"></a><span class="co">#the abstract from the pubmed data is extracted</span></span>
-<span id="cb20-9"><a href="machine-learning-part-2.html#cb20-9"></a>abs&lt;-pubmed_data<span class="op">$</span>Abstract</span>
-<span id="cb20-10"><a href="machine-learning-part-2.html#cb20-10"></a>abs&lt;-<span class="kw">iconv</span>(abs, <span class="dt">to =</span> <span class="st">&#39;utf-8&#39;</span>)</span>
-<span id="cb20-11"><a href="machine-learning-part-2.html#cb20-11"></a>abs &lt;-<span class="st"> </span>(abs[<span class="op">!</span><span class="kw">is.na</span>(abs)])</span>
-<span id="cb20-12"><a href="machine-learning-part-2.html#cb20-12"></a>abCorpus&lt;-<span class="kw">VCorpus</span>(<span class="kw">VectorSource</span>(abs))</span>
-<span id="cb20-13"><a href="machine-learning-part-2.html#cb20-13"></a>ab&lt;-<span class="kw">tidy</span>(abCorpus)</span>
-<span id="cb20-14"><a href="machine-learning-part-2.html#cb20-14"></a></span>
-<span id="cb20-15"><a href="machine-learning-part-2.html#cb20-15"></a><span class="co">#token words</span></span>
-<span id="cb20-16"><a href="machine-learning-part-2.html#cb20-16"></a>ab_word&lt;-ab <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest_tokens</span>(word,text) <span class="op">%&gt;%</span></span>
-<span id="cb20-17"><a href="machine-learning-part-2.html#cb20-17"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">gsub</span>(<span class="st">&quot;[^A-Za-z ]&quot;</span>,<span class="st">&quot;&quot;</span>,word)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb20-18"><a href="machine-learning-part-2.html#cb20-18"></a><span class="st">  </span><span class="kw">filter</span>(word <span class="op">!=</span><span class="st"> &quot;&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb20-19"><a href="machine-learning-part-2.html#cb20-19"></a><span class="st">  </span><span class="co">#remove stopwords from customised list</span></span>
-<span id="cb20-20"><a href="machine-learning-part-2.html#cb20-20"></a><span class="st">  </span><span class="kw">anti_join</span>(mystopwords) </span></code></pre></div>
-<pre><code>## Joining, by = &quot;word&quot;</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="machine-learning-part-2.html#cb22-1"></a><span class="co">#check if there are unnecessary words</span></span>
-<span id="cb22-2"><a href="machine-learning-part-2.html#cb22-2"></a><span class="co">#View(ab_word %&gt;% count (word, sort=T))</span></span></code></pre></div>
 </div>
 </div>
-<div id="wordcloud" class="section level2">
-<h2><span class="header-section-number">7.2</span> Wordcloud</h2>
+<div id="wordcloud" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Wordcloud<a href="machine-learning-part-2.html#wordcloud" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A trick with wordcloud is setting the right number of words, the range of size
 of the words to be plotted.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="machine-learning-part-2.html#cb23-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb23-2"><a href="machine-learning-part-2.html#cb23-2"></a>ab_word<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(word) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb23-3"><a href="machine-learning-part-2.html#cb23-3"></a><span class="st">        </span><span class="kw">with</span>(<span class="kw">wordcloud</span>(word,n,<span class="dt">min.freq =</span> <span class="dv">20</span>, </span>
-<span id="cb23-4"><a href="machine-learning-part-2.html#cb23-4"></a>        <span class="co">#min.freq specifies the threshold for words to be plotted</span></span>
-<span id="cb23-5"><a href="machine-learning-part-2.html#cb23-5"></a>        <span class="co"># scale is a vector of length 2 to indicate the range of size of words            # max.words is the maximum number of words to be plotted</span></span>
-<span id="cb23-6"><a href="machine-learning-part-2.html#cb23-6"></a>        <span class="co"># rot.per is the proportion of words with 90 degrees rotation                 </span></span>
-<span id="cb23-7"><a href="machine-learning-part-2.html#cb23-7"></a>        <span class="dt">max.words =</span> <span class="dv">100</span>, <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">8</span>, <span class="st">&quot;Dark2&quot;</span>)), </span>
-<span id="cb23-8"><a href="machine-learning-part-2.html#cb23-8"></a>        <span class="dt">scale =</span> <span class="kw">c</span>(<span class="dv">1</span>,.<span class="dv">2</span>), <span class="dt">per.rot =</span> <span class="fl">0.4</span>)</span>
-<span id="cb23-9"><a href="machine-learning-part-2.html#cb23-9"></a></span>
-<span id="cb23-10"><a href="machine-learning-part-2.html#cb23-10"></a></span>
-<span id="cb23-11"><a href="machine-learning-part-2.html#cb23-11"></a>m &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tdm1)</span>
-<span id="cb23-12"><a href="machine-learning-part-2.html#cb23-12"></a>    v &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">rowSums</span>(m),<span class="dt">decreasing=</span><span class="ot">TRUE</span>)</span>
-<span id="cb23-13"><a href="machine-learning-part-2.html#cb23-13"></a>    d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">word =</span> <span class="kw">names</span>(v),<span class="dt">freq=</span>v)</span>
-<span id="cb23-14"><a href="machine-learning-part-2.html#cb23-14"></a>    </span>
-<span id="cb23-15"><a href="machine-learning-part-2.html#cb23-15"></a><span class="kw">wordcloud</span>(d<span class="op">$</span>word,d<span class="op">$</span>freq, <span class="dt">min.freq =</span> <span class="dv">20</span>, <span class="dt">max.words =</span> <span class="dv">100</span>, <span class="dt">scale=</span><span class="kw">c</span>(<span class="dv">2</span>,.<span class="dv">3</span>),           <span class="dt">colors =</span> <span class="kw">brewer.pal</span>(<span class="dv">8</span>, <span class="st">&quot;Dark2&quot;</span>), <span class="dt">per.rot =</span> <span class="fl">0.4</span>, )</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-8-1.png" width="672" /></p>
 <p>Plot Wordcloud with negative and positive sentiment from <em>Bing</em> library. Other sentiment libraries include <em>afinn</em>, <em>loughran</em> and <em>nrc</em>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="machine-learning-part-2.html#cb24-1"></a><span class="kw">library</span>(reshape2)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;reshape2&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     smiths</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="machine-learning-part-2.html#cb27-1"></a>ab_word <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">get_sentiments</span>(<span class="st">&quot;bing&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb27-2"><a href="machine-learning-part-2.html#cb27-2"></a><span class="st">  </span><span class="kw">count</span>(word, sentiment, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb27-3"><a href="machine-learning-part-2.html#cb27-3"></a><span class="st">  </span><span class="kw">acast</span>(word<span class="op">~</span>sentiment,<span class="dt">value.var =</span> <span class="st">&quot;n&quot;</span>,<span class="dt">fill=</span><span class="dv">0</span>) <span class="op">%&gt;%</span></span>
-<span id="cb27-4"><a href="machine-learning-part-2.html#cb27-4"></a><span class="st">  </span><span class="kw">comparison.cloud</span>(<span class="dt">colors =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>),</span>
-<span id="cb27-5"><a href="machine-learning-part-2.html#cb27-5"></a>                   <span class="dt">title.size =</span> <span class="dv">2</span>,</span>
-<span id="cb27-6"><a href="machine-learning-part-2.html#cb27-6"></a>                   <span class="dt">max.words =</span> <span class="dv">100</span>, <span class="dt">scale=</span><span class="kw">c</span>(<span class="dv">2</span>,.<span class="dv">5</span>))</span></code></pre></div>
-<pre><code>## Joining, by = &quot;word&quot;</code></pre>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-9-1.png" width="672" /></p>
 <p>graph analysis of word relationship</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="machine-learning-part-2.html#cb29-1"></a><span class="kw">library</span>(extrafont)</span></code></pre></div>
-<pre><code>## Registering fonts with R</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="machine-learning-part-2.html#cb31-1"></a><span class="kw">library</span>(igraph)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;igraph&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     crossing</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     as_data_frame, groups, union</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     decompose, spectrum</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     union</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="machine-learning-part-2.html#cb37-1"></a><span class="kw">library</span>(ggraph)</span>
-<span id="cb37-2"><a href="machine-learning-part-2.html#cb37-2"></a><span class="kw">library</span>(widyr)</span>
-<span id="cb37-3"><a href="machine-learning-part-2.html#cb37-3"></a><span class="kw">library</span>(viridis)</span></code></pre></div>
-<pre><code>## Loading required package: viridisLite</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="machine-learning-part-2.html#cb39-1"></a><span class="co">#abstract</span></span>
-<span id="cb39-2"><a href="machine-learning-part-2.html#cb39-2"></a>ab_word_cors &lt;-<span class="st"> </span></span>
-<span id="cb39-3"><a href="machine-learning-part-2.html#cb39-3"></a><span class="st">  </span>ab_word <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb39-4"><a href="machine-learning-part-2.html#cb39-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">section =</span> <span class="kw">row_number</span>() <span class="op">%/%</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb39-5"><a href="machine-learning-part-2.html#cb39-5"></a><span class="st">  </span><span class="kw">filter</span>(section <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></span>
-<span id="cb39-6"><a href="machine-learning-part-2.html#cb39-6"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span>stop_words<span class="op">$</span>word) <span class="op">%&gt;%</span></span>
-<span id="cb39-7"><a href="machine-learning-part-2.html#cb39-7"></a><span class="st">  </span><span class="kw">group_by</span>(word) <span class="op">%&gt;%</span></span>
-<span id="cb39-8"><a href="machine-learning-part-2.html#cb39-8"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">n</span>() <span class="op">&gt;=</span><span class="st"> </span><span class="dv">20</span>) <span class="op">%&gt;%</span></span>
-<span id="cb39-9"><a href="machine-learning-part-2.html#cb39-9"></a><span class="st">  </span><span class="kw">pairwise_cor</span>(word, section, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb39-10"><a href="machine-learning-part-2.html#cb39-10"></a></span>
-<span id="cb39-11"><a href="machine-learning-part-2.html#cb39-11"></a>ab_word_cors <span class="op">%&gt;%</span></span>
-<span id="cb39-12"><a href="machine-learning-part-2.html#cb39-12"></a><span class="st">  </span><span class="kw">filter</span>(correlation <span class="op">&gt;</span><span class="st"> </span><span class="fl">.5</span>) <span class="op">%&gt;%</span></span>
-<span id="cb39-13"><a href="machine-learning-part-2.html#cb39-13"></a><span class="st">  </span><span class="kw">graph_from_data_frame</span>() <span class="op">%&gt;%</span></span>
-<span id="cb39-14"><a href="machine-learning-part-2.html#cb39-14"></a><span class="st">  </span><span class="kw">ggraph</span>(<span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>) <span class="op">+</span></span>
-<span id="cb39-15"><a href="machine-learning-part-2.html#cb39-15"></a><span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">edge_alpha =</span> correlation), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span><span class="st">&quot;#27408b&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb39-16"><a href="machine-learning-part-2.html#cb39-16"></a><span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
-<span id="cb39-17"><a href="machine-learning-part-2.html#cb39-17"></a><span class="st">  </span><span class="kw">theme_void</span>(<span class="dt">base_family=</span><span class="st">&quot;Roboto&quot;</span>)<span class="op">+</span></span>
-<span id="cb39-18"><a href="machine-learning-part-2.html#cb39-18"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;  Pairs of words in publications on electronic medical record and Text mining &quot;</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-10-1.png" width="672" /></p>
 </div>
-<div id="bigram-analysis" class="section level2">
-<h2><span class="header-section-number">7.3</span> Bigram analysis</h2>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="machine-learning-part-2.html#cb40-1"></a>ab_bigrams &lt;-<span class="st"> </span>ab <span class="op">%&gt;%</span></span>
-<span id="cb40-2"><a href="machine-learning-part-2.html#cb40-2"></a><span class="st">  </span><span class="kw">unnest_tokens</span>(bigram, text, <span class="dt">token =</span> <span class="st">&quot;ngrams&quot;</span>, <span class="dt">n =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span></span>
-<span id="cb40-3"><a href="machine-learning-part-2.html#cb40-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bigram =</span> <span class="kw">gsub</span>(<span class="st">&quot;[^A-Za-z ]&quot;</span>,<span class="st">&quot;&quot;</span>, bigram)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb40-4"><a href="machine-learning-part-2.html#cb40-4"></a><span class="st">  </span><span class="kw">filter</span>(bigram <span class="op">!=</span><span class="st"> &quot;&quot;</span>) </span>
-<span id="cb40-5"><a href="machine-learning-part-2.html#cb40-5"></a></span>
-<span id="cb40-6"><a href="machine-learning-part-2.html#cb40-6"></a></span>
-<span id="cb40-7"><a href="machine-learning-part-2.html#cb40-7"></a>bigrams_separated &lt;-<span class="st"> </span>ab_bigrams <span class="op">%&gt;%</span></span>
-<span id="cb40-8"><a href="machine-learning-part-2.html#cb40-8"></a><span class="st">  </span><span class="kw">separate</span>(bigram, <span class="kw">c</span>(<span class="st">&quot;word1&quot;</span>, <span class="st">&quot;word2&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb40-9"><a href="machine-learning-part-2.html#cb40-9"></a></span>
-<span id="cb40-10"><a href="machine-learning-part-2.html#cb40-10"></a>bigrams_filtered &lt;-<span class="st"> </span>bigrams_separated <span class="op">%&gt;%</span></span>
-<span id="cb40-11"><a href="machine-learning-part-2.html#cb40-11"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>word1 <span class="op">%in%</span><span class="st"> </span>mystopwords<span class="op">$</span>word) <span class="op">%&gt;%</span></span>
-<span id="cb40-12"><a href="machine-learning-part-2.html#cb40-12"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>word2 <span class="op">%in%</span><span class="st"> </span>mystopwords<span class="op">$</span>word)</span>
-<span id="cb40-13"><a href="machine-learning-part-2.html#cb40-13"></a></span>
-<span id="cb40-14"><a href="machine-learning-part-2.html#cb40-14"></a></span>
-<span id="cb40-15"><a href="machine-learning-part-2.html#cb40-15"></a>bigram_counts &lt;-<span class="st"> </span>bigrams_filtered <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb40-16"><a href="machine-learning-part-2.html#cb40-16"></a><span class="st">  </span><span class="kw">count</span>(word1, word2, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb40-17"><a href="machine-learning-part-2.html#cb40-17"></a></span>
-<span id="cb40-18"><a href="machine-learning-part-2.html#cb40-18"></a>bigrams_united &lt;-<span class="st"> </span>bigrams_filtered <span class="op">%&gt;%</span></span>
-<span id="cb40-19"><a href="machine-learning-part-2.html#cb40-19"></a><span class="st">  </span><span class="kw">unite</span>(bigram, word1, word2, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb40-20"><a href="machine-learning-part-2.html#cb40-20"></a>bigrams_united</span></code></pre></div>
-<pre><code>## # A tibble: 22,398 x 8
-##    author datetimestamp       description heading id    language origin bigram  
-##    &lt;lgl&gt;  &lt;dttm&gt;              &lt;lgl&gt;       &lt;lgl&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;lgl&gt;  &lt;chr&gt;   
-##  1 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     growing~
-##  2 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     elderly~
-##  3 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     populat~
-##  4 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     incurab~
-##  5 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     chronic~
-##  6 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     continu~
-##  7 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     medical~
-##  8 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     service~
-##  9 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     mental ~
-## 10 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     impairm~
-## # ... with 22,388 more rows</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="machine-learning-part-2.html#cb42-1"></a>bigram_graph &lt;-<span class="st"> </span>bigram_counts <span class="op">%&gt;%</span></span>
-<span id="cb42-2"><a href="machine-learning-part-2.html#cb42-2"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb42-3"><a href="machine-learning-part-2.html#cb42-3"></a><span class="st">  </span><span class="kw">graph_from_data_frame</span>()</span>
-<span id="cb42-4"><a href="machine-learning-part-2.html#cb42-4"></a>bigram_graph</span></code></pre></div>
-<pre><code>## IGRAPH ce30945 DN-- 106 97 -- 
-## + attr: name (v/c), n (e/n)
-## + edges from ce30945 (vertex names):
-##  [1]           -&gt;            electronic-&gt;health      machine   -&gt;learning   
-##  [4] health    -&gt;records     text      -&gt;mining      data      -&gt;mining     
-##  [7] natural   -&gt;language    language  -&gt;processing  medical   -&gt;records    
-## [10]           -&gt;patients    electronic-&gt;medical     health    -&gt;care       
-## [13] ehr       -&gt;data        health    -&gt;record      free      -&gt;text       
-## [16] clinical  -&gt;notes       deep      -&gt;learning    clinical  -&gt;data       
-## [19] entity    -&gt;recognition medical   -&gt;record      processing-&gt;nlp        
-## [22] neural    -&gt;network     records   -&gt;ehrs        logistic  -&gt;regression 
-## + ... omitted several edges</code></pre>
+<div id="bigram-analysis" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Bigram analysis<a href="machine-learning-part-2.html#bigram-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The relationship among the bigrams are illustrated here.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="machine-learning-part-2.html#cb44-1"></a><span class="kw">library</span>(tidygraph)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;tidygraph&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:igraph&#39;:
-## 
-##     groups</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     filter</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="machine-learning-part-2.html#cb48-1"></a><span class="kw">as_tbl_graph</span>(bigram_graph)</span></code></pre></div>
-<pre><code>## # A tbl_graph: 106 nodes and 97 edges
-## #
-## # A directed multigraph with 20 components
-## #
-## # Node Data: 106 x 1 (active)
-##   name        
-##   &lt;chr&gt;       
-## 1 &quot;&quot;          
-## 2 &quot;electronic&quot;
-## 3 &quot;machine&quot;   
-## 4 &quot;health&quot;    
-## 5 &quot;text&quot;      
-## 6 &quot;data&quot;      
-## # ... with 100 more rows
-## #
-## # Edge Data: 97 x 3
-##    from    to     n
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;
-## 1     1     1  1082
-## 2     2     4   173
-## 3     3    27   119
-## # ... with 94 more rows</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="machine-learning-part-2.html#cb50-1"></a><span class="kw">set.seed</span>(<span class="dv">2017</span>)</span>
-<span id="cb50-2"><a href="machine-learning-part-2.html#cb50-2"></a><span class="co">#plot(bigram_graph)</span></span>
-<span id="cb50-3"><a href="machine-learning-part-2.html#cb50-3"></a><span class="kw">ggraph</span>(bigram_graph, <span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>) <span class="op">+</span></span>
-<span id="cb50-4"><a href="machine-learning-part-2.html#cb50-4"></a><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span></span>
-<span id="cb50-5"><a href="machine-learning-part-2.html#cb50-5"></a><span class="st">  </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
-<span id="cb50-6"><a href="machine-learning-part-2.html#cb50-6"></a><span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">size=</span><span class="dv">3</span>,<span class="dt">vjust =</span> <span class="dv">1</span>, <span class="dt">hjust =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-12-1.png" width="672" /></p>
 </div>
-<div id="trigram" class="section level2">
-<h2><span class="header-section-number">7.4</span> Trigram</h2>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="machine-learning-part-2.html#cb51-1"></a>ab_trigrams &lt;-<span class="st"> </span>ab <span class="op">%&gt;%</span></span>
-<span id="cb51-2"><a href="machine-learning-part-2.html#cb51-2"></a><span class="st">  </span><span class="kw">unnest_tokens</span>(trigram, text, <span class="dt">token =</span> <span class="st">&quot;ngrams&quot;</span>, <span class="dt">n =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span></span>
-<span id="cb51-3"><a href="machine-learning-part-2.html#cb51-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">trigram =</span> <span class="kw">gsub</span>(<span class="st">&quot;[^A-Za-z ]&quot;</span>,<span class="st">&quot;&quot;</span>, trigram)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb51-4"><a href="machine-learning-part-2.html#cb51-4"></a><span class="st">  </span><span class="kw">filter</span>(trigram <span class="op">!=</span><span class="st"> &quot;&quot;</span>) </span>
-<span id="cb51-5"><a href="machine-learning-part-2.html#cb51-5"></a></span>
-<span id="cb51-6"><a href="machine-learning-part-2.html#cb51-6"></a>trigrams_separated &lt;-<span class="st"> </span>ab_trigrams <span class="op">%&gt;%</span></span>
-<span id="cb51-7"><a href="machine-learning-part-2.html#cb51-7"></a><span class="st">  </span><span class="kw">separate</span>(trigram, <span class="kw">c</span>(<span class="st">&quot;word1&quot;</span>, <span class="st">&quot;word2&quot;</span>,<span class="st">&quot;word3&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 72761 rows [1, 2,
-## 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="machine-learning-part-2.html#cb53-1"></a>trigrams_filtered &lt;-<span class="st"> </span>trigrams_separated <span class="op">%&gt;%</span></span>
-<span id="cb53-2"><a href="machine-learning-part-2.html#cb53-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>word1 <span class="op">%in%</span><span class="st"> </span>mystopwords<span class="op">$</span>word) <span class="op">%&gt;%</span></span>
-<span id="cb53-3"><a href="machine-learning-part-2.html#cb53-3"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>word2 <span class="op">%in%</span><span class="st"> </span>mystopwords<span class="op">$</span>word) <span class="op">%&gt;%</span></span>
-<span id="cb53-4"><a href="machine-learning-part-2.html#cb53-4"></a><span class="kw">filter</span>(<span class="op">!</span>word3 <span class="op">%in%</span><span class="st"> </span>mystopwords<span class="op">$</span>word)</span>
-<span id="cb53-5"><a href="machine-learning-part-2.html#cb53-5"></a></span>
-<span id="cb53-6"><a href="machine-learning-part-2.html#cb53-6"></a>trigram_counts &lt;-<span class="st"> </span>trigrams_filtered <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb53-7"><a href="machine-learning-part-2.html#cb53-7"></a><span class="st">  </span><span class="kw">count</span>(word1, word2, word3, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb53-8"><a href="machine-learning-part-2.html#cb53-8"></a></span>
-<span id="cb53-9"><a href="machine-learning-part-2.html#cb53-9"></a>trigram_counts</span></code></pre></div>
-<pre><code>## # A tibble: 14,100 x 4
-##    word1        word2        word3     n
-##    &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt; &lt;int&gt;
-##  1 &quot;&quot;           &quot;&quot;           NA     1082
-##  2 &quot;electronic&quot; &quot;health&quot;     NA      173
-##  3 &quot;machine&quot;    &quot;learning&quot;   NA      119
-##  4 &quot;health&quot;     &quot;records&quot;    NA      108
-##  5 &quot;text&quot;       &quot;mining&quot;     NA       91
-##  6 &quot;data&quot;       &quot;mining&quot;     NA       76
-##  7 &quot;natural&quot;    &quot;language&quot;   NA       68
-##  8 &quot;language&quot;   &quot;processing&quot; NA       66
-##  9 &quot;medical&quot;    &quot;records&quot;    NA       66
-## 10 &quot;&quot;           &quot;patients&quot;   NA       64
-## # ... with 14,090 more rows</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="machine-learning-part-2.html#cb55-1"></a>trigrams_united &lt;-<span class="st"> </span>trigrams_filtered <span class="op">%&gt;%</span></span>
-<span id="cb55-2"><a href="machine-learning-part-2.html#cb55-2"></a><span class="st">  </span><span class="kw">unite</span>(trigram, word1, word2, word3, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb55-3"><a href="machine-learning-part-2.html#cb55-3"></a>trigrams_united</span></code></pre></div>
-<pre><code>## # A tibble: 22,398 x 8
-##    author datetimestamp       description heading id    language origin trigram 
-##    &lt;lgl&gt;  &lt;dttm&gt;              &lt;lgl&gt;       &lt;lgl&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;lgl&gt;  &lt;chr&gt;   
-##  1 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     growing~
-##  2 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     elderly~
-##  3 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     populat~
-##  4 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     incurab~
-##  5 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     chronic~
-##  6 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     continu~
-##  7 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     medical~
-##  8 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     service~
-##  9 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     mental ~
-## 10 NA     2023-03-02 12:51:39 NA          NA      1     en       NA     impairm~
-## # ... with 22,388 more rows</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="machine-learning-part-2.html#cb57-1"></a>trigram_graph &lt;-<span class="st"> </span>trigram_counts <span class="op">%&gt;%</span></span>
-<span id="cb57-2"><a href="machine-learning-part-2.html#cb57-2"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb57-3"><a href="machine-learning-part-2.html#cb57-3"></a><span class="st">  </span><span class="kw">graph_from_data_frame</span>()</span>
-<span id="cb57-4"><a href="machine-learning-part-2.html#cb57-4"></a>trigram_graph</span></code></pre></div>
-<pre><code>## IGRAPH d175291 DN-- 106 97 -- 
-## + attr: name (v/c), word3 (e/c), n (e/n)
-## + edges from d175291 (vertex names):
-##  [1]           -&gt;            electronic-&gt;health      machine   -&gt;learning   
-##  [4] health    -&gt;records     text      -&gt;mining      data      -&gt;mining     
-##  [7] natural   -&gt;language    language  -&gt;processing  medical   -&gt;records    
-## [10]           -&gt;patients    electronic-&gt;medical     health    -&gt;care       
-## [13] ehr       -&gt;data        health    -&gt;record      free      -&gt;text       
-## [16] clinical  -&gt;notes       deep      -&gt;learning    clinical  -&gt;data       
-## [19] entity    -&gt;recognition medical   -&gt;record      processing-&gt;nlp        
-## [22] neural    -&gt;network     records   -&gt;ehrs        logistic  -&gt;regression 
-## + ... omitted several edges</code></pre>
+<div id="trigram" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Trigram<a href="machine-learning-part-2.html#trigram" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The relationship among the trigrams are illustrated here.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="machine-learning-part-2.html#cb59-1"></a><span class="kw">as_tbl_graph</span>(trigram_graph)</span></code></pre></div>
-<pre><code>## # A tbl_graph: 106 nodes and 97 edges
-## #
-## # A directed multigraph with 20 components
-## #
-## # Node Data: 106 x 1 (active)
-##   name        
-##   &lt;chr&gt;       
-## 1 &quot;&quot;          
-## 2 &quot;electronic&quot;
-## 3 &quot;machine&quot;   
-## 4 &quot;health&quot;    
-## 5 &quot;text&quot;      
-## 6 &quot;data&quot;      
-## # ... with 100 more rows
-## #
-## # Edge Data: 97 x 4
-##    from    to word3     n
-##   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-## 1     1     1 NA     1082
-## 2     2     4 NA      173
-## 3     3    27 NA      119
-## # ... with 94 more rows</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="machine-learning-part-2.html#cb61-1"></a><span class="kw">set.seed</span>(<span class="dv">2017</span>)</span>
-<span id="cb61-2"><a href="machine-learning-part-2.html#cb61-2"></a><span class="co">#plot(trigram_graph)</span></span>
-<span id="cb61-3"><a href="machine-learning-part-2.html#cb61-3"></a><span class="kw">ggraph</span>(trigram_graph, <span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>) <span class="op">+</span></span>
-<span id="cb61-4"><a href="machine-learning-part-2.html#cb61-4"></a><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span></span>
-<span id="cb61-5"><a href="machine-learning-part-2.html#cb61-5"></a><span class="st">  </span><span class="kw">geom_node_point</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
-<span id="cb61-6"><a href="machine-learning-part-2.html#cb61-6"></a><span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">size=</span><span class="dv">3</span>,<span class="dt">vjust =</span> <span class="dv">1</span>, <span class="dt">hjust =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-1-14-1.png" width="672" /></p>
 </div>
-<div id="topic-modeling-or-thematic-analysis" class="section level2">
-<h2><span class="header-section-number">7.5</span> Topic modeling or thematic analysis</h2>
+<div id="topic-modeling-or-thematic-analysis" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Topic modeling or thematic analysis<a href="machine-learning-part-2.html#topic-modeling-or-thematic-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Two methods for unsupervised thematic analysis, NMF and probabilistic topic
 model, are illustrated.</p>
-<div id="probabilistic-topic-model" class="section level3">
-<h3><span class="header-section-number">7.5.1</span> Probabilistic topic model</h3>
+<div id="probabilistic-topic-model" class="section level3 hasAnchor" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> Probabilistic topic model<a href="machine-learning-part-2.html#probabilistic-topic-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Probabilistic topic modelling is a machine learning method that generates topics or discovers themes among a collection of documents. This step was performed
 using the Latent Dirichlet Allocation algorithm via the <em>topicmodels</em> package in R. An issue with topic modeling is that the number of topics are not known. It
 can be estimated empirically or by examining the harmonic means of the log
 likelihood .</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="machine-learning-part-2.html#cb62-1"></a><span class="kw">library</span>(slam)</span>
-<span id="cb62-2"><a href="machine-learning-part-2.html#cb62-2"></a><span class="kw">library</span>(topicmodels)</span>
-<span id="cb62-3"><a href="machine-learning-part-2.html#cb62-3"></a></span>
-<span id="cb62-4"><a href="machine-learning-part-2.html#cb62-4"></a><span class="co">#ensure non non zero entry</span></span>
-<span id="cb62-5"><a href="machine-learning-part-2.html#cb62-5"></a>rowTotals &lt;-<span class="st"> </span><span class="kw">apply</span>(dtm , <span class="dv">1</span>, sum) <span class="co">#Find the sum of words in each Document</span></span>
-<span id="cb62-6"><a href="machine-learning-part-2.html#cb62-6"></a>dtm1   &lt;-<span class="st"> </span>dtm[rowTotals<span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, ]  </span>
-<span id="cb62-7"><a href="machine-learning-part-2.html#cb62-7"></a></span>
-<span id="cb62-8"><a href="machine-learning-part-2.html#cb62-8"></a><span class="co">#create tfidf using slam library</span></span>
-<span id="cb62-9"><a href="machine-learning-part-2.html#cb62-9"></a>term_tfidf &lt;-</span>
-<span id="cb62-10"><a href="machine-learning-part-2.html#cb62-10"></a><span class="st">  </span><span class="op">+</span><span class="st"> </span><span class="kw">tapply</span>(dtm<span class="op">$</span>v<span class="op">/</span><span class="kw">row_sums</span>(dtm)[dtm<span class="op">$</span>i],dtm<span class="op">$</span>j,mean) <span class="op">*</span><span class="st"> </span></span>
-<span id="cb62-11"><a href="machine-learning-part-2.html#cb62-11"></a><span class="st">  </span><span class="op">+</span><span class="st"> </span><span class="kw">log2</span>(<span class="kw">nDocs</span>(dtm)<span class="op">/</span><span class="kw">col_sums</span>(dtm<span class="op">&gt;</span><span class="dv">0</span>))</span>
-<span id="cb62-12"><a href="machine-learning-part-2.html#cb62-12"></a></span>
-<span id="cb62-13"><a href="machine-learning-part-2.html#cb62-13"></a><span class="co">#remove frequent words</span></span>
-<span id="cb62-14"><a href="machine-learning-part-2.html#cb62-14"></a>dtm1 &lt;-dtm1[,term_tfidf<span class="op">&gt;=</span><span class="kw">median</span>(term_tfidf)] </span>
-<span id="cb62-15"><a href="machine-learning-part-2.html#cb62-15"></a><span class="co">#dtm &lt;-dtm[,term_tfidf&gt;=0.0015]</span></span></code></pre></div>
 <p>Estimate the number of topics based on the log likelihood of P(topics|documents) at each iterations</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="machine-learning-part-2.html#cb63-1"></a><span class="co">#find k</span></span>
-<span id="cb63-2"><a href="machine-learning-part-2.html#cb63-2"></a>harmonicMean &lt;-<span class="st"> </span><span class="cf">function</span>(logLikelihoods, <span class="dt">precision=</span>2000L) {</span>
-<span id="cb63-3"><a href="machine-learning-part-2.html#cb63-3"></a>  <span class="kw">library</span>(<span class="st">&quot;Rmpfr&quot;</span>)</span>
-<span id="cb63-4"><a href="machine-learning-part-2.html#cb63-4"></a>  llMed &lt;-<span class="st"> </span><span class="kw">median</span>(logLikelihoods)</span>
-<span id="cb63-5"><a href="machine-learning-part-2.html#cb63-5"></a>  <span class="kw">as.double</span>(llMed <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">mean</span>(<span class="kw">exp</span>(<span class="op">-</span><span class="kw">mpfr</span>(logLikelihoods,</span>
-<span id="cb63-6"><a href="machine-learning-part-2.html#cb63-6"></a>                                       <span class="dt">prec =</span> precision) <span class="op">+</span><span class="st"> </span>llMed))))</span>
-<span id="cb63-7"><a href="machine-learning-part-2.html#cb63-7"></a>}</span>
-<span id="cb63-8"><a href="machine-learning-part-2.html#cb63-8"></a><span class="co">## estimate k</span></span>
-<span id="cb63-9"><a href="machine-learning-part-2.html#cb63-9"></a>k =<span class="st"> </span><span class="dv">20</span></span>
-<span id="cb63-10"><a href="machine-learning-part-2.html#cb63-10"></a>burnin =<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb63-11"><a href="machine-learning-part-2.html#cb63-11"></a>iter =<span class="st"> </span><span class="dv">1000</span></span>
-<span id="cb63-12"><a href="machine-learning-part-2.html#cb63-12"></a>keep=<span class="dv">50</span></span>
-<span id="cb63-13"><a href="machine-learning-part-2.html#cb63-13"></a>fitted &lt;-<span class="st"> </span><span class="kw">LDA</span>(dtm1, <span class="dt">k =</span> k, <span class="dt">method =</span> <span class="st">&quot;Gibbs&quot;</span>,<span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">burnin =</span> burnin, </span>
-<span id="cb63-14"><a href="machine-learning-part-2.html#cb63-14"></a>                  <span class="dt">iter =</span> iter, <span class="dt">keep =</span> keep) )</span>
-<span id="cb63-15"><a href="machine-learning-part-2.html#cb63-15"></a><span class="co"># where keep indicates that every keep iteration the log-likelihood is evaluated and stored. This returns all log-likelihood values including burnin, i.e., these need to be omitted before calculating the harmonic mean:</span></span>
-<span id="cb63-16"><a href="machine-learning-part-2.html#cb63-16"></a>logLiks &lt;-<span class="st"> </span>fitted<span class="op">@</span>logLiks[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(burnin<span class="op">/</span>keep))]</span>
-<span id="cb63-17"><a href="machine-learning-part-2.html#cb63-17"></a></span>
-<span id="cb63-18"><a href="machine-learning-part-2.html#cb63-18"></a><span class="co"># assuming that burnin is a multiple of keep and</span></span>
-<span id="cb63-19"><a href="machine-learning-part-2.html#cb63-19"></a><span class="kw">harmonicMean</span>(logLiks)</span></code></pre></div>
-<pre><code>## Loading required package: gmp</code></pre>
-<pre><code>## 
-## Attaching package: &#39;gmp&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     %*%, apply, crossprod, matrix, tcrossprod</code></pre>
-<pre><code>## C code of R package &#39;Rmpfr&#39;: GMP using 64 bits per limb</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Rmpfr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:gmp&#39;:
-## 
-##     outer</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     dbinom, dgamma, dnbinom, dnorm, dpois, pnorm</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     cbind, pmax, pmin, rbind</code></pre>
-<pre><code>## [1] -76604.37</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="machine-learning-part-2.html#cb73-1"></a><span class="co"># generate numerous topic models with different numbers of topics</span></span>
-<span id="cb73-2"><a href="machine-learning-part-2.html#cb73-2"></a>sequ &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">5</span>, <span class="dv">50</span>, <span class="dv">5</span>) <span class="co"># in this case a sequence of numbers from 5 to 50, by 5.</span></span>
-<span id="cb73-3"><a href="machine-learning-part-2.html#cb73-3"></a>fitted_many &lt;-<span class="st"> </span><span class="kw">lapply</span>(sequ, <span class="cf">function</span>(k) <span class="kw">LDA</span>(dtm1, <span class="dt">k =</span> k, <span class="dt">method =</span> <span class="st">&quot;Gibbs&quot;</span>,</span>
-<span id="cb73-4"><a href="machine-learning-part-2.html#cb73-4"></a>        <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">burnin =</span> burnin, <span class="dt">iter =</span> iter, <span class="dt">keep =</span> keep) ))</span>
-<span id="cb73-5"><a href="machine-learning-part-2.html#cb73-5"></a><span class="co"># extract logliks from each topic</span></span>
-<span id="cb73-6"><a href="machine-learning-part-2.html#cb73-6"></a>logLiks_many &lt;-<span class="st"> </span><span class="kw">lapply</span>(fitted_many, <span class="cf">function</span>(L)  L<span class="op">@</span>logLiks[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span>(burnin<span class="op">/</span>keep))])</span>
-<span id="cb73-7"><a href="machine-learning-part-2.html#cb73-7"></a></span>
-<span id="cb73-8"><a href="machine-learning-part-2.html#cb73-8"></a><span class="co"># compute harmonic means</span></span>
-<span id="cb73-9"><a href="machine-learning-part-2.html#cb73-9"></a>hm_many &lt;-<span class="st"> </span><span class="kw">sapply</span>(logLiks_many, <span class="cf">function</span>(h) <span class="kw">harmonicMean</span>(h))</span>
-<span id="cb73-10"><a href="machine-learning-part-2.html#cb73-10"></a></span>
-<span id="cb73-11"><a href="machine-learning-part-2.html#cb73-11"></a><span class="co"># inspect</span></span>
-<span id="cb73-12"><a href="machine-learning-part-2.html#cb73-12"></a><span class="kw">plot</span>(sequ, hm_many, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-2-1-1.png" width="672" /></p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="machine-learning-part-2.html#cb74-1"></a><span class="co"># compute optimum number of topics</span></span>
-<span id="cb74-2"><a href="machine-learning-part-2.html#cb74-2"></a>sequ[<span class="kw">which.max</span>(hm_many)]</span></code></pre></div>
-<pre><code>## [1] 40</code></pre>
 <p>The previous analysis show that there are 40 topics. For ease of illustrations
 LDA is perform with 5 topics.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="machine-learning-part-2.html#cb76-1"></a><span class="co">#perform LDA</span></span>
-<span id="cb76-2"><a href="machine-learning-part-2.html#cb76-2"></a>lda_EHR &lt;-<span class="st"> </span><span class="kw">LDA</span>(dtm1, <span class="dt">k =</span> <span class="dv">10</span>, </span>
-<span id="cb76-3"><a href="machine-learning-part-2.html#cb76-3"></a>         <span class="dt">method=</span><span class="st">&quot;Gibbs&quot;</span>,          <span class="dt">control=</span><span class="kw">list</span>(<span class="dt">seed=</span><span class="dv">1234</span>,<span class="dt">burnin=</span><span class="dv">1000</span>,<span class="dt">thin=</span><span class="dv">100</span>,<span class="dt">iter=</span><span class="dv">1000</span>))</span>
-<span id="cb76-4"><a href="machine-learning-part-2.html#cb76-4"></a></span>
-<span id="cb76-5"><a href="machine-learning-part-2.html#cb76-5"></a><span class="co">#extract topics terms and beta weights</span></span>
-<span id="cb76-6"><a href="machine-learning-part-2.html#cb76-6"></a>EHR_topics &lt;-<span class="st"> </span><span class="kw">tidy</span>(lda_EHR, <span class="dt">matrix =</span> <span class="st">&quot;beta&quot;</span>)</span>
-<span id="cb76-7"><a href="machine-learning-part-2.html#cb76-7"></a></span>
-<span id="cb76-8"><a href="machine-learning-part-2.html#cb76-8"></a><span class="co">#view data by topics</span></span>
-<span id="cb76-9"><a href="machine-learning-part-2.html#cb76-9"></a>EHR_top_terms &lt;-<span class="st"> </span>EHR_topics <span class="op">%&gt;%</span></span>
-<span id="cb76-10"><a href="machine-learning-part-2.html#cb76-10"></a><span class="st">  </span><span class="kw">group_by</span>(topic) <span class="op">%&gt;%</span></span>
-<span id="cb76-11"><a href="machine-learning-part-2.html#cb76-11"></a><span class="st">  </span><span class="kw">slice_max</span>(beta, <span class="dt">n =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb76-12"><a href="machine-learning-part-2.html#cb76-12"></a><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span></span>
-<span id="cb76-13"><a href="machine-learning-part-2.html#cb76-13"></a><span class="st">  </span><span class="kw">arrange</span>(topic, <span class="op">-</span>beta)</span>
-<span id="cb76-14"><a href="machine-learning-part-2.html#cb76-14"></a></span>
-<span id="cb76-15"><a href="machine-learning-part-2.html#cb76-15"></a>EHR_top_terms <span class="op">%&gt;%</span></span>
-<span id="cb76-16"><a href="machine-learning-part-2.html#cb76-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">reorder_within</span>(term, beta, topic)) <span class="op">%&gt;%</span></span>
-<span id="cb76-17"><a href="machine-learning-part-2.html#cb76-17"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(beta, term, <span class="dt">fill =</span> <span class="kw">factor</span>(topic))) <span class="op">+</span></span>
-<span id="cb76-18"><a href="machine-learning-part-2.html#cb76-18"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb76-19"><a href="machine-learning-part-2.html#cb76-19"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>topic, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span></span>
-<span id="cb76-20"><a href="machine-learning-part-2.html#cb76-20"></a><span class="st">  </span><span class="kw">scale_y_reordered</span>()</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/06-machinelearningpt2-2-2-1.png" width="672" /></p>
 <p>Compare differences in words between topics.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="machine-learning-part-2.html#cb77-1"></a>beta_wide &lt;-<span class="st"> </span>EHR_topics <span class="op">%&gt;%</span></span>
-<span id="cb77-2"><a href="machine-learning-part-2.html#cb77-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">topic =</span> <span class="kw">paste0</span>(<span class="st">&quot;topic&quot;</span>, topic)) <span class="op">%&gt;%</span></span>
-<span id="cb77-3"><a href="machine-learning-part-2.html#cb77-3"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> topic, <span class="dt">values_from =</span> beta) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb77-4"><a href="machine-learning-part-2.html#cb77-4"></a><span class="st">  </span><span class="kw">filter</span>(topic1 <span class="op">&gt;</span><span class="st"> </span><span class="fl">.001</span> <span class="op">|</span><span class="st"> </span>topic2 <span class="op">&gt;</span><span class="st"> </span><span class="fl">.001</span>) <span class="op">%&gt;%</span></span>
-<span id="cb77-5"><a href="machine-learning-part-2.html#cb77-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_ratio =</span> <span class="kw">log2</span>(topic2 <span class="op">/</span><span class="st"> </span>topic1))</span></code></pre></div>
 </div>
-<div id="nmf" class="section level3">
-<h3><span class="header-section-number">7.5.2</span> NMF</h3>
+<div id="nmf" class="section level3 hasAnchor" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> NMF<a href="machine-learning-part-2.html#nmf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In the previous chapter, NMF was used as a method to cluster data. Here, it can be framed as a method for topic modeling. The term document matrix is used.</p>
 
 </div>
@@ -983,7 +595,6 @@ LDA is perform with 5 topics.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1002,6 +613,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -1022,6 +634,10 @@ gitbook.start({
 "text": null
 },
 "download": ["Applications-of-R-in-Healthcare.pdf", "Applications-of-R-in-Healthcare.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
