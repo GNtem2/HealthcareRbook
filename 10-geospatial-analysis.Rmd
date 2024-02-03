@@ -19,15 +19,78 @@ mmc<-geocode_OSM ("monash medical centre, clayton")
 mmc
 ```
 
-The _osmdata_ library includes function _opg_ for extracting data from Overpass query. The list is available at https://wiki.openstreetmap.org/wiki/Map_features#Transportation
+The _osmdata_ library includes function _opg_ for extracting data from Overpass query. The list is available at https://wiki.openstreetmap.org/wiki/Map_features#Transportation. 
 
 ```{r 10-geospatial-analysis-1-1}
 library(tidyverse )
 library(osmdata)
 library(sf)
+```
+
+Note that _getbb_ now returns an error "HTTP 405 Method Not Allowed". It seems that there is an error with _getbb_ function.
+
+```{r 10-geospatial-analysis-1-2, eval=F}
 # build a query
-query <- opq(bbox = "Brisbane, qld, australia") %>%
+query <- getbb(bbox = "Brisbane, QLD, australia") %>% opq() %>%
   add_osm_feature(key = "amenity", value = "community_centre")
+```
+
+Vector for bbox can be obtained using _nominatimlite_.
+
+```{r 10-geospatial-analysis-1-3}
+nominatim_polygon <- nominatimlite::geo_lite_sf(address = "Brisbane, QLD, Australia", points_only = FALSE)
+bboxsf <- sf::st_bbox(nominatim_polygon)
+bboxsf
+```
+
+Extracting data on community centre in Brisbane.
+
+```{r 10-geospatial-analysis-1-4}
+
+query <- bboxsf %>% opq() %>%
+  add_osm_feature(key = "amenity", value = "community_centre")
+query
+```
+
+Get information on tags for highway. Wikipedia has a page OpenStreetMap Wiki on highway.  
+
+```{r 10-geospatial-analysis-1-5}
+
+available_tags("highway") %>% head()
+
+```
+
+Use the tags from above to define wide street. Plot the wide street using _ggplot2_.
+
+```{r 10-geospatial-analysis-1-6}
+wide_streets <- bboxsf%>%
+  opq()%>%
+  add_osm_feature(key = "highway", 
+        value = c("motorway", "primary", "motorway_link", "primary_link", "secondary", "secondary_link")) %>%
+  osmdata_sf()
+
+ggplot() +
+  geom_sf(data = wide_streets$osm_lines,
+          inherit.aes = FALSE,
+          color = "black")
+
+```
+
+Service or lane way can be defined by service.
+
+```{r 10-geospatial-analysis-1-7}
+narrow_streets <- bboxsf%>%
+  opq()%>%
+  add_osm_feature(key = "highway", 
+        value = c("service")) %>%
+  osmdata_sf()
+
+
+ggplot() +
+  geom_sf(data = narrow_streets$osm_lines,
+          inherit.aes = FALSE,
+          color = "blue")
+
 ```
 
 ### Google Maps API
@@ -191,8 +254,9 @@ _leaflet_. The _leaflet_ library can be called directly using _tmap_leaflet_
 ```{r 10-geospatial-analysis-5-3}
 #extract bounding box for Brisbane
 
-Ballarat <- osmdata::getbb("Brisbane, australia", format_out = "sf_polygon")$multipolygon
+#Brisbane <- osmdata::getbb("Brisbane, australia", format_out = "sf_polygon")$multipolygon 
 
+Brisbane<-nominatim_polygon$geometry
 
 library(tmap)
 
@@ -200,7 +264,7 @@ library(tmap)
 tmap_mode("view")
 
 #plot outline of Ballarat
-  tm_shape(Ballarat)+
+  tm_shape(Brisbane)+
  tm_borders()+
 
   #plot community centres
@@ -242,7 +306,7 @@ municipalities2<-right_join(municipalities, FinPop2, by=c("name"="...1")) %>%
   rename(Pensioner=`Proportion of pensioners of the population, %, 2019`,Age65=`Share of persons aged over 64 of the population, %, 2020`) %>% na.omit()
 
 #plot map using mapview
-mapview::mapview(municipalities2["Age65"],layer.name="Percentage Age>65")
+mapview::mapview(municipalities2["Age65"],layer.name="Age65")
 
 
 ```

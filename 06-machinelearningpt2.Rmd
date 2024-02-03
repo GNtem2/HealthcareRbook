@@ -39,10 +39,12 @@ library(stringr)
 
 The function to extract data from PubMed.
 
-```{r 06-machinelearningpt2-1-1, eval=F}
+```{r 06-machinelearningpt2-1-1, eval=F, include=F}
 #search 25/9/21
+#note error with new version of R and rismed
+#may be due to a coercion issue with the length = 4 argument
 query<-"electronic medical record + text mining"
-ngs_search <- EUtilsSummary(query, type="esearch",db = "pubmed",mindate=2016, maxdate=2018, retmax=30000)
+ngs_search <- EUtilsSummary(query, type="esearch",db = "pubmed",mindate=2020, maxdate=2021, retmax=30000)
 summary(ngs_search)
 QueryCount(ngs_search)
 ngs_records <- EUtilsGet(ngs_search)
@@ -53,7 +55,7 @@ ngs_records <- EUtilsGet(ngs_search)
 
 Data such as tear of publications can be easily extracted.
 
-```{r 06-machinelearningpt2-1-2}
+```{r 06-machinelearningpt2-1-2, eval=F, include=F}
 #reload saved search
 load("./Data-Use/EMR_Textmiing_ngs_records.Rda")
 
@@ -106,7 +108,7 @@ pubs_per_journal <- read.table("NGS_publications_per_journal.txt",header = T,sep
 
 Create list for high and low impact factor journals
 
-```{r 06-machinelearningpt2-1-3}
+```{r 06-machinelearningpt2-1-3, eval=F, include=F}
 #extract title and abstract
 pubmed_data <- data.frame('Pmid'=PMID(ngs_records),
     'Year'=YearPubmed(ngs_records),'Title'=ArticleTitle(ngs_records),
@@ -142,7 +144,7 @@ lia<-paste(li$Abstract,collapse="")
 
 Plot of journal publications normalised by year.
 
-```{r 06-machinelearningpt2-1-4}
+```{r 06-machinelearningpt2-1-4, eval=F, include=F}
 #ggplot
 ggplot(pubs_per_year,aes(year, NGS_publications_normalized)) + geom_line (colour="blue",size=2) +
 xlab("Year") +
@@ -156,7 +158,7 @@ theme(legend.position="none")
 
 Plot of journal publications normalised by journal.
 
-```{r 06-machinelearningpt2-1-5}
+```{r 06-machinelearningpt2-1-5, eval=F, include=F}
 ggplot(pubs_per_journal ,aes(journal, 
     NGS_publications_normalized,fill=journal)) + geom_bar(stat="identity")+
 coord_flip()+
@@ -168,7 +170,7 @@ Corpus
 
 The steps in processing and creating a Corpus from _tm_ library is illustrated. 
 
-```{r 06-machinelearningpt2-1-6, warning=F}
+```{r 06-machinelearningpt2-1-6, warning=F, eval=F, include=F}
 
 # create list of stop-words
 myStopwords=c("It","mg","kg","µgl","=","journals","medline","embase","ebsco",
@@ -201,7 +203,7 @@ tdm1   <- tdm[rowTotals> 0, ]
 
 Here, the same preprocessing steps are performed using _tidytext_.
 
-```{r 06-machinelearningpt2-1-7, warning=F}
+```{r 06-machinelearningpt2-1-7, warning=F, eval=F, include=F}
 
 mystopwords=bind_rows(data.frame(word= c("It","mg","kg","journals","medline","embase","ebsco","cinahl","background",
   "method","results","conclusion","http","web","i","ii","iii","ci",
@@ -235,7 +237,7 @@ ab_word<-ab %>% unnest_tokens(word,text) %>%
 A trick with wordcloud is setting the right number of words, the range of size 
 of the words to be plotted.
 
-```{r 06-machinelearningpt2-1-8, warning=F}
+```{r 06-machinelearningpt2-1-8, warning=F, eval=F, include=F}
 
 par(mfrow=c(1,2))
 ab_word%>% count(word) %>% 
@@ -259,7 +261,7 @@ wordcloud(d$word,d$freq, min.freq = 20, max.words = 100, scale=c(2,.3),         
 
 Plot Wordcloud with negative and positive sentiment from _Bing_ library. Other sentiment libraries include _afinn_, _loughran_ and _nrc_.
 
-```{r 06-machinelearningpt2-1-9, warning=F}
+```{r 06-machinelearningpt2-1-9, warning=F, eval=F, include=F}
 library(reshape2)
 ab_word %>% inner_join(get_sentiments("bing")) %>%
   count(word, sentiment, sort=TRUE) %>%
@@ -271,7 +273,7 @@ ab_word %>% inner_join(get_sentiments("bing")) %>%
 
 graph analysis of word relationship
 
-```{r 06-machinelearningpt2-1-10, warning=F}
+```{r 06-machinelearningpt2-1-10, warning=F, eval=F, include=F}
 library(extrafont)
 library(igraph)
 library(ggraph)
@@ -302,7 +304,7 @@ ab_word_cors %>%
 
 ## Bigram analysis
 
-```{r 06-machinelearningpt2-1-11}
+```{r 06-machinelearningpt2-1-11, eval=F, include=F}
 ab_bigrams <- ab %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
   mutate(bigram = gsub("[^A-Za-z ]","", bigram)) %>% 
@@ -335,7 +337,7 @@ bigram_graph
 
 The relationship among the bigrams are illustrated here.
 
-```{r 06-machinelearningpt2-1-12}
+```{r 06-machinelearningpt2-1-12, eval=F, include=F}
 library(tidygraph)
 as_tbl_graph(bigram_graph)
 
@@ -350,7 +352,7 @@ ggraph(bigram_graph, layout = "fr") +
 
 ## Trigram
 
-```{r 06-machinelearningpt2-1-13}
+```{r 06-machinelearningpt2-1-13, eval=F, include=F}
 ab_trigrams <- ab %>%
   unnest_tokens(trigram, text, token = "ngrams", n = 2) %>%
   mutate(trigram = gsub("[^A-Za-z ]","", trigram)) %>% 
@@ -385,7 +387,7 @@ trigram_graph
 
 The relationship among the trigrams are illustrated here.
 
-```{r 06-machinelearningpt2-1-14}
+```{r 06-machinelearningpt2-1-14, eval=F, include=F}
 
 as_tbl_graph(trigram_graph)
 
@@ -412,7 +414,7 @@ using the Latent Dirichlet Allocation algorithm via the _topicmodels_ package in
 can be estimated empirically or by examining the harmonic means of the log
 likelihood .
 
-```{r 06-machinelearningpt2-2}
+```{r 06-machinelearningpt2-2, eval=F, include=F}
 library(slam)
 library(topicmodels)
 
@@ -432,7 +434,7 @@ dtm1 <-dtm1[,term_tfidf>=median(term_tfidf)]
 
 Estimate the number of topics based on the log likelihood of P(topics|documents) at each iterations
 
-```{r 06-machinelearningpt2-2-1}
+```{r 06-machinelearningpt2-2-1, eval=F, include=F}
 
 #find k
 harmonicMean <- function(logLikelihoods, precision=2000L) {
@@ -473,7 +475,7 @@ sequ[which.max(hm_many)]
 The previous analysis show that there are 40 topics. For ease of illustrations 
 LDA is perform with 5 topics.
 
-```{r 06-machinelearningpt2-2-2}
+```{r 06-machinelearningpt2-2-2, eval=F, include=F}
 #perform LDA
 lda_EHR <- LDA(dtm1, k = 10, 
          method="Gibbs",          control=list(seed=1234,burnin=1000,thin=100,iter=1000))
@@ -499,7 +501,7 @@ EHR_top_terms %>%
 
 Compare differences in words between topics.
 
-```{r 06-machinelearningpt2-2-3}
+```{r 06-machinelearningpt2-2-3, eval=F, include=F}
 beta_wide <- EHR_topics %>%
   mutate(topic = paste0("topic", topic)) %>%
   pivot_wider(names_from = topic, values_from = beta) %>% 

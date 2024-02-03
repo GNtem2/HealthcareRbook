@@ -84,12 +84,11 @@ summary(DCa)
 
 ```
 
-#### Discrimination and Calibration
+### Discrimination and Calibration
 
 A high _$R^2$ suggests that the linear regression model is well calibrated. This metric is often not displayed but should be sought when interpreting the data.
 
-The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with 
-calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016].
+The areas under the receiver operating characteristic curve (AUC) is used to assess how well the models discriminate between those who have the disease and those who do not have the disease of interest. An AUC of 0.5 is classified as no better than by chance; 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. This rule of thumb about interpreting AUC when reading the literature is language the authors used to describe the AUC. This test of discrimination is not synonymous with calibration. It is possible to have a model with high discrimination but poor calibration [@pmid1738016]. The AUC is similar to Harrell's c-index but the interpretation of difference in AUC and c-index between models is not straightforward. A difference in 0.1 of AUC correspond to the number of subject rank correctly. The c-index was originally described for survival analysis [@pmid7069920]. Harrell described the c-index (concordance index) as estimating the probability that, of two randomly chosen patients, the patient with the higher prognostic score will outlive the patient with the lower prognostic score. As such the c-index should be interpreted as the number of concordant pairs relative to the total number of comparable pairs. It has been proposed that the AUC and c-index is not appropriate for survival analysis as they do not account for the dynamic nature of the data[@LONGATO2020103496]. The integrated Graf score has been proposed to account for difference in the estimated event-free survival probabilities with the actual outcome [@pmid10474158].
 
 Calibration of logistic regression model is performed using the Hosmer–Lemeshow goodness-of-ﬁt test and the Nagelkerke generalized R2. A model is well 
 calibrated when the Hosmer–Lemeshow goodness-of-ﬁt test shows no difference between observed and expected outcome or P value approaching 1. A high 
@@ -160,7 +159,7 @@ plot(eff_thick)
 ```
 
 
-##### Interaction 
+### Interaction 
 
 Interactions is plotted here using lollipop bar. The _ggalt_ library can be used to create this type of plot with _geom_lollipop_. The strength of interaction is measured using Friedman's H-statistics. The H-statistics ranges from 0 to 1 with 
 1 indicating the overall interaction strength. In the case with Breast Cancer data, the interaction strength is low. 
@@ -175,18 +174,29 @@ plot(interact)
 ```
 
 
+## Confounder 
 
+A confounder is a covariate that serves as a cause of both exposure and outcome and as such confound the analysis. A mediator exist on the causal pathway from exposure to outcome. A common misconception is that the multiple regression adjust for imbalance in covariates in clinical trial. This issue was observed in the pivotal NINDS alteplase trial. The results of the trial has since been accepted with re-analysis of this trial using covariate adjustment [@pmid15345796].
 
+There are several methods for covariate adjustment in radomised trials: direct adjustment, standardisation and inverse-probability-of-treatment weighting.
 
- 
+### Confounder weighted model
 
-#### Propensity matching
+The issue asked is whether one should choose to perform confounder analysis or propensity matching. 
 
-A common misconception is that the multiple regression adjust for imbalance in covariates. This issue was observed in the pivotal NINDS alteplase trial. The results of the trial has since been accepted with re-analysis of this trial.
+### Propensity matching
 
 Propensity matching is an important technique to adjust for imbalance in covariates between 2 arms. There are concerns with mis-use of this technique 
-such as difference in placebo arms from multiple sclerosis trials [@10.1001/jamaneurol.2020.0678]. It is proposed that this technique should be 
+such as difference in placebo arms from multiple sclerosis trials [@doi10.1001/jamaneurol.2020.0678]. It is proposed that this technique should be 
 used only if all the confounders are measurable. This situation may not be satisfied if the data were accrued at different period, in different continent etc.
+
+### E-values
+
+The E-values [@pmid28693043] has been proposed a measure of unmeasured confounders in observational studies. The E-value is a measure of the extent to which the confounder have on the treatment–outcome association, conditional on the measured covariates. A large E-value is desirable. The E-values is available in _Evalue_ library [@pmid29912013].
+
+## Causal inference
+
+Causation and association are often miscontrued to be the same. However, the finding of correlation (association) does necessarily imply causation. Causal inference evaluates the response of an effect variable in the setting of change in the cause of the effect variable. There are issues with approach to analysis of causal inference. It can be performed using frequentist such as confounder weighted model or Bayesian methods such as [(Baysian additive regression tree)][Bayesian trees method].
 
 ## Special types of regression
 
@@ -198,8 +208,11 @@ proportional odds model and the requirement for this model is stringent. When ex
 
 ### Survival analysis
 
-Survival analysis is useful when dealing with time to event data. The Cox model assesses the hazard of outcome between two groups. The assumption of this model 
-is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested based on the weighted Schoenfeld residuals[@10.1093/biomet/81.3.515]. In the next chapter on machine learning, an illustration of [random survival forest][Random survival forest] is provided. In the section on [clinical trial][Interpreting clinical trials] we illustrate how the results can be converted to numbers needed to treat.
+Survival analysis is useful when dealing with time to event data. Time to event data can be left, interval and right censoring. Left censoring exists when events may have already occurred at the start of the study eg purchase of phones. Right censoring exists when events have not happened yet eg cancer trial. Interval censoring exists when an insurance has been purchased but the date of product purchase is not yet known.
+
+The Cox model assesses the hazard of outcome between two groups. The assumption of this model is that the hazard between each arm is proportional [@pmid32167523]. The proportional hazard model can be tested based on the weighted Schoenfeld residuals[@10.1093/biomet/81.3.515]. There are non-parametric models available when the assumption of the proportional hazard model does not hold.
+
+In the next chapter on machine learning, an illustration of [random survival forest with _rfrsc_ library][Random survival forest with rfsrc] and _ranger_ library are provided. In the section on [clinical trial][Interpreting clinical trials] we illustrate how the results can be converted to numbers needed to treat. The median survival corresponding to survival probability of 0.50 can be determined here. Metrics for assessing survival model was described [above][Discrimination and Calibration].
 
 ```{r 03-Statistics-6, warning=F}
 
@@ -209,46 +222,52 @@ library(survminer)
 #https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
 data(cancer, package="survival")
 
-#time in days
+#time in is available in days
 #status censored=1, dead=2
 #sex:Male=1 Female=2
 
+survfit(Surv(time, status) ~ 1, data = cancer)
+
+```
+
+
+
+```{r 03-Statistics-6-1, warning=F}
 sfit<- coxph(Surv(time, status) ~ age+sex+ph.ecog+ph.karno+wt.loss, data = cancer)
 summary(sfit)
 ```
 
-Test proportional hazard assumption. The finding below shows that inclusion of covariate ph.karno violate proportional hazard assumption. 
+Test proportional hazard assumption using weighted residuals [@10.1093/biomet/81.3.515]. The finding below shows that inclusion of covariate ph.karno violate proportional hazard assumption. 
 
-```{r 03-Statistics-6-1, warning=F}
+```{r 03-Statistics-6-2, warning=F}
 cox.zph(sfit)
 ```
 
 Plot fit of survival model
 
-```{r 03-Statistics-6-2}
+```{r 03-Statistics-6-3}
 ggcoxdiagnostics(sfit, type = "deviance", 
  ox.scale = "linear.predictions")
 ```
 
 Forest plot of outcome from survival analysis
 
-```{r 03-Statistics-6-3, warning=F}
+```{r 03-Statistics-6-4, warning=F}
 ggforest(sfit)
 ```
 
 An alternative way to display the output from Cox regression is to use _forestmodel_ library .
 
-```{r 03-Statistics-6-4, warning=F}
+```{r 03-Statistics-6-5, warning=F}
 forestmodel::forest_model(sfit)
 ```
 
 The pseudoR2 for Cox regression model proposed by Royston can be evaluated
 
-```{r 03-Statistics-6-5, warning=F}
+```{r 03-Statistics-6-6, warning=F}
 royston(sfit)
 
 ```
-
 
 ### Quantile regression
 
@@ -282,9 +301,8 @@ ggplot(world_sfdf,  aes(x=LifeExpectancy,y=MeanLifetimeRisk))+
 #annotate("text",x=60, y=27, label=paste0("least square =",                        round(lsfit_sum$coefficients[1],2) ,"+", round(lsfit_sum$coefficients[2],2),"x ","Life Expectancy"),color="red")+ annotate("text",x=75, y=12,label=paste0("quantile =",round(rqfit_sum$coefficients[1],2), " + ", round(rqfit_sum$coefficients[2],2)," x ","Life Expectancy"),color="blue")
 ```
 
-
-##### Non-negative regression
-In certain situations, it is necessary to constrain the analysis so that the regression coefifcients are non-negative. For example, when regressing brain regions against infarct volume, there is no reason believe that a negative coefficient attributable to a brain region is possible. Non-negative regression can be performed in R using _nnls_. 
+### Non-negative regression
+In certain situations, it is necessary to constrain the analysis so that the regression coefifcients are non-negative. For example, when regressing brain regions against infarct volume, there is no reason believe that a negative coefficient attributable to a brain region is possible[@pmid16504541] . Non-negative regression can be performed in R using _nnls_. 
 
 
 ### Poisson regression
@@ -398,9 +416,37 @@ TwoSampleProportion.NIS(alpha=.05,
 
 ```{r 03-Statistics-12}
 library(powerMediation)
+library(ggplot2)
+
 #continuous predictor
 #p1=event rate
-powerLogisticCon(n=317, p1=0.5, OR=exp(0.405), alpha=0.05)
+#exp(0.405) =1.5
+
+powerLogisticCon(n=200, p1=0.265, OR=exp(0.014), alpha=0.05)
+
+
+# creating a data frame using data from 
+a=seq(0,05.4,0.05)
+df_power<-data.frame(`ASPECTS`= a,
+"Power"=powerLogisticCon(n=100, p1=a, OR=exp(.695), alpha=0.05)
+)
+ggplot(data=df_power, aes(x=ASPECTS, y=Power))+geom_point()
+
+
+
+```
+
+An alternative library to perform sample size for logistic regression is _WebPower_ library.
+
+```{r 03-Statistics-12-1}
+library(WebPower) 
+
+wp.logistic(p0=0.007, #Prob (Y=1|X=0) 
+            p1=0.012, #Prob (Y=1|X=1)
+            alpha=0.05, 
+            power=0.80, 
+            alternative="two.sided", 
+            family="normal")
 ```
 
 ### Survival studies
@@ -446,12 +492,31 @@ library(pwr)
 ```
 
 
-## Interpreting clinical trials
+## Randomised clinical trials
 
-A key issue in interpreting of clinical trials is that the relative risk 
-reduction or relative hazard risk are provided. An example is the result of the ACAS asymptomatic carotid artery trial is often quoted as showing 50% risk reduction. In fact, there was 2% annual risk of ipsilateral stroke in the 
-medical and 1% risk in the surgical arm. The absolute risk reduction or ARR was 
-1% per year. However, the 50% relative risk reduction is often quoted to explain to patients.
+A common misconception is that the multiple regression adjust for imbalance in covariates in clinical trial. This issue was observed in the pivotal NINDS alteplase trial. The results of the trial has since been accepted with re-analysis of this trial using covariate adjustment[@pmid15345796]. There are several methods for covariate adjustment in radomised trials: direct adjustment, standardisation and inverse-probability-of-treatment weighting.
+
+### Covariate adjustment in trials
+
+Specifically, covariate adjustment refers to adjustment of covariates available at the time of randomisation, i.e. prespecified variables and not variables after randomisation such as pneumonia post stroke trials. The advantage of covariate adjustment is that it results in narrower confidence interval as well as increase the power of the trial up to 7% [@10.1186/1745-6215-15-139]. The increased power is highest when prognostic variables are used but can decrease power when non-prognostic variables are used [@10.1186/1745-6215-15-139].
+
+### Subgroup analysis
+
+Subgroup analysis can be misleading especially if not specified prior to trial analysis [@doi:10.1056/NEJMsr077003]. Furthermore, increasing the number of subgroup analysis will lead to increasing the chance of false positive result or multiplicity. It is important to differentiate between prespecified and posthoc analyses as posthoc analyses may be biased by examination of the data.
+
+### p value for interaction
+
+The p value for interaction describe the influence by a baseline variable  treatment effect on outcome in clinical trial [@doi:10.1056/NEJMsr077003]. In a hypothetical trial, a significant p value for interaction between males and females for treatment effect on primary outcome indicates heterogenity of treatment effect.
+
+```{r 03-Statistics-14-1}
+library(Publish)
+library(survival)
+```
+
+### Interpreting risk reduction in clinical trials
+
+A key issue in interpreting of clinical trials occurs when the relative risk 
+reduction or relative hazard risk are provided. This issue affect the clinical interpretation of the trial finding and its application in practice. An example is the result of the ACAS asymptomatic carotid artery trial is often quoted as showing 50% risk reduction. In fact, there was 2% annual risk of ipsilateral stroke in the medical and 1% risk in the surgical arm. The absolute risk reduction or ARR was 1% per year. However, the 50% relative risk reduction is often quoted to explain to patients.
 
 ### NNT from ARR
 
@@ -462,6 +527,24 @@ In this case, the number needed to treat (NNT) is given by $\frac{1}{ARR}$ or $\
 
 Calculation of NNT for odds ratio requires knowledge of the outcome of the placebo group. The NNT is given by $\frac{1}{ACR-\frac{OR*ACR}{1-(ACR+OR*ACR)}}$. The ACR represents the assumed control risk. The NNT can be calculated from _nnt_ function in _meta_ library. 
 
+```{r 03-Statistics-14-2}
+
+library(meta)
+#p.c = baseline risk
+nnt(0.73, p.c = 0.3, sm = "OR")
+
+```
+
+### NNT from risk ratio
+
+```{r 03-Statistics-14-3}
+
+#data from EXTEND-IV trial in NEJM 2019
+#outcome 35.4% in tpa and 29.5% in control
+nnt(1.44, p.c = 0.295, sm = "RR")
+
+```
+
 ### NNT from hazard ratio
 
 Calculation of NNT for hazard ratio requires knowledge of the outcome of the placebo group and the hazard ratio or _HR_. The formula using the binomial theorem is $p=1-q$ where q is given by the ratio of outcome and numbers recruited in the placebo group. The formula is taken from [@pmid32404155] . The NNT is given 
@@ -470,31 +553,299 @@ in the control group. The HR was 0.44. The NNT from this formula $\frac{1}{.9971
 
 ### NNT from metaananlysis
 
-There are concerns with using NNT from the results of metaanalysis as the findings are amalgations of trials with different settings [@pmid12614141][@pmid10356018]. The caution applies when baseline risks or absolute risk differences vary across trials.
+There are concerns with using NNT from the results of metaanalysis as the findings are amalgations of trials with different settings [@pmid12614141] [@pmid10356018]. The caution applies when baseline risks or absolute risk differences vary across trials. 
 
+## Diagnostic test
+
+### Sensitivity, specificity
+
+The sensitivity of a diagnostic test is the true positive rate and the specificity is the true negative rate.  Example of 2 x 2 table is provided here. As an exercise, consider a paper about a diagnostic test for peripheral vertigo reporting 100% sensitivity and 94.4% specificity. There are 114 patients, 72 patients without stroke have vertigo and positive test findings. Among patients with stroke 7 of 42 have positive test findings. The sensitivity is $TP=\frac{TP}{TP+FN}$ and the specificity is the $TN=\frac{TN}{TN+FP}$.
+
+```{r 03-Statistics-14-3-1}
+#              Peripheral Vertigo
+#            Disease Positive     Disease Negative
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+# HIT Test#                 #                      $
+# Positive# True Positive   # False Positive       $  
+#         #     72          #       7              $
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+# HIT Test#                 #                      $
+# Negative# False Negative  # True Negative        $
+#         #     0           #       35             $ 
+#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+# Peripheral Vertigo
+#Sensitiviy=TP/(TP+FN)=100%
+#Specificity=TN/(TN+FP)=83%
+```
+
+
+### AUC
+
+The area under the receiver operating characteristics (ROC) curve or AUC is a measure of the accuracy of the test. It is recommended that ROC curve is used when there are multiple threshold. It should not be used when the test has only one threshold. Some investigators suggest caution regarding the validity of using receiver operating curve with single threshold diagnostic tests [@pmid33250548]. An AUC of 0.5 is classified as no better than by chance; 0.6–0.69 provides poor discrimination; 0.7–0.79 provides acceptable (fair) discrimination, 0.8 to 0.89 provides good (excellent) discrimination, and 0.9 to 1.0 provides outstanding discrimination. 
+
+
+
+### Likelihood ratio
+
+Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive rate (FPR); the negative (NLR) likelihood ratio is the ratio of 1-sensitivity to specificity. A PLR indicates the likelihood that a positive spot sign (test) would be expected in a patient with ICH (target disorder) compared with the likelihood that the same result would be expected in a patient without ICH. Using the recommendation by Jaeschke et al, a high PLR (>5) and low NLR (<0.2) indicate that the test results would make moderate changes in the likelihood of hematoma growth from baseline risk. PLRs of >10 and NLRs of <0.1 would confer very large changes from baseline risk .
+
+#### Fagan's normogram
+
+Fagan’s normogram can be conceptualised as a sliding ruler to match the disease 
+prevalence and likelihood ratios to evaluate the impact on the post-test probability [@pmid1143310]. At the current disease prevalence of 23.4% and PLR 4.65, the post-test probability remains low at 0.60. 
+
+```{r 03-Statistics-14-3-2}
+source("https://raw.githubusercontent.com/achekroud/nomogrammer/master/nomogrammer.r")
+p<-nomogrammer(Prevalence = .234, Plr = 4.85, Nlr = 0.49)
+p+ggtitle("Fagan's normogram for Spot Sign and ICH growth")
+
+#to save the file
+#ggsave(p,file="Fagan_SpotSign.png",width=5.99,height=3.99,units="in")
+
+```
+
+
+#### Likelihood ratio graph
+
+Likelihood ratio graph is a tool for comparing diagnostic tests [@pmid10700737].
+
+```{r 03-Statistics-14-3-3}
+#plot likelihood ratio graph
+
+LR_graph<-function (Read,sheet,Sensitivity, Specificity){
+  
+  Read1<-readxl::read_xlsx(Read, sheet = sheet)
+  
+  #binary data
+  #A=True pos %B=False positive   %C=False negative   %D=True negative
+  
+  A=Read1$TP
+  B=Read1$FP
+  C=Read1$FN
+  D=Read1$TN
+  
+  TPR=A/(A+C)
+  FPR=1-(D/(D+B))
+  
+  TPR_DiagnosticTest=Sensitivity
+  FPR_DiagnosticTest=1-Specificity
+  
+  # set plot
+  
+  X=seq(0,1,by=.1)
+  Y=seq(0,1,by=.1)
+
+  plot(X,Y,main="Likelihood Ratio graph", xlab="1-Specificity",ylab="Sensitivity",cex=.25)
+  
+  #pch describe the shape. The value 1 corresponds o
+  points(FPR_DiagnosticTest,TPR_DiagnosticTest,pch=8,col="blue",cex=2)
+  
+  #pch describe the shape. The value 8 corresponds *
+  points(FPR,TPR,pch=1,col="red",cex=2) #add point
+  #abline(coef = c(0,1)) #add diagonal line
+  df1<-data.frame(c1=c(0,TPR_DiagnosticTest),c2=c(0,FPR_DiagnosticTest))
+  reg1<-lm(c1~c2,data=df1)
+  df2<-data.frame(c1=c(TPR_DiagnosticTest,1),c2=c(FPR_DiagnosticTest,1))
+  reg2<-lm(c1~c2,data=df2)
+  abline(reg1)
+  abline(reg2)
+  text(x=FPR_DiagnosticTest,y=TPR_DiagnosticTest+.3,label="Superior",cex=.7)
+  text(x=FPR_DiagnosticTest+.2,y=TPR_DiagnosticTest+.2,label="Absence",cex=.7)
+  text(x=.0125,y=TPR_DiagnosticTest-.1,label="Presence",cex=.7)
+  text(x=FPR_DiagnosticTest+.1,y=TPR_DiagnosticTest,label="Inferior",cex=.7)
+  text(x=.7,y=.2,label="Reference = Content Expert",cex=.7)
+  text(x=.7,y=.15, label="Diagnostic Test software", cex=.7)
+
+}
+```
+
+Runnning the function from above
+
+```{r 03-Statistics-14-3-3-1}
+#Sensitivity=0.623
+#Specificity=1-.927
+
+LR_graph("./Data-Use/Diagnostic_test_summary.xlsx",1,.623,.927)
+
+```
 
 ## Metaanalysis
 
-During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the study. It is not well known outside of statistics journal 
-that the bivariate analysis is the preferred method to evaluate 
-diagnostic studies [@pmid16168343]. By contrast, the majority of metaanalysis of diagnostic studies uses the univariate method of Moses and Littenberg [@pmid8210827]. This issue will be expanded below.
+During journal club, junior doctors are often taught about the importance of metaanalysis. It is worth knowing how to perform a metaanalysis in order to critique the study. This is an important issue as the junior doctor is supervised by someone who a content expert but not necessarily a method expert. Metaanalysis can be performed for clinical trials, cohort studies or diagnostic studies. As an example, it is not well known outside of statistics journal that the bivariate analysis is the preferred method to evaluate diagnostic studies [@pmid16168343]. By contrast, the majority of metaanalysis of diagnostic studies uses the univariate method of Moses and Littenberg [@pmid8210827]. This issue will be expanded below.
+
+### Quality of study
+
+All studies require evaluation of the quality of the individual studies. This can be done with the QUADAS2 tool, available at 
+https://annals.org/aim/fullarticle/474994/quadas-2-revised-tool-quality-assessment-diagnostic-accuracy-studies. 
 
 ### PRISMA
 
 The PRISMA statement is useful for understanding the search strategy and the papers removed and retained in the metaanalysis. An example of generating the statement is provided below in R. The example given here is from a paper on the use of spot sign to predict enlargment of intracerebral hemorrhage [@pmid31272327].
 
-### Conversion of mean and median
+```{r 03-Statistics-14-3-4}
+library(PRISMAstatement)
+#example from Spot sign paper. Stroke 2019
+prisma(found = 193,
+       found_other = 27,
+       no_dupes = 141, 
+       screened = 141, 
+       screen_exclusions = 3, 
+       full_text = 138,
+       full_text_exclusions = 112, 
+       qualitative = 26, 
+       quantitative = 26,
+       width = 800, height = 800)
 
-One issue with performing metaanalysis is that one paper may report mean and another report median age. The formula for the mean is given by $\frac{a+2m+b}{4}$ where _m_ is the median, _a_ is the upper and _b_ is the lower range [@pmid25524443]. The variance is given by $S^2=\frac{1}{12}(\frac{(a+2m+b)^2}{4}+{(b-a)^2})$. This formula requires examination of the data such as the figure to obtain the upper and lower range.
+#https://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html#attributes
+library(DiagrammeR)
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Stroke
+
+  node [shape = oval,
+        fixedsize = false,
+        color=red,
+        width = 0.9] 
+  Hypertension; 'No Hypertension'
+  
+  node [shape= circle,
+  fontcolor=red,
+        color=blue,
+        fixedsize=false]
+
+  Hypokalemia; 'No Hypokalemia'        
+
+  # several 'edge' statements
+  edge [arrowhead=diamond]
+  
+  Stroke->{Hypertension, 'No Hypertension'}
+  Hypertension->{Hypokalemia, 'No Hypokalemia'}
+  
+}
+
+")
+
+## alternative
+
+grViz("digraph flowchart {
+      # node definitions with substituted label text
+      node [fontname = Helvetica, shape = rectangle]        
+      tab1 [label = '@@1']
+      tab2 [label = '@@2']
+      tab3 [label = '@@3']
+      tab4 [label = '@@4']
+      tab5 [label = '@@5']
+
+ 
+# edge definitions with the node IDs
+      tab1 -> tab3 
+      tab1-> tab2 
+      #tab2->tab3
+      tab2 -> tab4 
+      tab2-> tab5;
+      }
+
+      [1]: 'Stroke n=19'
+      [2]: 'Hypertension n=10'
+      [3]: 'No Hypertension n=9'
+      [4]: 'Hypokalemia n=?'
+      [5]: 'No Hypokalemia n=?'
+      ")
+
+```
+
+### Conversion of median to mean
+
+One issue with performing metaanalysis is that one paper may report mean and another report median age. The formula for the mean is given by $\frac{a+2m+b}{4}$ where _m_ is the median, _a_ is the upper and _b_ is the lower range [@pmid25524443]. The variance is given by $S^2=\frac{1}{12}(\frac{(a+2m+b)^2}{4}+{(b-a)^2})$. This formula requires examination of the data such as the figure to obtain the upper and lower range. These changes are incorporated into _meta_ libray using _meatamean_ function [@doi10.1136/ebmental-2019-300117].  More recently, investigators suggest to also consider the skewness of the data from the 5 number summary data [@pmid37161735]. The argument _method.mean_ in function _metamean_ is used to specify the method for estimating the mean. In this case we chose the Luo method for illustration Luo [@doi:10.1177/0962280216669183]. See the help page by typing question mark before _metamean_ for more options.
+
+```{r 03-Statistics-14-4}
+library(meta)
+
+#NIHSS data from ANGEL large core trial in NEJM 2023
+metamean(q1=4,q3=20,median=16,n=230, method.mean = "Luo")
+
+
+```
+
+Here the same data is used for the McGrath method [@doi:10.1177/0962280219889080].
+
+```{r 03-Statistics-14-5}
+
+metamean(q1=4,q3=20,median=16,n=230, method.mean = "QE-McGrath")
+
+```
+
+
+The conversion from median to mean in _metafor_ is performed using _conv.fivenum_ function [@JSSv036i03]. There is an update on the _metafor_ page as well as discussion on alternate approach. The default method of this function is to use the methods by Luo [@doi:10.1177/0962280216669183], Wan [@pmid25524443] and Shi [@pmid37161735]
+
+```{r 03-Statistics-14-6}
+library(metafor)
+# example data frame
+EstMean <- data.frame(Paper=c(1:4,NA), min=c(1,2,NA,2,NA), q1=c(NA,NA,4,4,NA),
+                  median=c(5,6,6,6,NA), q3=c(NA,NA,10,10,NA),
+                  max=c(12,14,NA,14,NA),
+                  mean=c(NA,NA,NA,NA,7.0), sd=c(NA,NA,NA,NA,4.2),
+                  n=c(30,30,30,30,30))
+EstMean
+
+EstMean <- conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=EstMean)
+
+EstMean
+
+
+```
+
+The _estmeansd_ library uses quantile estimation method with _qe.mean.sd_ function when the data available are the median and quartile ranges [@doi:10.1177/0962280219889080] [@pmid36412105].The approach here is to use simulation to estimate the parameters.
+
+```{r 03-Statistics-14-7}
+library(estmeansd)
+
+#data from ANGEL large core trial in NEJM 2023
+res_qe <- bc.mean.sd(q1.val = 13, med.val = 16, q3.val = 20, n = 230)
+res_qe 
+
+```
+The standard error from the mean can be estimated using _get_SE_ function.
+
+```{r 03-Statistics-14-8}
+get_SE(res_qe)
+
+```
+
+The _estmeansd_ library uses Box-Cox method for estimating mean and sd when the data available are the median, minimum and maximum values.
+
+```{r 03-Statistics-14-9}
+library(estmeansd)
+
+res_bc <- bc.mean.sd(min.val = 13, med.val = 16, max.val = 42, n = 230)
+res_bc 
+
+```
+Again, the standard error from the mean can be estimated using _get_SE_ function.
+
+```{r 03-Statistics-14-10}
+get_SE(res_bc)
+
+```
+
 
 ### Inconsistency I2
 
 The inconsistency $I^2$ index is the sum of the squared deviations from the overall effect and weighted by the study size. Value <25% is classified as low 
-and greater than 75% as high heterogeneity. This test can be performed using metafor package . The presence of high $I^2$ suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. The $I^2$ value for the TIA clinic study is 34.41%. As such meta-regression is not needed for that study. By contrast, the $I^2$ is much higher for the spot sign study, necessitating metaregression.
+and greater than 75% as high heterogeneity. This test can be performed using metafor package [@JSSv036i03]. The presence of high $I^2$ suggests a need to proceed to  meta-regression on the data to understand the source of heterogeneity. The fixed component were the covariates which were being tested for their effect on heterogeneity. The random effect components were the sensitivity and FPR. The $I^2$ value for the TIA clinic study is 34.41%. As such meta-regression is not needed for that study. By contrast, the $I^2$ is much higher for the spot sign study, necessitating metaregression.
 
 
 ```{r 03-Statistics-15}
 library(PRISMAstatement)
+
 #example from Spot sign paper. Stroke 2019
 prisma(found = 193,
        found_other = 27,
@@ -592,6 +943,10 @@ text(-.9, 7.5, "Model", pos=2)
 text(c(-.55,-.2), 7.5, c("recurrence", " total subjects"))
 text( 1,   7.5, "Proportion [95% CI]", pos=2)
 ```
+
+### Metaanalysis of continuous data
+
+Metanalysis of continuous outcome data can be performed using standardised mean difference or ratio of means. It is available in the _meta_ library using _metacont_ function [@doi10.1136/ebmental-2019-300117].
 
 ### Bivariate Metaanalysis
 

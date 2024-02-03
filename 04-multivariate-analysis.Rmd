@@ -111,20 +111,22 @@ _traj_ model prefers data in wide format.
 
 GEE is used for analysis of longitudinal or clustered data. GEE is preferred when the idea is to discover the group effect or population average (marginal) log odds [@pmid20220526]. This is contrast with the mixed model approach to evaluate the average subject via maximum likelihood estimation. The fitting for mixed model is complex compare to GEE and can breakdown. The library for performing GEE is _gee_ or _geepack_.
 
-```{r 04-multivariate-analysis-4, warning=F}
+```{r 04-multivariate-analysis-4, warning=F, eval=F}
 library(tidyverse)
 library(gee)
 
 #open simulated data from previous chapter
 dtTime<-read.csv("./Data-Use/dtTime_simulated.csv") %>%
-  rename(NIHSS=Y)
+  rename(NIHSS=Y) %>% mutate (NIHSS=abs(NIHSS))
   
 
-fit<-gee(ENI~T+Diabetes+NIHSS,
+(fit<-gee(ENI~T+Diabetes+NIHSS,
          id=id, 
          corstr = "unstructured",
+         tol = 0.001, maxiter = 25,
          #data=dtTrial_long)
-          data=dtTime)
+          data=dtTime))
+  summary(fit)
 
 ```
 
@@ -139,56 +141,112 @@ set of observations of correlated variables into a set of values of uncorrelated
 principal component aligns in the direction that contains most of the variance 
 of observed variables. The next principal component is orthogonal to the first principle component and contains the second most of spread of variance. The next component contains the third most of spread, and so on.  The latter principal components are likely to represent noise and are discarded. Expressing this in terms of our imaging data, each component yields a linear combination of ‘ischemic’ voxels that covary with each other. These components can be interpreted as patterns of ischemic injury. The unit of measurement in PCA images is the covariance of the data. 
 
-In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principal components. 
+In the case of MR images, each voxel is a variable, leading to tens of thousands of variables with relatively small numbers of samples. Specialised methods are required to compute principal components. There are situations in which PCA may not work well if there is non-linear relationship in the data.
 
 Based on cosine rule, principal components from different data are similar if values approach 1 and dissimilar if values approach 0 [@pmid22551679].
 
-There are situations in which PCA may not work well if there is non-linear relationship in the data.
+### PCA with MRI
 
-```{r PCA}
-library(oro.nifti)
-library(abind)
-library(CHNOSZ) # for working with arrays
-library(RNiftyReg)
+Here we illustrate multivariate analysis with _mand_ library. 
 
-#create a list using pattern matching
-mca.list<-list.files(path="./Ext-Data/",pattern = "*.nii", full.names = TRUE)
-
-#length of list
-length(mca.list)
-#read multiple files using lapply function
-
-#use lappy to read in the nifti files
-#note lapply returns a list
-mca.list.nii <- lapply(mca.list, readNIfTI)
-
-#convert to list of array 
-mca.list.array<-lapply(mca.list.nii, img_data)
-
-#convert to array
-m.listarray<-list2array(mca.list.array)
-
+```{r 04-multivariate-analysis-5, warning=F}
+#modified commands from mand vignette
 library(mand)
-fit=msma(m.listarray,comp=2)
+data("atlas")
+data("atlasdatasets")
+data("template")
 
+atlasdataset=atlasdatasets$aal
+tmpatlas=atlas$aal
+
+#overlay images
+coat(template, tmpatlas, regionplot=TRUE, 
+ atlasdataset=atlasdataset, ROIids = c(1:2, 41:44), regionlegend=TRUE)
+```
+
+Simulate a dataset using _mand_. 
+
+```{r 04-multivariate-analysis-5-1, warning=F}
+data("diffimg") #mand
+data("baseimg")
+data("mask")
+data("sdevimg")
+
+diffimg2 = diffimg * (tmpatlas %in% 41:44)
+
+img1 = simbrain(baseimg = baseimg, diffimg = diffimg2, 
+sdevimg=sdevimg, mask=mask, n0=20, c1=0.01, sd1=0.05)
+
+#dim(img1$S) #40 6422
+
+#mand takes matrix array as argument
+fit=msma(img1$S,comp=2)
+plot(fit, v="score", axes = 1:2, plottype="scatter")
+midx = 1 ## the index for the modality
+vidx = 1 ## the index for the component
+Q = fit$wbX[[midx]][,vidx]
+outstat1 = rec(Q, img1$imagedim, mask=img1$brainpos)
+coat(template, outstat1)
 
 #https://rdrr.io/cran/mand/f/vignettes/a_overview.Rmd
 #https://rdrr.io/cran/caret/man/plsda.html
 ```
 
+Let's apply _mand_ on imaging data. First we use pattern matching to extract the relevant nii files into a list.
+
+```{r 04-multivariate-analysis-5-2, warning=F}
+#remotes::install_github("neuroconductor/MNITemplate")
+library(MNITemplate)
+
+#MNI choose resolution
+MNI = readMNI(res = "2mm")
+
+#create a list using pattern matching ending in .nii
+#regular expression | indicates matching for ica.nii or mca_blur.nii
+mca.list<-list.files(path="./Ext-Data/",
+                     pattern = "*ica.nii|*mca_blur.nii", 
+                     full.names = TRUE)
+```
+
+We use the _imgdatamat_ function to read in the files with patients as rows and imaging voxels in columns.
+
+```{r 04-multivariate-analysis-5-3, warning=F}
+
+#use imgdatamat to organise data as rows of patients and columns of voxels
+#simscale reduces the size of the voxel to quarter of its size
+m.list.dat<-imgdatamat(mca.list, simscale=1/4)
+
+#check that the dimension is correct
+dim(m.list.dat$S) #42 902629
+
+fit1=msma(m.list.dat$S,comp=2)
+plot(fit1, v="score", axes = 1:2, plottype="scatter")
+midx = 1 ## the index for the modality
+vidx = 1 ## the index for the component
+Q = fit1$wbX[[midx]][,vidx]
+outstat_fit1 = rec(Q, m.list.dat$imagedim, mask=m.list.dat$brainpos)
+coat(MNI, outstat_fit1)
+```
+
+
 
 ## Independent component analysis
 
-Independent component analysis is different from PCA in that it seeks components which are statistically independent. 
+Independent component analysis is different from PCA in that it seeks components which are statistically independent.It separates signal from a multivariate distribution into additive components which as statistically independent. It is used in separating components of noise signal or blind source localisation. 
+
+```{r 04-multivariate-analysis-5-4, warning=F}
+library(fastICA)
+a <- fastICA(img1$S, 2, alg.typ = "deflation", fun = "logcosh", alpha = 1,
+             method = "R", row.norm = FALSE, maxit = 200, 
+             tol = 0.0001, verbose = TRUE)
+
+```
 
 ## Partial least squares
 
 There are several versions of partial least squares (PLS). A detailed 
-mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix [@pmid15531609]. For the purposes of 
-exposition we will describe the individual components of the method. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of 
-dependent variables (neurological outcome scores). Each voxel can take on a 
-value of 1 (representing involvement by infarction) or 0 (representing absence 
-of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. 
+mathematical exposition of the PLS-PLR technique used here can be found in the paper by Fort and Lambert-Lacroix [@pmid15531609]. PLS is a multiple regression method that is suited to datasets comprising large sets of independent predictor variables (voxels in an image) and smaller sets of dependent variables (neurological outcome scores). Each voxel can take on a value of 1 (representing involvement by infarction) or 0 (representing absence of involvement) in the MR image of each patient. PLS employs a data reduction method which generates latent variables, linear combinations of independent and dependent variables which explain as much of their covariance as possible. 
+
 Linear least squares regression of the latent variables produces coefﬁcients or beta weights for the latent variables at each voxel location in the brain in stereotaxic coordinate space.[@pmid19660556]
 
 The colon dataset containing microarray data comes with the _plsgenomics_ 
@@ -196,7 +254,7 @@ library [@pmid28968879]. The analysis involves partitioning the data into
 training and test set. The classification data is in the Y column. This example 
 is provided by the _plsgenomics_ library
 
-```{r 04-multivariate-analysis-5, warning=F}
+```{r 04-multivariate-analysis-6, warning=F}
 library(plsgenomics)
 
 data("Colon")
@@ -234,5 +292,5 @@ res$Cvg
 sum(res$Ytest!=Colon$Y[-IndexLearn])
 ```
 
-## Causal inference
+
 

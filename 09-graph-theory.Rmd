@@ -23,7 +23,7 @@ The Laplacian matrix is the difference between the degree and adjacency matrix. 
 
 Bimodal graphs are of interest in social network and in analysis of food ecosystem in nature. A well studied example is the _Zachary_ karate club network.This dataset is included in the _igraphdata_ package.
 
-```{r 09-graph-theory-2, warning=F}
+```{r 09-graph-theory-2, warning=F, include=F, eval=F}
 library(bipartite)
 
 edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")

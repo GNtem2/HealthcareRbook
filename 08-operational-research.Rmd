@@ -4,7 +4,7 @@
 
 Queueing theory describes the movement of a queue such as customer arrival in bank, shop or emergency department. It seeks to balance supply and demand for a service. It begun with the study queue waiting on Danish telephones in 1909.
 
-Little's theorem describes the linear relationship between the number of customer _L_ to the customer arrival rate $\lambda$ and the customer served per time peiod, $\mu$.
+Little's theorem describes the linear relationship between the number of customer _L_ to the customer arrival rate $\lambda$ and the customer served per time peiod, $\mu$. This can also be used to determine the number of beds needed for coronary care unit given 4 patients being admitted to cardiology unit, one of whom needs to be admitted to coronary care unit and would stay for an average of 3 days.
 
 Queueing system is described in terms of Kendall’s notation, M/M/c/k, with exponential arrival time. Using this terminology, MM1 system has 1 server and infinite queue. An MM/2/3 system has 2 (c) servers and 1 (k-c) position in the queue. The M refers to Markov chain. 
 
@@ -571,17 +571,29 @@ library(heemod)
 
 ```
 
-There are several data in BCEA library.
+There are several data in BCEA library such as Vaccine.
 
 ```{r 08-operational-research-12}
 library(BCEA)
 
 #use Vaccine data from BCEA
-data(Vaccine,package = "BCEA")
+data(Vaccine)
 
 ints=c("Standard care","Vaccination")
 
-m <- bcea(e,c,ref=2,interventions=ints)
+# Runs the health economic evaluation using BCEA
+m <- bcea(
+      e=eff,
+      c=cost,               # defines the variables of 
+                            #  effectiveness and cost
+      ref=2,                # selects the 2nd row of (e, c) 
+                            #  as containing the reference intervention
+      interventions=treats, # defines the labels to be associated 
+                            #  with each intervention
+      Kmax=50000,           # maximum value possible for the willingness 
+                            #  to pay threshold; implies that k is chosen 
+                            #  in a grid from the interval (0, Kmax)
+      plot=TRUE             # plots the results
+)
 
-summary(m)
 ```

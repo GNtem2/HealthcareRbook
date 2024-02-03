@@ -60,6 +60,7 @@ In the example here, the GBD 2016 life time risk of stroke is re-used. The model
 
 ```{r 07-Bayesian-analysis-1}
 library(INLA)
+
 load("./Data-Use/world_stroke.Rda")
 
 #perform ordinary linear regression for comparison
@@ -77,8 +78,11 @@ summary(fitINLA)
 ```
 Performing Bayesian analysis with _rstan_ can be tricky as the text file for the stan code require an empty line at the end. The _brms_ library contains the same precompiled _stan_ code and is easier to run.
 
-```{r 07-Bayesian-analysis-1-2}
+```{r 07-Bayesian-analysis-1-2, eval=F}
+#This may not run if there is incompatibility between Rtools and version of R
+#check  system("g++ -v")
 library(brms)
+
 fitBRM<-brm(LifeExpectancy~MeanLifetimeRisk,  data =world_sfdf[,c(23,12)])
 
 summary(fitBRM)
@@ -86,7 +90,7 @@ summary(fitBRM)
 
 Extract the posterior samples for plotting.
 
-```{r 07-Bayesian-analysis-1-3}
+```{r 07-Bayesian-analysis-1-3, include=F, eval=F}
 library(tidyverse)
 post_samples_BRM <- brms::posterior_samples(fitBRM) 
 
@@ -136,7 +140,7 @@ summary(Dx)
 
 The same data is used for logistic regression with stan.
 
-```{r 07-Bayesian-analysis-2-1, warning=F}
+```{r 07-Bayesian-analysis-2-1, warning=F, eval=F}
 DxBRM<-brm(Class ~Epith.c.size+Cl.thickness+Cell.shape, 
            family=bernoulli(link = "logit"), data = BreastCancer2)
 
@@ -146,7 +150,7 @@ summary(DxBRM)
 
 Extract the posterior sample from logistic regression.
 
-```{r  07-Bayesian-analysis-2-2, warning=F}
+```{r  07-Bayesian-analysis-2-2, warning=F, eval=F}
 post_samples_DxBRM <- brms::posterior_samples(DxBRM)
 
 post_samples_DxBRM %>% 
@@ -163,7 +167,7 @@ post_samples_DxBRM %>%
 Plotting world_sfdf to identify characteristics of the data
 
 ```{r 07-Bayesian-analysis-3, warning=F}
-
+library(ggplot2)
 ggplot(data=world_sfdf, aes(x=LifeExpectancy, y=MeanLifetimeRisk,
               color=Income, shape=Continent))+                                               
   geom_point()+
@@ -191,7 +195,7 @@ summary(Inla_Income)
 
 Intercept model with BRMS
 
-```{r 07-Bayesian-analysis-3-2}
+```{r 07-Bayesian-analysis-3-2, eval=F}
 
 BRMS_Income <- brm(MeanLifetimeRisk ~ 1 + LifeExpectancy+(1 | Income), 
                               data   = world_sfdf, 
@@ -204,7 +208,7 @@ BRMS_Income <- brm(MeanLifetimeRisk ~ 1 + LifeExpectancy+(1 | Income),
 summary(BRMS_Income)
 ```
 
-```{r  07-Bayesian-analysis-3-3, warning=F}
+```{r  07-Bayesian-analysis-3-3, warning=F, eval=F}
 post_samples_BRMS_Income <- brms::posterior_samples(BRMS_Income)
 
 post_samples_BRMS_Income %>% 
@@ -221,6 +225,7 @@ post_samples_BRMS_Income %>%
 A Bayesian approach towards metaanalysis is provided below using the package _meta4diag_ [@2015arXiv151206220G]. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the _mada_ package which does not provide a bivariate method for performing summary sensitivity and specificity. 
 
 ```{r 07-Bayesian-analysis-4}
+#install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 library(meta4diag)
 library(INLA)
 

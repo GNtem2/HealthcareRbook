@@ -11,8 +11,7 @@ boring and ignored.
 
 #### Vector and list
 
-All elements of an atomic vector and arrays are the same. A vector has one dimensional and a matrix has 2 or more dimension. List can contain different types of data. A complex example of a structured list is the _json_ format shown below. In base R, _c_ is a function for creating a vector or list. The function _list_ can also be used to create list. It is best to avoid using 
-_c_ when assigning a name to a dataframe or vector [@Wickham2019].
+All elements of an atomic vector and arrays are the same. A vector is an array with one dimension . List can contain different types of data. A complex example of a structured list is the _json_ format shown below. In base R, _c_ is a function for creating a vector or list. The function _list_ can also be used to create list. It is best to avoid using _c_ when assigning a name to a dataframe or vector [@Wickham2019].
 
 ```{r 02-Data-Wrangling-1}
 a<-c(1,2,3)
@@ -30,16 +29,23 @@ is.list(e) #TRUE
 
 #### Matrix and Arrays
 
-Arrays are arranged in rows and columns of a single data type. It contains a description of the number of dimension. Array can also be accessed by its indexing. Later in this chapter, we will illustrate the importance of arrays for manipulating MRI scans. A volumetric mri scan, there are 3 dimenions _[,,]_. The first column is the sagittal sequence, second column is the coronal sequence and the third column is the axial sequence. In the example below, this knowledge of arrays can be used to reverse the ordering of information on MRI scan (flip on it axis between left and right)
+In R, an array is a vector organised with attributes such as dimensions. It is of a single data type. It contains a description of the number of dimension. Array can also be accessed by its indexing. 
+
+Later in this chapter, we will illustrate the importance of arrays for manipulating MRI scans. A volumetric mri scan, there are 3 dimenions _[,,]_. The first column is the sagittal sequence, second column is the coronal sequence and the third column is the axial sequence. In the example below, this knowledge of arrays can be used to reverse the ordering of information on MRI scan (flip on it axis between left and right).
 
 ```{r 02-Data-Wrangling-1-1}
 #vector
 vector1<-c(1,2,3)
 vector2<-c(4,5,6,7,8,9)
+
+# 2 dimensions
 array1<-array(c(vector1,vector2),dim = c(3,3,2))
 array1
+
+# 3 dimensions
 array2<-array(c(vector1,vector2),dim = c(2,2,3))
 array2
+
 #check if array or matrix
 is.matrix(array1)
 is.array(array1)
@@ -69,76 +75,85 @@ First column of array1
 array1[,1,]
 ```
 
-### apply, lapply, sapply
+A  matrix is a rectangular array of a single data type arranged in rows and columns or a 2 dimensional array. Data type can be number or character. Matrix can be considered a linear combination of vector into a linear map. In R, the function _is.matrix_ returns true only if there is a dimension argument in the data. This definition also means that a dat frame is not a matrix.
 
-#### apply
 
-The _apply_ function works on data in array format.
+```{r 02-Data-Wrangling-1-3}
 
-```{r 02-Data-Wrangling-2}
-#sum data across rows ie c(1)
-apply(array1,c(1),sum)
-
-#sum data across columns(2)
-apply(array1,c(2),sum)
-
-#sum data across rows and columns c(1,2)
-apply(array1,c(1,2),sum)
+M1<-matrix(c(1,2,3, 4,5,6),nrow=2, ncol=3, byrow = T,
+           dimnames = list(c("row1", "row2"),
+                        c("Col1", "Col2", "Col3")))
+M1
 ```
+A tensor is multidimensional array. Using the analogy before about a matrix being a linear map, a tensor can be viewed as a multilinear map. More on tensor later.
 
+#### array operations
 
-#### lapply
+Array operations are performed element wise.
 
-The call _lapply_ applies a function to a list. In the section below of medical images the _lapply_ function will be used to creates a list of nifti files and which can be opened painlessly with additional call to _readNIfTI_. Here a more simple example is used.
+```{r 02-Data-Wrangling-1-4}
+arrayA<-array(c(1,2,3),dim=c(1,3)) #1 row 3 columns
+arrayA
 
-```{r 02-Data-Wrangling-2-1}
-a<-c(1,2,3,4,5,6,7,8)
-lapply(a, function(x) x^3)
-```
+arrayB<-array(c(4,5,6),dim=c(1,3))
+arrayB
 
-#### sapply
-
-The call _sapply_ applies a function to a vector, matrix or list. It returns the results in the form of a matrix.
-
-```{r 02-Data-Wrangling-2-2, warning=F}
-a<-c(1,2,3,4)
-sapply(a, function(x) x^2)
+#addition
+arrayC=arrayA+arrayB
+arrayC
 
 ```
 
-#### tapply
+Now we illustrate multiplication of arrays
 
-The _tapply_ function applies a function to a subset of the data.
-
-```{r 02-Data-Wrangling-2-3}
-
-dat.array1<-as.data.frame.array(array1)
-dat.array1
+```{r 02-Data-Wrangling-1-4-1}
+arrayD=arrayA*arrayB
+arrayD
 ```
 
-```{r 02-Data-Wrangling-2-3-1}
-dat.array1$V6<- dat.array1$V6 %% 2
-dat.array1$V6
+Division of arrays
+
+```{r 02-Data-Wrangling-1-4-2}
+arrayE<-arrayA/arrayB
+arrayE
 ```
 
-```{r 02-Data-Wrangling-2-3-2}
-tapply(dat.array1$V1, dat.array1$V6, sum) 
+### Operators
+
+##### Relation operators
+
+We test if variable A is same as B by using == operator while we test if A is not equal to B by != operator. A is greater than B by > operator and A is lesser than B by < operator.
+
+#### Logical operators
+
+The _|_ operator signifies elementwise _or_ relationship and _||_ signifies _or_ relationship. The _&_ operator signifies elementwise _and_ relationship and && signifies _and_ relationship.
+
+
+#### %in%
+
+The _%in%_ operator helps to evaluate if an element belong to a vector. The package _Hmisc_ contains an operator _%nin%_ which is the opposite of _%in%_.
+
+#### %>%
+
+The _%>%_ operator or pipe function, from _magrittr_ package, is used to pass information to the next function.
+
+```{r 02-Data-Wrangling-1-5}
+DF<-data.frame(Disability=c("Good","Moderate","Good","Poor"),NIHSS=c(2,10,1,20),Sex=c("M","F","M","M" ))
+
+#create new variable outcome
+DF$outcome=ifelse(DF$Disability %in% c("Good","Moderate"), 0,1)
+DF
+
 ```
 
-The _rapply_ function or recursive apply is applied to a list, contingent on the second argument. In this example, the first function is to multiple elements of the list by 2 contingent on the element being numeric.
 
-```{r 02-Data-Wrangling-2-4}
-a<-c(1,2,3.4,D,5, "NA")
-
-rapply(a, function(x) x*2, class="numeric")
-```
 
 ### Simple function
 
 a function is written by creating name of function, calling on _function_ (x) 
 and brackets to define function.
 
-```{r 02-Data-Wrangling-3}
+```{r 02-Data-Wrangling-2}
 # function sun
 ArithSum<-function (x) {
   sum(x)
@@ -150,7 +165,7 @@ ArithSum(vector1)
 
 ### for loop
 
-```{r 02-Data-Wrangling-4}
+```{r 02-Data-Wrangling-2-1}
 vector2<-c(4,5,6)
 
 for (i in vector2){
@@ -160,7 +175,7 @@ for (i in vector2){
 
 Perform math operation using for loop
 
-```{r 02-Data-Wrangling-4-1}
+```{r 02-Data-Wrangling-2-2}
 
 for (i in vector2){
   m= sum(vector2)/length(vector2)
@@ -171,7 +186,7 @@ m
 
 The _next_ command can be used to modify the loop. This simple example removes even number
 
-```{r 02-Data-Wrangling-4-2}
+```{r 02-Data-Wrangling-2-3}
 for(i in vector2){
   if(!i %% 2){
     next
@@ -183,7 +198,7 @@ for(i in vector2){
 
 Perform a math operation along the columns.
 
-```{r 02-Data-Wrangling-4-3}
+```{r 02-Data-Wrangling-2-4}
 
 A=c(1,2,3)
 B=c(4,5,6)
@@ -199,7 +214,7 @@ output_col
 
 Perform a math operation along the rows.
 
-```{r 02-Data-Wrangling-4-4}
+```{r 02-Data-Wrangling-2-5}
 output_row <- vector("double", nrow(df))  # 1. output
 for (i in seq_along(df)) {            # 2. sequence
   output_row[[i]] <- mean(df[[i]])      # 3. body
@@ -208,11 +223,77 @@ output_row
 
 
 ```
+
+
+### apply, lapply, sapply
+
+#### apply
+
+The _apply_ function works on data in array format.
+
+```{r 02-Data-Wrangling-3}
+#sum data across rows ie c(1)
+apply(array1,c(1),sum)
+
+#sum data across columns(2)
+apply(array1,c(2),sum)
+
+#sum data across rows and columns c(1,2)
+apply(array1,c(1,2),sum)
+```
+
+
+#### lapply
+
+The call _lapply_ applies a function to a list. In the section below of medical images the _lapply_ function will be used to creates a list of nifti files and which can be opened painlessly with additional call to _readNIfTI_. Here a more simple example is used.
+
+```{r 02-Data-Wrangling-3-1}
+a<-c(1,2,3,4,5,6,7,8)
+lapply(a, function(x) x^3)
+```
+
+#### sapply
+
+The call _sapply_ applies a function to a vector, matrix or list. It returns the results in the form of a matrix.
+
+```{r 02-Data-Wrangling-3-2, warning=F}
+a<-c(1,2,3,4)
+sapply(a, function(x) x^2)
+
+```
+
+#### tapply
+
+The _tapply_ function applies a function to a subset of the data.
+
+```{r 02-Data-Wrangling-3-3}
+
+dat.array1<-as.data.frame.array(array1)
+dat.array1
+```
+
+```{r 02-Data-Wrangling-3-4}
+dat.array1$V6<- dat.array1$V6 %% 2
+dat.array1$V6
+```
+
+```{r 02-Data-Wrangling-3-4-1}
+tapply(dat.array1$V1, dat.array1$V6, sum) 
+```
+
+The _rapply_ function or recursive apply is applied to a list, contingent on the second argument. In this example, the first function is to multiple elements of the list by 2 contingent on the element being numeric.
+
+```{r 02-Data-Wrangling-3-5}
+a<-c(1,2,3.4,D,5, "NA")
+
+rapply(a, function(x) x*2, class="numeric")
+```
+
 ### Functional
 
 A functional is a function embedded in a function. Later, we will revisit functional to perform analysis on a list of _nifti_ files.
 
-```{r 02-Data-Wrangling-4-5}
+```{r 02-Data-Wrangling-4}
 
 Fou<-lapply(df, function(A) mean(A)/sd(A))
 
@@ -222,7 +303,7 @@ Fou
 
 The _unlist_ function returns a matrix.
 
-```{r 02-Data-Wrangling-4-5-1}
+```{r 02-Data-Wrangling-4-1}
 
 Fou2<-unlist(lapply(df, function(A) mean(A)/sd(A)))
 
@@ -234,7 +315,7 @@ Fou2
 
 _Mapply_ applies the function over elements of the data.
 
-```{r 02-Data-Wrangling-4-5-2}
+```{r 02-Data-Wrangling-4-2}
 
 MeanFou<-lapply(df, mean)
 
@@ -244,30 +325,98 @@ MeanFou[]<-Map('/', df, MeanFou)
 
 The equivalent code with _lapply_ is provided below.
 
-```{r 02-Data-Wrangling-4-5-3}
+```{r 02-Data-Wrangling-4-3}
 
 MeanFou2<-lapply(df, function(M) M/mean(M))
 
 MeanFou2
 
 ```
+
+### Iteration
+
+This is an extension of the discussion on functional programming. Here we will be using _purrr_ library and _map_ function to apply function to multiple input. First, we use _split_ function to partition data.
+
+```{r 02-Data-Wrangling-4-4}
+library(purrr)
+library(dplyr)
+
+ss<-read.csv("./Data-Use/ss150718.csv") 
+ss%>% 
+  select(duplicate, PubYear, TP,FP,FN,TN) |> 
+  split(ss$duplicate) %>% head()
+```
+
+Following on from the splitting of the data, we perform the regression on the split data with _map_.
+
+```{r 02-Data-Wrangling-4-5}
+
+ss %>% select(duplicate, PubYear, TP, FP, FN, TN) %>% mutate(Sensitivity=TP/(TP+FN)) |> 
+  split(ss$duplicate) |>
+  map(\(df) lm(Sensitivity ~ PubYear, data = df))|> 
+  map(summary) 
+
+
+```
+
+We can extend this function to each element of a vector to get the output for the linear regression on the partition data.
+
+```{r 02-Data-Wrangling-4-5-1}
+ss %>% select(duplicate, PubYear, TP, FP, FN, TN) %>% mutate(Sensitivity=TP/(TP+FN)) |> 
+  split(ss$duplicate) |>
+  map(\(df) lm(Sensitivity ~ PubYear, data = df))|> 
+  map(summary) %>%
+  map_dbl("r.squared")
+
+```
+
+#### map characters
+
+The _map_ function can be applied to characters. This can be illustrated using the spot sign data
+
+```{r 02-Data-Wrangling-4-5-2}
+
+map2_chr(ss$Authors, ss$PubYear, ~paste(.x, .y, sep=": ")) %>% head()
+```
+
+The characters can be mapped to upper case.
+
+```{r 02-Data-Wrangling-4-5-3}
+library(stringr)
+map2_chr(ss$Authors, ss$PubYear, ~paste(.x, .y, sep=" - ")) %>% 
+  map_chr(~str_to_upper(.)) %>%
+  head()
+```
+
+The _purrr_ library has function to _pluck_ items from the list or data frame.
+
+```{r 02-Data-Wrangling-4-5-4}
+map2_chr(ss$Authors, ss$PubYear, ~paste(.x, .y, sep=" - ")) %>% 
+  pluck(1) 
+```
+
 ## Data storage
 
-Often one assumes that opening Rstudio is sufficient to locate the file and run the analysis. One way of doing this at the console is to click on _Session_ tab, then _Set Working Directory_ to location of file. Another way of doing this seemlessly is to use the library _here_. It is easy to find the files in your directory using the _list.files()_ call.
-
-
-To list all files in a directory then
+Often one assumes that opening Rstudio is sufficient to locate the file and run the analysis. One way of doing this at the console is to click on _Session_ tab, then _Set Working Directory_ to location of file. Another way of doing this seemlessly is to use the library _here_. It is easy to find the files in your directory using the _list.files()_ call. 
 
 ```{r 02-Data-Wrangling-4-6, echo=F, eval=F}
 
 list.files()
 ```
 
-To list files matching a pattern
+To list only some files use pattern matching.
 
-```{r 02-Data-Wrangling-4-6-1}
+```{r 02-Data-Wrangling-4-6-1, echo=F, eval=F}
+
+list.files(pattern = "*.Rmd")
+```
+
+
+We can increase the complexity of pattern matching.
+
+```{r 02-Data-Wrangling-4-6-2}
 #list files matching pattern
-list.files(pattern=".Rmd")
+list.files(pattern=".Rmd|*.stan")
 ```
 
 ### Data frame
@@ -312,20 +461,29 @@ dfdate<-data.frame("DateofEvent"=c("12/03/2005","12/04/2006",NA),
                    "Result"=c(4,5,6))
 class(dfdate$DateofEvent)
 dfdate$DateofEvent
+```
 
+The date column appears to be listed as character because of NA. This is easily fixed by filtering NA.
+
+```{r 02-Data-Wrangling-6-1}
+
+dfdate$`Date.of.Event`<-dfdate$DateofEvent
 #remove NA using filter
 dfdate %>% filter(!is.na(DateofEvent))
 
 #re assigning date data type
 dfdate$DateofEvent2<-as.POSIXct(dfdate$DateofEvent)
+dfdate$DateofEvent3<-as.POSIXct(dfdate$`Date.of.Event`)
 class(dfdate$DateofEvent2)
 dfdate$DateofEvent2
+
+
 ```
 
 Problem can occur when date and time are located in separate columns. The first issue is that time data is assigned a default date 1899-12-30. This error occurs as the base date in MS Office is 1899-12-30. This issue can be compounded when there are 2 time data eg a patient has stroke onset at 22:00 and is scanned at 02:00. The data become 1899-12-31 22:00 and 1899-12-31 02:00. In this case it implies that scanning occurs before stroke onset. This could have been solved at the data collection stage by having 2 separate date colums. There are several solutions inclusing _ifelse_ but care must be taken with this argument. Note 
 that _ifelse_ argument convert date time data to numeric class. This can be resolved by embedding _ifelse_ statement within _as.Date_ argument. This argument requires _origin_ argument. The logic argument may fail when the default date differ eg 1904-02-08 02:00. In this case 1904-02-08 02:00 is greater than 1899-12-31 22:00.
 
-```{r 02-Data-Wrangling-6-1}
+```{r 02-Data-Wrangling-6-2}
 library(lubridate)
 library(tidyverse)
 
@@ -370,16 +528,27 @@ The _foreign_ library can handle older _SAS_ files but not the current version. 
 
 Json is short for JavaScript object Notification. These files have a 
 hierarchical structured format.  The json file is in text format amd can also be examined using _Notepad_. These files can be read using the _RJSONIO_ or _rjson_ 
-libraries in R.
+libraries in R. Geojson is a json format with geographical data.
 
 ```{r 02-Data-Wrangling-8}
 library(RJSONIO)
-j<-fromJSON("./Data-Use/0411.geojson")
+j<-fromJSON("./Data-Use/0411.geojson") #Christionso Island
 j<-lapply(j, function(x) {
   x[sapply(x,is.null)]<-NA
   unlist(x)
 })
 k<-as.data.frame(do.call("cbind",j)) #list to data frame
+head(k)
+```
+
+The geojson file can be converted to sf using _geojson_sf_ function from _geojsonsf_ library.
+
+```{r 02-Data-Wrangling-8-1}
+
+library(geojsonsf)
+
+#Christianso Island
+geojson_sf("./Data-Use/0411.geojson")  %>% mapview::mapview()
 ```
 
 
@@ -433,9 +602,9 @@ dfa2
 ### Factors
 
 There are several types of factors in R: ordered and not ordered. It is 
-important to pay attention to how factors are coded. Sometimes, male is represented as 1 and female as 0. Sometimes, female is represented as 2. This discussion may seems trivial but a paper had been retracted in a high impact factor journal Jama because of miscoding of the trial assignment 1 and 2 rather than the assignment of 0 and 1. This error led to reversing the results with logistic regression [@pmid31593277]. This error led to report that an outpatient management program for chronic obstructive pulmonary disease resulted in fewer admissions. Below is an example which can occur when data is transformed into factor and back to number. Note that the coding goes from 0 and 1 to 2 and 1.
+important to pay attention to how factors are coded. Sometimes, male is represented as 1 and female as 0. Sometimes, female is represented as 2 as integer encoding. Integer encoding assumes a rank ordering. This discussion may seems trivial but several papers have been retracted in high impact factor journal Jama because of miscoding of the trial assignment 1 and 2 rather than the assignment of 0 and 1. This error led to reversing the results with logistic regression when 2 is exchanged for 0 [@pmid31593277]. This error led to report that an outpatient management program for chronic obstructive pulmonary disease resulted in fewer admissions. Below is an example which can occur when data is transformed into factor and back to number. Note that the coding goes from 0 and 1 to 2 and 1. It has been suggested that the move away from coding data as 1 and 0 was historical and due to the fear that coding with punch card would treat 0 as a missing number and hence the move to coding binary variable as 1 and 2.
 
-In certain analyses, the libraries prefer to use the dependent  or outcome variable as binary coding in numeric format eg logistic regression and random forest. The library _e1071_ for performing support vector machine prefers the outcome variable as factor.
+In certain analyses, the libraries prefer to use the dependent  or outcome variable as binary coding in numeric format such as 1 and 0 eg logistic regression and random forest. The library _e1071_ for performing support vector machine prefers the outcome variable as factor. 
 
 ```{r 02-Data-Wrangling-12}
 library(Stat2Data)
@@ -479,7 +648,6 @@ head(BreastCancer$Class)
 ```
 
 
-
 This illustration describes conversion of a continuous variable into orderly factors.
 
 ```{r 02-Data-Wrangling-12-4}
@@ -496,7 +664,7 @@ class(Leukemia$AgeCat)
 Merging of files can be done using _dplyr_ to perform _inner_join_, 
 _outer_join_, _left_join_ and _right_join_. Note that this can also be done in base R or using syntax of _data.table_. These files can be joined using  _%>%_ operator.
 
-```{r 02-Data-Wrangling-13}
+```{r 02-Data-Wrangling-12-5}
 DF1<-data.frame(ID=c(1,2,3),Age=c(20,30,40))
 DF2<-data.frame(ID=c(1,2,3),Sex=c(1,0,0))
 DF3<-data.frame(ID=c(1,2,3), Diabetes=c(1,1,0))
@@ -506,8 +674,43 @@ DF <-DF1 %>% left_join(DF2, by="ID") %>% left_join(DF3, by="ID")
 
 ```
 
+### Tidy evaluation
 
-### Pivot
+Data in a dataframe can be summarised with the help of _group_by_ function in _dplyr_. The _summarise_ function returns 1 row of data per group. The number of observations in each group can be counted using _n()_ function.
+
+```{r 02-Data-Wrangling-13}
+# spot sign dataset
+ss<-read.csv("./Data-Use/ss150718.csv")
+
+ss %>% group_by(Country) %>% summarise (Number=n())
+
+
+
+```
+
+We can add more arguments to the _group_by_ function
+
+```{r 02-Data-Wrangling-13-1}
+
+ss %>% group_by(Country, Study.type) %>% summarise (Number=n())
+
+```
+We can also apply a function across multiple columns with _across_. Here we use _reframe_ argument to unlock restriction impose by _group_by_. Here we use _tibble_ function to return several output columns.
+
+```{r 02-Data-Wrangling-13-2}
+DR<- function (w,x,y,z){
+  tibble(
+   Sensitivity=round(w/(w+y),2),
+   Specificity=round(z/(z+x),2))
+}
+
+ss %>% group_by(Country, Study.type) %>% 
+  #the output is limted to 6 rows by head argument
+  reframe (across(TP:TN), DR(TP,FP,FN,TN)) %>% head() 
+```
+
+
+### Pivot wide and long
 
 A variety of different expressions are used to describe data format such as wide and long formats. In some case the distinction between such formats is not 
 clear. The verbs for performing these operations are _pivot_wide_, _pivot_long_. Again _data.table_ uses different verbs such as _cast_ and _melt_. In general, most regression analyses are performed with data in wide format. In this case 
@@ -701,7 +904,22 @@ E<-data.frame(A,B,C) %>%
   
   #add across columns and avoid NA
   mutate(ABC=rowSums(dplyr::select(.,A:C),na.rm = T))
-          
+```
+
+Another example of NA creating issues with _sum_ in mutate is provided below. Here, the function _rowwise_ from _dplyr_ can be used to emphasise the operation across rows. 
+
+```{r 02-Data-Wrangling-19-1, warning=F}
+
+df<-data.frame(Mon_SBP=c(160,NA,180),Tues_SBP=c(0,0,150),
+               Wed_SBP=c(NA,130,125)) %>%
+  #error from NA
+  rowwise %>%
+  mutate(SBP=ifelse(sum(Mon_SBP>140 & Tues_SBP>120, 
+                        Tues_SBP>100 & Wed_SBP>120, 
+                        Mon_SBP>100 & Wed_SBP>115, na.rm=T)>1.5,1,0))
+
+
+df
           
 
 
@@ -722,10 +940,12 @@ df.e$disability2<-str_extract(df.e$disability,"\\w") #extract number
 Sometimes data from public government sites come in PDF form instead of excel. Conversion from pdf to excel or text can be difficult especially with special character eg Danish. There are several libraries for doing this: _pdftables_ (require API key) and _pdftools_. The example below uses _pdftools_. 
 available at https://docs.ropensci.org/pdftools/. The document is the 2018 
 Danish Stroke Registry report. The _tabulizer_ package is excellent for 
-converting table data. However, _tabulizer_ package depends on _rJava_ and requires deft handling. 
+converting table data. However, _tabulizer_ package depends on _rJava_ and requires deft handling. The _PDE_ libray has user interface for performing data extraction from pdf.
 
 ```{r 02-Data-Wrangling-21}
 library(pdftools)
+
+#Danish stroke registry
 txt<-pdf_text("./Data-Use/4669_dap_aarsrapport-2018_24062019final.pdf")
 cat(txt[17]) #browse data page 13+4 filler pages
 
@@ -736,6 +956,7 @@ png::writePNG(screenshot13, "./Data-Use/Danish-Stroke-page13.png")
 
 knitr::include_graphics("./Data-Use/Danish-Stroke-page13.png")
 ```
+
 
 
 ### Scanned text or picture
@@ -819,29 +1040,36 @@ Table2<-as.data.frame(lapply(Table2, function(x)
 #write.csv(Table2,file="./Data-Use/Covid_bystate_Table130420.csv")
 ```
 
-## Manipulating Medical Images
+## Medical Images
 
 ### DICOM and nifti format
 
-R can handle a variety of different data format. Medical images are stored as _DICOM_ files for handling and converted to _nifti_ files for analysis. The workhorses are the _oro.dicom_ and _oro.nifti_ libraries. Nifti is an S4 class object with multiple slots for data type. These slots can be accessed by typing the @ after the handle of the file. The slots also contain information on whether the data has been scaled. This can be checked by accessing the _scl_slope_ and _scl_inter_ slots. These data on slope and intercept provide a mean of returning an image to its correct value.
+R can handle a variety of different data format. Medical images are stored as _DICOM_ files for handling and converted to _nifti_ files for analysis. The workhorses are the _oro.dicom_ and _oro.nifti_ libraries. Nifti is an S4 class object with multiple slots for data type. These slots can be accessed by typing the @ after the handle of the file.  The values in an image can be evaluated using _range_ function. Alternately, use _cal_max_ and _cal_min_ to perform the same task. It appears that in the conversion from minc file to nifti file, a scaling factor has been applied and transformed the values.
 
 ```{r 02-Data-Wrangling-25, warning=F}
 library(oro.nifti)
 mca<-readNIfTI("./Data-Use/mca_notpa.nii.gz", reorient = FALSE) 
 
-mca@scl_slope
+range(mca)
 ```
-To find available slots
+
+The slots also contain information on whether the data has been scaled. This can be checked by accessing the _scl_slope_ and _scl_inter_ slots. These data on slope and intercept provide a mean of returning an image to its correct value.
 
 ```{r 02-Data-Wrangling-25-1, warning=F}
+mca@scl_slope
+```
+
+To find available slots
+
+```{r 02-Data-Wrangling-25-2, warning=F}
 #find available of slots
 slotNames(mca)
 
 ```
 
-In this example below we will simulated an image of dimensions 5 by 5 by 5.
+In this example below we will simulated an image of dimensions 5 by 5 by 5. see [simulation using mand library][PCA with MRI].
 
-```{r 02-Data-Wrangling-25-2, warning=F}
+```{r 02-Data-Wrangling-25-3, warning=F}
 library(oro.nifti)
 set.seed(1234)
 dims = rep(5, 3)
@@ -852,7 +1080,7 @@ print(SimIm)
 
 View the simulated image.
 
-```{r 02-Data-Wrangling-25-3, warning=F}
+```{r 02-Data-Wrangling-25-4, warning=F}
 neurobase::ortho2(SimIm)
 ```
 
@@ -873,9 +1101,8 @@ image(mca[,70,])
 
 To see axial image, assign a number to the slice data.
 
-``````{r 02-Data-Wrangling-26-2}
-
-#plot mca #axial
+```{r 02-Data-Wrangling-26-2}
+#plot mca #axial in third column
 image(mca[,,35]) 
 ```
 
@@ -905,7 +1132,7 @@ img2@.Data <- k1
 img2
 ```
 
-Arrays can be manipulated to split an image into 2 images. Below is a function to split B0 and B1000 images from diffusion series.
+Arrays can be manipulated to split an image into 2 separate images. Below is a function to split B0 and B1000 images from diffusion series.
 
 ```{r 02-Data-Wrangling-27-2, warning=F}
 
@@ -939,12 +1166,12 @@ Volume
 VoxelDim(A)
 ```
 
-
 Find unsigned angle between 2 vectors k and k1
 
 ```{r 2-Data-Wrangling-27-4, warning=F}
 
 Morpho::angle.calc(k,k1)
+
 ```
 
 Determine centre of gravity of an object.
@@ -1029,16 +1256,22 @@ class(mca.list.array)
 
 #convert list to array
 #CHNOSZ function
-m.listarray<-list2array(mca.list.array)#91 109  91  25
+m.listarray<-CHNOSZ::list2array(mca.list.array)#91 109  91  25
 
 class(m.listarray)
 ```
 
 ### Math operation on multidimensional array
 
-Here we use _apply_ function to average over every element of the multidimensional array. The first argument of _apply_ is the array, the second argument is the margin or the component for analysis and the last argument is the function. If the idea is to analyse the row then the margin argument is _c(1)_, column then the margin argumen is _c(2)_ and so on.
+Before illustrating more complex operations on ultidimensional array or tensor, let's consider the basics of multidimensional array. The rank of a tensor represents the dimension of an array. Rank 0 represents 1 dimension and so on. 
 
 ```{r 02-Data-Wrangling-28-3, warning=F}
+
+```
+
+Here we use _apply_ function to average over every element of the multidimensional array. The first argument of _apply_ is the array, the second argument is the margin or the component for analysis and the last argument is the function. If the idea is to analyse the row then the margin argument is _c(1)_, column then the margin argumen is _c(2)_ and so on.
+
+```{r 02-Data-Wrangling-28-3-1, warning=F}
 ma<-apply(m.listarray,c(1,2,3), mean)
 neurobase::ortho2(ma)
 
@@ -1047,7 +1280,7 @@ neurobase::ortho2(ma)
 
 Thresholding can be performed using _mask_img_ function. This function can also be used to create a mask.
 
-```{r 02-Data-Wrangling-28-3-1, warning=F}
+```{r 02-Data-Wrangling-28-3-2, warning=F}
 
 ma_mask=neurobase::mask_img(ma, ma>0.1)
 
@@ -1198,7 +1431,7 @@ ica1000.rescale
 
 There are several different MRI templates. The well known one is the MNI 152 template [@pmid11545704]. This was developed from male right-handed medical students. The MNI 152 is also known as International Consortium for Brain Mapping (ICBM) 152.
 
-#### Atlases
+### Atlases
 
 A list of available atlases for human and animals is available at https://loni.usc.edu/research/atlases. 
 
@@ -1210,6 +1443,8 @@ The automated anatomical labeling (AAL) atlas of activation contains 45 volume o
 library(rgl)
 library(misc3d)
 library(MNITemplate)
+#source("https://neuroconductor.org/neurocLite.R")
+#neuro_install('aal')
 library(aal)
 library(neurobase)
 library(magick)
@@ -1243,12 +1478,8 @@ text3d(x=-0.98, y=dtemp[2]/2, z = dtemp[3]/2, text="Right")
 #movie file is saved to temporary folder
 #movie3d(spin3d(),duration=30)
 
-
 #add digital map of mca territory
 MCA<-readNIfTI("./Data-Use/MCA_average28_MAP_100.nii")
-
-#check range 
-range(MCA)
 
 #mask2 = remake_img(vec = img %in% source, img = img)
 contour3d(template, x=1:dtemp[1], y=1:dtemp[2], z=1:dtemp[3], level = cut, alpha = 0.1, draw = TRUE)
@@ -1278,6 +1509,9 @@ text3d(x=-0.98, y=dtemp[2]/2, z = dtemp[3]/2, text="Right")
 The Eve template is from John Hopkins [@pmid19385016]. It is a single subject high resolution white matter atlas that has been morphed into MNI 152 coordinates. The atlas is parcellated into 176 regions based on ICBM-DTI-81 atlas.
 
 ```{r 02-Data-Wrangling-32, warning=F}
+#source("https://neuroconductor.org/neurocLite.R")
+#neuro_install('EveTemplate', release = "stable", release_repo = "github")
+
 library(EveTemplate)
 
 eve_labels = readEveMap(type = "II")
@@ -1317,6 +1551,249 @@ RightM1o<-nii2oro(RightM1)
 #dimensions of RightM1o (182 218 182) and eve_labels (181 217 181) are dissimilar
 #overlay(eve_labels, y=RightM1o, z=90,plot.type="single")
 ```
+
+## ECG Signal processing
+
+The ECG records the electrical signal from the heart. In a clinical record it is performed as a 12 lead recording. The ECG contains an initial P wave which originates from the atrium. The P wave is absent in patients with atrial fibrillation. The RR interval is used to measure the heart rate. A false assumption is that the heart rate is constant but measurement shows beat to beat variation. Heart rate variability is a feature of health.
+
+#### ECG data
+
+The ecg dataset of one patient contains 2048 observations collected at a rate of 180 samples per second. 
+
+```{r 02-Data-Wrangling-35, warning=F}
+library(ade4)
+data("ecg") #ts object
+#Time Series:
+#Start = 0.31 
+#End = 11.6822222222222 
+#Frequency = 180
+head(ecg)
+```
+
+```{r 02-Data-Wrangling-35-1, warning=F}
+plot(ecg)
+```
+
+Let's look now at the Hart dataset.
+
+```{r 02-Data-Wrangling-35-2, warning=F}
+
+ECG<-read.csv("../../DataMining/python_journey/Heart/ECG/data.csv")
+
+#ECG is a dataframe object
+
+plot(as.ts(ECG)) # from base R
+
+```
+
+create a ts object by providing starting and end time and frequency. the plot of the data now has a new x limit.
+
+```{r 02-Data-Wrangling-35-3, warning=F}
+
+ECG1<-ts(ECG$hart, start=c(0.31,13.7), frequency=180)
+
+plot(ECG1)
+```
+
+
+
+```{r 02-Data-Wrangling-35-4, warning=F}
+EEGECG<-read.csv("../../DataMining/python_journey/Heart/ECG/eeg_stroke_ecg.csv")
+
+#this data has 2 columns time and ECG
+
+plot(as.ts(EEGECG$ECG))
+
+ECG2<-ts(EEGECG$ECG, start=c(0.31,6.75), frequency=60)
+plot(ECG2)
+
+```
+
+
+Here we illustrate the use of _RHRV_ package to analyse ECG signal [@doi10.1007/978-3-319-65355-6]. The code is provided on the RHRV website https://rhrv.r-forge.r-project.org/documentation.html. The example.beats data was download from this website and stored in the Data-Use folder. Here we make changes regarding the path of the data. 
+
+```{r 02-Data-Wrangling-35-5, warning=F}
+library(RHRV)
+
+hrv.data = CreateHRVData()
+hrv.data = SetVerbose(hrv.data, TRUE)
+
+#setwd("C:/RHRV")
+hrv.data = LoadBeatAscii(hrv.data, "example.beats.txt", 
+                         RecordPath = "./Data-Use/" )
+
+plot(hrv.data$Beat$Time)
+
+hrv.data = BuildNIHR(hrv.data)
+PlotNIHR(hrv.data)
+
+hrv.data = FilterNIHR(hrv.data)
+PlotNIHR(hrv.data)
+
+
+```
+
+## EEG signal processing
+
+The _eegUtils_ package has useful methods for plotting EEG. https://craddm.github.io/eegUtils/index.html. According to the site, it has functions for importing data from Biosemi, Brain Vision Analyzer, and EEGLAB.
+
+```{r 02-Data-Wrangling-36, warning=F}
+
+#devtools::install_github("mne-tools/mne-r")
+#remotes::install_github("craddm/eegUtils@develop")
+library(eegUtils)
+plot_butterfly(demo_epochs)
+```
+
+
+```{r 02-Data-Wrangling-36-1, warning=F}
+topoplot(demo_epochs, 
+         time_lim = c(.22, .25 ))
+```
+
+The following data is from https://datashare.ed.ac.uk/handle/10283/2189
+
+```{r 02-Data-Wrangling-36-2, warning=F, eval=F}
+library(eegUtils)
+library(R.matlab)
+limo_test <- import_set("limo_dataset_S1.set")
+limo_cont <- R.matlab::readMat("continuous_variable.mat")
+limo_cat <- readr::read_csv("categorical_variable.txt",
+                            col_names = c("cond_lab"))
+```
+
+The _MNE-R_ package is an interface to _MNE_ package in Python.
+
+## Python 
+
+Python can be run directly from R markdown file. It requires that python be specified instead of R. The use of python here requires that Miniconda or Anaconda be installed. Installation of [Miniconda][Minconda environment] via _reticulate_ package will be shown below.
+
+```{python 02-Data-Wrangling-37, warning=F}
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+#dataset containing locations of ms clinics in Victoria
+dataset = pd.read_csv('./Data-Use/msclinic.csv') #Read data from CSV datafile
+dat=pd.DataFrame(dataset)
+#print 10 rows
+print(dat.head(10))
+exit
+```
+
+Passing Python object to R and _py$_ in front of Python object in R.
+
+```{r 02-Data-Wrangling-37-1, warning=F, eval=F}
+
+head(py$dat)
+
+```
+To pass a R object to python then add _r._ in front of object. 
+
+```{python 02-Data-Wrangling-37-2, warning=F}
+
+#The ECG data is now passed as r.ECG
+print(r.ECG)
+```
+
+The data can now be plotted using _matplotlib_ library from Python.
+
+```{python 02-Data-Wrangling-37-3, warning=F, eval=F}
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+
+#Matplotlib
+plt.title("Heart Rate Signal") #The title of our plot
+
+#ECG is data frame and hart is the column
+plt.plot(r.ECG.hart) #Draw the plot object
+
+#Display the plot
+plt.show() 
+exit
+```
+
+### Reticulate
+
+Information on the use of Python in R is available at https://rstudio.github.io/reticulate/. The package _reticulate_ can import Python function to work directly in R. Note that the chunk code heading here is r.
+
+```{r 02-Data-Wrangling-38, warning=F}
+library(reticulate)
+os <- import("os") #os is operating system package
+os$listdir(".")
+```
+
+Here we provide another example on how to use Python in R. Note the change in the way we extract the _stats_ module from _scipy_ Python package.
+
+```{r 02-Data-Wrangling-38-1, warning=F}
+data("mtcars") #mtcars data in R
+
+library(reticulate)
+np<-import("numpy")
+pd<-import("pandas")
+
+#equivalent in Python is from scipy import stats
+sc<-import("scipy")
+sc$stats$linregress(mtcars$mpg,mtcars$cyl)
+
+```
+
+### Minconda 
+
+Miniconda and Anaconda  can be installed directly from its website. Here we will illustrate installation of Miniconda from Rstudio. The _install_miniconda_ function from _reticulate_ library download Miniconda from the web. 
+
+```{r 02-Data-Wrangling-39, warning=F}
+#library(reticulate)
+
+#this function is turned off as it only needs to be done once
+#install_miniconda(path = miniconda_path(), update = TRUE, force = FALSE)
+
+```
+
+To find the libraries install in Miniconda
+
+```{r 02-Data-Wrangling-39-1, warning=F, eval=F}
+
+conda list
+
+```
+
+### Python environment
+
+Unless specified, the default environment is r-reticulate. Setting the Python environment is important to avoid package incompatibility. To set the environment
+
+```{r 02-Data-Wrangling-40, warning=F}
+
+library(reticulate)
+#virtualenv_create("SignalProcessing")
+
+
+```
+
+Some Python libraries such as _pycox_ can be installed in R using install_py... this way.Some python packages have 
+
+```{r 02-Data-Wrangling-40-1, warning=F}
+library(reticulate)
+#library(survivalmodels)
+#install pycox for survivalmodels
+#install_pycox(pip = TRUE, install_torch = TRUE)
+#install_keras(pip = TRUE, install_tensorflow = TRUE)
+
+#install other Python packages
+#this is similar to pip install torch
+#install_torch(method = "auto", conda = "auto", pip = TRUE)
+
+```
+
+## Matlab
+
+The package _R.mat_ provides interface between R and Matlab. This is useful for running EEG analysis where we import analysis from Matlab for visualisation in R. Matlab must be installed to for this to run.
+
+## Stata
+
+The package _Rs\Stata_ provides interface between R and Stata. Stata must be installed to for this to run.
 
 Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
 

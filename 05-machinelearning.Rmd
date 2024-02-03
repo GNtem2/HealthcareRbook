@@ -17,7 +17,7 @@ uses chi-square test to partition the tree, available from the _party_ library. 
 
 The tree is grown using a “divide and conquer” strategy, with repeated partitioning of the original data into smaller groups (nodes) on a yes or no basis. The method uses a splitting rule built around the notion of “purity.” A node in the tree is defined as pure when all the elements belong to one class. When there is impurity in the node, a split occurs to maximize reduction in “impurity.” In some cases, the split may be biased toward attributes that 
 contain many different ordinal levels or scales. Thus, the selection of an attribute as the root node may vary according to the splitting rule and the scaling of the attribute.  The decision tree package rpart does tolerate certain degree of missing number because the data are split using the available data for that attribute to calculate the Gini index (rather than the entire cohort). One major advantage of _rpart_ is the presentation of the classification rules in 
-the easily interpretable form of a tree. The hierarchical nature of the decision tree is similar to many decision processes [@pmid29559951].
+the easily interpretable form of a tree. The hierarchical nature of the decision tree is similar to many decision processes [@pmid29559951]. A criticism of decision tree is that it's prone to overfitting and or preference for variable with many levels. Decision tree do not handle collinearity issues well.
 
 ```{r 05-machinelearning-1, warning=F}
 library(rpart)
@@ -44,15 +44,15 @@ treeSAH<-ctree(outcome~., data=aSAH, control = ctree_control(mincriterion=0.95, 
 plot(treeSAH,type = "simple",main = "Conditional Inference for aSAH")
 ```
 
-### criticisms of decision tree
-
-Overfitting and prone to chosing variable with many levels are some disadvantage of _decision tree_. Decision tree do not handle collinearity issues well and the related method of _random forest_ is proposed below.
+## Ensemble tree methods
  
-## Random Forest
+### Bagging trees 
 
-Both gradient boost machine and random forest are examples of tree-based method with the former based on boosting of the residuals of the model and the latter based on bagging with random selection (rows and columns) of multiple subsets of the data. As such random forest regression ensembles the model from multiple decision trees. The trees are created by obtaining multiple subset of the data (random selection of data by rows and columns). Decision tree comes at certain disadvantage such as overfitting. Random forest avoids the problems of single decision tree analyses by aggregating the results of multiple trees obtained by performing analysis on random subsets of the original data. This method is different from the bootstrapping procedure that can be used in decision tree 
-which may not change the data structure; hence the trees can look very similar. Random forest is available as _randomForest_ or _ranger_ or via _caret_.
+Both gradient boost machine and random forest are examples of tree-based method with the former based on boosting of the residuals of the model and the latter based on bagging with random selection (rows and columns) of multiple subsets of the data. As such random forest regression ensembles the model from multiple decision trees. The trees are created by obtaining multiple subset of the data without replacement (random selection of data by rows and columns). Decision tree comes at certain disadvantage such as overfitting. Random forest avoids the problems of single decision tree analyses by aggregating the results of multiple trees obtained by performing analysis on random subsets of the original data. This method is different from the bootstrapping procedure in which the data is subsetted with replacement. Theoretically, decision tree can look very similar as the data structure is not significantly changed. There is a theoretical risk of overfitting with random forest and underfitting with boosting tree methods. 
 
+#### Random Forest
+
+Random forest is available as _randomForest_ or _ranger_ or via _caret_.
 A major drawback to random forest is that the hierarchical nature of the trees 
 is lost. As such this method is seen as a black box tool and is less commonly embraced in the medical literature. One way us to use  an interpretable machine learning tool _iml_ [@10.21105/joss.00786] (Shapley values) tool to aid interpretation of the model. This method uses ideas from coalition game theory 
 to fairly distribute the contribution of the coalition of covariates to the 
@@ -103,9 +103,9 @@ roc_rf
 
 ```
 
-### Random survival forest
+#### Random survival forest with rfsrc
 
-Random survival forest example is provided below using _rfsrc_ library. The _survex_ library is used for explanation on the model.
+Random survival forest example is provided below using _rfsrc_ library. The _survex_ library is used for explanation on the model. This library is also available as a learner in the _mlr3verse_.
 
 ```{r 05-machinelearning-3-1, warning=F}
 library(survival)
@@ -135,10 +135,16 @@ explainer<-survex::explain(RF)
 
 ```
 
+Plot a single tree from the random survival forest model.
+
+```{r 05-machinelearning-3-2, warning=F}
+
+plot(get.tree(RF,4))
+```
 
 Dynamic AUC
 
-```{r 05-machinelearning-3-2, warning=F}
+```{r 05-machinelearning-3-3, warning=F}
 y <- explainer$y
 times <- explainer$times
 
@@ -151,7 +157,7 @@ cd_auc(y, surv = surv, times = times)
 
 Plot variable importance for random survival forest using permutation of features and measure impact on Brier score.
 
-```{r 05-machinelearning-3-3, warning=F}
+```{r 05-machinelearning-3-4, warning=F}
 
 ModelRF<-survex::model_parts(explainer)
 
@@ -163,14 +169,76 @@ plot(ModelRF)
 
 Plot partial dependence
 
-```{r 05-machinelearning-3-4, warning=F}
+```{r 05-machinelearning-3-5, warning=F}
 Model_PD<-model_profile(explainer)
 plot(Model_PD)
 ```
 
+#### Random survival forest with ranger
+
+Random forest can be used for performing survival analysis using _ranger_, _randomforestSRC_. The example below is an example using the lung cancer trial.
+
+```{r 05-machinelearning-3-6, warning=F}
+#data from survival package on NCCTG lung cancer trial
+#https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
+data(cancer, package="survival")
+
+#time in days
+#status censored=1, dead=2
+#sex:Male=1 Female=2
+
+library(ranger)
+library(tidyverse)
+library(survival)
+
+cancer2<-cancer %>% dplyr::select(time, status, age,sex, ph.ecog) %>% na.omit()  
+
+survival_formula<-formula(paste('Surv(', 'time', ',', 'status', ') ~ ','age+sex+ph.ecog'))
+  
+survival_forest <- ranger(survival_formula,
+                         data = cancer2,  
+                         seed = 1234,
+                         importance = 'permutation',
+                         mtry = 2,
+                         verbose = TRUE,
+                         num.trees = 200,
+                         write.forest=TRUE)
+
+print("error:"); print(survival_forest$prediction.error)
 
 
-## Gradient Boost Machine
+
+```
+
+Print variable importance
+
+```{r 05-machinelearning-3-7, warning=F}
+sort(survival_forest$variable.importance)
+
+```
+
+Probability of survival  
+
+```{r 05-machinelearning-3-8, warning=F}
+plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
+lines(survival_forest$unique.death.times, survival_forest$survival[56,], col='blue')
+```
+
+
+
+```{r 05-machinelearning-3-9, warning=F}
+
+plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
+for (x in c(2:100)) {
+  lines(survival_forest$unique.death.times, survival_forest$survival[x,], col='red')
+}
+```
+
+
+
+### Boosting trees
+
+#### Gradient Boost Machine
 
 Gradient boost machine is available as _gradient boost machine_gbm_. 
 
@@ -202,7 +270,7 @@ roc_gbm
 
 ```
 
-### Extreme gradient boost machine
+#### Extreme gradient boost machine
 
 In the examples above, the outcome variable is treated as a factor. Extreme gradient boost machine _xgboost_ requires conversion to numeric variable. 
 
@@ -263,6 +331,96 @@ print(paste("test-error=", err))
 xgb.plot.tree(model = model, trees = 1:2)
 
 ```
+
+### Bayesian trees method
+
+#### BART
+
+BART or Bayesian additive regression trees is a non-parametric method that uses  a sum of Bayesian trees to estimate an unknown function. Every tree acts as a weak learner in this ensemle method. It can also be used in causal inference. It uses tuning parameters derived from Bayesian priors. Each predicted value has a posterior distribution. BART uses a regularization prior that forces each tree to be able to explain only a limited subset of the relationships between the covariates and the predictor variable. In some instances, BART outperform xgboost.
+
+```{r 05-machinelearning-4-2, warning=F}
+library(BART)
+
+data(Melanoma, package = "MASS")
+
+N <- length(Melanoma$status)
+
+#table(Melanoma$ph.karno, cancer$pat.karno)
+
+## if physician's KPS unavailable, then use the patient's
+#h <- which(is.na(cancer$ph.karno))
+#cancer$ph.karno[h] <- cancer$pat.karno[h]
+
+times <- Melanoma$time
+times <- ceiling(times/7)  ## weeks
+
+#1 died from melanoma, 2 alive, 3 dead from other causes.
+##delta: 0=censored, 1=dead
+delta=ifelse(Melanoma$status==2,0,1)
+
+## matrix of observed covariates
+x.train <- cbind(Melanoma$sex, Melanoma$age, Melanoma$thickness)
+
+#provide column names
+dimnames(x.train)[[2]] <- c('M(1):F(0)','age', 'thickness')
+
+table(x.train[ , 1])
+summary(x.train[ , 2])
+table(x.train[ , 3])
+
+##test BART with token run to ensure installation works
+set.seed(99)
+post <- surv.bart(x.train=x.train, times=times, delta=delta,
+                  nskip=1, ndpost=1, keepevery=1)
+
+
+post <- surv.bart(x.train=x.train, times=times, delta=delta,
+                      seed=99)
+
+pre <- surv.pre.bart(times=times, delta=delta, x.train=x.train,
+                     x.test=x.train)
+
+K <- pre$K
+M <- nrow(post$yhat.train)
+
+pre$tx.test <- rbind(pre$tx.test, pre$tx.test)
+pre$tx.test[ , 2] <- c(rep(1, N*K), rep(2, N*K))
+## sex pushed to col 2, since time is always in col 1
+
+pred <- predict(post, newdata=pre$tx.test)
+
+pd <- matrix(nrow=M, ncol=2*K)
+
+for(j in 1:K) {
+  h <- seq(j, N*K, by=K)
+  pd[ , j] <- apply(pred$surv.test[ , h], 1, mean)
+  pd[ , j+K] <- apply(pred$surv.test[ , h+N*K], 1, mean)
+}
+
+pd.mu  <- apply(pd, 2, mean)
+pd.025 <- apply(pd, 2, quantile, probs=0.025)
+pd.975 <- apply(pd, 2, quantile, probs=0.975)
+
+males <- 1:K
+females <- males+K
+
+plot(c(0, pre$times), c(1, pd.mu[males]), type='s', col='blue',
+     ylim=0:1, ylab='S(t, x)', xlab='t (weeks)',
+     main=paste('Melanoma ex. (MASS:: Melanoma)',
+                "Friedman's partial dependence function",
+                'Male (blue) vs. Female (red)', sep='\n'))
+lines(c(0, pre$times), c(1, pd.025[males]), col='blue', type='s', lty=2)
+lines(c(0, pre$times), c(1, pd.975[males]), col='blue', type='s', lty=2)
+lines(c(0, pre$times), c(1, pd.mu[females]), col='red', type='s')
+lines(c(0, pre$times), c(1, pd.025[females]), col='red', type='s', lty=2)
+lines(c(0, pre$times), c(1, pd.975[females]), col='red', type='s', lty=2)
+
+
+
+```
+
+
+
 
 ## KNN
 
@@ -364,69 +522,6 @@ roc_svm
 
 ```
 
-
-### Survival analysis using random forest
-
-Random forest can be used for performing survival analysis using _ranger_, _randomforestSRC_. The example below is an example using the lung cancer trial.
-
-```{r 05-machinelearning-7, warning=F}
-#data from survival package on NCCTG lung cancer trial
-#https://stat.ethz.ch/R-manual/R-devel/library/survival/html/lung.html
-data(cancer, package="survival")
-
-#time in days
-#status censored=1, dead=2
-#sex:Male=1 Female=2
-
-library(ranger)
-library(tidyverse)
-library(survival)
-
-cancer2<-cancer %>% dplyr::select(time, status, age,sex, ph.ecog) %>% na.omit()  
-
-survival_formula<-formula(paste('Surv(', 'time', ',', 'status', ') ~ ','age+sex+ph.ecog'))
-  
-survival_forest <- ranger(survival_formula,
-                         data = cancer2,  
-                         seed = 1234,
-                         importance = 'permutation',
-                         mtry = 2,
-                         verbose = TRUE,
-                         num.trees = 200,
-                         write.forest=TRUE)
-
-print("error:"); print(survival_forest$prediction.error)
-
-
-
-```
-
-Print variable importance
-
-```{r 05-machinelearning-7-1, warning=F}
-sort(survival_forest$variable.importance)
-
-```
-
-Probability of survival  
-
-```{r 05-machinelearning-7-2, warning=F}
-plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
-lines(survival_forest$unique.death.times, survival_forest$survival[56,], col='blue')
-```
-
-
-
-```{r 05-machinelearning-7-3, warning=F}
-
-plot(survival_forest$unique.death.times, survival_forest$survival[1,], type='l', col='orange', ylim=c(0.01,1))
-for (x in c(2:100)) {
-  lines(survival_forest$unique.death.times, survival_forest$survival[x,], col='red')
-}
-```
-
-
-
 ## Non-negative matrix factorisation
 
 Non-negative matrix factorisation is an unsupervised machine learning method, which seeks to explain the observed clinical features using smaller number of basis components (hidden variables). A matrix V of dimension m x n is factorise 
@@ -438,8 +533,8 @@ discovery, and market research.  For a clinical example, the matrix for NMF deco
 
 The example below used the recommended procedure to estimate the factorization rank, based on stability of the cophenetic correlation coefficient and the residual error, prior to performing the NMF analysis. The data were permuted and the factorization rank computed. These data were used as reference for selecting factorization rank to minimize the chance of overfitting. 
 
-```{r 05-machinelearning-8, warning=F}
-
+```{r 05-machinelearning-7, warning=F}
+#BiocManager::install("Biobase")
 library(NMF,quietly = TRUE)
 library(tidyverse)
 edge<- read.csv("./Data-Use/Hosp_Network_geocoded.csv")
@@ -462,7 +557,7 @@ consensusmap(estim.r)
 
 The optimal number of rank for this data is likely to be 4.
 
-```{r 05-machinelearning-8-1, warning=F}
+```{r 05-machinelearning-7-1, warning=F}
 #Using the data above we can use which argument to find the order
 #since the starting point is 2 we just need to add 1
 Rank=which(estim.r$measures$cophenetic==max(estim.r$measures$cophenetic))+1
@@ -483,7 +578,8 @@ First we will illustrate with a simple relationship among fruit. Note in this ex
 
 There are several libraries for FCA. Here we will use _multiplex_. The _fcaR_ library can also handle fuzzy data.
 
-```{r 05-machinelearning-9, warning=F}
+```{r 05-machinelearning-8, warning=F}
+#BiocManager::install("Rgraphviz")
 
 library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
 library(Rgraphviz) #plot hasse diagram
@@ -515,7 +611,7 @@ diagram.levels(po)
 
 Next we illustrate FCA in network of hospitals in South-Eastern Melbourne. The objects are the hospitals and the attributes are the services available in those hospitals.
 
-```{r 05-machinelearning-9-1, warning=F}
+```{r 05-machinelearning-8-1, warning=F}
 
 #library(multiplex) #Algebraic Tools for the Analysis of Multiple Social Networks
 #library(Rgraphviz) #plot hasse diagram
@@ -554,7 +650,7 @@ from nature such as evolution and survival of the fittest. These are seen as heu
 
 This method uses idea in metallurgy whereby metal is heated and then cooled to alter its property.
 
-```{r 05-machinelearning-10, eval=F}
+```{r 05-machinelearning-9, eval=F}
 #SA section is set not to run as the analysis takes a long time.
 # a saved run is provided below
 
@@ -623,7 +719,7 @@ glm_sa <- safs(x = x, y = y,
 
 ```
 
-```{r 05-machinelearning-10-1}
+```{r 05-machinelearning-9-1}
 
 load("./Logistic_SimulatedAnnealing.Rda")
 
@@ -639,7 +735,7 @@ other machine learning methods. Genetic algorithm is available in R as part of _
 
 One potential issue with using cross-validation in genetic algorithm for feature selection is that it would be not right to use it again when feeding this data into another machine learning method.
 
-```{r 05-machinelearning-11, eval=F}
+```{r 05-machinelearning-10, eval=F}
 #GA
 library(caret)
 
@@ -731,7 +827,7 @@ Normal.nucleoli #(100%), Id (90%)
 The output from the Genetic Algorithm is plotted as  mean fitness by 
 generations. This plot  shows the internal and external accuracy estimate from cross validation.
 
-```{r 05-machinelearning-11-1}
+```{r 05-machinelearning-10-1}
 
 load("./Logistic_GeneticAlgorithm.Rda")
 #plot output of genetic algorithm 
@@ -741,15 +837,17 @@ plot(glm_ga)
 
 ## Manifold learning
 
+Manifold learning has been described as using geometry information in high dimensional space to map data into cluster in lower dimensional space. This is a non-linear reduction technique. Several manifold learning methods are described below but this list is not exhaustive. It is available through _maniTools_ package. 
+
 ### T-Stochastic Neighbourhood Embedding
 
-T-Stochastic Neighbourhood Embedding (TSNE) is a maifold learning method which seeks to transform the complex data into low (2) dimensions while maintaining 
+T-Stochastic Neighbourhood Embedding (TSNE) is a manifold learning method which seeks to transform the complex data into low (2) dimensions while maintaining 
 the distance between neighbouring objects. The distance between data points are can be measured using Euclidean distance or other measures of distance. The transformed data points are conditional probabilities that represents similarities. The original description of TSNE used PCA as a first step to speed up computation and reduce noise.
 
 This method is listed here as it is a form of data reduction method. This non-linear method is different from PCA in that the low dimensional output of 
 TSNE are not intended for machine learning. TSNE is implemented in R as _Rtsne_. The perplexity parameter allows tuning of the proximity of the data points.  The PCA step can be performed within _Rtsne_ by setting the _pca_ argument. The default number of iterations or max_iter is 1000.
 
-```{r 05-machinelearning-12, warning=F}
+```{r 05-machinelearning-11, warning=F}
 library(Rtsne)
 library(ggplot2)
 library(mice) #impute missing data
@@ -791,14 +889,15 @@ tsne_out <- Rtsne(as.matrix(BC_unique[,-11]),
 mycolors <- c('red', 'blue')
 BC_unique$color <- mycolors[ as.numeric(BC_unique$Class) ]
 
-rgl::plot3d(x=tsne_out$Y[,1], y=tsne_out$Y[,2], z=tsne_out$Y[,3], type = 'p', col=BC_unique$color, size=8)
+#turn off rgl
+#rgl::plot3d(x=tsne_out$Y[,1], y=tsne_out$Y[,2], z=tsne_out$Y[,3], type = 'p', col=BC_unique$color, size=8)
 #rgl::legend3d("topright", legend = names(mycolors), pch = 16, col = colors, cex=1, inset=c(0.02))
 ```
 
 
 The example with Breast cancer didn't turn out as well. Let's try TSNE with the iris dataset.
 
-```{r 05-machinelearning-12-1}
+```{r 05-machinelearning-11-1}
 #TSNE
 
 data(iris)
@@ -813,11 +912,11 @@ plot(tsne_out$Y,col=Iris_unique$Species,asp=1)
 
 ### Self organising map
 
-Self organising map is an unsupervised machine learning method and is excellent for viewing complex data in low dimensional space i.e. a data reduction method. SOM is available as part of _kohonen_ library. It uses competitive learning to adjust its weight in contrast to other neural network approaches. Each node is evaluated to participate in the neural network. Input vectors that are close to each other in high dimensional space are mapped to be close to each other in low dimensional space.
+Self organising map is an unsupervised machine learning method and is excellent for viewing complex data in low dimensional space i.e. a data reduction method. SOM is available as part of _kohonen_ library. It uses competitive learning to adjust its weight in contrast to other neural network approaches which use backward propagation or gradient descent to update the weight of the features. Each node is evaluated to participate in the neural network. Input vectors that are close to each other in high dimensional space are mapped to be close to each other in low dimensional space. SOM is a competeitive neural network and has been considered as a deep learning method.
 
-The codes below are modified from https://rpubs.com/AlgoritmaAcademy/som for use in aanalysis of iris data.
+The codes below are modified from https://rpubs.com/AlgoritmaAcademy/som for use in analysis of iris data. The first illustration is with unsupervised SOM.
 
-```{r 05-machinelearning-13}
+```{r 05-machinelearning-12}
 library(kohonen)
 
 #unsupervised SOM
@@ -840,7 +939,7 @@ plot(iris.model, type = "mapping", pchs = 19, shape = "round")
 ```
 
 
-```{r 05-machinelearning-13-1}
+```{r 05-machinelearning-12-1}
 
 plot(iris.model, type = "codes", main = "Codes Plot", palette.name = rainbow)
 ```
@@ -848,7 +947,7 @@ plot(iris.model, type = "codes", main = "Codes Plot", palette.name = rainbow)
 The plot of training shows that the distance between nodes reached a plateau 
 after 300 iterations.
 
-```{r 05-machinelearning-13-2}
+```{r 05-machinelearning-12-2}
 
 plot(iris.model, type = "changes")
 
@@ -856,7 +955,7 @@ plot(iris.model, type = "changes")
 
 Supervised SOM is now performed with the same iris data.
 
-```{r 05-machinelearning-14}
+```{r 05-machinelearning-13}
 #SOM
 
 set.seed(100)
@@ -899,13 +998,13 @@ table(Predict = pred$predictions[[2]], Actual = test.label)
 
 Determine number of clusters.
 
-```{r 05-machinelearning-14-1}
+```{r 05-machinelearning-13-1}
 library(factoextra)
 
 fviz_nbclust(iris.model$codes[[1]], kmeans, method = "wss")
 ```
 
-```{r 05-machinelearning-14-2}
+```{r 05-machinelearning-13-2}
 set.seed(100)
 clust <- kmeans(iris.model$codes[[1]], 6)
 plot(iris.model, type = "codes", bgcol = rainbow(9)[clust$cluster], 
@@ -914,6 +1013,9 @@ add.cluster.boundaries(iris.model, clust$cluster)
 
 ```
 
+### Multidimensional scaling
+
+MDS is a method of dimensionality reduction which preserves the distance between variables. This method has been used in geography. It is implemented in _IsoplotR_ package and _igraph_ package as _layout.mds_.
 
 ## Deep learning
 
@@ -921,9 +1023,11 @@ Deep learning is a neural network with many layers: inner, multiple hidden and o
 it may be stuck in a local minima rather than the global minima.  
 
 There are several R libraries for performing deep learning. It's worth checking out the installation requirement as some require installing the library in 
-python and uses the _reticulate_ library to perform analysis. The examples used here are R libraries including _RSNNS_.
+python and uses the _reticulate_ library to perform analysis. The examples used here are R libraries including _RSNNS_. The instructions for installing _Miniconda_ from _reticulate_ was provided in the earlier chapter on [data wrangling][Python Minconda environment]. Those instruction include installing _torch_ and _kerras_.
 
-### Multiplayer Perceptron
+### Deep neural network
+
+#### Multiplayer Perceptron
 
 Multilayer perceptron is a type of deep learning. . It passes information in one direction from inner to hidden and outer layer and hence is referred to as feed forward artificial neural network. It trains the data using a loss function 
 which adapt to the parameter and optimise according to the specified learning rate. Overfitting is minimised by using an L2 regularisation penalty, termed alpha. 
@@ -931,7 +1035,7 @@ which adapt to the parameter and optimise according to the specified learning ra
 For tabular data, deep learning may not necessarily be better than other machine learning method. By contrast, deep learning may be better for unstructured data.
 
 
-```{r 05-machinelearning-15}
+```{r 05-machinelearning-14}
 library(caret)
 library(RSNNS)
 
@@ -993,7 +1097,159 @@ confusionMatrix(BreastCancer2$targetsTrain, encodeClassLabels(fitted.values(mode
 
 ```
 
+#### Deep survival neural network
 
+There are several libraries available in _survivalmodels_ which interface with _pycox_ from Python. First, we illustrate the use of _deepsurv_.
+
+```{r 05-machinelearning-15}
+library(survivalmodels)
+
+data(Melanoma, package = "MASS")
+
+times <- Melanoma$time
+times <- ceiling(times/7)  ## weeks
+
+#1 died from melanoma, 2 alive, 3 dead from other causes.
+##delta: 0=censored, 1=dead
+delta=ifelse(Melanoma$status==2,0,1)
+
+## matrix of observed covariates
+x.train <- cbind(Melanoma$sex, Melanoma$age, Melanoma$thickness)
+
+deepsurv(data = Melanoma, 
+    frac = 0.3, #Fraction of data to use for validation 
+    activation = "relu",
+    num_nodes = c(4L, 8L, 4L, 2L), 
+    dropout = 0.1, 
+    early_stopping = TRUE, 
+    epochs = 100L, #number of epochs.
+    batch_size = 32L)
+```
+
+Using the same Melanoma dataset, we illustrate _DeepHit_.
+
+```{r 05-machinelearning-15-1}
+
+DH<-deephit(data = Melanoma, 
+    frac = 0.3, #Fraction of data to use for validation 
+    activation = "relu",
+    num_nodes = c(4L, 8L, 4L, 2L), 
+    dropout = 0.1, 
+    early_stopping = TRUE, 
+    epochs = 100L, #number of epochs.
+    batch_size = 32L)
+
+summary(DH)
+
+```
+
+
+```{r 05-machinelearning-15-2}
+library(mlr3)
+library(mlr3proba)
+library(mlr3extralearners)
+library(mlr3pipelines)
+library(mlr3tuning)
+
+## get the `whas` task from mlr3proba
+whas <- tsk("whas")
+
+## create our own task from the Melanoma dataset
+Melanoma_data <- MASS::Melanoma
+
+Melanoma_data$status=ifelse(Melanoma_data$status==2,0,1)
+
+## convert characters to factors
+Melanoma_data$sex <- factor(Melanoma_data$sex)
+MelanomaTS <- TaskSurv$new("Melanoma", Melanoma_data, time = "time", event = "status")
+
+
+#1 died from melanoma, 2 alive, 3 dead from other causes.
+##delta: 0=censored, 1=dead
+delta=ifelse(Melanoma_data$status==2,0,1)
+
+## matrix of observed covariates
+x.train <- cbind(Melanoma_data$sex, Melanoma_data$age, Melanoma_data$thickness)
+
+
+## combine in list
+tasks <- list(whas, MelanomaTS)
+
+library(paradox)
+
+search_space <- ps(
+ ## p_dbl for numeric valued parameters
+ dropout = p_dbl(lower = 0, upper = 1),
+ weight_decay = p_dbl(lower = 0, upper = 0.5),
+ learning_rate = p_dbl(lower = 0, upper = 1),
+ 
+ ## p_int for integer valued parameters
+ nodes = p_int(lower = 1, upper = 32),
+ k = p_int(lower = 1, upper = 4)
+)
+
+search_space$trafo <- function(x, param_set) {
+ x$num_nodes = rep(x$nodes, x$k)
+ x$nodes = x$k = NULL
+ return(x)
+}
+
+
+create_autotuner <- function(learner) {
+ AutoTuner$new(
+   learner = learner,
+   search_space = search_space,
+   resampling = rsmp("holdout"),
+   measure = msr("surv.cindex"),
+   terminator = trm("evals", n_evals = 2),
+   tuner = tnr("random_search")
+ )
+}
+
+## load learners
+learners <- lrns(
+ #paste0("surv.", c("deephit", "deepsurv")), #crash when running multiple learners
+ paste0("surv.", c( "deepsurv")),
+ frac = 0.3, early_stopping = TRUE, epochs = 10, optimizer = "adam"
+)
+ 
+# apply our function
+learners <- lapply(learners, create_autotuner)
+
+
+create_pipeops <- function(learner) {
+ po("encode") %>>% po("scale") %>>% po("learner", learner)
+}
+
+## apply our function
+learners <- lapply(learners, create_pipeops)
+
+## select holdout as the resampling strategy
+resampling <- rsmp("cv", folds = 2)
+
+## add KM and CPH
+learners <- c(learners, lrns(c("surv.kaplan", "surv.coxph")))
+#learners <- c(learners, lrns(c("surv.coxph")))
+design <- benchmark_grid(tasks, learners, resampling)
+bm <- benchmark(design)
+               
+## Aggreggate with Harrell's C and Integrated Graf Score
+msrs <- msrs(c("surv.cindex", "surv.graf"))
+bm$aggregate(msrs)[, c(3, 4, 7, 8)]
+
+library(mlr3benchmark)
+
+## create mlr3benchmark object
+bma <- as.BenchmarkAggr(bm)
+
+## run global Friedman test
+bma$friedman_test()
+
+
+```
+
+
+### Tabnet
 
 ### CNN
 

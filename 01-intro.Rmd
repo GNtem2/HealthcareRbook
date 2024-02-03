@@ -426,9 +426,10 @@ The data below is generated in the section on data simulation. The data were sim
 
 ```{r 01-intro-7}
 library(ggplot2)
-library(tidyverse)
+library(dplyr)
 dtTime<-read.csv("./Data-Use/dtTime_simulated.csv")
 dtTrial<-read.csv("./Data-Use/dtTrial_simulated.csv")
+
 #summarise data using group_by
 dtTime2<-dtTime %>%
   group_by(period, T) %>%
@@ -436,6 +437,7 @@ dtTime2<-dtTime %>%
             sdY=sd(Y),
             upperY=meanY+sdY,
             lowerY=meanY-sdY)
+
 #individual line plot
 ggplot(dtTime,aes(x=as.factor(period),y=Y))+
   geom_line(aes(color=as.factor(T),group=id))+
@@ -460,16 +462,22 @@ To perform line plot on the grouped data, first fit the regression line to the g
 #linear regression Y1 predict Y2 where Y1 and Y2 are grouped data 
 #from the simulated data above.
 fit<-lm(Y1~Y0+T, data=dtTrial)
+
 dtTrial2<-filter(dtTrial, T==1)
+
 fit2<-lm(Y2~Y1, data=dtTrial2)
+
 #line plot by group
 pd <- position_dodge2(width = 0.2) # move them .2 to the left and right
 gbase  = ggplot(dtTime2, aes(y=meanY, colour=as.factor(T))) + geom_errorbar(aes(ymin=lowerY, ymax=upperY), width=.3, position=pd)+
 geom_point(position=pd) 
 gline = gbase + geom_line(position=pd) 
+
 dtTime2$period=as.numeric(dtTime2$period)
 unique((dtTime2$period))
+
 gline = gline %+% dtTime2
+
 print(gline + aes(x=period))
 ```
 
@@ -705,25 +713,6 @@ ggparty(treeBC) +
 
 ```
 
-### ggROC- ROC curve
-
-This example uses data from the Wisconsin Breast Cancer Dataset. It examines the use of fine needle aspirate to diagnose breast cancer.
-
-```{r 01-intro-17}
-library(ggROC)
-library(pROC)
-library(party)
-#Wisonconsin Breast Cancer data
-data("BreastCancer",package = "mlbench")
-colnames(BreastCancer)
-rocgg <- roc(BreastCancer$Class, as.numeric(BreastCancer$Mitoses))
-rocgg2 <- roc(BreastCancer$Class, as.numeric(BreastCancer$Cl.thickness))
-ggroc(rocgg)
-#list of roc curves
-roc.model <- roc(Class ~Epith.c.size+Cl.thickness+Cell.shape, 
-                 data = BreastCancer)
-ggroc(roc.model)+ggtitle("Wisconsin Breast Cancer Dataset")
-```
 
 
 ### Map 
@@ -766,7 +755,8 @@ shapefile for USA can also be extracted from _tigris_ library. A challenge with 
 ```{r 01-intro-18-1}
 library(ggplot2)
 library(dplyr)
-covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction))
+covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=str_to_lower(Jurisdiction))
+
 map_covid<-ggplot()+ 
   geom_map(data=US, map=US,
                     aes(x=long, y=lat, map_id=region),
@@ -806,7 +796,7 @@ load("./Data-Use/world_stroke.Rda")
 colnames(world_sfdf) 
 class(world_sfdf) #contains simple features
 #map of country income
-m<-tm_shape(world_sfdf)+tm_polygons("Income")
+m<-tm_shape(world_sfdf, projection = "+proj=eck4")+tm_polygons("Income")
 m
 
 #save object as png
@@ -814,9 +804,13 @@ m
 
 #save as leaflet object
 #tmap_save(m,file="world_income.html"")
+```
 
-#map of lifetime  stroke risk
-n<-tm_shape(world_sfdf)+tm_polygons("MeanLifetimeRisk")
+
+map of lifetime  stroke risk
+
+```{r 01-intro-19-1}
+n<-tm_shape(world_sfdf, projection = "+proj=eck4")+tm_polygons("MeanLifetimeRisk")
 n
 ```
 
@@ -924,6 +918,7 @@ illustrated here as it relates to the _ggplot2_ family. The Colin $T_1$ scan is
 a high resolution scan from MNI.
 
 ```{r 01-intro-23}
+#devtools::install_github("muschellij2/ggneuro")
 library(ggneuro)
 library(neurobase)
 colin_1mm<-untar("./Data-Use/colin_1mm.tgz")
@@ -977,7 +972,7 @@ library(ggplot2)
 library(plotly)
 library(dplyr)
 
-covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=tolower(Jurisdiction)) #consistent
+covid<-read.csv("./Data-Use/Covid_bystate_Table130420.csv") %>% mutate(region=str_to_lower(Jurisdiction)) #consistent
 
 ggplotly(
   ggplot()+ 
