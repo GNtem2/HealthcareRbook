@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-03" />
+<meta name="date" content="2024-02-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -624,11 +624,11 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ##    silent = silent, &quot;, &quot; inla.mode = inla.mode, safe = FALSE, debug = 
 ##    debug, .parent.frame = .parent.frame)&quot; ) 
 ## Time used:
-##     Pre = 0.818, Running = 2.33, Post = 0.182, Total = 3.33 
+##     Pre = 0.452, Running = 2.34, Post = 0.0615, Total = 2.85 
 ## Fixed effects:
 ##                    mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-## (Intercept)      56.275 1.595     53.143   56.275     59.407 56.275   0
-## MeanLifetimeRisk  0.789 0.076      0.639    0.789      0.938  0.789   0
+## (Intercept)      56.275 1.598     53.139   56.275     59.411 56.275   0
+## MeanLifetimeRisk  0.789 0.077      0.638    0.789      0.939  0.789   0
 ## 
 ## Model hyperparameters:
 ##                                          mean    sd 0.025quant 0.5quant
@@ -636,7 +636,7 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ##                                         0.975quant  mode
 ## Precision for the Gaussian observations      0.032 0.026
 ## 
-## Marginal log-Likelihood:  -587.98 
+## Marginal log-Likelihood:  -587.99 
 ##  is computed 
 ## Posterior summaries for the linear predictor and the fitted values are computed
 ## (Posterior marginals needs also &#39;control.compute=list(return.marginals.predictor=TRUE)&#39;)</code></pre>
@@ -702,7 +702,7 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ##    silent = silent, &quot;, &quot; inla.mode = inla.mode, safe = FALSE, debug = 
 ##    debug, .parent.frame = .parent.frame)&quot; ) 
 ## Time used:
-##     Pre = 0.338, Running = 0.39, Post = 0.104, Total = 0.831 
+##     Pre = 0.182, Running = 0.198, Post = 0.0646, Total = 0.445 
 ## Fixed effects:
 ##                mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 ## (Intercept)  -8.496 0.709     -9.886   -8.496     -7.106 -8.496   0
@@ -768,14 +768,11 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ##    silent = silent, &quot;, &quot; inla.mode = inla.mode, safe = FALSE, debug = 
 ##    debug, .parent.frame = .parent.frame)&quot; ) 
 ## Time used:
-##     Pre = 0.359, Running = 0.55, Post = 0.227, Total = 1.14 
+##     Pre = 0.195, Running = 0.259, Post = 0.0771, Total = 0.531 
 ## Fixed effects:
-##                   mean          sd   0.025quant 0.5quant   0.975quant   mode
-## (Intercept)    -13.407 16435812.74 -36276543.01   -6.745 36276477.959 -9.648
-## LifeExpectancy   0.029        0.02        -0.01    0.029        0.068  0.029
-##                kld
-## (Intercept)      0
-## LifeExpectancy   0
+##                  mean    sd 0.025quant 0.5quant 0.975quant   mode   kld
+## (Intercept)    17.950 2.176     13.573   17.969     22.218 17.967 0.001
+## LifeExpectancy  0.027 0.019     -0.010    0.027      0.064  0.027 0.000
 ## 
 ## Random effects:
 ##   Name     Model
@@ -783,13 +780,13 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ## 
 ## Model hyperparameters:
 ##                                          mean    sd 0.025quant 0.5quant
-## Precision for the Gaussian observations 0.045 0.004      0.038    0.045
-## Precision for Income                    0.000 0.000      0.000    0.000
+## Precision for the Gaussian observations 0.047 0.004      0.039    0.047
+## Precision for Income                    0.098 0.092      0.011    0.071
 ##                                         0.975quant  mode
-## Precision for the Gaussian observations      0.054 0.045
-## Precision for Income                         0.000 0.000
+## Precision for the Gaussian observations      0.056 0.046
+## Precision for Income                         0.343 0.030
 ## 
-## Marginal log-Likelihood:  -840.59 
+## Marginal log-Likelihood:  -760.64 
 ##  is computed 
 ## Posterior summaries for the linear predictor and the fitted values are computed
 ## (Posterior marginals needs also &#39;control.compute=list(return.marginals.predictor=TRUE)&#39;)</code></pre>
@@ -890,17 +887,17 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ## 
 ## $patients
 ##       patient_id      age female
-##    1:          1 78.64668      0
-##    2:          2 56.03117      0
-##    3:          3 72.29343      0
-##    4:          4 76.65124      1
-##    5:          5 62.43887      1
+##    1:          1 45.73757      1
+##    2:          2 43.57000      0
+##    3:          3 61.78056      0
+##    4:          4 68.32311      1
+##    5:          5 73.44639      0
 ##   ---                           
-##  996:        996 61.25319      0
-##  997:        997 59.73085      0
-##  998:        998 56.25877      0
-##  999:        999 53.06304      0
-## 1000:       1000 69.69699      0
+##  996:        996 76.86785      0
+##  997:        997 68.91076      0
+##  998:        998 86.80927      1
+##  999:        999 67.50553      1
+## 1000:       1000 69.65274      1
 ## 
 ## $states
 ##    state_id state_name

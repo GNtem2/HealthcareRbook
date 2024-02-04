@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-03" />
+<meta name="date" content="2024-02-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -776,7 +776,7 @@ random forest model.</p>
 <pre><code>##  [1] 1.0000000 0.9307568 0.9112200 0.9096154 0.8829532 0.8786292 0.8560335
 ##  [8] 0.8517304 0.8459069 0.8241969 0.8231190 0.8146465 0.7873396 0.7604641
 ## [15] 0.7722174 0.7696099 0.7667343 0.7605675 0.7514324 0.7500935 0.7638787
-## [22] 0.7621149 0.7673878 0.7606034 0.7352058 0.7093474 0.7040276 0.7112689
+## [22] 0.7621149 0.7673878 0.7606034 0.7352058 0.7093474 0.7040276 0.7113576
 ## [29] 0.7135705 0.7084011 0.7085640 0.7135241 0.7028266 0.6921722 0.6955375
 ## [36] 0.7029153 0.6907407 0.6919927 0.7015251 0.7019995 0.7273598 0.7425582
 ## [43] 0.7499178 0.7495446 0.7548334 0.7822465 0.8160264 0.8361538 0.8801743
@@ -5027,7 +5027,7 @@ random forest model.</p>
 ## done 10000 (out of 10250)
 ## done 10100 (out of 10250)
 ## done 10200 (out of 10250)
-## time: 86s
+## time: 84s
 ## trcnt,tecnt: 1000,0</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="machine-learning.html#cb109-1" tabindex="-1"></a>pre <span class="ot">&lt;-</span> <span class="fu">surv.pre.bart</span>(<span class="at">times=</span>times, <span class="at">delta=</span>delta, <span class="at">x.train=</span>x.train,</span>
 <span id="cb109-2"><a href="machine-learning.html#cb109-2" tabindex="-1"></a>                     <span class="at">x.test=</span>x.train)</span>
@@ -5183,7 +5183,7 @@ random forest model.</p>
 <span id="cb123-13"><a href="machine-learning.html#cb123-13" tabindex="-1"></a></span>
 <span id="cb123-14"><a href="machine-learning.html#cb123-14" tabindex="-1"></a>fig</span></code></pre></div>
 <div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-933430e44e0b4dbf05e8" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-933430e44e0b4dbf05e8">{"x":{"visdat":{"41881b8638f":["function () ","plotlyVisDat"]},"cur_data":"41881b8638f","attrs":{"41881b8638f":{"x":{},"y":{},"mode":"markers","marker":{"size":12,"line":{"color":"black","width":1}},"color":{},"symbol":{},"split":{},"colors":"RdBu","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"symbols":["square-dot","circle-dot"],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"as.numeric(Test$Cl.thickness)"},"yaxis":{"domain":[0,1],"automargin":true,"title":"as.numeric(Test$Epith.c.size)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[5,6,4,2,2,3,2,1,2,4,1,4,1,3,2,1,1,1,1,3,1,2,1,4,1,1,3,1,6,2,3,5,5,6,3,3,1,5,4,3,3,1,4,1,3,5,1,5,2,1,1,5,2,5,3,3,3,1,5,3,3,5,5,1,5,3,5,6,1,1,3,1,4,1,4,4,3,1,1,4,4,3,5,5,4,3,5,5,3,1,1,5,5,4,5,1,4,5,1,3,2,2,6,3,1,3,4,1,1,2,1,3,3,2],"y":[7,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,10,2,3,2,2,2,2,1,2,1,2,2,2,2,2,1,2,2,2,2,2,2,7,5,2,2,2,3,2,2,1,2,2,3,2,2,2,1,2,2,2,2,2,2,3,2,2,2,2,1,1,2,1,1,2,2,1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2],"mode":"markers","marker":{"color":"rgba(239,138,98,1)","symbol":"square-dot","size":12,"line":{"color":"black","width":1}},"type":"scatter","name":"benign<br />benign<br />benign","textfont":{"color":"rgba(239,138,98,1)"},"error_y":{"color":"rgba(239,138,98,1)"},"error_x":{"color":"rgba(239,138,98,1)"},"line":{"color":"rgba(239,138,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5,10,8,6,10,10,3,1,4,8,5,8,3,7,1,10,10,10,3,4,5,7,10,3,7],"y":[2,3,5,5,3,3,5,8,1,2,4,3,3,3,4,2,2,2,5,3,3,2,2,3,4],"mode":"markers","marker":{"color":"rgba(239,138,98,1)","symbol":"circle-dot","size":12,"line":{"color":"black","width":1}},"type":"scatter","name":"benign<br />malignant<br />malignant","textfont":{"color":"rgba(239,138,98,1)"},"error_y":{"color":"rgba(239,138,98,1)"},"error_x":{"color":"rgba(239,138,98,1)"},"line":{"color":"rgba(239,138,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8,10,10,5,9,5,6,5,1,10,9,10,8,10,10,6,8,10,8,10,10,8,10,8,10,10,10,8,6,7,10,10,10,5,8],"y":[7,8,10,8,6,8,8,8,5,6,5,7,4,7,5,8,5,10,4,4,5,8,3,3,3,4,5,7,3,4,6,3,3,5,6],"mode":"markers","marker":{"color":"rgba(247,247,247,1)","symbol":"circle-dot","size":12,"line":{"color":"black","width":1}},"type":"scatter","name":"malignant<br />malignant<br />malignant","textfont":{"color":"rgba(247,247,247,1)"},"error_y":{"color":"rgba(247,247,247,1)"},"error_x":{"color":"rgba(247,247,247,1)"},"line":{"color":"rgba(247,247,247,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-933430e44e0b4dbf05e8">{"x":{"visdat":{"1fc8223cb68":["function () ","plotlyVisDat"]},"cur_data":"1fc8223cb68","attrs":{"1fc8223cb68":{"x":{},"y":{},"mode":"markers","marker":{"size":12,"line":{"color":"black","width":1}},"color":{},"symbol":{},"split":{},"colors":"RdBu","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"symbols":["square-dot","circle-dot"],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"as.numeric(Test$Cl.thickness)"},"yaxis":{"domain":[0,1],"automargin":true,"title":"as.numeric(Test$Epith.c.size)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[5,6,4,2,2,3,2,1,2,4,1,4,1,3,2,1,1,1,1,3,1,2,1,4,1,1,3,1,6,2,3,5,5,6,3,3,1,5,4,3,3,1,4,1,3,5,1,5,2,1,1,5,2,5,3,3,3,1,5,3,3,5,5,1,5,3,5,6,1,1,3,1,4,1,4,4,3,1,1,4,4,3,5,5,4,3,5,5,3,1,1,5,5,4,5,1,4,5,1,3,2,2,6,3,1,3,4,1,1,2,1,3,3,2],"y":[7,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,10,2,3,2,2,2,2,1,2,1,2,2,2,2,2,1,2,2,2,2,2,2,7,5,2,2,2,3,2,2,1,2,2,3,2,2,2,1,2,2,2,2,2,2,3,2,2,2,2,1,1,2,1,1,2,2,1,1,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2],"mode":"markers","marker":{"color":"rgba(239,138,98,1)","symbol":"square-dot","size":12,"line":{"color":"black","width":1}},"type":"scatter","name":"benign<br />benign<br />benign","textfont":{"color":"rgba(239,138,98,1)"},"error_y":{"color":"rgba(239,138,98,1)"},"error_x":{"color":"rgba(239,138,98,1)"},"line":{"color":"rgba(239,138,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5,10,8,6,10,10,3,1,4,8,5,8,3,7,1,10,10,10,3,4,5,7,10,3,7],"y":[2,3,5,5,3,3,5,8,1,2,4,3,3,3,4,2,2,2,5,3,3,2,2,3,4],"mode":"markers","marker":{"color":"rgba(239,138,98,1)","symbol":"circle-dot","size":12,"line":{"color":"black","width":1}},"type":"scatter","name":"benign<br />malignant<br />malignant","textfont":{"color":"rgba(239,138,98,1)"},"error_y":{"color":"rgba(239,138,98,1)"},"error_x":{"color":"rgba(239,138,98,1)"},"line":{"color":"rgba(239,138,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8,10,10,5,9,5,6,5,1,10,9,10,8,10,10,6,8,10,8,10,10,8,10,8,10,10,10,8,6,7,10,10,10,5,8],"y":[7,8,10,8,6,8,8,8,5,6,5,7,4,7,5,8,5,10,4,4,5,8,3,3,3,4,5,7,3,4,6,3,3,5,6],"mode":"markers","marker":{"color":"rgba(247,247,247,1)","symbol":"circle-dot","size":12,"line":{"color":"black","width":1}},"type":"scatter","name":"malignant<br />malignant<br />malignant","textfont":{"color":"rgba(247,247,247,1)"},"error_y":{"color":"rgba(247,247,247,1)"},"error_x":{"color":"rgba(247,247,247,1)"},"line":{"color":"rgba(247,247,247,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="support-vector-machine" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Support vector machine<a href="machine-learning.html#support-vector-machine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -5876,7 +5876,7 @@ which adapt to the parameter and optimise according to the specified learning ra
 <span id="cb199-31"><a href="machine-learning.html#cb199-31" tabindex="-1"></a></span>
 <span id="cb199-32"><a href="machine-learning.html#cb199-32" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div>
 <pre><code>## SNNS network definition file V1.4-3D
-## generated at Sat Feb  3 15:30:36 2024
+## generated at Mon Feb  5 10:09:39 2024
 ## 
 ## network name : RSNNS_untitled
 ## source files :
@@ -6269,128 +6269,128 @@ which adapt to the parameter and optimise according to the specified learning ra
 <span id="cb234-79"><a href="machine-learning.html#cb234-79" tabindex="-1"></a><span class="co">#learners &lt;- c(learners, lrns(c(&quot;surv.coxph&quot;)))</span></span>
 <span id="cb234-80"><a href="machine-learning.html#cb234-80" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">benchmark_grid</span>(tasks, learners, resampling)</span>
 <span id="cb234-81"><a href="machine-learning.html#cb234-81" tabindex="-1"></a>bm <span class="ot">&lt;-</span> <span class="fu">benchmark</span>(design)</span></code></pre></div>
-<pre><code>## INFO  [15:31:57.742] [mlr3] Running benchmark with 12 resampling iterations
-## INFO  [15:31:57.892] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;whas&#39; (iter 1/2)
-## INFO  [15:31:58.092] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
-## INFO  [15:31:58.125] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:31:58.145] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:31:58.153] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
-## INFO  [15:31:58.317] [mlr3] Finished benchmark
-## INFO  [15:31:58.359] [bbotk] Result of batch 1:
-## INFO  [15:31:58.362] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:31:58.362] [bbotk]  0.6247406    0.4554209     0.8456182    11 3   0.5386304        0      0
-## INFO  [15:31:58.362] [bbotk]  runtime_learners                                uhash
-## INFO  [15:31:58.362] [bbotk]              0.15 9d4b6ad5-d78e-48be-b066-df0f4700cf27
-## INFO  [15:31:58.371] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:31:58.392] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:31:58.400] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
-## INFO  [15:31:58.492] [mlr3] Finished benchmark
-## INFO  [15:31:58.829] [bbotk] Result of batch 2:
-## INFO  [15:31:58.831] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:31:58.831] [bbotk]  0.1573471    0.4268247     0.6872897    27 1   0.6580334        0      0
-## INFO  [15:31:58.831] [bbotk]  runtime_learners                                uhash
-## INFO  [15:31:58.831] [bbotk]              0.06 f6438961-c5af-4d9d-bee2-d9ebe5225890
-## INFO  [15:31:58.845] [bbotk] Finished optimizing after 2 evaluation(s)
-## INFO  [15:31:58.846] [bbotk] Result:
-## INFO  [15:31:58.848] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
-## INFO  [15:31:58.848] [bbotk]  0.1573471    0.4268247     0.6872897    27 1          &lt;list[8]&gt; &lt;list[4]&gt;
-## INFO  [15:31:58.848] [bbotk]  surv.cindex
-## INFO  [15:31:58.848] [bbotk]    0.6580334
-## INFO  [15:31:59.119] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;whas&#39; (iter 2/2)
-## INFO  [15:31:59.282] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
-## INFO  [15:31:59.308] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:31:59.326] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:31:59.334] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
-## INFO  [15:31:59.584] [mlr3] Finished benchmark
-## INFO  [15:31:59.619] [bbotk] Result of batch 1:
-## INFO  [15:31:59.621] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:31:59.621] [bbotk]  0.9949267    0.2285935     0.8684118    17 4   0.5964691        0      0
-## INFO  [15:31:59.621] [bbotk]  runtime_learners                                uhash
-## INFO  [15:31:59.621] [bbotk]              0.25 0d81925d-610a-4204-b48d-44ba91747fea
-## INFO  [15:31:59.628] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:31:59.647] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:31:59.655] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
-## INFO  [15:31:59.748] [mlr3] Finished benchmark
-## INFO  [15:31:59.788] [bbotk] Result of batch 2:
-## INFO  [15:31:59.790] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:31:59.790] [bbotk]  0.8363856    0.2299571     0.9908099    13 2   0.6330391        0      0
-## INFO  [15:31:59.790] [bbotk]  runtime_learners                                uhash
-## INFO  [15:31:59.790] [bbotk]              0.09 1192e02f-cb6a-436f-acbc-d17fc9071022
-## INFO  [15:31:59.803] [bbotk] Finished optimizing after 2 evaluation(s)
-## INFO  [15:31:59.804] [bbotk] Result:
-## INFO  [15:31:59.806] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
-## INFO  [15:31:59.806] [bbotk]  0.8363856    0.2299571     0.9908099    13 2          &lt;list[8]&gt; &lt;list[4]&gt;
-## INFO  [15:31:59.806] [bbotk]  surv.cindex
-## INFO  [15:31:59.806] [bbotk]    0.6330391
-## INFO  [15:32:00.068] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;whas&#39; (iter 1/2)
-## INFO  [15:32:00.098] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;whas&#39; (iter 2/2)
-## INFO  [15:32:00.128] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;whas&#39; (iter 1/2)
-## INFO  [15:32:00.177] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;whas&#39; (iter 2/2)
-## INFO  [15:32:00.214] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;Melanoma&#39; (iter 1/2)
-## INFO  [15:32:00.458] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
-## INFO  [15:32:00.485] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:32:00.502] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:32:00.509] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
-## INFO  [15:32:00.620] [mlr3] Finished benchmark
-## INFO  [15:32:00.655] [bbotk] Result of batch 1:
-## INFO  [15:32:00.657] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:32:00.657] [bbotk]  0.4570555    0.2741379     0.8601232    20 1   0.4037037        0      0
-## INFO  [15:32:00.657] [bbotk]  runtime_learners                                uhash
-## INFO  [15:32:00.657] [bbotk]              0.11 133eadd4-eb30-4ee6-aa9a-c9501b14913c
-## INFO  [15:32:00.664] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:32:00.681] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:32:00.689] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
-## INFO  [15:32:00.773] [mlr3] Finished benchmark
-## INFO  [15:32:00.813] [bbotk] Result of batch 2:
-## INFO  [15:32:00.815] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:32:00.815] [bbotk]  0.7608218     0.479834     0.7939875    20 3   0.4185185        0      0
-## INFO  [15:32:00.815] [bbotk]  runtime_learners                                uhash
-## INFO  [15:32:00.815] [bbotk]              0.08 60637f63-a4c0-402f-8061-ae6cf3b5827a
-## INFO  [15:32:00.826] [bbotk] Finished optimizing after 2 evaluation(s)
-## INFO  [15:32:00.827] [bbotk] Result:
-## INFO  [15:32:00.829] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
-## INFO  [15:32:00.829] [bbotk]  0.7608218     0.479834     0.7939875    20 3          &lt;list[8]&gt; &lt;list[4]&gt;
-## INFO  [15:32:00.829] [bbotk]  surv.cindex
-## INFO  [15:32:00.829] [bbotk]    0.4185185
-## INFO  [15:32:01.142] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;Melanoma&#39; (iter 2/2)
-## INFO  [15:32:01.305] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
-## INFO  [15:32:01.331] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:32:01.348] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:32:01.356] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
-## INFO  [15:32:01.437] [mlr3] Finished benchmark
-## INFO  [15:32:01.470] [bbotk] Result of batch 1:
-## INFO  [15:32:01.472] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:32:01.472] [bbotk]  0.1140623    0.2846605       0.22349    10 4   0.8258064        0      0
-## INFO  [15:32:01.472] [bbotk]  runtime_learners                                uhash
-## INFO  [15:32:01.472] [bbotk]              0.06 6c410554-e53b-4dec-b83b-3430adccf793
-## INFO  [15:32:01.479] [bbotk] Evaluating 1 configuration(s)
-## INFO  [15:32:01.496] [mlr3] Running benchmark with 1 resampling iterations
-## INFO  [15:32:01.504] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
-## INFO  [15:32:01.679] [mlr3] Finished benchmark
-## INFO  [15:32:01.728] [bbotk] Result of batch 2:
-## INFO  [15:32:01.730] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
-## INFO  [15:32:01.730] [bbotk]  0.2337101    0.3132217     0.5829765     8 3   0.7451613        0      0
-## INFO  [15:32:01.730] [bbotk]  runtime_learners                                uhash
-## INFO  [15:32:01.730] [bbotk]              0.06 d93e2732-7b66-4215-9dec-37259bb124f2
-## INFO  [15:32:01.743] [bbotk] Finished optimizing after 2 evaluation(s)
-## INFO  [15:32:01.744] [bbotk] Result:
-## INFO  [15:32:01.745] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
-## INFO  [15:32:01.745] [bbotk]  0.1140623    0.2846605       0.22349    10 4          &lt;list[8]&gt; &lt;list[4]&gt;
-## INFO  [15:32:01.745] [bbotk]  surv.cindex
-## INFO  [15:32:01.745] [bbotk]    0.8258064
-## INFO  [15:32:01.973] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;Melanoma&#39; (iter 1/2)
-## INFO  [15:32:01.992] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;Melanoma&#39; (iter 2/2)
-## INFO  [15:32:02.011] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;Melanoma&#39; (iter 1/2)
-## INFO  [15:32:02.035] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;Melanoma&#39; (iter 2/2)
-## INFO  [15:32:02.060] [mlr3] Finished benchmark</code></pre>
+<pre><code>## INFO  [10:11:24.232] [mlr3] Running benchmark with 12 resampling iterations
+## INFO  [10:11:24.393] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;whas&#39; (iter 1/2)
+## INFO  [10:11:24.997] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
+## INFO  [10:11:25.078] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:25.120] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:25.139] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
+## INFO  [10:11:25.408] [mlr3] Finished benchmark
+## INFO  [10:11:25.495] [bbotk] Result of batch 1:
+## INFO  [10:11:25.500] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:25.500] [bbotk]  0.6247406    0.4554209     0.8456182    11 3   0.5219491        0      0
+## INFO  [10:11:25.500] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:25.500] [bbotk]              0.23 c8398de8-088c-479d-a935-b1acb46e5ccf
+## INFO  [10:11:25.515] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:25.563] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:25.582] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
+## INFO  [10:11:25.818] [mlr3] Finished benchmark
+## INFO  [10:11:25.916] [bbotk] Result of batch 2:
+## INFO  [10:11:25.921] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:25.921] [bbotk]  0.1573471    0.4268247     0.6872897    27 1   0.4903424        0      0
+## INFO  [10:11:25.921] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:25.921] [bbotk]               0.2 0e93742e-a79e-42ab-a3b6-ff559c0b2b6f
+## INFO  [10:11:25.954] [bbotk] Finished optimizing after 2 evaluation(s)
+## INFO  [10:11:25.956] [bbotk] Result:
+## INFO  [10:11:25.960] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
+## INFO  [10:11:25.960] [bbotk]  0.6247406    0.4554209     0.8456182    11 3          &lt;list[8]&gt; &lt;list[4]&gt;
+## INFO  [10:11:25.960] [bbotk]  surv.cindex
+## INFO  [10:11:25.960] [bbotk]    0.5219491
+## INFO  [10:11:27.179] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;whas&#39; (iter 2/2)
+## INFO  [10:11:27.573] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
+## INFO  [10:11:27.638] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:27.679] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:27.697] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
+## INFO  [10:11:27.937] [mlr3] Finished benchmark
+## INFO  [10:11:28.022] [bbotk] Result of batch 1:
+## INFO  [10:11:28.027] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:28.027] [bbotk]  0.9949267    0.2285935     0.8684118    17 4   0.4422026        0      0
+## INFO  [10:11:28.027] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:28.027] [bbotk]              0.22 70883535-e5ba-417b-8471-826e5612661e
+## INFO  [10:11:28.046] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:28.086] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:28.111] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;whas&#39; (iter 1/1)
+## INFO  [10:11:28.373] [mlr3] Finished benchmark
+## INFO  [10:11:28.636] [bbotk] Result of batch 2:
+## INFO  [10:11:28.640] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:28.640] [bbotk]  0.8363856    0.2299571     0.9908099    13 2   0.3472047        0      0
+## INFO  [10:11:28.640] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:28.640] [bbotk]              0.25 e641b7a3-3096-4c7d-80fb-728c483517ff
+## INFO  [10:11:28.675] [bbotk] Finished optimizing after 2 evaluation(s)
+## INFO  [10:11:28.678] [bbotk] Result:
+## INFO  [10:11:28.681] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
+## INFO  [10:11:28.681] [bbotk]  0.9949267    0.2285935     0.8684118    17 4          &lt;list[8]&gt; &lt;list[4]&gt;
+## INFO  [10:11:28.681] [bbotk]  surv.cindex
+## INFO  [10:11:28.681] [bbotk]    0.4422026
+## INFO  [10:11:29.349] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;whas&#39; (iter 1/2)
+## INFO  [10:11:29.419] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;whas&#39; (iter 2/2)
+## INFO  [10:11:29.489] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;whas&#39; (iter 1/2)
+## INFO  [10:11:29.605] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;whas&#39; (iter 2/2)
+## INFO  [10:11:29.707] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;Melanoma&#39; (iter 1/2)
+## INFO  [10:11:30.239] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
+## INFO  [10:11:30.313] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:30.350] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:30.369] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
+## INFO  [10:11:30.584] [mlr3] Finished benchmark
+## INFO  [10:11:30.678] [bbotk] Result of batch 1:
+## INFO  [10:11:30.683] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:30.683] [bbotk]  0.4570555    0.2741379     0.8601232    20 1   0.3555556        0      0
+## INFO  [10:11:30.683] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:30.683] [bbotk]              0.19 18149d55-7443-4481-8ec4-1c38131bbccd
+## INFO  [10:11:30.701] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:30.738] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:30.763] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
+## INFO  [10:11:30.968] [mlr3] Finished benchmark
+## INFO  [10:11:31.074] [bbotk] Result of batch 2:
+## INFO  [10:11:31.079] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:31.079] [bbotk]  0.7608218     0.479834     0.7939875    20 3   0.6703704        0      0
+## INFO  [10:11:31.079] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:31.079] [bbotk]              0.17 43442330-56ee-4f93-b67a-1c048d6ed68b
+## INFO  [10:11:31.106] [bbotk] Finished optimizing after 2 evaluation(s)
+## INFO  [10:11:31.108] [bbotk] Result:
+## INFO  [10:11:31.112] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
+## INFO  [10:11:31.112] [bbotk]  0.7608218     0.479834     0.7939875    20 3          &lt;list[8]&gt; &lt;list[4]&gt;
+## INFO  [10:11:31.112] [bbotk]  surv.cindex
+## INFO  [10:11:31.112] [bbotk]    0.6703704
+## INFO  [10:11:31.711] [mlr3] Applying learner &#39;encode.scale.surv.deepsurv.tuned&#39; on task &#39;Melanoma&#39; (iter 2/2)
+## INFO  [10:11:32.305] [bbotk] Starting to optimize 5 parameter(s) with &#39;&lt;OptimizerRandomSearch&gt;&#39; and &#39;&lt;TerminatorEvals&gt; [n_evals=2, k=0]&#39;
+## INFO  [10:11:32.380] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:32.426] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:32.444] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
+## INFO  [10:11:32.665] [mlr3] Finished benchmark
+## INFO  [10:11:32.748] [bbotk] Result of batch 1:
+## INFO  [10:11:32.753] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:32.753] [bbotk]  0.1140623    0.2846605       0.22349    10 4   0.4483871        0      0
+## INFO  [10:11:32.753] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:32.753] [bbotk]               0.2 a6bb33ca-ee0f-474d-95b0-e9b78a60f786
+## INFO  [10:11:32.778] [bbotk] Evaluating 1 configuration(s)
+## INFO  [10:11:32.821] [mlr3] Running benchmark with 1 resampling iterations
+## INFO  [10:11:32.841] [mlr3] Applying learner &#39;surv.deepsurv&#39; on task &#39;Melanoma&#39; (iter 1/1)
+## INFO  [10:11:33.057] [mlr3] Finished benchmark
+## INFO  [10:11:33.148] [bbotk] Result of batch 2:
+## INFO  [10:11:33.154] [bbotk]    dropout weight_decay learning_rate nodes k surv.cindex warnings errors
+## INFO  [10:11:33.154] [bbotk]  0.2337101    0.3132217     0.5829765     8 3   0.5096774        0      0
+## INFO  [10:11:33.154] [bbotk]  runtime_learners                                uhash
+## INFO  [10:11:33.154] [bbotk]               0.2 f9a240c9-5ca4-48f9-b561-4b1326583436
+## INFO  [10:11:33.181] [bbotk] Finished optimizing after 2 evaluation(s)
+## INFO  [10:11:33.183] [bbotk] Result:
+## INFO  [10:11:33.186] [bbotk]    dropout weight_decay learning_rate nodes k learner_param_vals  x_domain
+## INFO  [10:11:33.186] [bbotk]  0.2337101    0.3132217     0.5829765     8 3          &lt;list[8]&gt; &lt;list[4]&gt;
+## INFO  [10:11:33.186] [bbotk]  surv.cindex
+## INFO  [10:11:33.186] [bbotk]    0.5096774
+## INFO  [10:11:33.924] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;Melanoma&#39; (iter 1/2)
+## INFO  [10:11:33.982] [mlr3] Applying learner &#39;surv.kaplan&#39; on task &#39;Melanoma&#39; (iter 2/2)
+## INFO  [10:11:34.036] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;Melanoma&#39; (iter 1/2)
+## INFO  [10:11:34.107] [mlr3] Applying learner &#39;surv.coxph&#39; on task &#39;Melanoma&#39; (iter 2/2)
+## INFO  [10:11:34.178] [mlr3] Finished benchmark</code></pre>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="machine-learning.html#cb236-1" tabindex="-1"></a><span class="do">## Aggreggate with Harrell&#39;s C and Integrated Graf Score</span></span>
 <span id="cb236-2"><a href="machine-learning.html#cb236-2" tabindex="-1"></a>msrs <span class="ot">&lt;-</span> <span class="fu">msrs</span>(<span class="fu">c</span>(<span class="st">&quot;surv.cindex&quot;</span>, <span class="st">&quot;surv.graf&quot;</span>))</span>
 <span id="cb236-3"><a href="machine-learning.html#cb236-3" tabindex="-1"></a>bm<span class="sc">$</span><span class="fu">aggregate</span>(msrs)[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>)]</span></code></pre></div>
 <pre><code>##     task_id                       learner_id surv.cindex surv.graf
-## 1:     whas encode.scale.surv.deepsurv.tuned   0.5849302       Inf
+## 1:     whas encode.scale.surv.deepsurv.tuned   0.4897944       Inf
 ## 2:     whas                      surv.kaplan   0.5000000       Inf
 ## 3:     whas                       surv.coxph   0.7502472       Inf
-## 4: Melanoma encode.scale.surv.deepsurv.tuned   0.5628998       Inf
+## 4: Melanoma encode.scale.surv.deepsurv.tuned   0.7033658       Inf
 ## 5: Melanoma                      surv.kaplan   0.5000000       Inf
 ## 6: Melanoma                       surv.coxph   0.7383489       Inf</code></pre>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="machine-learning.html#cb238-1" tabindex="-1"></a><span class="fu">library</span>(mlr3benchmark)</span></code></pre></div>
@@ -6411,7 +6411,7 @@ which adapt to the parameter and optimise according to the specified learning ra
 ##  Friedman rank sum test
 ## 
 ## data:  cindex and learner_id and task_id
-## Friedman chi-squared = 4, df = 2, p-value = 0.1353</code></pre>
+## Friedman chi-squared = 3, df = 2, p-value = 0.2231</code></pre>
 </div>
 </div>
 <div id="tabnet" class="section level3 hasAnchor" number="6.9.2">
