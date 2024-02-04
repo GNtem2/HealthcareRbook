@@ -52,6 +52,14 @@ query <- bboxsf %>% opq() %>%
 query
 ```
 
+Extracting data on fast food eateries in Brisbane.
+
+```{r 10-geospatial-analysis-1-4-1}
+query_FF <- bboxsf %>% opq() %>%
+  add_osm_feature(key = "amenity", value = "fast_food")
+query_FF
+```
+
 Get information on tags for highway. Wikipedia has a page OpenStreetMap Wiki on highway.  
 
 ```{r 10-geospatial-analysis-1-5}
