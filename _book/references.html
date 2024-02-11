@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,12 +52,135 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.10/DiagrammeR.js"></script>
+<link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
+<script src="libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/ionicons-2.0.1/ionicons.min.css" rel="stylesheet" />
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -332,24 +455,23 @@
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a></li>
-<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.2</b> Discrete Event Simulations</a>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.2.1</b> Simulate capacity of system</a></li>
-<li class="chapter" data-level="9.2.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.2.2</b> Queuing network</a></li>
+<li class="chapter" data-level="9.1.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.1.1</b> Simulate capacity of system</a></li>
+<li class="chapter" data-level="9.1.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.1.2</b> Queuing network</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.3</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
+<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
-<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
-<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.4</b> Process mapping</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.5</b> Supply chains</a></li>
+<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.6</b> Health economics</a>
 <ul>
-<li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
+<li class="chapter" data-level="9.6.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.6.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a>
@@ -383,7 +505,10 @@
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#section-1"><i class="fa fa-check"></i><b>11.2.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
 <ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
@@ -435,6 +560,236 @@
 <div id="references" class="section level1 unnumbered hasAnchor">
 <h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Aboumatar, H., and R. A. Wise. 2019. <span>“<span class="nocase"><span>N</span>otice of <span>R</span>etraction. <span>A</span>boumatar et al. <span>E</span>ffect of a <span>P</span>rogram <span>C</span>ombining <span>T</span>ransitional <span>C</span>are and <span>L</span>ong-term <span>S</span>elf-management <span>S</span>upport on <span>O</span>utcomes of <span>H</span>ospitalized <span>P</span>atients <span>W</span>ith <span>C</span>hronic <span>O</span>bstructive <span>P</span>ulmonary <span>D</span>isease: <span>A</span> <span>R</span>andomized <span>C</span>linical <span>T</span>rial. <span>J</span><span>A</span><span>M</span><span>A</span>. 2018;320(22):2335-2343</span>.”</span> <em>JAMA</em> 322 (14): 1417–18.
+</div>
+<div class="csl-entry">
+Agresti, Alan, and Brent A. Coull. 1998. <span>“Approximate Is Better Than <span>‘Exact’</span> for Interval Estimation of Binomial Proportions.”</span> <em>The American Statistician</em> 52 (2): 119–26. <a href="https://doi.org/10.1080/00031305.1998.10480550">https://doi.org/10.1080/00031305.1998.10480550</a>.
+</div>
+<div class="csl-entry">
+<span>“Atlas-Based Whole Brain White Matter Analysis Using Large Deformation Diffeomorphic Metric Mapping: Application to Normal Elderly and Alzheimer’s Disease Participants.”</span> 2009. <em>Neuroimage</em> 46 (2): 486–99. <a href="https://doi.org/10.1016/j.neuroimage.2009.01.002">https://doi.org/10.1016/j.neuroimage.2009.01.002</a>.
+</div>
+<div class="csl-entry">
+Aung T, Kromhout D, Halsey J. 2018. <span>“Associations of Omega-3 Fatty Acid Supplement Use with Cardiovascular Disease Risks: Meta-Analysis of 10 Trials Involving 77 917 Individuals.”</span> <em>Jama Cardiol</em>, March. <a href="https://doi.org/doi: 10.1001/jamacardio.2017.5205">https://doi.org/doi: 10.1001/jamacardio.2017.5205</a>.
+</div>
+<div class="csl-entry">
+Balduzzi, Sara, Gerta Rücker, and Guido Schwarzer. 2019. <span>“How to Perform a Meta-Analysis with <span>R</span>: A Practical Tutorial.”</span> <em>Evidence-Based Mental Health</em>, no. 22: 153–60.
+</div>
+<div class="csl-entry">
+Beare, R., J. Chen, T. G. Phan, R. K. Lees, M. Ali, A. Alexandrov, P. M. Bath, et al. 2015. <span>“<span class="nocase"><span>G</span>oogling <span>S</span>troke <span>A</span><span>S</span><span>P</span><span>E</span><span>C</span><span>T</span><span>S</span> to <span>D</span>etermine <span>D</span>isability: <span>E</span>xploratory <span>A</span>nalysis from <span>V</span><span>I</span><span>S</span><span>T</span><span>A</span>-<span>A</span>cute <span>C</span>ollaboration</span>.”</span> <em>PLoS ONE</em> 10 (5): e0125687.
+</div>
+<div class="csl-entry">
+Berkhemer, O. A., P. S. Fransen, D. Beumer, L. A. van den Berg, H. F. Lingsma, A. J. Yoo, W. J. Schonewille, et al. 2015. <span>“<span class="nocase"><span>A</span> randomized trial of intraarterial treatment for acute ischemic stroke</span>.”</span> <em>N. Engl. J. Med.</em> 372 (1): 11–20.
+</div>
+<div class="csl-entry">
+BJ, Biggerstaff. 2000. <span>“Comparing Diagnostic Tests: A Simple Graphic Using Likelihood Ratios.”</span> <em>Stat Med</em> 19 (March): 649–63. <a href="https://doi.org/10.1002/(sici)1097-0258(20000315)19:5&lt;649::aid-sim371&gt;3.0.co;2-h">https://doi.org/10.1002/(sici)1097-0258(20000315)19:5&lt;649::aid-sim371&gt;3.0.co;2-h</a>.
+</div>
+<div class="csl-entry">
+Brin, Sergey, and Lawrence Page. 1998. <span>“<span>T</span>he <span>A</span>natomy of a <span>L</span>arge-<span>S</span>cale <span>H</span>ypertextual <span>W</span>eb <span>S</span>earch <span>E</span>ngine.”</span> <em>Computer Networks and ISDN Systems</em> 30 (1-7): 107–17. <a href="https://doi.org/10.1016/S0169-7552(98)00110-X">https://doi.org/10.1016/S0169-7552(98)00110-X</a>.
+</div>
+<div class="csl-entry">
+Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001. <span>“Interval Estimation for a Binomial Proportion.”</span> <em>Statist. Sci.</em> 16 (2): 101–33. <a href="https://doi.org/10.1214/ss/1009213286">https://doi.org/10.1214/ss/1009213286</a>.
+</div>
+<div class="csl-entry">
+Campbell, B. C., P. J. Mitchell, T. J. Kleinig, H. M. Dewey, L. Churilov, N. Yassi, B. Yan, et al. 2015. <span>“<span class="nocase"><span>E</span>ndovascular therapy for ischemic stroke with perfusion-imaging selection</span>.”</span> <em>N. Engl. J. Med.</em> 372 (11): 1009–18.
+</div>
+<div class="csl-entry">
+Centor, Robert M., Rabih Geha, and Reza Manesh. 2019. <span>“<span class="nocase">The Pursuit of Diagnostic Excellence</span>.”</span> <em>JAMA Network Open</em> 2 (12): e1918040–40. <a href="https://doi.org/10.1001/jamanetworkopen.2019.18040">https://doi.org/10.1001/jamanetworkopen.2019.18040</a>.
+</div>
+<div class="csl-entry">
+Cohen, Jacob. 1977. <span>“CHAPTER 6 - Differences Between Proportions.”</span> In <em>Statistical Power Analysis for the Behavioral Sciences</em>, edited by Jacob Cohen, 179–213. Academic Press. https://doi.org/<a href="https://doi.org/10.1016/B978-0-12-179060-8.50011-6">https://doi.org/10.1016/B978-0-12-179060-8.50011-6</a>.
+</div>
+<div class="csl-entry">
+Derek B Archer, Stephen A Coombes, David E Vaillancourt. 2018. <span>“A Template and Probabilistic Atlas of the Human Sensorimotor Tracts Using Diffusion MRI.”</span> <em>Cerebral Cortex</em> 28 (5): 1685--1699. <a href="https://doi.org/10.1093/cercor/bhx066">https://doi.org/10.1093/cercor/bhx066</a>.
+</div>
+<div class="csl-entry">
+Diamond, G. A. 1992. <span>“<span class="nocase"><span>W</span>hat price perfection? <span>C</span>alibration and discrimination of clinical prediction models</span>.”</span> <em>J Clin Epidemiol</em> 45 (1): 85–89.
+</div>
+<div class="csl-entry">
+Durif, G., L. Modolo, J. Michaelsson, J. E. Mold, S. Lambert-Lacroix, and F. Picard. 2018. <span>“<span class="nocase"><span>H</span>igh dimensional classification with combined adaptive sparse <span>P</span><span>L</span><span>S</span> and logistic regression</span>.”</span> <em>Bioinformatics</em> 34 (3): 485–93.
+</div>
+<div class="csl-entry">
+Fornito, Alex. 2016. <span>“Graph Theoretic Analysis of Human Brain Networks.”</span> In <em>Neuromethods</em>, edited by Massimo Filippi, 2nd ed., 119:283–314. Neuromethods 119. United States of America: Humana Press. <a href="https://doi.org/10.1007/978-1-4939-5611-1_10">https://doi.org/10.1007/978-1-4939-5611-1_10</a>.
+</div>
+<div class="csl-entry">
+Fort, G., and S. Lambert-Lacroix. 2005. <span>“<span class="nocase"><span>C</span>lassification using partial least squares with penalized logistic regression</span>.”</span> <em>Bioinformatics</em> 21 (7): 1104–11.
+</div>
+<div class="csl-entry">
+Friedman, J. H., and C. B. Roosen. 1995. <span>“<span class="nocase"><span>A</span>n introduction to multivariate adaptive regression splines</span>.”</span> <em>Stat Methods Med Res</em> 4 (3): 197–217.
+</div>
+<div class="csl-entry">
+Friston, K., J. Phillips, D. Chawla, and C. Buchel. 2000. <span>“<span class="nocase"><span>N</span>onlinear <span>P</span><span>C</span><span>A</span>: characterizing interactions between modes of brain activity</span>.”</span> <em>Philos. Trans. R. Soc. Lond., B, Biol. Sci.</em> 355 (1393): 135–46.
+</div>
+<div class="csl-entry">
+Gopal, A. D., N. R. Desai, T. Tse, and J. S. Ross. 2015. <span>“<span class="nocase"><span>R</span>eporting of noninferiority trials in <span>C</span>linical<span>T</span>rials.gov and corresponding publications</span>.”</span> <em>JAMA</em> 313 (11): 1163–65.
+</div>
+<div class="csl-entry">
+Graf E, Sauerbrei W, Schmoor C. 1999. <span>“Assessment and Comparison of Prognostic Classification Schemes for Survival Data.”</span> <em>Stat Med</em> 18 (September): 2529–45. <a href="https://doi.org/10.1002/(sici)1097-0258(19990915/30)18:17/18&lt;2529::aid-sim274&gt;3.0.co;2-5">https://doi.org/10.1002/(sici)1097-0258(19990915/30)18:17/18&lt;2529::aid-sim274&gt;3.0.co;2-5</a>.
+</div>
+<div class="csl-entry">
+Grambsch, P. M., and T. M. Therneau. 1994. <span>“<span class="nocase">Proportional hazards tests and diagnostics based on weighted residuals</span>.”</span> <em>Biometrika</em> 81 (3): 515–26. <a href="https://doi.org/10.1093/biomet/81.3.515">https://doi.org/10.1093/biomet/81.3.515</a>.
+</div>
+<div class="csl-entry">
+Guo, Jingyi, and Andrea Riebler. 2015. <span>“<span class="nocase">meta4diag: Bayesian Bivariate Meta-analysis of Diagnostic Test Studies for Routine Practice</span>.”</span> <em>arXiv e-Prints</em>, December, arXiv:1512.06220. <a href="https://arxiv.org/abs/1512.06220">https://arxiv.org/abs/1512.06220</a>.
+</div>
+<div class="csl-entry">
+Harrell FE Jr, Pryor DB, Califf RM. 1982. <span>“Evaluating the Yield of Medical Tests.”</span> <em>JAMA</em> 247 (May): 2543–46.
+</div>
+<div class="csl-entry">
+Hastie, Trevor, Robert Tibshirani, and Jerome Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference and Prediction</em>. 2nd ed. Springer. <a href="http://www-stat.stanford.edu/~tibs/ElemStatLearn/">http://www-stat.stanford.edu/~tibs/ElemStatLearn/</a>.
+</div>
+<div class="csl-entry">
+Hu, Hu, Y. 2019. <span>“Marine Omega‐3 Supplementation and Cardiovascular Disease: An Updated Meta‐analysis of 13 Randomized Controlled Trials Involving 127 477 Participants.”</span> <em>JAHA</em>, September. https://doi.org/<a href="https://doi.org/10.1161/JAHA.119.013543">https://doi.org/10.1161/JAHA.119.013543</a>.
+</div>
+<div class="csl-entry">
+Hubbard AE, Fleischer NL, Ahern J. 2010. <span>“To GEE or Not to GEE: Comparing Population Average and Mixed Models for Estimating the Associations Between Neighborhood Risk Factors and Health.”</span> <em>Epidemiology</em> 21: 467–74. <a href="https://doi.org/10.1097/EDE.0b013e3181caeb9">https://doi.org/10.1097/EDE.0b013e3181caeb9</a>.
+</div>
+<div class="csl-entry">
+Ingall, Timothy John, William Michael O’Fallon, Kjell Asplund, Lewis Robert Goldfrank, Vicki S. Hertzberg, Thomas Arthur Louis, and Teresa J. Hengy Christianson. 2004. <span>“Findings from the Reanalysis of the NINDS Tissue Plasminogen Activator for Acute Ischemic Stroke Treatment Trial.”</span> <em>Stroke</em> 35 (10): 2418–24. <a href="https://doi.org/10.1161/01.STR.0000140891.70547.56">https://doi.org/10.1161/01.STR.0000140891.70547.56</a>.
+</div>
+<div class="csl-entry">
+J, Muschelli. 2020. <span>“ROC and AUC with a Binary Predictor: A Potentially Misleading Metric.”</span> <em>J Classif</em> 37 (October): 696–708. <a href="https://doi.org/10.1007/s00357-019-09345-1">https://doi.org/10.1007/s00357-019-09345-1</a>.
+</div>
+<div class="csl-entry">
+Jaeschke, R., G. H. Guyatt, and D. L. Sackett. 1994. <span>“<span class="nocase"><span>U</span>sers’ guides to the medical literature. <span>I</span><span>I</span><span>I</span>. <span>H</span>ow to use an article about a diagnostic test. <span>B</span>. <span>W</span>hat are the results and will they help me in caring for my patients? <span>T</span>he <span>E</span>vidence-<span>B</span>ased <span>M</span>edicine <span>W</span>orking <span>G</span>roup</span>.”</span> <em>JAMA</em> 271 (9): 703–7.
+</div>
+<div class="csl-entry">
+Jamakovic, A., and Piet Van Mieghem. 2008. <span>“On the Robustness of Complex Networks by Using the Algebraic Connectivity.”</span> In <em>Networking</em>, edited by Amitabha Das, Hung Keng Pung, Francis Bu-Sung Lee, and Lawrence Wai-Choong Wong, 4982:183–94. Lecture Notes in Computer Science. Springer. <a href="http://dblp.uni-trier.de/db/conf/networking/networking2008.html#JamakovicM08">http://dblp.uni-trier.de/db/conf/networking/networking2008.html#JamakovicM08</a>.
+</div>
+<div class="csl-entry">
+Kahan, Jairath, B. C. 2014. <span>“The Risks and Rewards of Covariate Adjustment in Randomized Trials: An Assessment of 12 Outcomes from 8 Studies.”</span> <em>Trials</em> 15: 139. <a href="https://doi.org/10.1186/1745-6215-15-139">https://doi.org/10.1186/1745-6215-15-139</a>.
+</div>
+<div class="csl-entry">
+Kaji, A. H., and R. J. Lewis. 2015. <span>“<span class="nocase"><span>N</span>oninferiority <span>T</span>rials: <span>I</span>s a <span>N</span>ew <span>T</span>reatment <span>A</span>lmost as <span>E</span>ffective as <span>A</span>nother?</span>”</span> <em>JAMA</em> 313 (23): 2371–72.
+</div>
+<div class="csl-entry">
+Kempster, P. A., C. A. McLean, and T. G. Phan. 2016. <span>“<span class="nocase"><span>T</span>en year clinical experience with stroke and cerebral vasculitis</span>.”</span> <em>J Clin Neurosci</em> 27 (May): 119–25.
+</div>
+<div class="csl-entry">
+Kleinbaum, David G, Lawrence L. Kupper, and Keith E. Muller. 1978. <span>“Applied Regression Analysis and Other Multivariable Methods.”</span> In.
+</div>
+<div class="csl-entry">
+Longato, Enrico, Martina Vettoretti, and Barbara Di Camillo. 2020. <span>“A Practical Perspective on the Concordance Index for the Evaluation and Selection of Prognostic Time-to-Event Models.”</span> <em>Journal of Biomedical Informatics</em> 108: 103496. https://doi.org/<a href="https://doi.org/10.1016/j.jbi.2020.103496">https://doi.org/10.1016/j.jbi.2020.103496</a>.
+</div>
+<div class="csl-entry">
+Ludwig, L., P. Darmon, and B Guerci. 2020. <span>“<span class="nocase">Computing and interpreting the Number Needed to Treat for Cardiovascular Outcomes Trials:Perspective on GLP-1 RA and SGLT-2i therapies</span>.”</span> <em>Cardiovasc Diabetol</em>, May. <a href="https://doi.org/10.1186/s12933-020-01034-3">https://doi.org/10.1186/s12933-020-01034-3</a>.
+</div>
+<div class="csl-entry">
+Luo, Dehui, Xiang Wan, Jiming Liu, and Tiejun Tong. 2018. <span>“Optimally Estimating the Sample Mean from the Sample Size, Median, Mid-Range, and/or Mid-Quartile Range.”</span> <em>Statistical Methods in Medical Research</em> 27 (6): 1785–805. <a href="https://doi.org/10.1177/0962280216669183">https://doi.org/10.1177/0962280216669183</a>.
+</div>
+<div class="csl-entry">
+Marx, Heiner C, Arthur. Bucher. 2003. <span>“Numbers Needed to Treat Derived from Meta-Analysis: A Word of Caution.”</span> <em>BMJ Evidence-Based Medicine</em> 8 (2): 36–37. <a href="https://doi.org/10.1136/ebm.8.2.36">https://doi.org/10.1136/ebm.8.2.36</a>.
+</div>
+<div class="csl-entry">
+Mathur MB, Riddell CA, Ding P. 2018. <span>“Web Site and r Package for Computing e-Values.”</span> <em>Epidemiology</em>, e45–47. <a href="https://doi.org/10.1097/EDE.0000000000000864">https://doi.org/10.1097/EDE.0000000000000864</a>.
+</div>
+<div class="csl-entry">
+Mazziotta J, Evans A, Toga A. 2001. <span>“A Probabilistic Atlas and Reference System for the Human Brain: International Consortium for Brain Mapping (ICBM).”</span> <em>Philos Trans R Soc Lond B Biol Sci</em> 356 (1412): 1293–1322. <a href="https://doi.org/10.1098/rstb.2001.0915">https://doi.org/10.1098/rstb.2001.0915</a>.
+</div>
+<div class="csl-entry">
+McGrath, Sean, Stephan Katzenschlager, Alexander J. Zimmer, Alexander Seitel, Russell J. Steele, and Andrea Benedetti. 2022. <span>“Standard Error Estimation in Meta-Analysis of Studies Reporting Medians.”</span> <em>Statistical Methods in Medical Research</em> 32: 373–88. <a href="https://doi.org/10.1177/09622802221139233">https://doi.org/10.1177/09622802221139233</a>.
+</div>
+<div class="csl-entry">
+McGrath, Sean, XiaoFei Zhao, Russell Steele, Brett D. Thombs, Andrea Benedetti, the DEPRESsion Screening Data (DEPRESSD) Collaboration, Brooke Levis, et al. 2020. <span>“Estimating the Sample Mean and Standard Deviation from Commonly Reported Quantiles in Meta-Analysis.”</span> <em>Statistical Methods in Medical Research</em> 29 (9): 2520–37. <a href="https://doi.org/10.1177/0962280219889080">https://doi.org/10.1177/0962280219889080</a>.
+</div>
+<div class="csl-entry">
+Molnar, Christoph, Bernd Bischl, and Giuseppe Casalicchio. 2018. <span>“Iml: An r Package for Interpretable Machine Learning.”</span> <em>JOSS</em> 3 (26): 786. <a href="https://doi.org/10.21105/joss.00786">https://doi.org/10.21105/joss.00786</a>.
+</div>
+<div class="csl-entry">
+Moses, L. E., D. Shapiro, and B. Littenberg. 1993. <span>“<span class="nocase"><span>C</span>ombining independent studies of a diagnostic test into a summary <span>R</span><span>O</span><span>C</span> curve: data-analytic approaches and some additional considerations</span>.”</span> <em>Stat Med</em> 12 (14): 1293–1316.
+</div>
+<div class="csl-entry">
+Phan, T. G., R. Beare, M. Parsons, H. Zhao, S. Davis, G. A. Donnan, V. Srikanth, and H. Ma. 2019. <span>“<span class="nocase"><span>G</span>oogling <span>B</span>oundaries for <span>O</span>perating <span>M</span>obile <span>S</span>troke <span>U</span>nit for <span>S</span>troke <span>C</span>odes</span>.”</span> <em>Front Neurol</em> 10: 331.
+</div>
+<div class="csl-entry">
+Phan, T. G., J. Chen, G. Donnan, V. Srikanth, A. Wood, and D. C. Reutens. 2010. <span>“<span class="nocase"><span>D</span>evelopment of a new tool to correlate stroke outcome with infarct topography: a proof-of-concept study</span>.”</span> <em>Neuroimage</em> 49 (1): 127–33.
+</div>
+<div class="csl-entry">
+Phan, T. G., J. Chen, S. Singhal, H. Ma, B. B. Clissold, J. Ly, and R. Beare. 2018. <span>“<span class="nocase"><span>E</span>xploratory <span>U</span>se of <span>D</span>ecision <span>T</span>ree <span>A</span>nalysis in <span>C</span>lassification of <span>O</span>utcome in <span>H</span>ypoxic-<span>I</span>schemic <span>B</span>rain <span>I</span>njury</span>.”</span> <em>Front Neurol</em> 9: 126.
+</div>
+<div class="csl-entry">
+Phan, T. G., B. B. Clissold, H. Ma, J. V. Ly, and V. Srikanth. 2017. <span>“<span class="nocase"><span>P</span>redicting <span>D</span>isability after <span>I</span>schemic <span>S</span>troke <span>B</span>ased on <span>C</span>omorbidity <span>I</span>ndex and <span>S</span>troke <span>S</span>everity-<span>F</span>rom the <span>V</span>irtual <span>I</span>nternational <span>S</span>troke <span>T</span>rials <span>A</span>rchive-<span>A</span>cute <span>C</span>ollaboration</span>.”</span> <em>Front Neurol</em> 8: 192.
+</div>
+<div class="csl-entry">
+Phan, T. G., B. Clissold, J. Ly, H. Ma, C. Moran, V. Srikanth, K. R. Lees, et al. 2016. <span>“<span class="nocase"><span>S</span>troke <span>S</span>everity and <span>C</span>omorbidity <span>I</span>ndex for <span>P</span>rediction of <span>M</span>ortality after <span>I</span>schemic <span>S</span>troke from the <span>V</span>irtual <span>I</span>nternational <span>S</span>troke <span>T</span>rials <span>A</span>rchive-<span>A</span>cute <span>C</span>ollaboration</span>.”</span> <em>J Stroke Cerebrovasc Dis</em> 25 (4): 835–42.
+</div>
+<div class="csl-entry">
+Phan, T. G., A. Demchuk, V. Srikanth, B. Silver, S. C. Patel, P. A. Barber, S. R. Levine, and M. D. Hill. 2013. <span>“<span class="nocase"><span>P</span>roof of concept study: relating infarct location to stroke disability in the <span>N</span><span>I</span><span>N</span><span>D</span><span>S</span> rt-<span>P</span><span>A</span> trial</span>.”</span> <em>Cerebrovasc. Dis.</em> 35 (6): 560–65.
+</div>
+<div class="csl-entry">
+Phan, T. G., G. A. Donnan, S. M. Davis, and G. Byrnes. 2006. <span>“<span class="nocase"><span>P</span>roof-of-principle phase <span>I</span><span>I</span> <span>M</span><span>R</span><span>I</span> studies in stroke: sample size estimates from dichotomous and continuous data</span>.”</span> <em>Stroke</em> 37 (10): 2521–25.
+</div>
+<div class="csl-entry">
+Phan, T. G., G. A. Donnan, M. Koga, L. A. Mitchell, M. Molan, G. Fitt, W. Chong, M. Holt, and D. C. Reutens. 2006. <span>“<span class="nocase"><span>T</span>he <span>A</span><span>S</span><span>P</span><span>E</span><span>C</span><span>T</span><span>S</span> template is weighted in favor of the striatocapsular region</span>.”</span> <em>Neuroimage</em> 31 (2): 477–81.
+</div>
+<div class="csl-entry">
+Phan, T. G., T. Kooblal, C. Matley, S. Singhal, B. Clissold, J. Ly, A. G. Thrift, V. Srikanth, and H. Ma. 2019. <span>“<span class="nocase"><span>S</span>troke <span>S</span>everity <span>V</span>ersus <span>D</span>ysphagia <span>S</span>creen as <span>D</span>river for <span>P</span>ost-stroke <span>P</span>neumonia</span>.”</span> <em>Front Neurol</em> 10: 16.
+</div>
+<div class="csl-entry">
+Phan, T. G., N. Krishnadas, V. W. Y. Lai, M. Batt, L. A. Slater, R. V. Chandra, V. Srikanth, and H. Ma. 2019. <span>“<span class="nocase"><span>M</span>eta-<span>A</span>nalysis of <span>A</span>ccuracy of the <span>S</span>pot <span>S</span>ign for <span>P</span>redicting <span>H</span>ematoma <span>G</span>rowth and <span>C</span>linical <span>O</span>utcomes</span>.”</span> <em>Stroke</em> 50 (8): 2030–36.
+</div>
+<div class="csl-entry">
+Reitsma, J. B., A. S. Glas, A. W. Rutjes, R. J. Scholten, P. M. Bossuyt, and A. H. Zwinderman. 2005. <span>“<span class="nocase"><span>B</span>ivariate analysis of sensitivity and specificity produces informative summary measures in diagnostic reviews</span>.”</span> <em>J Clin Epidemiol</em> 58 (10): 982–90.
+</div>
+<div class="csl-entry">
+Rodriguez-Linares, Leandro, Xose Vila, Maria Jose Lado, Arturo Mendez, Abraham Otero, and Constantino Antonio Garcia. 2017. <em>Heart Rate Variability Analysis with the r Package RHRV</em>. Use r! Springer. https://doi.org/<a href="https://doi.org/	10.1007/978-3-319-65355-6"> 10.1007/978-3-319-65355-6</a>.
+</div>
+<div class="csl-entry">
+Salminen, P., H. Paajanen, T. Rautio, P. Nordstrom, M. Aarnio, T. Rantanen, R. Tuominen, et al. 2015. <span>“<span class="nocase"><span>A</span>ntibiotic <span>T</span>herapy vs <span>A</span>ppendectomy for <span>T</span>reatment of <span>U</span>ncomplicated <span>A</span>cute <span>A</span>ppendicitis: <span>T</span>he <span>A</span><span>P</span><span>P</span><span>A</span><span>C</span> <span>R</span>andomized <span>C</span>linical <span>T</span>rial</span>.”</span> <em>JAMA</em> 313 (23): 2340–48.
+</div>
+<div class="csl-entry">
+Seneviratne, U., Z. M. Low, Z. X. Low, A. Hehir, S. Paramaswaran, M. Foong, H. Ma, and T. G. Phan. 2019. <span>“<span class="nocase"><span>M</span>edical health care utilization cost of patients presenting with psychogenic nonepileptic seizures</span>.”</span> <em>Epilepsia</em> 60 (2): 349–57.
+</div>
+<div class="csl-entry">
+Shi, Jiandong, Dehui Luo, Xiang Wan, Yue Liu, Jiming Liu, Zhaoxiang Bian, and Tiejun Tong. 2023. <span>“Detecting the Skewness of Data from the Five-Number Summary and Its Application in Meta-Analysis.”</span> <em>Statistical Methods in Medical Research</em> 32 (7): 1338–60. <a href="https://doi.org/10.1177/09622802231172043">https://doi.org/10.1177/09622802231172043</a>.
+</div>
+<div class="csl-entry">
+Signori, Alessio, Fabio Pellegrini, Francesca Bovis, Luca Carmisciano, Carl de Moor, and Maria Pia Sormani. 2020. <span>“<span class="nocase">Comparison of Placebos and Propensity Score Adjustment in Multiple Sclerosis Nonrandomized Studies</span>.”</span> <em>JAMA Neurology</em>, April. <a href="https://doi.org/10.1001/jamaneurol.2020.0678">https://doi.org/10.1001/jamaneurol.2020.0678</a>.
+</div>
+<div class="csl-entry">
+Singhal, Shaloo, Jian Chen, Richard Beare, Henry Ma, John Ly, and Thanh G. Phan. 2012. <span>“Application of Principal Component Analysis to Study Topography of Hypoxic–Ischemic Brain Injury.”</span> <em>NeuroImage</em> 62 (1): 300–306. https://doi.org/<a href="https://doi.org/10.1016/j.neuroimage.2012.04.025">https://doi.org/10.1016/j.neuroimage.2012.04.025</a>.
+</div>
+<div class="csl-entry">
+Smeeth, A. Ebrahim, L. Haines. 1999. <span>“<span class="nocase">Numbers needed to treat derived from meta-analyses–sometimes informative, usually misleading</span>.”</span> <em>BMJ</em> 318: 1548–51. <a href="https://doi.org/10.1136/bmj.318.7197.1548">https://doi.org/10.1136/bmj.318.7197.1548</a>.
+</div>
+<div class="csl-entry">
+Smith, Norman R. Draper. Harry. 1998. <em>Applied Regression Analysis, Third Edition</em>. 3rd ed. Wiley Series in Probability and Statistics. John Wiley &amp; Sons, Inc.
+</div>
+<div class="csl-entry">
+Stensrud, M. J., and M. A. Hernan. 2020. <span>“<span class="nocase"><span>W</span>hy <span>T</span>est for <span>P</span>roportional <span>H</span>azards?</span>”</span> <em>JAMA</em>, March.
+</div>
+<div class="csl-entry">
+TJ, Fagan. 1975. <span>“Nomogram for Bayes’s Theorem.”</span> <em>N Engl J Med</em> 293 (July): 257. <a href="https://doi.org/10.1056/NEJM197507312930513">https://doi.org/10.1056/NEJM197507312930513</a>.
+</div>
+<div class="csl-entry">
+Tzourio-Mazoyer N, Papathanassiou D, Landeau B. 2002. <span>“Automated Anatomical Labeling of Activations in SPM Using a Macroscopic Anatomical Parcellation of the MNI MRI Single-Subject Brain.”</span> <em>Neuroimage</em> 15 (1): 273–89. <a href="https://doi.org/10.1006/nimg.2001.0978">https://doi.org/10.1006/nimg.2001.0978</a>.
+</div>
+<div class="csl-entry">
+VanderWeele TJ, Ding P. 2017. <span>“Sensitivity Analysis in Observational Research: Introducing the e-Value.”</span> <em>Ann Intern Med</em> 167 (August): 268–74. <a href="https://doi.org/10.7326/M16-2607">https://doi.org/10.7326/M16-2607</a>.
+</div>
+<div class="csl-entry">
+Viechtbauer, Wolfgang. 2010. <span>“Conducting Meta-Analyses in r with the Metafor Package.”</span> <em>Journal of Statistical Software</em> 36 (3): 1–48. <a href="https://doi.org/10.18637/jss.v036.i03">https://doi.org/10.18637/jss.v036.i03</a>.
+</div>
+<div class="csl-entry">
+Wan, Wang, X. 2014. <span>“Estimating the Sample Mean and Standard Deviation from the Sample Size, Median, Range and/or Interquartile Range.”</span> <em>BMC Med Res Methodol</em>, December. https://doi.org/<a href="https://doi.org/10.1186/1471-2288-14-135">https://doi.org/10.1186/1471-2288-14-135</a>.
+</div>
+<div class="csl-entry">
+Wang, Rui, Stephen W. Lagakos, James H. Ware, David J. Hunter, and Jeffrey M. Drazen. 2007. <span>“Statistics in Medicine — Reporting of Subgroup Analyses in Clinical Trials.”</span> <em>New England Journal of Medicine</em> 357 (21): 2189–94. <a href="https://doi.org/10.1056/NEJMsr077003">https://doi.org/10.1056/NEJMsr077003</a>.
+</div>
+<div class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div class="csl-entry">
+———. 2019. 2nd ed. Chapman &amp; Hall/CRC the r Series. Chapman; Hall/CRC; 2 edition (May 30, 2019).
+</div>
+<div class="csl-entry">
+Xie, Yihui. 2015. <em>Dynamic Documents with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/">http://yihui.name/knitr/</a>.
+</div>
+<div class="csl-entry">
+———. 2023. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+</div>
+</div>
 </div>
             </section>
 
@@ -496,6 +851,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

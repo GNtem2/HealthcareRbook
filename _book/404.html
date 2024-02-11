@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Graph Theory | Applications of R in Healthcare</title>
+  <title>Page not found | Applications of R in Healthcare</title>
   <meta name="description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Graph Theory | Applications of R in Healthcare" />
+  <meta property="og:title" content="Page not found | Applications of R in Healthcare" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
   <meta name="github-repo" content="GNtem2/HealthcareRbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Graph Theory | Applications of R in Healthcare" />
+  <meta name="twitter:title" content="Page not found | Applications of R in Healthcare" />
   
   <meta name="twitter:description" content="This is a book describing the use of R in Healthcare. It is aimed at beginners of R language. The majority of the examples are taken from works in Neurology. Where possible data from other disease such as heart disease, cancer and vaccine are used. The ideas and principles can be applied to other aspects of Healthcare. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="operational-research.html"/>
-<link rel="next" href="geospatial-analysis.html"/>
+
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -557,268 +557,19 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="graph-theory" class="section level1 hasAnchor" number="10">
-<h1><span class="header-section-number">Chapter 10</span> Graph Theory<a href="graph-theory.html#graph-theory" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Graph based methods are used daily without realisation of their origin. Examples include Google, Facebook social network, and roads. These methods have emerged as tools for interpreting and analysing connected network structures <span class="citation">(<a href="#ref-c38a1e53f6a2457198c204405a3d7e00">Fornito 2016</a>)</span>. For example, the brain structures and their association with disability can be framed as a network analysis.</p>
-<p>Matrix can be used to represent graphical data, relevant for the network analysis. An adjacency matrix represents the adjacency between different nodes. The nodes are represented in rows and colums. A value of one represent that node A is adjancence to node B. This graph is symmetrical as the value is also assigned between B and A. The diagonal of this graph consists of zeros as the relationship between A and A is zero. Direction can be introduced to a graph by representing the direction from A to B as one. In this case, a value of zero is attached from B to A.</p>
-<p>A graph consists of vertices (nodes) and edges (links). The edges can have direction in which case it is known as directed graph (digraph). Edge direction indicates flow from a source node to a destination node. The nodes and their directed edges can be represented as an adjacency matrix. A directed graph has an asymmetric adjacency matrix.</p>
-<div class="sourceCode" id="cb1185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1185-1"><a href="graph-theory.html#cb1185-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb1185-2"><a href="graph-theory.html#cb1185-2" tabindex="-1"></a>aspects<span class="ot">&lt;-</span><span class="fu">graph</span>(<span class="fu">c</span>(<span class="st">&quot;M1&quot;</span>,<span class="st">&quot;M2&quot;</span>,<span class="st">&quot;M2&quot;</span>,<span class="st">&quot;Disability&quot;</span>,<span class="st">&quot;tpa&quot;</span>,<span class="st">&quot;M1&quot;</span>,<span class="st">&quot;M2&quot;</span>,<span class="st">&quot;M1&quot;</span>,<span class="st">&quot;tpa&quot;</span>,<span class="st">&quot;M2&quot;</span>))</span>
-<span id="cb1185-3"><a href="graph-theory.html#cb1185-3" tabindex="-1"></a><span class="fu">plot</span>(aspects) <span class="co">#aspects is the name of the graph</span></span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/09-graph-theory-1-1.png" width="672" /></p>
-<div id="special-graphs" class="section level2 hasAnchor" number="10.1">
-<h2><span class="header-section-number">10.1</span> Special graphs<a href="graph-theory.html#special-graphs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="laplacian-matrix" class="section level3 hasAnchor" number="10.1.1">
-<h3><span class="header-section-number">10.1.1</span> Laplacian matrix<a href="graph-theory.html#laplacian-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The Laplacian matrix is the difference between the degree and adjacency matrix. The degree matrix represents the number of direct connection of a node. The diagonal of Laplacian matrix retains the diagonal values of the degree matrix (since the diagonal of the adjacency matrix consists of zeroes). The smallest eigenvalue of the Laplacian describes whether the graph is connected or not. The second eigenvalue of the Laplacian matrix is the algebraic connectivity or Fiedler value. High Fiedler value indicates greater number of connected components and consequently, resilience to breakdown in flow of information between members<span class="citation">(<a href="#ref-conf/networking/JamakovicM08">Jamakovic and Mieghem 2008</a>)</span> .</p>
-</div>
-<div id="bimodal-bipartite-graph" class="section level3 hasAnchor" number="10.1.2">
-<h3><span class="header-section-number">10.1.2</span> Bimodal (bipartite) graph<a href="graph-theory.html#bimodal-bipartite-graph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Bimodal graphs are of interest in social network and in analysis of food ecosystem in nature. A well studied example is the <em>Zachary</em> karate club network.This dataset is included in the <em>igraphdata</em> package.</p>
-<div class="sourceCode" id="cb1186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1186-1"><a href="graph-theory.html#cb1186-1" tabindex="-1"></a><span class="fu">library</span>(latentnet)</span></code></pre></div>
-<pre><code>## Loading required package: network</code></pre>
-<pre><code>## 
-## &#39;network&#39; 1.18.1 (2023-01-24), part of the Statnet Project
-## * &#39;news(package=&quot;network&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;network&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
-<pre><code>## 
-## Attaching package: &#39;network&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:igraph&#39;:
-## 
-##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
-##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
-##     is.directed, list.edge.attributes, list.vertex.attributes,
-##     set.edge.attribute, set.vertex.attribute</code></pre>
-<pre><code>## The following object is masked from &#39;package:Hmisc&#39;:
-## 
-##     is.discrete</code></pre>
-<pre><code>## The following object is masked from &#39;package:plyr&#39;:
-## 
-##     is.discrete</code></pre>
-<pre><code>## Loading required package: ergm</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;ergm&#39;:
-##   method               from 
-##   simulate.formula     lme4 
-##   simulate.formula_lhs lme4 
-##   summary.formula      Hmisc</code></pre>
-<pre><code>## 
-## &#39;ergm&#39; 4.5.0 (2023-05-27), part of the Statnet Project
-## * &#39;news(package=&quot;ergm&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;ergm&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information</code></pre>
-<pre><code>## &#39;ergm&#39; 4 is a major update that introduces some backwards-incompatible
-## changes. Please type &#39;news(package=&quot;ergm&quot;)&#39; for a list of major changes.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ergm&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:survMisc&#39;:
-## 
-##     gof</code></pre>
-<pre><code>## The following object is masked from &#39;package:lava&#39;:
-## 
-##     gof</code></pre>
-<pre><code>## 
-## &#39;latentnet&#39; 2.10.6 (2022-05-11), part of the Statnet Project
-## * &#39;news(package=&quot;latentnet&quot;)&#39; for changes since last version
-## * &#39;citation(&quot;latentnet&quot;)&#39; for citation information
-## * &#39;https://statnet.org&#39; for help, support, and other information
-## NOTE: BIC calculation prior to latentnet 2.7.0 had a bug in the calculation of the effective number of parameters. See help(summary.ergmm) for details.
-## NOTE: Prior to version 2.8.0, handling of fixed effects for directed networks had a bug. See help(&quot;ergmm-terms&quot;) for details.</code></pre>
-<div class="sourceCode" id="cb1201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1201-1"><a href="graph-theory.html#cb1201-1" tabindex="-1"></a><span class="co">#davis of social network</span></span>
-<span id="cb1201-2"><a href="graph-theory.html#cb1201-2" tabindex="-1"></a><span class="fu">data</span>(davis)</span>
-<span id="cb1201-3"><a href="graph-theory.html#cb1201-3" tabindex="-1"></a>davis.fit<span class="ot">&lt;-</span><span class="fu">ergmm</span>(davis<span class="sc">~</span><span class="fu">bilinear</span>(<span class="at">d=</span><span class="dv">2</span>)<span class="sc">+</span>rsociality)</span>
-<span id="cb1201-4"><a href="graph-theory.html#cb1201-4" tabindex="-1"></a><span class="fu">plot</span>(davis.fit,<span class="at">pie=</span><span class="cn">TRUE</span>,<span class="at">rand.eff=</span><span class="st">&quot;sociality&quot;</span>,<span class="at">labels=</span><span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="Applications-of-R-in-Healthcare_files/figure-html/09-graph-theory-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1202-1"><a href="graph-theory.html#cb1202-1" tabindex="-1"></a><span class="co">#davis[,1:10]</span></span></code></pre></div>
-</div>
-</div>
-<div id="centrality-measures" class="section level2 hasAnchor" number="10.2">
-<h2><span class="header-section-number">10.2</span> Centrality Measures<a href="graph-theory.html#centrality-measures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The nodes in this case are variables such as ASPECTS regions, demographic and risk factors. This graph below uses data from a paper on the use of PageRank where a graph of 4 variables were used to illustrate the PageRank method for searching brain regions related to disability <span class="citation">(<a href="#ref-pmid25961856">Beare et al. 2015</a>)</span>.</p>
-<div class="sourceCode" id="cb1203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1203-1"><a href="graph-theory.html#cb1203-1" tabindex="-1"></a><span class="co">#the network data is provided above on ASPECTS regions</span></span>
-<span id="cb1203-2"><a href="graph-theory.html#cb1203-2" tabindex="-1"></a></span>
-<span id="cb1203-3"><a href="graph-theory.html#cb1203-3" tabindex="-1"></a><span class="co">#degree is available in igraph, sna</span></span>
-<span id="cb1203-4"><a href="graph-theory.html#cb1203-4" tabindex="-1"></a>d<span class="ot">&lt;-</span>igraph<span class="sc">::</span><span class="fu">degree</span>(aspects)</span>
-<span id="cb1203-5"><a href="graph-theory.html#cb1203-5" tabindex="-1"></a></span>
-<span id="cb1203-6"><a href="graph-theory.html#cb1203-6" tabindex="-1"></a><span class="co">#closeness is available in igraph, sna</span></span>
-<span id="cb1203-7"><a href="graph-theory.html#cb1203-7" tabindex="-1"></a>cl<span class="ot">&lt;-</span>igraph<span class="sc">::</span><span class="fu">closeness</span>(aspects)</span>
-<span id="cb1203-8"><a href="graph-theory.html#cb1203-8" tabindex="-1"></a></span>
-<span id="cb1203-9"><a href="graph-theory.html#cb1203-9" tabindex="-1"></a><span class="co">#betweenness</span></span>
-<span id="cb1203-10"><a href="graph-theory.html#cb1203-10" tabindex="-1"></a>b<span class="ot">&lt;-</span>igraph<span class="sc">::</span><span class="fu">betweenness</span>(aspects)</span>
-<span id="cb1203-11"><a href="graph-theory.html#cb1203-11" tabindex="-1"></a></span>
-<span id="cb1203-12"><a href="graph-theory.html#cb1203-12" tabindex="-1"></a><span class="co">#page rank</span></span>
-<span id="cb1203-13"><a href="graph-theory.html#cb1203-13" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">page.rank</span>(aspects)</span>
-<span id="cb1203-14"><a href="graph-theory.html#cb1203-14" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="st">&quot;degree&quot;</span><span class="ot">=</span><span class="fu">round</span>(d,<span class="dv">2</span>),<span class="st">&quot;closeness&quot;</span><span class="ot">=</span><span class="fu">round</span>(cl,<span class="dv">2</span>),<span class="st">&quot;betweenness&quot;</span> <span class="ot">=</span><span class="fu">round</span>(b,<span class="dv">2</span>),<span class="st">&quot;PageRank&quot;</span> <span class="ot">=</span><span class="fu">round</span>(p<span class="sc">$</span>vector,<span class="dv">2</span>))</span>
-<span id="cb1203-15"><a href="graph-theory.html#cb1203-15" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(df)</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left"></th>
-<th align="right">degree</th>
-<th align="right">closeness</th>
-<th align="right">betweenness</th>
-<th align="right">PageRank</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">M1</td>
-<td align="right">3</td>
-<td align="right">0.33</td>
-<td align="right">0</td>
-<td align="right">0.29</td>
-</tr>
-<tr class="even">
-<td align="left">M2</td>
-<td align="right">4</td>
-<td align="right">0.50</td>
-<td align="right">2</td>
-<td align="right">0.37</td>
-</tr>
-<tr class="odd">
-<td align="left">Disability</td>
-<td align="right">1</td>
-<td align="right">NaN</td>
-<td align="right">0</td>
-<td align="right">0.25</td>
-</tr>
-<tr class="even">
-<td align="left">tpa</td>
-<td align="right">2</td>
-<td align="right">0.25</td>
-<td align="right">0</td>
-<td align="right">0.09</td>
-</tr>
-</tbody>
-</table>
-<div id="local-centrality-measures" class="section level3 hasAnchor" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> Local centrality measures<a href="graph-theory.html#local-centrality-measures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Centrality measures assign a measure of “importance” to nodes and can therefore indicate whether some nodes are more critical than others in a given network. When network nodes represent variables, centrality measures may indicate relevance of variables to a model.</p>
-<p>The simplest centrality measure, degree centrality, is the count of links for each node and is a purely local measure of importance. Node strength, used in weighted networks, is the sum of weights of edges entering or leaving (or both) the node. Other measures, such as betweenness centrality, describe more global structure - the degree of participation of a node as conduit of information between other nodes in a network.</p>
-</div>
-<div id="global-centrality-measures" class="section level3 hasAnchor" number="10.2.2">
-<h3><span class="header-section-number">10.2.2</span> Global centrality measures<a href="graph-theory.html#global-centrality-measures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="page-rank" class="section level4 hasAnchor" number="10.2.2.1">
-<h4><span class="header-section-number">10.2.2.1</span> Page Rank<a href="graph-theory.html#page-rank" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>PageRank is one member of a family of graph eigenvector centrality measures, all of which incorporate the idea that the score of a node depends, at least in part, on the scores of neighbors connecting to the node. Thus a page may have a high PageRank score if many pages link to it, or if a few important or authoritative pages link to it.</p>
-<p>Others include eigenvector centrality (which works best with undirected graphs), alpha centrality and Katz centrality. PageRank uses a different scaling for connections (by the number of links leaving the node) and importance is based on incoming connections rather than outgoing connections<span class="citation">(<a href="#ref-brin98anatomy">Brin and Page 1998</a>)</span> . Eigenvector centrality measure a node’s centrality in terms of node parameters and centrality of neighboring nodes.</p>
-<p>PageRank has several differences with respect to other eigenvector centrality methods, expanded below, which make it better suited for digraphs. PageRank was originally described in terms of a web user/surfer randomly clicking links, and the PageRank of a web page corresponds to the probability of the random surfer arriving at the page of interest. The model of the random surfer used in the PageRank computation includes a damping factor, which represents the chance of the random surfer becoming bored and selecting a completely different page at random (teleporting to a random page). Similarly, if a page is a sink (i.e. has no outgoing links), then the random web surfer may click on to a random page.</p>
-<p>A number of different approaches are available for computing the PageRank for nodes in a network. The conceptually simplest is to assign an equal initial score to each node, and then iteratively update PageRank scores. This is easy to perform algebraically for a small number of nodes but can take a long time with larger data. In practice, it is performed using eigenvector methode. PageRank analysis can be performed using <em>igraph</em> package. <span class="citation">(<a href="#ref-pmid25961856">Beare et al. 2015</a>)</span></p>
-<p>Graph based methods have emerged as tools for interpreting and analysing connected network structures and in this case network structures associated with disability.These types of analysis are attractive because they assess the connectedness of each region of interest (ROI) with respect to other ROIs over the entire brain network.Eigenvector centrality methods have been used to explore connectedness of brain regions. PageRank is a variant of eigenvector centrality and is an ideal method for analysis ofdirected graph (the edges between adjacent nodes(regions) have direction). This method was initially developed as the basis of the search engine for Google. PageRank offered a considerable improvement over pure text based methods in ranking search results,and had the advantage of being content independent (i.e. the search is based on links between the web pages). PageRank emphasises web pages based on the number of links directed to a page and the importance of the sources of those links. Thus a small number of links from influential pages can greatly enhance the importance of the destination page.</p>
-</div>
-</div>
-</div>
-<div id="community" class="section level2 hasAnchor" number="10.3">
-<h2><span class="header-section-number">10.3</span> Community<a href="graph-theory.html#community" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-</div>
-<div id="visualising-graph" class="section level2 hasAnchor" number="10.4">
-<h2><span class="header-section-number">10.4</span> Visualising graph<a href="graph-theory.html#visualising-graph" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>There are many packages for visualising graph such as <em>igraph</em>, <em>sna</em>, <em>ggraph</em>, _Rgraphviz, <em>visnetwork</em>, <em>networkD3</em>.</p>
-<div id="visnetwork" class="section level3 hasAnchor" number="10.4.1">
-<h3><span class="header-section-number">10.4.1</span> Visnetwork<a href="graph-theory.html#visnetwork" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1204-1"><a href="graph-theory.html#cb1204-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb1204-2"><a href="graph-theory.html#cb1204-2" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb1204-3"><a href="graph-theory.html#cb1204-3" tabindex="-1"></a><span class="fu">library</span>(visNetwork)</span>
-<span id="cb1204-4"><a href="graph-theory.html#cb1204-4" tabindex="-1"></a>edge<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;./Data-Use/TPA_edge.csv&quot;</span>) <span class="co">#3 columns:V1 V2 time </span></span>
-<span id="cb1204-5"><a href="graph-theory.html#cb1204-5" tabindex="-1"></a>node<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./Data-Use/TPA_node.csv&quot;</span>)</span>
-<span id="cb1204-6"><a href="graph-theory.html#cb1204-6" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">graph_from_data_frame</span>(<span class="at">d=</span>edge[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)],<span class="at">vertices =</span> node,<span class="at">directed=</span>F)</span>
-<span id="cb1204-7"><a href="graph-theory.html#cb1204-7" tabindex="-1"></a><span class="fu">V</span>(df)<span class="sc">$</span>type<span class="ot">&lt;-</span><span class="fu">V</span>(df)<span class="sc">$</span>name <span class="sc">%in%</span> edge[,<span class="dv">1</span>]</span>
-<span id="cb1204-8"><a href="graph-theory.html#cb1204-8" tabindex="-1"></a><span class="co">#assign color</span></span>
-<span id="cb1204-9"><a href="graph-theory.html#cb1204-9" tabindex="-1"></a>vertex.label<span class="ot">&lt;-</span><span class="fu">V</span>(df)<span class="sc">$</span>membership</span>
-<span id="cb1204-10"><a href="graph-theory.html#cb1204-10" tabindex="-1"></a><span class="co"># Generate colors based on type:</span></span>
-<span id="cb1204-11"><a href="graph-theory.html#cb1204-11" tabindex="-1"></a>colrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;gray50&quot;</span>, <span class="st">&quot;gold&quot;</span>)</span>
-<span id="cb1204-12"><a href="graph-theory.html#cb1204-12" tabindex="-1"></a><span class="fu">V</span>(df)<span class="sc">$</span>color <span class="ot">&lt;-</span> colrs[<span class="fu">V</span>(df)<span class="sc">$</span>membership]</span>
-<span id="cb1204-13"><a href="graph-theory.html#cb1204-13" tabindex="-1"></a><span class="co">#assign shape</span></span>
-<span id="cb1204-14"><a href="graph-theory.html#cb1204-14" tabindex="-1"></a>shape <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;circle&quot;</span>, <span class="st">&quot;square&quot;</span>)</span>
-<span id="cb1204-15"><a href="graph-theory.html#cb1204-15" tabindex="-1"></a><span class="fu">V</span>(df)<span class="sc">$</span>shape<span class="ot">&lt;-</span>shape[<span class="fu">V</span>(df)<span class="sc">$</span>membership] </span>
-<span id="cb1204-16"><a href="graph-theory.html#cb1204-16" tabindex="-1"></a></span>
-<span id="cb1204-17"><a href="graph-theory.html#cb1204-17" tabindex="-1"></a><span class="co">#extract data for visNetwork</span></span>
-<span id="cb1204-18"><a href="graph-theory.html#cb1204-18" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">toVisNetworkData</span>(df)</span>
-<span id="cb1204-19"><a href="graph-theory.html#cb1204-19" tabindex="-1"></a><span class="fu">visNetwork</span>(<span class="at">nodes=</span>data<span class="sc">$</span>nodes,<span class="at">edges=</span>data<span class="sc">$</span>edges, <span class="at">main=</span><span class="st">&quot;TPA ECR Network&quot;</span>)<span class="sc">%&gt;%</span> <span class="fu">visNodes</span>(<span class="at">color =</span> <span class="fu">list</span>(<span class="at">hover =</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">visInteraction</span>(<span class="at">hover =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="visNetwork html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-78e2341dac5f26d1603d" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-78e2341dac5f26d1603d">{"x":{"nodes":{"id":["patient","CTscan","viewCTscan","TPA","ECR","amb","EDdoctor","EDnurse","StrokeReg","StrokeCon","INR"],"membership":[1,1,1,1,1,2,2,2,2,2,2],"group":[1,3,3,4,4,1,1,1,2,2,3],"type":[false,false,false,false,false,true,true,true,true,true,true],"color":["gray50","gray50","gray50","gray50","gray50","gold","gold","gold","gold","gold","gold"],"shape":["circle","circle","circle","circle","circle","square","square","square","square","square","square"],"label":["patient","CTscan","viewCTscan","TPA","ECR","amb","EDdoctor","EDnurse","StrokeReg","StrokeCon","INR"]},"edges":{"from":["patient","patient","CTscan","patient","CTscan","patient","CTscan","viewCTscan","TPA","viewCTscan","TPA","ECR","ECR","viewCTscan"],"to":["amb","EDdoctor","EDdoctor","EDnurse","EDnurse","StrokeReg","StrokeReg","StrokeReg","StrokeReg","StrokeCon","StrokeCon","StrokeCon","INR","INR"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","color":{"hover":"red"}},"manipulation":{"enabled":false},"interaction":{"hover":true,"zoomSpeed":1}},"groups":["1","3","4","2"],"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":{"text":"TPA ECR Network","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
-</div>
-<div id="large-graph" class="section level3 hasAnchor" number="10.4.2">
-<h3><span class="header-section-number">10.4.2</span> Large graph<a href="graph-theory.html#large-graph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>There are very few softwares capable of handling very large graph with the exception of <em>Gephi</em> , <em>Cytoscape</em> and <em>Neo4J</em>.</p>
-</div>
-</div>
-<div id="social-media-and-network-analysis" class="section level2 hasAnchor" number="10.5">
-<h2><span class="header-section-number">10.5</span> Social Media and Network Analysis<a href="graph-theory.html#social-media-and-network-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Social media platform such as twitter, youtube, facebook and instagram are rich source of information for graph theory analysis as well as textmining. The following section only covers twitter and youtube as both are accessible to the public. There’s restricted access for facebook and instagram.</p>
-<div id="twitter" class="section level3 hasAnchor" number="10.5.1">
-<h3><span class="header-section-number">10.5.1</span> Twitter<a href="graph-theory.html#twitter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Analysis of <em>Twitter</em> requires creating an account on <em>Twitter</em>. This step will generate a series of keys listed below. These keys should be stored in a secret location. There are several different ways to access <em>Twitter</em> data. It should be noted that the data covers a range of 9 days and a maximum of 18000 tweets can be downloaded each day. The location of the tweeter can also be accessed if you have created an account with Google Maps API.</p>
-<div class="sourceCode" id="cb1205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1205-1"><a href="graph-theory.html#cb1205-1" tabindex="-1"></a><span class="fu">library</span>(rtweet)</span>
-<span id="cb1205-2"><a href="graph-theory.html#cb1205-2" tabindex="-1"></a><span class="fu">create_token</span>(</span>
-<span id="cb1205-3"><a href="graph-theory.html#cb1205-3" tabindex="-1"></a>  <span class="at">app=</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb1205-4"><a href="graph-theory.html#cb1205-4" tabindex="-1"></a>  <span class="at">consumer_key=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb1205-5"><a href="graph-theory.html#cb1205-5" tabindex="-1"></a>  <span class="at">consumer_secret =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb1205-6"><a href="graph-theory.html#cb1205-6" tabindex="-1"></a>  <span class="at">access_token =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb1205-7"><a href="graph-theory.html#cb1205-7" tabindex="-1"></a>  <span class="at">access_secret =</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb1205-8"><a href="graph-theory.html#cb1205-8" tabindex="-1"></a>)</span>
-<span id="cb1205-9"><a href="graph-theory.html#cb1205-9" tabindex="-1"></a><span class="co"># searching for tweets on WHO</span></span>
-<span id="cb1205-10"><a href="graph-theory.html#cb1205-10" tabindex="-1"></a>CW <span class="ot">&lt;-</span> <span class="fu">search_tweets</span>(<span class="st">&quot;WHO&quot;</span>, <span class="at">n =</span> <span class="dv">18000</span>, <span class="at">include_rts =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1205-11"><a href="graph-theory.html#cb1205-11" tabindex="-1"></a><span class="co"># searching for tweets confined y location</span></span>
-<span id="cb1205-12"><a href="graph-theory.html#cb1205-12" tabindex="-1"></a>searchTerm_t<span class="ot">=</span> (<span class="at">geocode=</span> (<span class="st">&quot;-37.81363,144.9631,5km&quot;</span>))</span>
-<span id="cb1205-13"><a href="graph-theory.html#cb1205-13" tabindex="-1"></a>myTwitterData <span class="ot">&lt;-</span> <span class="fu">Authenticate</span>(<span class="st">&quot;twitter&quot;</span>, </span>
-<span id="cb1205-14"><a href="graph-theory.html#cb1205-14" tabindex="-1"></a>                              <span class="at">apiKey=</span>myapikey, <span class="at">apiSecret=</span>myapisecret, </span>
-<span id="cb1205-15"><a href="graph-theory.html#cb1205-15" tabindex="-1"></a>                              <span class="at">accessToken=</span>myaccesstoken, <span class="at">accessTokenSecret=</span>myaccesstokensecret) <span class="sc">%&gt;%</span> </span>
-<span id="cb1205-16"><a href="graph-theory.html#cb1205-16" tabindex="-1"></a>  <span class="fu">Collect</span>(<span class="at">searchTerm=</span>searchTerm_t, <span class="at">numTweets=</span><span class="dv">100</span>, <span class="at">writeToFile=</span><span class="cn">FALSE</span>,<span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
-<span id="cb1205-17"><a href="graph-theory.html#cb1205-17" tabindex="-1"></a><span class="co">#alternately confined search for tweets on MS from Australia</span></span>
-<span id="cb1205-18"><a href="graph-theory.html#cb1205-18" tabindex="-1"></a>MStw <span class="ot">&lt;-</span> <span class="fu">search_tweets</span>(</span>
-<span id="cb1205-19"><a href="graph-theory.html#cb1205-19" tabindex="-1"></a>  <span class="st">&quot;multiple sclerosis&quot;</span>, <span class="at">geocode =</span> <span class="fu">lookup_coords</span>(<span class="st">&quot;AUS&quot;</span>),<span class="at">n =</span> <span class="dv">18000</span>, <span class="at">include_rts =</span> <span class="cn">FALSE</span></span>
-<span id="cb1205-20"><a href="graph-theory.html#cb1205-20" tabindex="-1"></a>)</span>
-<span id="cb1205-21"><a href="graph-theory.html#cb1205-21" tabindex="-1"></a>rt <span class="ot">&lt;-</span> <span class="fu">lat_lng</span>(MStw)<span class="co">#extract lat and lon from tweets</span></span>
-<span id="cb1205-22"><a href="graph-theory.html#cb1205-22" tabindex="-1"></a><span class="do">## plot lat and lng points onto  map</span></span>
-<span id="cb1205-23"><a href="graph-theory.html#cb1205-23" tabindex="-1"></a><span class="fu">with</span>(rt, <span class="fu">points</span>(lng, lat, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> .<span class="dv">75</span>, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>, .<span class="dv">3</span>, .<span class="dv">7</span>, .<span class="dv">75</span>)))</span>
-<span id="cb1205-24"><a href="graph-theory.html#cb1205-24" tabindex="-1"></a>leaflet<span class="sc">::</span> <span class="fu">leaflet</span>(<span class="at">data=</span>rt) <span class="sc">%&gt;%</span> <span class="fu">addTiles</span> () <span class="sc">%&gt;%</span> <span class="fu">addCircles</span>(<span class="at">lat=</span><span class="sc">~</span>lat,<span class="at">lng=</span><span class="sc">~</span>lng)</span>
-<span id="cb1205-25"><a href="graph-theory.html#cb1205-25" tabindex="-1"></a><span class="do">## plot time series of tweets</span></span>
-<span id="cb1205-26"><a href="graph-theory.html#cb1205-26" tabindex="-1"></a><span class="fu">ts_plot</span>(MStw, <span class="st">&quot;weeks&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1205-27"><a href="graph-theory.html#cb1205-27" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb1205-28"><a href="graph-theory.html#cb1205-28" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">plot.title =</span> ggplot2<span class="sc">::</span><span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))   ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
-<span id="cb1205-29"><a href="graph-theory.html#cb1205-29" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>,</span>
-<span id="cb1205-30"><a href="graph-theory.html#cb1205-30" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Frequency of #MS Twitter statuses from past 9 days&quot;</span>,</span>
-<span id="cb1205-31"><a href="graph-theory.html#cb1205-31" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Twitter status (tweet) counts aggregated using three-hour intervals&quot;</span>,</span>
-<span id="cb1205-32"><a href="graph-theory.html#cb1205-32" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">Source: Data collected from Twitter&#39;s REST API via rtweet&quot;</span></span>
-<span id="cb1205-33"><a href="graph-theory.html#cb1205-33" tabindex="-1"></a>  )</span></code></pre></div>
-</div>
-<div id="youtube" class="section level3 hasAnchor" number="10.5.2">
-<h3><span class="header-section-number">10.5.2</span> Youtube<a href="graph-theory.html#youtube" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To perform analysis of comments on <em>Youtube</em>, a Google Developer’s account should be created. The apikey shoud be saved in a secret location. The analysis can be done by identifying the video of interest.</p>
-<div class="sourceCode" id="cb1206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1206-1"><a href="graph-theory.html#cb1206-1" tabindex="-1"></a><span class="fu">library</span>(SocialMediaLab)</span>
-<span id="cb1206-2"><a href="graph-theory.html#cb1206-2" tabindex="-1"></a>apiKey <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb1206-3"><a href="graph-theory.html#cb1206-3" tabindex="-1"></a>videoIDs<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;YHzz2cXBlGk&quot;</span>) <span class="co">#123 comments #406,253 views 2/2/18</span></span>
-<span id="cb1206-4"><a href="graph-theory.html#cb1206-4" tabindex="-1"></a><span class="co">#extract</span></span>
-<span id="cb1206-5"><a href="graph-theory.html#cb1206-5" tabindex="-1"></a>g_youtube_actor <span class="ot">&lt;-</span> <span class="fu">Authenticate</span>(<span class="st">&quot;youtube&quot;</span>, <span class="at">apiKey=</span> apiKey) <span class="sc">%&gt;%</span></span>
-<span id="cb1206-6"><a href="graph-theory.html#cb1206-6" tabindex="-1"></a>  <span class="fu">Collect</span>(<span class="at">videoIDs =</span> videoIDs, <span class="at">writeToFile=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1206-7"><a href="graph-theory.html#cb1206-7" tabindex="-1"></a>  <span class="fu">Create</span>(<span class="st">&quot;Actor&quot;</span>)</span></code></pre></div>
-
-</div>
-</div>
-</div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-pmid25961856" class="csl-entry">
-Beare, R., J. Chen, T. G. Phan, R. K. Lees, M. Ali, A. Alexandrov, P. M. Bath, et al. 2015. <span>“<span class="nocase"><span>G</span>oogling <span>S</span>troke <span>A</span><span>S</span><span>P</span><span>E</span><span>C</span><span>T</span><span>S</span> to <span>D</span>etermine <span>D</span>isability: <span>E</span>xploratory <span>A</span>nalysis from <span>V</span><span>I</span><span>S</span><span>T</span><span>A</span>-<span>A</span>cute <span>C</span>ollaboration</span>.”</span> <em>PLoS ONE</em> 10 (5): e0125687.
-</div>
-<div id="ref-brin98anatomy" class="csl-entry">
-Brin, Sergey, and Lawrence Page. 1998. <span>“<span>T</span>he <span>A</span>natomy of a <span>L</span>arge-<span>S</span>cale <span>H</span>ypertextual <span>W</span>eb <span>S</span>earch <span>E</span>ngine.”</span> <em>Computer Networks and ISDN Systems</em> 30 (1-7): 107–17. <a href="https://doi.org/10.1016/S0169-7552(98)00110-X">https://doi.org/10.1016/S0169-7552(98)00110-X</a>.
-</div>
-<div id="ref-c38a1e53f6a2457198c204405a3d7e00" class="csl-entry">
-Fornito, Alex. 2016. <span>“Graph Theoretic Analysis of Human Brain Networks.”</span> In <em>Neuromethods</em>, edited by Massimo Filippi, 2nd ed., 119:283–314. Neuromethods 119. United States of America: Humana Press. <a href="https://doi.org/10.1007/978-1-4939-5611-1_10">https://doi.org/10.1007/978-1-4939-5611-1_10</a>.
-</div>
-<div id="ref-conf/networking/JamakovicM08" class="csl-entry">
-Jamakovic, A., and Piet Van Mieghem. 2008. <span>“On the Robustness of Complex Networks by Using the Algebraic Connectivity.”</span> In <em>Networking</em>, edited by Amitabha Das, Hung Keng Pung, Francis Bu-Sung Lee, and Lawrence Wai-Choong Wong, 4982:183–94. Lecture Notes in Computer Science. Springer. <a href="http://dblp.uni-trier.de/db/conf/networking/networking2008.html#JamakovicM08">http://dblp.uni-trier.de/db/conf/networking/networking2008.html#JamakovicM08</a>.
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="operational-research.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="geospatial-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -849,7 +600,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/09-graph-theory.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/%s",
 "text": "Edit"
 },
 "history": {

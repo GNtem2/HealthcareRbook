@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,43 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.10/DiagrammeR.js"></script>
+<link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
+<script src="libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/ionicons-2.0.1/ionicons.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -418,24 +455,23 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a></li>
-<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.2</b> Discrete Event Simulations</a>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.2.1</b> Simulate capacity of system</a></li>
-<li class="chapter" data-level="9.2.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.2.2</b> Queuing network</a></li>
+<li class="chapter" data-level="9.1.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.1.1</b> Simulate capacity of system</a></li>
+<li class="chapter" data-level="9.1.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.1.2</b> Queuing network</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.3</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
+<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
-<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
-<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.4</b> Process mapping</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.5</b> Supply chains</a></li>
+<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.6</b> Health economics</a>
 <ul>
-<li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
+<li class="chapter" data-level="9.6.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.6.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a>
@@ -469,7 +505,10 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#section-1"><i class="fa fa-check"></i><b>11.2.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
 <ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
@@ -524,58 +563,58 @@ div.csl-indent {
 <div id="brief-introduction-to-shiny-app" class="section level2 hasAnchor" number="12.1">
 <h2><span class="header-section-number">12.1</span> Brief introduction to Shiny app<a href="app.html#brief-introduction-to-shiny-app" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Shiny divides the app to 2 component: <em>ui</em> or user interface web page and <em>server</em> or the engine for running the app. This app is used to assist if a stroke code should be activated. It uses the <em>reactive</em> call within <em>server</em> to switch between activating and deactivating code stroke.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="app.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb1-2"><a href="app.html#cb1-2" tabindex="-1"></a><span class="co"># Define UI for application </span></span>
-<span id="cb1-3"><a href="app.html#cb1-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">bootstrapPage</span>(</span>
-<span id="cb1-4"><a href="app.html#cb1-4" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">&quot;ST6-code stroke prototype app&quot;</span>),</span>
-<span id="cb1-5"><a href="app.html#cb1-5" tabindex="-1"></a>    <span class="fu">wellPanel</span>(</span>
-<span id="cb1-6"><a href="app.html#cb1-6" tabindex="-1"></a>        <span class="fu">helpText</span>(<span class="st">&quot;This app helps you decide if you should call a code stroke. it is designed for use at a teaching hospital and may not apply for your specific need. Please check with your local hospital.&quot;</span>),</span>
-<span id="cb1-7"><a href="app.html#cb1-7" tabindex="-1"></a>        <span class="co">#stroke      </span></span>
-<span id="cb1-8"><a href="app.html#cb1-8" tabindex="-1"></a>        <span class="fu">textInput</span>(<span class="st">&#39;stroke&#39;</span>,<span class="st">&quot;Is it a stroke-Please enter Yes or No&quot;</span>,<span class="st">&quot;No&quot;</span>),</span>
-<span id="cb1-9"><a href="app.html#cb1-9" tabindex="-1"></a>        <span class="co">#walk</span></span>
-<span id="cb1-10"><a href="app.html#cb1-10" tabindex="-1"></a>        <span class="fu">textInput</span>(<span class="st">&#39;walk&#39;</span>,<span class="st">&quot;Prior to stroke, can the patient walk from one room to another without the help from another person? Walking aids such as four wheelframe and walking stick are allowed? -Please enter Yes or No&quot;</span>,<span class="st">&quot;Yes&quot;</span>),</span>
-<span id="cb1-11"><a href="app.html#cb1-11" tabindex="-1"></a>        <span class="co">#home</span></span>
-<span id="cb1-12"><a href="app.html#cb1-12" tabindex="-1"></a>        <span class="fu">textInput</span>(<span class="st">&#39;nursing&#39;</span>,<span class="st">&quot;Is the patient from nursing home-Please enter Yes or No&quot;</span>,<span class="st">&quot;Yes&quot;</span>)</span>
-<span id="cb1-13"><a href="app.html#cb1-13" tabindex="-1"></a>    ),</span>
-<span id="cb1-14"><a href="app.html#cb1-14" tabindex="-1"></a>    <span class="co">#partition screen to 3 columns- sum to 12</span></span>
-<span id="cb1-15"><a href="app.html#cb1-15" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>,</span>
-<span id="cb1-16"><a href="app.html#cb1-16" tabindex="-1"></a>           <span class="fu">tabPanel</span>(</span>
-<span id="cb1-17"><a href="app.html#cb1-17" tabindex="-1"></a>               <span class="fu">textOutput</span>(<span class="st">&quot;Hospital&quot;</span>),</span>
-<span id="cb1-18"><a href="app.html#cb1-18" tabindex="-1"></a>               <span class="fu">textOutput</span>(<span class="st">&quot;Walk&quot;</span>))</span>
-<span id="cb1-19"><a href="app.html#cb1-19" tabindex="-1"></a>    )</span>
-<span id="cb1-20"><a href="app.html#cb1-20" tabindex="-1"></a>  )</span>
-<span id="cb1-21"><a href="app.html#cb1-21" tabindex="-1"></a><span class="co"># Define server logic </span></span>
-<span id="cb1-22"><a href="app.html#cb1-22" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb1-23"><a href="app.html#cb1-23" tabindex="-1"></a>    <span class="co">#stroke</span></span>
-<span id="cb1-24"><a href="app.html#cb1-24" tabindex="-1"></a>    answer<span class="ot">&lt;-</span><span class="fu">reactive</span>({</span>
-<span id="cb1-25"><a href="app.html#cb1-25" tabindex="-1"></a>       <span class="cf">if</span>(input<span class="sc">$</span>stroke<span class="sc">==</span><span class="st">&quot;No&quot;</span>) </span>
-<span id="cb1-26"><a href="app.html#cb1-26" tabindex="-1"></a>          {<span class="fu">return</span> (<span class="st">&quot;Your answer is NO to the patient having signs of stroke, please do NOT call code stroke&quot;</span>)</span>
-<span id="cb1-27"><a href="app.html#cb1-27" tabindex="-1"></a>     } <span class="cf">else</span> {</span>
-<span id="cb1-28"><a href="app.html#cb1-28" tabindex="-1"></a>        <span class="fu">return</span>(<span class="st">&quot;Please call code stroke&quot;</span>)</span>
-<span id="cb1-29"><a href="app.html#cb1-29" tabindex="-1"></a>    }</span>
-<span id="cb1-30"><a href="app.html#cb1-30" tabindex="-1"></a>    })</span>
-<span id="cb1-31"><a href="app.html#cb1-31" tabindex="-1"></a>    output<span class="sc">$</span>Hospital<span class="ot">&lt;-</span><span class="fu">renderText</span>({<span class="fu">return</span>(<span class="fu">answer</span>())})</span>
-<span id="cb1-32"><a href="app.html#cb1-32" tabindex="-1"></a>    <span class="co">#walk</span></span>
-<span id="cb1-33"><a href="app.html#cb1-33" tabindex="-1"></a>    answer1<span class="ot">&lt;-</span><span class="fu">reactive</span>({</span>
-<span id="cb1-34"><a href="app.html#cb1-34" tabindex="-1"></a>       <span class="cf">if</span>(input<span class="sc">$</span>stroke<span class="sc">==</span><span class="st">&quot;No&quot;</span>) </span>
-<span id="cb1-35"><a href="app.html#cb1-35" tabindex="-1"></a>      {<span class="fu">return</span> (<span class="st">&quot;Your answer is NO to the patient having signs of stroke, please do NOT call code stroke&quot;</span>)</span>
-<span id="cb1-36"><a href="app.html#cb1-36" tabindex="-1"></a>       } <span class="cf">else</span> { <span class="cf">if</span>(input<span class="sc">$</span>walk<span class="sc">==</span><span class="st">&quot;No&quot;</span>) {</span>
-<span id="cb1-37"><a href="app.html#cb1-37" tabindex="-1"></a>           <span class="fu">return</span>(<span class="st">&quot;Your answer is No, indicating that premorbidly the patient is unable to walk unaided, please do NOT call code stroke&quot;</span>)</span>
-<span id="cb1-38"><a href="app.html#cb1-38" tabindex="-1"></a>       } <span class="cf">else</span> { <span class="cf">if</span>(input<span class="sc">$</span>nursing<span class="sc">==</span><span class="st">&quot;Yes&quot;</span>) {</span>
-<span id="cb1-39"><a href="app.html#cb1-39" tabindex="-1"></a>         <span class="fu">return</span>(<span class="st">&quot;Your answer is Yes to the patient living in nursing home, please do NOT call code stroke&quot;</span>)</span>
-<span id="cb1-40"><a href="app.html#cb1-40" tabindex="-1"></a>       }</span>
-<span id="cb1-41"><a href="app.html#cb1-41" tabindex="-1"></a>         }</span>
-<span id="cb1-42"><a href="app.html#cb1-42" tabindex="-1"></a>        <span class="fu">return</span>(<span class="st">&quot;Please call code stroke&quot;</span>)</span>
-<span id="cb1-43"><a href="app.html#cb1-43" tabindex="-1"></a>        }</span>
-<span id="cb1-44"><a href="app.html#cb1-44" tabindex="-1"></a>    })</span>
-<span id="cb1-45"><a href="app.html#cb1-45" tabindex="-1"></a>    output<span class="sc">$</span>Walk<span class="ot">&lt;-</span><span class="fu">renderText</span>({<span class="fu">return</span>(<span class="fu">answer1</span>())})</span>
-<span id="cb1-46"><a href="app.html#cb1-46" tabindex="-1"></a>   }</span>
-<span id="cb1-47"><a href="app.html#cb1-47" tabindex="-1"></a><span class="co"># Run the application </span></span>
-<span id="cb1-48"><a href="app.html#cb1-48" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
+<div class="sourceCode" id="cb1364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1364-1"><a href="app.html#cb1364-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb1364-2"><a href="app.html#cb1364-2" tabindex="-1"></a><span class="co"># Define UI for application </span></span>
+<span id="cb1364-3"><a href="app.html#cb1364-3" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">bootstrapPage</span>(</span>
+<span id="cb1364-4"><a href="app.html#cb1364-4" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">&quot;ST6-code stroke prototype app&quot;</span>),</span>
+<span id="cb1364-5"><a href="app.html#cb1364-5" tabindex="-1"></a>    <span class="fu">wellPanel</span>(</span>
+<span id="cb1364-6"><a href="app.html#cb1364-6" tabindex="-1"></a>        <span class="fu">helpText</span>(<span class="st">&quot;This app helps you decide if you should call a code stroke. it is designed for use at a teaching hospital and may not apply for your specific need. Please check with your local hospital.&quot;</span>),</span>
+<span id="cb1364-7"><a href="app.html#cb1364-7" tabindex="-1"></a>        <span class="co">#stroke      </span></span>
+<span id="cb1364-8"><a href="app.html#cb1364-8" tabindex="-1"></a>        <span class="fu">textInput</span>(<span class="st">&#39;stroke&#39;</span>,<span class="st">&quot;Is it a stroke-Please enter Yes or No&quot;</span>,<span class="st">&quot;No&quot;</span>),</span>
+<span id="cb1364-9"><a href="app.html#cb1364-9" tabindex="-1"></a>        <span class="co">#walk</span></span>
+<span id="cb1364-10"><a href="app.html#cb1364-10" tabindex="-1"></a>        <span class="fu">textInput</span>(<span class="st">&#39;walk&#39;</span>,<span class="st">&quot;Prior to stroke, can the patient walk from one room to another without the help from another person? Walking aids such as four wheelframe and walking stick are allowed? -Please enter Yes or No&quot;</span>,<span class="st">&quot;Yes&quot;</span>),</span>
+<span id="cb1364-11"><a href="app.html#cb1364-11" tabindex="-1"></a>        <span class="co">#home</span></span>
+<span id="cb1364-12"><a href="app.html#cb1364-12" tabindex="-1"></a>        <span class="fu">textInput</span>(<span class="st">&#39;nursing&#39;</span>,<span class="st">&quot;Is the patient from nursing home-Please enter Yes or No&quot;</span>,<span class="st">&quot;Yes&quot;</span>)</span>
+<span id="cb1364-13"><a href="app.html#cb1364-13" tabindex="-1"></a>    ),</span>
+<span id="cb1364-14"><a href="app.html#cb1364-14" tabindex="-1"></a>    <span class="co">#partition screen to 3 columns- sum to 12</span></span>
+<span id="cb1364-15"><a href="app.html#cb1364-15" tabindex="-1"></a>    <span class="fu">column</span>(<span class="dv">9</span>,</span>
+<span id="cb1364-16"><a href="app.html#cb1364-16" tabindex="-1"></a>           <span class="fu">tabPanel</span>(</span>
+<span id="cb1364-17"><a href="app.html#cb1364-17" tabindex="-1"></a>               <span class="fu">textOutput</span>(<span class="st">&quot;Hospital&quot;</span>),</span>
+<span id="cb1364-18"><a href="app.html#cb1364-18" tabindex="-1"></a>               <span class="fu">textOutput</span>(<span class="st">&quot;Walk&quot;</span>))</span>
+<span id="cb1364-19"><a href="app.html#cb1364-19" tabindex="-1"></a>    )</span>
+<span id="cb1364-20"><a href="app.html#cb1364-20" tabindex="-1"></a>  )</span>
+<span id="cb1364-21"><a href="app.html#cb1364-21" tabindex="-1"></a><span class="co"># Define server logic </span></span>
+<span id="cb1364-22"><a href="app.html#cb1364-22" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb1364-23"><a href="app.html#cb1364-23" tabindex="-1"></a>    <span class="co">#stroke</span></span>
+<span id="cb1364-24"><a href="app.html#cb1364-24" tabindex="-1"></a>    answer<span class="ot">&lt;-</span><span class="fu">reactive</span>({</span>
+<span id="cb1364-25"><a href="app.html#cb1364-25" tabindex="-1"></a>       <span class="cf">if</span>(input<span class="sc">$</span>stroke<span class="sc">==</span><span class="st">&quot;No&quot;</span>) </span>
+<span id="cb1364-26"><a href="app.html#cb1364-26" tabindex="-1"></a>          {<span class="fu">return</span> (<span class="st">&quot;Your answer is NO to the patient having signs of stroke, please do NOT call code stroke&quot;</span>)</span>
+<span id="cb1364-27"><a href="app.html#cb1364-27" tabindex="-1"></a>     } <span class="cf">else</span> {</span>
+<span id="cb1364-28"><a href="app.html#cb1364-28" tabindex="-1"></a>        <span class="fu">return</span>(<span class="st">&quot;Please call code stroke&quot;</span>)</span>
+<span id="cb1364-29"><a href="app.html#cb1364-29" tabindex="-1"></a>    }</span>
+<span id="cb1364-30"><a href="app.html#cb1364-30" tabindex="-1"></a>    })</span>
+<span id="cb1364-31"><a href="app.html#cb1364-31" tabindex="-1"></a>    output<span class="sc">$</span>Hospital<span class="ot">&lt;-</span><span class="fu">renderText</span>({<span class="fu">return</span>(<span class="fu">answer</span>())})</span>
+<span id="cb1364-32"><a href="app.html#cb1364-32" tabindex="-1"></a>    <span class="co">#walk</span></span>
+<span id="cb1364-33"><a href="app.html#cb1364-33" tabindex="-1"></a>    answer1<span class="ot">&lt;-</span><span class="fu">reactive</span>({</span>
+<span id="cb1364-34"><a href="app.html#cb1364-34" tabindex="-1"></a>       <span class="cf">if</span>(input<span class="sc">$</span>stroke<span class="sc">==</span><span class="st">&quot;No&quot;</span>) </span>
+<span id="cb1364-35"><a href="app.html#cb1364-35" tabindex="-1"></a>      {<span class="fu">return</span> (<span class="st">&quot;Your answer is NO to the patient having signs of stroke, please do NOT call code stroke&quot;</span>)</span>
+<span id="cb1364-36"><a href="app.html#cb1364-36" tabindex="-1"></a>       } <span class="cf">else</span> { <span class="cf">if</span>(input<span class="sc">$</span>walk<span class="sc">==</span><span class="st">&quot;No&quot;</span>) {</span>
+<span id="cb1364-37"><a href="app.html#cb1364-37" tabindex="-1"></a>           <span class="fu">return</span>(<span class="st">&quot;Your answer is No, indicating that premorbidly the patient is unable to walk unaided, please do NOT call code stroke&quot;</span>)</span>
+<span id="cb1364-38"><a href="app.html#cb1364-38" tabindex="-1"></a>       } <span class="cf">else</span> { <span class="cf">if</span>(input<span class="sc">$</span>nursing<span class="sc">==</span><span class="st">&quot;Yes&quot;</span>) {</span>
+<span id="cb1364-39"><a href="app.html#cb1364-39" tabindex="-1"></a>         <span class="fu">return</span>(<span class="st">&quot;Your answer is Yes to the patient living in nursing home, please do NOT call code stroke&quot;</span>)</span>
+<span id="cb1364-40"><a href="app.html#cb1364-40" tabindex="-1"></a>       }</span>
+<span id="cb1364-41"><a href="app.html#cb1364-41" tabindex="-1"></a>         }</span>
+<span id="cb1364-42"><a href="app.html#cb1364-42" tabindex="-1"></a>        <span class="fu">return</span>(<span class="st">&quot;Please call code stroke&quot;</span>)</span>
+<span id="cb1364-43"><a href="app.html#cb1364-43" tabindex="-1"></a>        }</span>
+<span id="cb1364-44"><a href="app.html#cb1364-44" tabindex="-1"></a>    })</span>
+<span id="cb1364-45"><a href="app.html#cb1364-45" tabindex="-1"></a>    output<span class="sc">$</span>Walk<span class="ot">&lt;-</span><span class="fu">renderText</span>({<span class="fu">return</span>(<span class="fu">answer1</span>())})</span>
+<span id="cb1364-46"><a href="app.html#cb1364-46" tabindex="-1"></a>   }</span>
+<span id="cb1364-47"><a href="app.html#cb1364-47" tabindex="-1"></a><span class="co"># Run the application </span></span>
+<span id="cb1364-48"><a href="app.html#cb1364-48" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code></pre></div>
 <pre><code>## 
-## Listening on http://127.0.0.1:4496</code></pre>
+## Listening on http://127.0.0.1:5816</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/11-App-1-1.png" width="672" /></p>
-<p>Other available apps can be found at <a href="https://gntem3.shinyapps.io/ambmc" class="uri">https://gntem3.shinyapps.io/ambmc</a>. It was designed to explore deployment of mobile stroke unit (ambulance equipped with CT scanner for stroke treatment) in Melbourne <span class="citation">(<a href="#ref-pmid31019489">Phan et al. 2019</a>)</span>. The app illustrates the use of slide ruler to enable user interaction. A picture can be inserted into the app by placing the picture inside sub-folder <em>www</em>. A web page can be inserted using html coding. Plotly object can be rendered wihtin shiny using the call <em>renderPlotly</em>. Leaflet map object can be rendered using the call <em>renderLeaflet</em>.</p>
+<p>Other available apps can be found at <a href="https://gntem3.shinyapps.io/ambmc" class="uri">https://gntem3.shinyapps.io/ambmc</a>. It was designed to explore deployment of mobile stroke unit (ambulance equipped with CT scanner for stroke treatment) in Melbourne <span class="citation">(<a href="#ref-pmid31019489">Phan, Beare, et al. 2019</a>)</span>. The app illustrates the use of slide ruler to enable user interaction. A picture can be inserted into the app by placing the picture inside sub-folder <em>www</em>. A web page can be inserted using html coding. Plotly object can be rendered wihtin shiny using the call <em>renderPlotly</em>. Leaflet map object can be rendered using the call <em>renderLeaflet</em>.</p>
 
 </div>
 </div>
@@ -645,6 +684,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

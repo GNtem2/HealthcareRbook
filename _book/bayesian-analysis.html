@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,43 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.10/DiagrammeR.js"></script>
+<link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
+<script src="libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/ionicons-2.0.1/ionicons.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -418,24 +455,23 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a></li>
-<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.2</b> Discrete Event Simulations</a>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.2.1</b> Simulate capacity of system</a></li>
-<li class="chapter" data-level="9.2.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.2.2</b> Queuing network</a></li>
+<li class="chapter" data-level="9.1.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.1.1</b> Simulate capacity of system</a></li>
+<li class="chapter" data-level="9.1.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.1.2</b> Queuing network</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.3</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
+<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
-<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
-<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.4</b> Process mapping</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.5</b> Supply chains</a></li>
+<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.6</b> Health economics</a>
 <ul>
-<li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
+<li class="chapter" data-level="9.6.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.6.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a>
@@ -469,7 +505,10 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#section-1"><i class="fa fa-check"></i><b>11.2.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
 <ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
@@ -563,24 +602,14 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 <p>In the example here, the GBD 2016 life time risk of stroke is re-used. The model is shown next to the simple linear regression. INLA is used to infer the probability of a set of data given the defined parameters. In the regression example below the linear regression return coefficient of 0.788 and the INLA version returns a mean value of 0.789 as well. Note that Bayesian methods do not provide p-values.</p>
 <div id="linear-regression" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Linear regression<a href="bayesian-analysis.html#linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="bayesian-analysis.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(INLA)</span></code></pre></div>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## Loading required package: sp</code></pre>
-<pre><code>## The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
-## which was just loaded, will retire in October 2023.
-## Please refer to R-spatial evolution reports for details, especially
-## https://r-spatial.org/r/2023/05/15/evolution4.html.
-## It may be desirable to make the sf package available;
-## package maintainers should consider adding sf to Suggests:.
-## The sp package is now running under evolution status 2
-##      (status 2 uses the sf package in place of rgdal)</code></pre>
+<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1017-1"><a href="bayesian-analysis.html#cb1017-1" tabindex="-1"></a><span class="fu">library</span>(INLA)</span></code></pre></div>
 <pre><code>## This is INLA_23.09.09 built 2023-10-16 17:29:11 UTC.
 ##  - See www.r-inla.org/contact-us for how to get help.</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="bayesian-analysis.html#cb6-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;./Data-Use/world_stroke.Rda&quot;</span>)</span>
-<span id="cb6-2"><a href="bayesian-analysis.html#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="bayesian-analysis.html#cb6-3" tabindex="-1"></a><span class="co">#perform ordinary linear regression for comparison</span></span>
-<span id="cb6-4"><a href="bayesian-analysis.html#cb6-4" tabindex="-1"></a>fit<span class="ot">&lt;-</span><span class="fu">lm</span>(LifeExpectancy<span class="sc">~</span>MeanLifetimeRisk, <span class="at">data =</span>world_sfdf)</span>
-<span id="cb6-5"><a href="bayesian-analysis.html#cb6-5" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1019-1"><a href="bayesian-analysis.html#cb1019-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;./Data-Use/world_stroke.Rda&quot;</span>)</span>
+<span id="cb1019-2"><a href="bayesian-analysis.html#cb1019-2" tabindex="-1"></a></span>
+<span id="cb1019-3"><a href="bayesian-analysis.html#cb1019-3" tabindex="-1"></a><span class="co">#perform ordinary linear regression for comparison</span></span>
+<span id="cb1019-4"><a href="bayesian-analysis.html#cb1019-4" tabindex="-1"></a>fit<span class="ot">&lt;-</span><span class="fu">lm</span>(LifeExpectancy<span class="sc">~</span>MeanLifetimeRisk, <span class="at">data =</span>world_sfdf)</span>
+<span id="cb1019-5"><a href="bayesian-analysis.html#cb1019-5" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = LifeExpectancy ~ MeanLifetimeRisk, data = world_sfdf)
@@ -601,108 +630,106 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ## Multiple R-squared:  0.3802, Adjusted R-squared:  0.3766 
 ## F-statistic: 106.1 on 1 and 173 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here the output of Bayesian analysis contrasts with the frequentist output above.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="bayesian-analysis.html#cb8-1" tabindex="-1"></a><span class="co">#need to subset data as world_sfdf is of class &quot;sf&quot;         &quot;tbl_df&quot;     &quot;tbl&quot; &quot;data.frame&quot;</span></span>
-<span id="cb8-2"><a href="bayesian-analysis.html#cb8-2" tabindex="-1"></a>fitINLA<span class="ot">&lt;-</span><span class="fu">inla</span>(LifeExpectancy<span class="sc">~</span>MeanLifetimeRisk, <span class="at">family =</span> <span class="st">&quot;gaussian&quot;</span>, <span class="at">data =</span>world_sfdf[,<span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">12</span>)])</span>
-<span id="cb8-3"><a href="bayesian-analysis.html#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="bayesian-analysis.html#cb8-4" tabindex="-1"></a><span class="fu">summary</span>(fitINLA)</span></code></pre></div>
+<div class="sourceCode" id="cb1021"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1021-1"><a href="bayesian-analysis.html#cb1021-1" tabindex="-1"></a><span class="co">#need to subset data as world_sfdf is of class &quot;sf&quot;         &quot;tbl_df&quot;     &quot;tbl&quot; &quot;data.frame&quot;</span></span>
+<span id="cb1021-2"><a href="bayesian-analysis.html#cb1021-2" tabindex="-1"></a>fitINLA<span class="ot">&lt;-</span><span class="fu">inla</span>(LifeExpectancy<span class="sc">~</span>MeanLifetimeRisk, <span class="at">family =</span> <span class="st">&quot;gaussian&quot;</span>, <span class="at">data =</span>world_sfdf[,<span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">12</span>)])</span>
+<span id="cb1021-3"><a href="bayesian-analysis.html#cb1021-3" tabindex="-1"></a></span>
+<span id="cb1021-4"><a href="bayesian-analysis.html#cb1021-4" tabindex="-1"></a><span class="fu">summary</span>(fitINLA)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-##    c(&quot;inla.core(formula = formula, family = family, contrasts = contrasts, 
-##    &quot;, &quot; data = data, quantiles = quantiles, E = E, offset = offset, &quot;, &quot; 
-##    scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, 
-##    &quot;, &quot; lp.scale = lp.scale, link.covariates = link.covariates, verbose = 
-##    verbose, &quot;, &quot; lincomb = lincomb, selection = selection, control.compute 
-##    = control.compute, &quot;, &quot; control.predictor = control.predictor, 
-##    control.family = control.family, &quot;, &quot; control.inla = control.inla, 
-##    control.fixed = control.fixed, &quot;, &quot; control.mode = control.mode, 
-##    control.expert = control.expert, &quot;, &quot; control.hazard = control.hazard, 
-##    control.lincomb = control.lincomb, &quot;, &quot; control.update = 
-##    control.update, control.lp.scale = control.lp.scale, &quot;, &quot; 
-##    control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, 
-##    &quot;, &quot; inla.call = inla.call, inla.arg = inla.arg, num.threads = 
-##    num.threads, &quot;, &quot; keep = keep, working.directory = working.directory, 
-##    silent = silent, &quot;, &quot; inla.mode = inla.mode, safe = FALSE, debug = 
-##    debug, .parent.frame = .parent.frame)&quot; ) 
+##    c(&quot;inla.core(formula = formula, family = family, contrasts = contrasts, &quot;, &quot; 
+##    data = data, quantiles = quantiles, E = E, offset = offset, &quot;, &quot; scale = 
+##    scale, weights = weights, Ntrials = Ntrials, strata = strata, &quot;, &quot; lp.scale 
+##    = lp.scale, link.covariates = link.covariates, verbose = verbose, &quot;, &quot; 
+##    lincomb = lincomb, selection = selection, control.compute = control.compute, 
+##    &quot;, &quot; control.predictor = control.predictor, control.family = control.family, 
+##    &quot;, &quot; control.inla = control.inla, control.fixed = control.fixed, &quot;, &quot; 
+##    control.mode = control.mode, control.expert = control.expert, &quot;, &quot; 
+##    control.hazard = control.hazard, control.lincomb = control.lincomb, &quot;, &quot; 
+##    control.update = control.update, control.lp.scale = control.lp.scale, &quot;, &quot; 
+##    control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, &quot;, &quot; 
+##    inla.call = inla.call, inla.arg = inla.arg, num.threads = num.threads, &quot;, &quot; 
+##    keep = keep, working.directory = working.directory, silent = silent, &quot;, &quot; 
+##    inla.mode = inla.mode, safe = FALSE, debug = debug, .parent.frame = 
+##    .parent.frame)&quot; ) 
 ## Time used:
-##     Pre = 0.452, Running = 2.34, Post = 0.0615, Total = 2.85 
+##     Pre = 1.15, Running = 2.4, Post = 0.24, Total = 3.79 
 ## Fixed effects:
 ##                    mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-## (Intercept)      56.275 1.598     53.139   56.275     59.411 56.275   0
+## (Intercept)      56.275 1.599     53.137   56.275     59.413 56.275   0
 ## MeanLifetimeRisk  0.789 0.077      0.638    0.789      0.939  0.789   0
 ## 
 ## Model hyperparameters:
-##                                          mean    sd 0.025quant 0.5quant
-## Precision for the Gaussian observations 0.026 0.003      0.021    0.026
-##                                         0.975quant  mode
-## Precision for the Gaussian observations      0.032 0.026
+##                                          mean    sd 0.025quant 0.5quant 0.975quant
+## Precision for the Gaussian observations 0.026 0.003      0.021    0.026      0.032
+##                                          mode
+## Precision for the Gaussian observations 0.026
 ## 
-## Marginal log-Likelihood:  -587.99 
+## Marginal log-Likelihood:  -587.98 
 ##  is computed 
 ## Posterior summaries for the linear predictor and the fitted values are computed
 ## (Posterior marginals needs also &#39;control.compute=list(return.marginals.predictor=TRUE)&#39;)</code></pre>
 <p>Performing Bayesian analysis with <em>rstan</em> can be tricky as the text file for the stan code require an empty line at the end. The <em>brms</em> library contains the same precompiled <em>stan</em> code and is easier to run.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bayesian-analysis.html#cb10-1" tabindex="-1"></a><span class="co">#This may not run if there is incompatibility between Rtools and version of R</span></span>
-<span id="cb10-2"><a href="bayesian-analysis.html#cb10-2" tabindex="-1"></a><span class="co">#check  system(&quot;g++ -v&quot;)</span></span>
-<span id="cb10-3"><a href="bayesian-analysis.html#cb10-3" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
-<span id="cb10-4"><a href="bayesian-analysis.html#cb10-4" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="bayesian-analysis.html#cb10-5" tabindex="-1"></a>fitBRM<span class="ot">&lt;-</span><span class="fu">brm</span>(LifeExpectancy<span class="sc">~</span>MeanLifetimeRisk,  <span class="at">data =</span>world_sfdf[,<span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">12</span>)])</span>
-<span id="cb10-6"><a href="bayesian-analysis.html#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="bayesian-analysis.html#cb10-7" tabindex="-1"></a><span class="fu">summary</span>(fitBRM)</span></code></pre></div>
+<div class="sourceCode" id="cb1023"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1023-1"><a href="bayesian-analysis.html#cb1023-1" tabindex="-1"></a><span class="co">#This may not run if there is incompatibility between Rtools and version of R</span></span>
+<span id="cb1023-2"><a href="bayesian-analysis.html#cb1023-2" tabindex="-1"></a><span class="co">#check  system(&quot;g++ -v&quot;)</span></span>
+<span id="cb1023-3"><a href="bayesian-analysis.html#cb1023-3" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1023-4"><a href="bayesian-analysis.html#cb1023-4" tabindex="-1"></a></span>
+<span id="cb1023-5"><a href="bayesian-analysis.html#cb1023-5" tabindex="-1"></a>fitBRM<span class="ot">&lt;-</span><span class="fu">brm</span>(LifeExpectancy<span class="sc">~</span>MeanLifetimeRisk,  <span class="at">data =</span>world_sfdf[,<span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">12</span>)])</span>
+<span id="cb1023-6"><a href="bayesian-analysis.html#cb1023-6" tabindex="-1"></a></span>
+<span id="cb1023-7"><a href="bayesian-analysis.html#cb1023-7" tabindex="-1"></a><span class="fu">summary</span>(fitBRM)</span></code></pre></div>
 <p>Extract the posterior samples for plotting.</p>
 </div>
 <div id="logistic-regression-2" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> Logistic regression<a href="bayesian-analysis.html#logistic-regression-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This example illustrates the use of INLA for logistic regression.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="bayesian-analysis.html#cb11-1" tabindex="-1"></a><span class="co">#library(INLA)</span></span>
-<span id="cb11-2"><a href="bayesian-analysis.html#cb11-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BreastCancer&quot;</span>,<span class="at">package =</span> <span class="st">&quot;mlbench&quot;</span>)</span>
-<span id="cb11-3"><a href="bayesian-analysis.html#cb11-3" tabindex="-1"></a><span class="fu">colnames</span>(BreastCancer)</span></code></pre></div>
+<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1024-1"><a href="bayesian-analysis.html#cb1024-1" tabindex="-1"></a><span class="co">#library(INLA)</span></span>
+<span id="cb1024-2"><a href="bayesian-analysis.html#cb1024-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BreastCancer&quot;</span>,<span class="at">package =</span> <span class="st">&quot;mlbench&quot;</span>)</span>
+<span id="cb1024-3"><a href="bayesian-analysis.html#cb1024-3" tabindex="-1"></a><span class="fu">colnames</span>(BreastCancer)</span></code></pre></div>
 <pre><code>##  [1] &quot;Id&quot;              &quot;Cl.thickness&quot;    &quot;Cell.size&quot;       &quot;Cell.shape&quot;     
 ##  [5] &quot;Marg.adhesion&quot;   &quot;Epith.c.size&quot;    &quot;Bare.nuclei&quot;     &quot;Bl.cromatin&quot;    
 ##  [9] &quot;Normal.nucleoli&quot; &quot;Mitoses&quot;         &quot;Class&quot;</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="bayesian-analysis.html#cb13-1" tabindex="-1"></a><span class="co">#note Class is benign or malignant of class factor</span></span>
-<span id="cb13-2"><a href="bayesian-analysis.html#cb13-2" tabindex="-1"></a><span class="co">#need to convert this to numeric values</span></span>
-<span id="cb13-3"><a href="bayesian-analysis.html#cb13-3" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="bayesian-analysis.html#cb13-4" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="bayesian-analysis.html#cb13-5" tabindex="-1"></a><span class="co">#first convert to character</span></span>
-<span id="cb13-6"><a href="bayesian-analysis.html#cb13-6" tabindex="-1"></a>BreastCancer<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.character</span>(BreastCancer<span class="sc">$</span>Class)</span>
-<span id="cb13-7"><a href="bayesian-analysis.html#cb13-7" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="bayesian-analysis.html#cb13-8" tabindex="-1"></a>BreastCancer<span class="sc">$</span>Class[BreastCancer<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;benign&quot;</span>]<span class="ot">&lt;-</span><span class="dv">0</span></span>
-<span id="cb13-9"><a href="bayesian-analysis.html#cb13-9" tabindex="-1"></a>BreastCancer<span class="sc">$</span>Class[BreastCancer<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;malignant&quot;</span>]<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb13-10"><a href="bayesian-analysis.html#cb13-10" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="bayesian-analysis.html#cb13-11" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="bayesian-analysis.html#cb13-12" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="bayesian-analysis.html#cb13-13" tabindex="-1"></a><span class="co">#convert factors to numeric</span></span>
-<span id="cb13-14"><a href="bayesian-analysis.html#cb13-14" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">lapply</span>(BreastCancer[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">7</span>)], as.numeric)</span>
-<span id="cb13-15"><a href="bayesian-analysis.html#cb13-15" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(BreastCancer2)</span>
-<span id="cb13-16"><a href="bayesian-analysis.html#cb13-16" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="bayesian-analysis.html#cb13-17" tabindex="-1"></a><span class="co">#return Class to data</span></span>
-<span id="cb13-18"><a href="bayesian-analysis.html#cb13-18" tabindex="-1"></a><span class="co">#convert character back to numeric</span></span>
-<span id="cb13-19"><a href="bayesian-analysis.html#cb13-19" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(BreastCancer<span class="sc">$</span>Class)</span>
-<span id="cb13-20"><a href="bayesian-analysis.html#cb13-20" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="bayesian-analysis.html#cb13-21" tabindex="-1"></a>Dx<span class="ot">&lt;-</span><span class="fu">inla</span>(Class <span class="sc">~</span>Epith.c.size<span class="sc">+</span>Cl.thickness<span class="sc">+</span>Cell.shape, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
-<span id="cb13-22"><a href="bayesian-analysis.html#cb13-22" tabindex="-1"></a>         <span class="at">data =</span> BreastCancer2)</span>
-<span id="cb13-23"><a href="bayesian-analysis.html#cb13-23" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="bayesian-analysis.html#cb13-24" tabindex="-1"></a><span class="fu">summary</span>(Dx)</span></code></pre></div>
+<div class="sourceCode" id="cb1026"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1026-1"><a href="bayesian-analysis.html#cb1026-1" tabindex="-1"></a><span class="co">#note Class is benign or malignant of class factor</span></span>
+<span id="cb1026-2"><a href="bayesian-analysis.html#cb1026-2" tabindex="-1"></a><span class="co">#need to convert this to numeric values</span></span>
+<span id="cb1026-3"><a href="bayesian-analysis.html#cb1026-3" tabindex="-1"></a></span>
+<span id="cb1026-4"><a href="bayesian-analysis.html#cb1026-4" tabindex="-1"></a></span>
+<span id="cb1026-5"><a href="bayesian-analysis.html#cb1026-5" tabindex="-1"></a><span class="co">#first convert to character</span></span>
+<span id="cb1026-6"><a href="bayesian-analysis.html#cb1026-6" tabindex="-1"></a>BreastCancer<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.character</span>(BreastCancer<span class="sc">$</span>Class)</span>
+<span id="cb1026-7"><a href="bayesian-analysis.html#cb1026-7" tabindex="-1"></a></span>
+<span id="cb1026-8"><a href="bayesian-analysis.html#cb1026-8" tabindex="-1"></a>BreastCancer<span class="sc">$</span>Class[BreastCancer<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;benign&quot;</span>]<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb1026-9"><a href="bayesian-analysis.html#cb1026-9" tabindex="-1"></a>BreastCancer<span class="sc">$</span>Class[BreastCancer<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;malignant&quot;</span>]<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb1026-10"><a href="bayesian-analysis.html#cb1026-10" tabindex="-1"></a></span>
+<span id="cb1026-11"><a href="bayesian-analysis.html#cb1026-11" tabindex="-1"></a></span>
+<span id="cb1026-12"><a href="bayesian-analysis.html#cb1026-12" tabindex="-1"></a></span>
+<span id="cb1026-13"><a href="bayesian-analysis.html#cb1026-13" tabindex="-1"></a><span class="co">#convert factors to numeric</span></span>
+<span id="cb1026-14"><a href="bayesian-analysis.html#cb1026-14" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">lapply</span>(BreastCancer[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">7</span>)], as.numeric)</span>
+<span id="cb1026-15"><a href="bayesian-analysis.html#cb1026-15" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(BreastCancer2)</span>
+<span id="cb1026-16"><a href="bayesian-analysis.html#cb1026-16" tabindex="-1"></a></span>
+<span id="cb1026-17"><a href="bayesian-analysis.html#cb1026-17" tabindex="-1"></a><span class="co">#return Class to data</span></span>
+<span id="cb1026-18"><a href="bayesian-analysis.html#cb1026-18" tabindex="-1"></a><span class="co">#convert character back to numeric</span></span>
+<span id="cb1026-19"><a href="bayesian-analysis.html#cb1026-19" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(BreastCancer<span class="sc">$</span>Class)</span>
+<span id="cb1026-20"><a href="bayesian-analysis.html#cb1026-20" tabindex="-1"></a></span>
+<span id="cb1026-21"><a href="bayesian-analysis.html#cb1026-21" tabindex="-1"></a>Dx<span class="ot">&lt;-</span><span class="fu">inla</span>(Class <span class="sc">~</span>Epith.c.size<span class="sc">+</span>Cl.thickness<span class="sc">+</span>Cell.shape, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, </span>
+<span id="cb1026-22"><a href="bayesian-analysis.html#cb1026-22" tabindex="-1"></a>         <span class="at">data =</span> BreastCancer2)</span>
+<span id="cb1026-23"><a href="bayesian-analysis.html#cb1026-23" tabindex="-1"></a></span>
+<span id="cb1026-24"><a href="bayesian-analysis.html#cb1026-24" tabindex="-1"></a><span class="fu">summary</span>(Dx)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-##    c(&quot;inla.core(formula = formula, family = family, contrasts = contrasts, 
-##    &quot;, &quot; data = data, quantiles = quantiles, E = E, offset = offset, &quot;, &quot; 
-##    scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, 
-##    &quot;, &quot; lp.scale = lp.scale, link.covariates = link.covariates, verbose = 
-##    verbose, &quot;, &quot; lincomb = lincomb, selection = selection, control.compute 
-##    = control.compute, &quot;, &quot; control.predictor = control.predictor, 
-##    control.family = control.family, &quot;, &quot; control.inla = control.inla, 
-##    control.fixed = control.fixed, &quot;, &quot; control.mode = control.mode, 
-##    control.expert = control.expert, &quot;, &quot; control.hazard = control.hazard, 
-##    control.lincomb = control.lincomb, &quot;, &quot; control.update = 
-##    control.update, control.lp.scale = control.lp.scale, &quot;, &quot; 
-##    control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, 
-##    &quot;, &quot; inla.call = inla.call, inla.arg = inla.arg, num.threads = 
-##    num.threads, &quot;, &quot; keep = keep, working.directory = working.directory, 
-##    silent = silent, &quot;, &quot; inla.mode = inla.mode, safe = FALSE, debug = 
-##    debug, .parent.frame = .parent.frame)&quot; ) 
+##    c(&quot;inla.core(formula = formula, family = family, contrasts = contrasts, &quot;, &quot; 
+##    data = data, quantiles = quantiles, E = E, offset = offset, &quot;, &quot; scale = 
+##    scale, weights = weights, Ntrials = Ntrials, strata = strata, &quot;, &quot; lp.scale 
+##    = lp.scale, link.covariates = link.covariates, verbose = verbose, &quot;, &quot; 
+##    lincomb = lincomb, selection = selection, control.compute = control.compute, 
+##    &quot;, &quot; control.predictor = control.predictor, control.family = control.family, 
+##    &quot;, &quot; control.inla = control.inla, control.fixed = control.fixed, &quot;, &quot; 
+##    control.mode = control.mode, control.expert = control.expert, &quot;, &quot; 
+##    control.hazard = control.hazard, control.lincomb = control.lincomb, &quot;, &quot; 
+##    control.update = control.update, control.lp.scale = control.lp.scale, &quot;, &quot; 
+##    control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, &quot;, &quot; 
+##    inla.call = inla.call, inla.arg = inla.arg, num.threads = num.threads, &quot;, &quot; 
+##    keep = keep, working.directory = working.directory, silent = silent, &quot;, &quot; 
+##    inla.mode = inla.mode, safe = FALSE, debug = debug, .parent.frame = 
+##    .parent.frame)&quot; ) 
 ## Time used:
-##     Pre = 0.182, Running = 0.198, Post = 0.0646, Total = 0.445 
+##     Pre = 1.1, Running = 0.319, Post = 0.119, Total = 1.54 
 ## Fixed effects:
 ##                mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 ## (Intercept)  -8.496 0.709     -9.886   -8.496     -7.106 -8.496   0
@@ -715,171 +742,196 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ## Posterior summaries for the linear predictor and the fitted values are computed
 ## (Posterior marginals needs also &#39;control.compute=list(return.marginals.predictor=TRUE)&#39;)</code></pre>
 <p>The same data is used for logistic regression with stan.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="bayesian-analysis.html#cb15-1" tabindex="-1"></a>DxBRM<span class="ot">&lt;-</span><span class="fu">brm</span>(Class <span class="sc">~</span>Epith.c.size<span class="sc">+</span>Cl.thickness<span class="sc">+</span>Cell.shape, </span>
-<span id="cb15-2"><a href="bayesian-analysis.html#cb15-2" tabindex="-1"></a>           <span class="at">family=</span><span class="fu">bernoulli</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="at">data =</span> BreastCancer2)</span>
-<span id="cb15-3"><a href="bayesian-analysis.html#cb15-3" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="bayesian-analysis.html#cb15-4" tabindex="-1"></a><span class="fu">summary</span>(DxBRM)</span></code></pre></div>
+<div class="sourceCode" id="cb1028"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1028-1"><a href="bayesian-analysis.html#cb1028-1" tabindex="-1"></a>DxBRM<span class="ot">&lt;-</span><span class="fu">brm</span>(Class <span class="sc">~</span>Epith.c.size<span class="sc">+</span>Cl.thickness<span class="sc">+</span>Cell.shape, </span>
+<span id="cb1028-2"><a href="bayesian-analysis.html#cb1028-2" tabindex="-1"></a>           <span class="at">family=</span><span class="fu">bernoulli</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="at">data =</span> BreastCancer2)</span>
+<span id="cb1028-3"><a href="bayesian-analysis.html#cb1028-3" tabindex="-1"></a></span>
+<span id="cb1028-4"><a href="bayesian-analysis.html#cb1028-4" tabindex="-1"></a><span class="fu">summary</span>(DxBRM)</span></code></pre></div>
 <p>Extract the posterior sample from logistic regression.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="bayesian-analysis.html#cb16-1" tabindex="-1"></a>post_samples_DxBRM <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">posterior_samples</span>(DxBRM)</span>
-<span id="cb16-2"><a href="bayesian-analysis.html#cb16-2" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="bayesian-analysis.html#cb16-3" tabindex="-1"></a>post_samples_DxBRM <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="bayesian-analysis.html#cb16-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>lp__) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href="bayesian-analysis.html#cb16-5" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-6"><a href="bayesian-analysis.html#cb16-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="bayesian-analysis.html#cb16-7" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb16-8"><a href="bayesian-analysis.html#cb16-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1029-1"><a href="bayesian-analysis.html#cb1029-1" tabindex="-1"></a>post_samples_DxBRM <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">posterior_samples</span>(DxBRM)</span>
+<span id="cb1029-2"><a href="bayesian-analysis.html#cb1029-2" tabindex="-1"></a></span>
+<span id="cb1029-3"><a href="bayesian-analysis.html#cb1029-3" tabindex="-1"></a>post_samples_DxBRM <span class="sc">%&gt;%</span> </span>
+<span id="cb1029-4"><a href="bayesian-analysis.html#cb1029-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>lp__) <span class="sc">%&gt;%</span> </span>
+<span id="cb1029-5"><a href="bayesian-analysis.html#cb1029-5" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb1029-6"><a href="bayesian-analysis.html#cb1029-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb1029-7"><a href="bayesian-analysis.html#cb1029-7" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb1029-8"><a href="bayesian-analysis.html#cb1029-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 </div>
 <div id="mixed-model" class="section level3 hasAnchor" number="8.3.3">
 <h3><span class="header-section-number">8.3.3</span> Mixed model<a href="bayesian-analysis.html#mixed-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Plotting world_sfdf to identify characteristics of the data</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="bayesian-analysis.html#cb17-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb17-2"><a href="bayesian-analysis.html#cb17-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>world_sfdf, <span class="fu">aes</span>(<span class="at">x=</span>LifeExpectancy, <span class="at">y=</span>MeanLifetimeRisk,</span>
-<span id="cb17-3"><a href="bayesian-analysis.html#cb17-3" tabindex="-1"></a>              <span class="at">color=</span>Income, <span class="at">shape=</span>Continent))<span class="sc">+</span>                                               </span>
-<span id="cb17-4"><a href="bayesian-analysis.html#cb17-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb17-5"><a href="bayesian-analysis.html#cb17-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1030"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1030-1"><a href="bayesian-analysis.html#cb1030-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1030-2"><a href="bayesian-analysis.html#cb1030-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>world_sfdf, <span class="fu">aes</span>(<span class="at">x=</span>LifeExpectancy, <span class="at">y=</span>MeanLifetimeRisk,</span>
+<span id="cb1030-3"><a href="bayesian-analysis.html#cb1030-3" tabindex="-1"></a>              <span class="at">color=</span>Income, <span class="at">shape=</span>Continent))<span class="sc">+</span>                                               </span>
+<span id="cb1030-4"><a href="bayesian-analysis.html#cb1030-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb1030-5"><a href="bayesian-analysis.html#cb1030-5" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-3-1.png" width="672" /></p>
 <p>Intercept model with INLA</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="bayesian-analysis.html#cb18-1" tabindex="-1"></a><span class="co"># Set prior on precision</span></span>
-<span id="cb18-2"><a href="bayesian-analysis.html#cb18-2" tabindex="-1"></a>prec.prior <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">prec =</span> <span class="fu">list</span>(<span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.001</span>)))</span>
-<span id="cb18-3"><a href="bayesian-analysis.html#cb18-3" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="bayesian-analysis.html#cb18-4" tabindex="-1"></a>Inla_Income<span class="ot">&lt;-</span><span class="fu">inla</span>(MeanLifetimeRisk<span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>LifeExpectancy<span class="sc">+</span><span class="fu">f</span>(Income,  </span>
-<span id="cb18-5"><a href="bayesian-analysis.html#cb18-5" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;iid&quot;</span>,</span>
-<span id="cb18-6"><a href="bayesian-analysis.html#cb18-6" tabindex="-1"></a>    <span class="at">hyper =</span> prec.prior), </span>
-<span id="cb18-7"><a href="bayesian-analysis.html#cb18-7" tabindex="-1"></a>    <span class="at">data =</span>world_sfdf[,<span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">20</span>)], </span>
-<span id="cb18-8"><a href="bayesian-analysis.html#cb18-8" tabindex="-1"></a>    <span class="at">control.predictor =</span> <span class="fu">list</span>(<span class="at">compute =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb18-9"><a href="bayesian-analysis.html#cb18-9" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="bayesian-analysis.html#cb18-10" tabindex="-1"></a><span class="fu">summary</span>(Inla_Income)</span></code></pre></div>
+<div class="sourceCode" id="cb1031"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1031-1"><a href="bayesian-analysis.html#cb1031-1" tabindex="-1"></a><span class="co"># Set prior on precision</span></span>
+<span id="cb1031-2"><a href="bayesian-analysis.html#cb1031-2" tabindex="-1"></a>prec.prior <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">prec =</span> <span class="fu">list</span>(<span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.001</span>)))</span>
+<span id="cb1031-3"><a href="bayesian-analysis.html#cb1031-3" tabindex="-1"></a></span>
+<span id="cb1031-4"><a href="bayesian-analysis.html#cb1031-4" tabindex="-1"></a>Inla_Income<span class="ot">&lt;-</span><span class="fu">inla</span>(MeanLifetimeRisk<span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>LifeExpectancy<span class="sc">+</span><span class="fu">f</span>(Income,  </span>
+<span id="cb1031-5"><a href="bayesian-analysis.html#cb1031-5" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;iid&quot;</span>,</span>
+<span id="cb1031-6"><a href="bayesian-analysis.html#cb1031-6" tabindex="-1"></a>    <span class="at">hyper =</span> prec.prior), </span>
+<span id="cb1031-7"><a href="bayesian-analysis.html#cb1031-7" tabindex="-1"></a>    <span class="at">data =</span>world_sfdf[,<span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">20</span>)], </span>
+<span id="cb1031-8"><a href="bayesian-analysis.html#cb1031-8" tabindex="-1"></a>    <span class="at">control.predictor =</span> <span class="fu">list</span>(<span class="at">compute =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1031-9"><a href="bayesian-analysis.html#cb1031-9" tabindex="-1"></a></span>
+<span id="cb1031-10"><a href="bayesian-analysis.html#cb1031-10" tabindex="-1"></a><span class="fu">summary</span>(Inla_Income)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-##    c(&quot;inla.core(formula = formula, family = family, contrasts = contrasts, 
-##    &quot;, &quot; data = data, quantiles = quantiles, E = E, offset = offset, &quot;, &quot; 
-##    scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, 
-##    &quot;, &quot; lp.scale = lp.scale, link.covariates = link.covariates, verbose = 
-##    verbose, &quot;, &quot; lincomb = lincomb, selection = selection, control.compute 
-##    = control.compute, &quot;, &quot; control.predictor = control.predictor, 
-##    control.family = control.family, &quot;, &quot; control.inla = control.inla, 
-##    control.fixed = control.fixed, &quot;, &quot; control.mode = control.mode, 
-##    control.expert = control.expert, &quot;, &quot; control.hazard = control.hazard, 
-##    control.lincomb = control.lincomb, &quot;, &quot; control.update = 
-##    control.update, control.lp.scale = control.lp.scale, &quot;, &quot; 
-##    control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, 
-##    &quot;, &quot; inla.call = inla.call, inla.arg = inla.arg, num.threads = 
-##    num.threads, &quot;, &quot; keep = keep, working.directory = working.directory, 
-##    silent = silent, &quot;, &quot; inla.mode = inla.mode, safe = FALSE, debug = 
-##    debug, .parent.frame = .parent.frame)&quot; ) 
+##    c(&quot;inla.core(formula = formula, family = family, contrasts = contrasts, &quot;, &quot; 
+##    data = data, quantiles = quantiles, E = E, offset = offset, &quot;, &quot; scale = 
+##    scale, weights = weights, Ntrials = Ntrials, strata = strata, &quot;, &quot; lp.scale 
+##    = lp.scale, link.covariates = link.covariates, verbose = verbose, &quot;, &quot; 
+##    lincomb = lincomb, selection = selection, control.compute = control.compute, 
+##    &quot;, &quot; control.predictor = control.predictor, control.family = control.family, 
+##    &quot;, &quot; control.inla = control.inla, control.fixed = control.fixed, &quot;, &quot; 
+##    control.mode = control.mode, control.expert = control.expert, &quot;, &quot; 
+##    control.hazard = control.hazard, control.lincomb = control.lincomb, &quot;, &quot; 
+##    control.update = control.update, control.lp.scale = control.lp.scale, &quot;, &quot; 
+##    control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, &quot;, &quot; 
+##    inla.call = inla.call, inla.arg = inla.arg, num.threads = num.threads, &quot;, &quot; 
+##    keep = keep, working.directory = working.directory, silent = silent, &quot;, &quot; 
+##    inla.mode = inla.mode, safe = FALSE, debug = debug, .parent.frame = 
+##    .parent.frame)&quot; ) 
 ## Time used:
-##     Pre = 0.195, Running = 0.259, Post = 0.0771, Total = 0.531 
+##     Pre = 0.919, Running = 0.451, Post = 0.294, Total = 1.66 
 ## Fixed effects:
-##                  mean    sd 0.025quant 0.5quant 0.975quant   mode   kld
-## (Intercept)    17.950 2.176     13.573   17.969     22.218 17.967 0.001
-## LifeExpectancy  0.027 0.019     -0.010    0.027      0.064  0.027 0.000
+##                  mean         sd   0.025quant 0.5quant   0.975quant   mode kld
+## (Intercept)    24.891 8477384.45 -17169403.82   22.019 17169473.002 22.853   0
+## LifeExpectancy  0.029       0.02        -0.01    0.029        0.068  0.029   0
 ## 
 ## Random effects:
 ##   Name     Model
 ##     Income IID model
 ## 
 ## Model hyperparameters:
-##                                          mean    sd 0.025quant 0.5quant
-## Precision for the Gaussian observations 0.047 0.004      0.039    0.047
-## Precision for Income                    0.098 0.092      0.011    0.071
-##                                         0.975quant  mode
-## Precision for the Gaussian observations      0.056 0.046
-## Precision for Income                         0.343 0.030
+##                                          mean    sd 0.025quant 0.5quant 0.975quant
+## Precision for the Gaussian observations 0.046 0.003      0.041    0.046      0.051
+## Precision for Income                    0.000 0.000      0.000    0.000      0.000
+##                                          mode
+## Precision for the Gaussian observations 0.045
+## Precision for Income                    0.000
 ## 
-## Marginal log-Likelihood:  -760.64 
+## Marginal log-Likelihood:  -821.97 
 ##  is computed 
 ## Posterior summaries for the linear predictor and the fitted values are computed
 ## (Posterior marginals needs also &#39;control.compute=list(return.marginals.predictor=TRUE)&#39;)</code></pre>
 <p>Intercept model with BRMS</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bayesian-analysis.html#cb20-1" tabindex="-1"></a>BRMS_Income <span class="ot">&lt;-</span> <span class="fu">brm</span>(MeanLifetimeRisk <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> LifeExpectancy<span class="sc">+</span>(<span class="dv">1</span> <span class="sc">|</span> Income), </span>
-<span id="cb20-2"><a href="bayesian-analysis.html#cb20-2" tabindex="-1"></a>                              <span class="at">data   =</span> world_sfdf, </span>
-<span id="cb20-3"><a href="bayesian-analysis.html#cb20-3" tabindex="-1"></a>                              <span class="at">warmup =</span> <span class="dv">100</span>, </span>
-<span id="cb20-4"><a href="bayesian-analysis.html#cb20-4" tabindex="-1"></a>                              <span class="at">iter   =</span> <span class="dv">200</span>, </span>
-<span id="cb20-5"><a href="bayesian-analysis.html#cb20-5" tabindex="-1"></a>                              <span class="at">chains =</span> <span class="dv">2</span>, </span>
-<span id="cb20-6"><a href="bayesian-analysis.html#cb20-6" tabindex="-1"></a>                              <span class="at">inits  =</span> <span class="st">&quot;random&quot;</span>,</span>
-<span id="cb20-7"><a href="bayesian-analysis.html#cb20-7" tabindex="-1"></a>                              <span class="at">cores  =</span> <span class="dv">2</span>)  <span class="co">#use 2 CPU cores simultaneously instead of just 1.</span></span>
-<span id="cb20-8"><a href="bayesian-analysis.html#cb20-8" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="bayesian-analysis.html#cb20-9" tabindex="-1"></a><span class="fu">summary</span>(BRMS_Income)</span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="bayesian-analysis.html#cb21-1" tabindex="-1"></a>post_samples_BRMS_Income <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">posterior_samples</span>(BRMS_Income)</span>
-<span id="cb21-2"><a href="bayesian-analysis.html#cb21-2" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="bayesian-analysis.html#cb21-3" tabindex="-1"></a>post_samples_BRMS_Income <span class="sc">%&gt;%</span> </span>
-<span id="cb21-4"><a href="bayesian-analysis.html#cb21-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>lp__) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-5"><a href="bayesian-analysis.html#cb21-5" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-6"><a href="bayesian-analysis.html#cb21-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
-<span id="cb21-7"><a href="bayesian-analysis.html#cb21-7" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb21-8"><a href="bayesian-analysis.html#cb21-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1033"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1033-1"><a href="bayesian-analysis.html#cb1033-1" tabindex="-1"></a>BRMS_Income <span class="ot">&lt;-</span> <span class="fu">brm</span>(MeanLifetimeRisk <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> LifeExpectancy<span class="sc">+</span>(<span class="dv">1</span> <span class="sc">|</span> Income), </span>
+<span id="cb1033-2"><a href="bayesian-analysis.html#cb1033-2" tabindex="-1"></a>                              <span class="at">data   =</span> world_sfdf, </span>
+<span id="cb1033-3"><a href="bayesian-analysis.html#cb1033-3" tabindex="-1"></a>                              <span class="at">warmup =</span> <span class="dv">100</span>, </span>
+<span id="cb1033-4"><a href="bayesian-analysis.html#cb1033-4" tabindex="-1"></a>                              <span class="at">iter   =</span> <span class="dv">200</span>, </span>
+<span id="cb1033-5"><a href="bayesian-analysis.html#cb1033-5" tabindex="-1"></a>                              <span class="at">chains =</span> <span class="dv">2</span>, </span>
+<span id="cb1033-6"><a href="bayesian-analysis.html#cb1033-6" tabindex="-1"></a>                              <span class="at">inits  =</span> <span class="st">&quot;random&quot;</span>,</span>
+<span id="cb1033-7"><a href="bayesian-analysis.html#cb1033-7" tabindex="-1"></a>                              <span class="at">cores  =</span> <span class="dv">2</span>)  <span class="co">#use 2 CPU cores simultaneously instead of just 1.</span></span>
+<span id="cb1033-8"><a href="bayesian-analysis.html#cb1033-8" tabindex="-1"></a></span>
+<span id="cb1033-9"><a href="bayesian-analysis.html#cb1033-9" tabindex="-1"></a><span class="fu">summary</span>(BRMS_Income)</span></code></pre></div>
+<div class="sourceCode" id="cb1034"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1034-1"><a href="bayesian-analysis.html#cb1034-1" tabindex="-1"></a>post_samples_BRMS_Income <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">posterior_samples</span>(BRMS_Income)</span>
+<span id="cb1034-2"><a href="bayesian-analysis.html#cb1034-2" tabindex="-1"></a></span>
+<span id="cb1034-3"><a href="bayesian-analysis.html#cb1034-3" tabindex="-1"></a>post_samples_BRMS_Income <span class="sc">%&gt;%</span> </span>
+<span id="cb1034-4"><a href="bayesian-analysis.html#cb1034-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>lp__) <span class="sc">%&gt;%</span> </span>
+<span id="cb1034-5"><a href="bayesian-analysis.html#cb1034-5" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb1034-6"><a href="bayesian-analysis.html#cb1034-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb1034-7"><a href="bayesian-analysis.html#cb1034-7" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb1034-8"><a href="bayesian-analysis.html#cb1034-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 </div>
 <div id="bayesian-metaanalysis" class="section level3 hasAnchor" number="8.3.4">
 <h3><span class="header-section-number">8.3.4</span> Bayesian Metaanalysis<a href="bayesian-analysis.html#bayesian-metaanalysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A Bayesian approach towards metaanalysis is provided below using the package <em>meta4diag</em> <span class="citation">(<a href="#ref-2015arXiv151206220G">Guo and Riebler 2015</a>)</span>. This approach uses the Integrated Nested Laplacian Approximations (INLA). This package takes a has an advantage over the <em>mada</em> package which does not provide a bivariate method for performing summary sensitivity and specificity.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="bayesian-analysis.html#cb22-1" tabindex="-1"></a><span class="co">#install.packages(&quot;INLA&quot;,repos=c(getOption(&quot;repos&quot;),INLA=&quot;https://inla.r-inla-download.org/R/stable&quot;), dep=TRUE)</span></span>
-<span id="cb22-2"><a href="bayesian-analysis.html#cb22-2" tabindex="-1"></a><span class="fu">library</span>(meta4diag)</span></code></pre></div>
-<pre><code>## Loading required package: grid</code></pre>
-<pre><code>## Loading required package: shiny</code></pre>
+<div class="sourceCode" id="cb1035"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1035-1"><a href="bayesian-analysis.html#cb1035-1" tabindex="-1"></a><span class="co">#install.packages(&quot;INLA&quot;,repos=c(getOption(&quot;repos&quot;),INLA=&quot;https://inla.r-inla-download.org/R/stable&quot;), dep=TRUE)</span></span>
+<span id="cb1035-2"><a href="bayesian-analysis.html#cb1035-2" tabindex="-1"></a><span class="fu">library</span>(meta4diag)</span></code></pre></div>
 <pre><code>## Loading required package: shinyBS</code></pre>
 <pre><code>## Loading required package: caTools</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="bayesian-analysis.html#cb27-1" tabindex="-1"></a><span class="fu">library</span>(INLA)</span>
-<span id="cb27-2"><a href="bayesian-analysis.html#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="bayesian-analysis.html#cb27-3" tabindex="-1"></a><span class="co">#data from spot sign metaanalysis</span></span>
-<span id="cb27-4"><a href="bayesian-analysis.html#cb27-4" tabindex="-1"></a>Dat<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./Data-Use/ss150718.csv&quot;</span>)</span>
-<span id="cb27-5"><a href="bayesian-analysis.html#cb27-5" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="bayesian-analysis.html#cb27-6" tabindex="-1"></a><span class="co">#remove duplicates</span></span>
-<span id="cb27-7"><a href="bayesian-analysis.html#cb27-7" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">subset</span>(Dat, Dat<span class="sc">$</span>retain<span class="sc">==</span><span class="st">&quot;yes&quot;</span>) </span>
-<span id="cb27-8"><a href="bayesian-analysis.html#cb27-8" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="bayesian-analysis.html#cb27-9" tabindex="-1"></a><span class="co">#the data can be viewed under res$data</span></span>
-<span id="cb27-10"><a href="bayesian-analysis.html#cb27-10" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">meta4diag</span>(<span class="at">data =</span> dat) </span>
-<span id="cb27-11"><a href="bayesian-analysis.html#cb27-11" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="bayesian-analysis.html#cb27-12" tabindex="-1"></a><span class="co">#perform SROC</span></span>
-<span id="cb27-13"><a href="bayesian-analysis.html#cb27-13" tabindex="-1"></a><span class="fu">SROC</span>(res, <span class="at">crShow =</span> T)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;caTools&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:pracma&#39;:
+## 
+##     combs, trapz</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base64enc&#39;:
+## 
+##     base64decode, base64encode</code></pre>
+<pre><code>## 
+## Attaching package: &#39;meta4diag&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:meta&#39;:
+## 
+##     forest, funnel</code></pre>
+<pre><code>## The following objects are masked from &#39;package:mada&#39;:
+## 
+##     AUC, crosshair, forest</code></pre>
+<pre><code>## The following objects are masked from &#39;package:metafor&#39;:
+## 
+##     forest, funnel</code></pre>
+<div class="sourceCode" id="cb1045"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1045-1"><a href="bayesian-analysis.html#cb1045-1" tabindex="-1"></a><span class="fu">library</span>(INLA)</span>
+<span id="cb1045-2"><a href="bayesian-analysis.html#cb1045-2" tabindex="-1"></a></span>
+<span id="cb1045-3"><a href="bayesian-analysis.html#cb1045-3" tabindex="-1"></a><span class="co">#data from spot sign metaanalysis</span></span>
+<span id="cb1045-4"><a href="bayesian-analysis.html#cb1045-4" tabindex="-1"></a>Dat<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./Data-Use/ss150718.csv&quot;</span>)</span>
+<span id="cb1045-5"><a href="bayesian-analysis.html#cb1045-5" tabindex="-1"></a></span>
+<span id="cb1045-6"><a href="bayesian-analysis.html#cb1045-6" tabindex="-1"></a><span class="co">#remove duplicates</span></span>
+<span id="cb1045-7"><a href="bayesian-analysis.html#cb1045-7" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">subset</span>(Dat, Dat<span class="sc">$</span>retain<span class="sc">==</span><span class="st">&quot;yes&quot;</span>) </span>
+<span id="cb1045-8"><a href="bayesian-analysis.html#cb1045-8" tabindex="-1"></a></span>
+<span id="cb1045-9"><a href="bayesian-analysis.html#cb1045-9" tabindex="-1"></a><span class="co">#the data can be viewed under res$data</span></span>
+<span id="cb1045-10"><a href="bayesian-analysis.html#cb1045-10" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">meta4diag</span>(<span class="at">data =</span> dat) </span>
+<span id="cb1045-11"><a href="bayesian-analysis.html#cb1045-11" tabindex="-1"></a></span>
+<span id="cb1045-12"><a href="bayesian-analysis.html#cb1045-12" tabindex="-1"></a><span class="co">#perform SROC</span></span>
+<span id="cb1045-13"><a href="bayesian-analysis.html#cb1045-13" tabindex="-1"></a><span class="fu">SROC</span>(res, <span class="at">crShow =</span> T)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-4-1.png" width="672" /></p>
 <p>Forest plot of sensitivity using the <em>meta4diag</em> package.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="bayesian-analysis.html#cb28-1" tabindex="-1"></a><span class="co">#sensitivity is specified under accuracy.type</span></span>
-<span id="cb28-2"><a href="bayesian-analysis.html#cb28-2" tabindex="-1"></a><span class="co">#note that there are several different forest plot: mada, metafor, meta4diag</span></span>
-<span id="cb28-3"><a href="bayesian-analysis.html#cb28-3" tabindex="-1"></a>meta4diag<span class="sc">::</span><span class="fu">forest</span>(res, <span class="at">accuracy.type=</span><span class="st">&quot;sens&quot;</span>, <span class="at">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="at">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="at">p.pch=</span><span class="dv">15</span>, <span class="at">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
-<span id="cb28-4"><a href="bayesian-analysis.html#cb28-4" tabindex="-1"></a>    <span class="at">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="at">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="at">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="at">text.cex=</span><span class="dv">1</span>,</span>
-<span id="cb28-5"><a href="bayesian-analysis.html#cb28-5" tabindex="-1"></a>    <span class="at">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="at">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="at">arrow.lty=</span><span class="dv">1</span>, <span class="at">arrow.lwd=</span><span class="dv">1</span>,</span>
-<span id="cb28-6"><a href="bayesian-analysis.html#cb28-6" tabindex="-1"></a>    <span class="at">cut=</span><span class="cn">TRUE</span>, <span class="at">intervals=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
-<span id="cb28-7"><a href="bayesian-analysis.html#cb28-7" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Forest plot of Sensitivity&quot;</span>, <span class="at">main.cex=</span><span class="fl">1.5</span>, <span class="at">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1046"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1046-1"><a href="bayesian-analysis.html#cb1046-1" tabindex="-1"></a><span class="co">#sensitivity is specified under accuracy.type</span></span>
+<span id="cb1046-2"><a href="bayesian-analysis.html#cb1046-2" tabindex="-1"></a><span class="co">#note that there are several different forest plot: mada, metafor, meta4diag</span></span>
+<span id="cb1046-3"><a href="bayesian-analysis.html#cb1046-3" tabindex="-1"></a>meta4diag<span class="sc">::</span><span class="fu">forest</span>(res, <span class="at">accuracy.type=</span><span class="st">&quot;sens&quot;</span>, <span class="at">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="at">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="at">p.pch=</span><span class="dv">15</span>, <span class="at">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb1046-4"><a href="bayesian-analysis.html#cb1046-4" tabindex="-1"></a>    <span class="at">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="at">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="at">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="at">text.cex=</span><span class="dv">1</span>,</span>
+<span id="cb1046-5"><a href="bayesian-analysis.html#cb1046-5" tabindex="-1"></a>    <span class="at">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="at">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="at">arrow.lty=</span><span class="dv">1</span>, <span class="at">arrow.lwd=</span><span class="dv">1</span>,</span>
+<span id="cb1046-6"><a href="bayesian-analysis.html#cb1046-6" tabindex="-1"></a>    <span class="at">cut=</span><span class="cn">TRUE</span>, <span class="at">intervals=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
+<span id="cb1046-7"><a href="bayesian-analysis.html#cb1046-7" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Forest plot of Sensitivity&quot;</span>, <span class="at">main.cex=</span><span class="fl">1.5</span>, <span class="at">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-4-1-1.png" width="672" /></p>
 <p>Forest plot of specificity using the <em>meta4diag</em> package.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="bayesian-analysis.html#cb29-1" tabindex="-1"></a><span class="co">#specificity is specified under accuracy.type</span></span>
-<span id="cb29-2"><a href="bayesian-analysis.html#cb29-2" tabindex="-1"></a><span class="co">#note that there are several different forest plot: mada, metafor, meta4diag</span></span>
-<span id="cb29-3"><a href="bayesian-analysis.html#cb29-3" tabindex="-1"></a>meta4diag<span class="sc">::</span><span class="fu">forest</span>(res, <span class="at">accuracy.type=</span><span class="st">&quot;spec&quot;</span>, <span class="at">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="at">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="at">p.pch=</span><span class="dv">15</span>, <span class="at">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
-<span id="cb29-4"><a href="bayesian-analysis.html#cb29-4" tabindex="-1"></a>    <span class="at">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="at">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="at">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="at">text.cex=</span><span class="dv">1</span>,</span>
-<span id="cb29-5"><a href="bayesian-analysis.html#cb29-5" tabindex="-1"></a>    <span class="at">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="at">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="at">arrow.lty=</span><span class="dv">1</span>, <span class="at">arrow.lwd=</span><span class="dv">1</span>,</span>
-<span id="cb29-6"><a href="bayesian-analysis.html#cb29-6" tabindex="-1"></a>    <span class="at">cut=</span><span class="cn">TRUE</span>, <span class="at">intervals=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
-<span id="cb29-7"><a href="bayesian-analysis.html#cb29-7" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Forest plot of Specificity&quot;</span>, <span class="at">main.cex=</span><span class="fl">1.5</span>, <span class="at">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1047"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1047-1"><a href="bayesian-analysis.html#cb1047-1" tabindex="-1"></a><span class="co">#specificity is specified under accuracy.type</span></span>
+<span id="cb1047-2"><a href="bayesian-analysis.html#cb1047-2" tabindex="-1"></a><span class="co">#note that there are several different forest plot: mada, metafor, meta4diag</span></span>
+<span id="cb1047-3"><a href="bayesian-analysis.html#cb1047-3" tabindex="-1"></a>meta4diag<span class="sc">::</span><span class="fu">forest</span>(res, <span class="at">accuracy.type=</span><span class="st">&quot;spec&quot;</span>, <span class="at">est.type=</span><span class="st">&quot;mean&quot;</span>, <span class="at">p.cex=</span><span class="st">&quot;scaled&quot;</span>, <span class="at">p.pch=</span><span class="dv">15</span>, <span class="at">p.col=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb1047-4"><a href="bayesian-analysis.html#cb1047-4" tabindex="-1"></a>    <span class="at">nameShow=</span><span class="st">&quot;right&quot;</span>, <span class="at">dataShow=</span><span class="st">&quot;center&quot;</span>, <span class="at">estShow=</span><span class="st">&quot;left&quot;</span>, <span class="at">text.cex=</span><span class="dv">1</span>,</span>
+<span id="cb1047-5"><a href="bayesian-analysis.html#cb1047-5" tabindex="-1"></a>    <span class="at">shade.col=</span><span class="st">&quot;gray&quot;</span>, <span class="at">arrow.col=</span><span class="st">&quot;black&quot;</span>, <span class="at">arrow.lty=</span><span class="dv">1</span>, <span class="at">arrow.lwd=</span><span class="dv">1</span>,</span>
+<span id="cb1047-6"><a href="bayesian-analysis.html#cb1047-6" tabindex="-1"></a>    <span class="at">cut=</span><span class="cn">TRUE</span>, <span class="at">intervals=</span><span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>),</span>
+<span id="cb1047-7"><a href="bayesian-analysis.html#cb1047-7" tabindex="-1"></a>    <span class="at">main=</span><span class="st">&quot;Forest plot of Specificity&quot;</span>, <span class="at">main.cex=</span><span class="fl">1.5</span>, <span class="at">axis.cex=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/07-Bayesian-analysis-4-2-1.png" width="672" /></p>
 </div>
 <div id="cost" class="section level3 hasAnchor" number="8.3.5">
 <h3><span class="header-section-number">8.3.5</span> Cost<a href="bayesian-analysis.html#cost" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The example below is provided by <em>hesim</em>.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="bayesian-analysis.html#cb30-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;hesim&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1048"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1048-1"><a href="bayesian-analysis.html#cb1048-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;hesim&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;hesim&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:survMisc&#39;:
+## 
+##     autoplot</code></pre>
 <pre><code>## The following object is masked from &#39;package:Matrix&#39;:
 ## 
 ##     expand</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="bayesian-analysis.html#cb33-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;data.table&quot;</span>)</span>
-<span id="cb33-2"><a href="bayesian-analysis.html#cb33-2" tabindex="-1"></a>strategies <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">strategy_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb33-3"><a href="bayesian-analysis.html#cb33-3" tabindex="-1"></a>n_patients <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb33-4"><a href="bayesian-analysis.html#cb33-4" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">patient_id =</span> <span class="dv">1</span><span class="sc">:</span>n_patients,</span>
-<span id="cb33-5"><a href="bayesian-analysis.html#cb33-5" tabindex="-1"></a>          <span class="at">age =</span> <span class="fu">rnorm</span>(n_patients, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
-<span id="cb33-6"><a href="bayesian-analysis.html#cb33-6" tabindex="-1"></a>          <span class="at">female =</span> <span class="fu">rbinom</span>(n_patients, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> .<span class="dv">4</span>))</span>
-<span id="cb33-7"><a href="bayesian-analysis.html#cb33-7" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">state_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb33-8"><a href="bayesian-analysis.html#cb33-8" tabindex="-1"></a>                     <span class="at">state_name =</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </span>
-<span id="cb33-9"><a href="bayesian-analysis.html#cb33-9" tabindex="-1"></a><span class="co"># Non-death health states</span></span>
-<span id="cb33-10"><a href="bayesian-analysis.html#cb33-10" tabindex="-1"></a>tmat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb33-11"><a href="bayesian-analysis.html#cb33-11" tabindex="-1"></a>              <span class="fu">c</span>(<span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">4</span>),</span>
-<span id="cb33-12"><a href="bayesian-analysis.html#cb33-12" tabindex="-1"></a>              <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span>
-<span id="cb33-13"><a href="bayesian-analysis.html#cb33-13" tabindex="-1"></a><span class="fu">colnames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
-<span id="cb33-14"><a href="bayesian-analysis.html#cb33-14" tabindex="-1"></a>transitions <span class="ot">&lt;-</span> <span class="fu">create_trans_dt</span>(tmat)</span>
-<span id="cb33-15"><a href="bayesian-analysis.html#cb33-15" tabindex="-1"></a>transitions[, trans <span class="sc">:=</span> <span class="fu">factor</span>(transition_id)]</span>
-<span id="cb33-16"><a href="bayesian-analysis.html#cb33-16" tabindex="-1"></a>hesim_dat <span class="ot">&lt;-</span> <span class="fu">hesim_data</span>(<span class="at">strategies =</span> strategies,</span>
-<span id="cb33-17"><a href="bayesian-analysis.html#cb33-17" tabindex="-1"></a>                        <span class="at">patients =</span> patients, </span>
-<span id="cb33-18"><a href="bayesian-analysis.html#cb33-18" tabindex="-1"></a>                        <span class="at">states =</span> states,</span>
-<span id="cb33-19"><a href="bayesian-analysis.html#cb33-19" tabindex="-1"></a>                        <span class="at">transitions =</span> transitions)</span>
-<span id="cb33-20"><a href="bayesian-analysis.html#cb33-20" tabindex="-1"></a><span class="fu">print</span>(hesim_dat)</span></code></pre></div>
+<pre><code>## The following object is masked from &#39;package:reshape&#39;:
+## 
+##     expand</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
+<div class="sourceCode" id="cb1054"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1054-1"><a href="bayesian-analysis.html#cb1054-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;data.table&quot;</span>)</span>
+<span id="cb1054-2"><a href="bayesian-analysis.html#cb1054-2" tabindex="-1"></a>strategies <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">strategy_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1054-3"><a href="bayesian-analysis.html#cb1054-3" tabindex="-1"></a>n_patients <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1054-4"><a href="bayesian-analysis.html#cb1054-4" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">patient_id =</span> <span class="dv">1</span><span class="sc">:</span>n_patients,</span>
+<span id="cb1054-5"><a href="bayesian-analysis.html#cb1054-5" tabindex="-1"></a>          <span class="at">age =</span> <span class="fu">rnorm</span>(n_patients, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb1054-6"><a href="bayesian-analysis.html#cb1054-6" tabindex="-1"></a>          <span class="at">female =</span> <span class="fu">rbinom</span>(n_patients, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> .<span class="dv">4</span>))</span>
+<span id="cb1054-7"><a href="bayesian-analysis.html#cb1054-7" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">state_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb1054-8"><a href="bayesian-analysis.html#cb1054-8" tabindex="-1"></a>                     <span class="at">state_name =</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </span>
+<span id="cb1054-9"><a href="bayesian-analysis.html#cb1054-9" tabindex="-1"></a><span class="co"># Non-death health states</span></span>
+<span id="cb1054-10"><a href="bayesian-analysis.html#cb1054-10" tabindex="-1"></a>tmat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb1054-11"><a href="bayesian-analysis.html#cb1054-11" tabindex="-1"></a>              <span class="fu">c</span>(<span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">4</span>),</span>
+<span id="cb1054-12"><a href="bayesian-analysis.html#cb1054-12" tabindex="-1"></a>              <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span>
+<span id="cb1054-13"><a href="bayesian-analysis.html#cb1054-13" tabindex="-1"></a><span class="fu">colnames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
+<span id="cb1054-14"><a href="bayesian-analysis.html#cb1054-14" tabindex="-1"></a>transitions <span class="ot">&lt;-</span> <span class="fu">create_trans_dt</span>(tmat)</span>
+<span id="cb1054-15"><a href="bayesian-analysis.html#cb1054-15" tabindex="-1"></a>transitions[, trans <span class="sc">:=</span> <span class="fu">factor</span>(transition_id)]</span>
+<span id="cb1054-16"><a href="bayesian-analysis.html#cb1054-16" tabindex="-1"></a>hesim_dat <span class="ot">&lt;-</span> <span class="fu">hesim_data</span>(<span class="at">strategies =</span> strategies,</span>
+<span id="cb1054-17"><a href="bayesian-analysis.html#cb1054-17" tabindex="-1"></a>                        <span class="at">patients =</span> patients, </span>
+<span id="cb1054-18"><a href="bayesian-analysis.html#cb1054-18" tabindex="-1"></a>                        <span class="at">states =</span> states,</span>
+<span id="cb1054-19"><a href="bayesian-analysis.html#cb1054-19" tabindex="-1"></a>                        <span class="at">transitions =</span> transitions)</span>
+<span id="cb1054-20"><a href="bayesian-analysis.html#cb1054-20" tabindex="-1"></a><span class="fu">print</span>(hesim_dat)</span></code></pre></div>
 <pre><code>## $strategies
 ##    strategy_id
 ## 1:           1
@@ -887,17 +939,17 @@ The probability of P(B) is given by the sum of P(A1∩B), P(A2∩B)…P(An∩B).
 ## 
 ## $patients
 ##       patient_id      age female
-##    1:          1 45.73757      1
-##    2:          2 43.57000      0
-##    3:          3 61.78056      0
-##    4:          4 68.32311      1
-##    5:          5 73.44639      0
+##    1:          1 59.93828      1
+##    2:          2 71.29811      0
+##    3:          3 82.90199      1
+##    4:          4 77.88516      0
+##    5:          5 58.12814      1
 ##   ---                           
-##  996:        996 76.86785      0
-##  997:        997 68.91076      0
-##  998:        998 86.80927      1
-##  999:        999 67.50553      1
-## 1000:       1000 69.65274      1
+##  996:        996 63.90423      0
+##  997:        997 60.96895      0
+##  998:        998 76.53153      0
+##  999:        999 71.08916      0
+## 1000:       1000 82.42916      0
 ## 
 ## $states
 ##    state_id state_name

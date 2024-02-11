@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,8 +52,109 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.10/DiagrammeR.js"></script>
+<link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
+<script src="libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/ionicons-2.0.1/ionicons.min.css" rel="stylesheet" />
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -354,24 +455,23 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a></li>
-<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.2</b> Discrete Event Simulations</a>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.2.1</b> Simulate capacity of system</a></li>
-<li class="chapter" data-level="9.2.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.2.2</b> Queuing network</a></li>
+<li class="chapter" data-level="9.1.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.1.1</b> Simulate capacity of system</a></li>
+<li class="chapter" data-level="9.1.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.1.2</b> Queuing network</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.3</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
+<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
-<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
-<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.4</b> Process mapping</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.5</b> Supply chains</a></li>
+<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.6</b> Health economics</a>
 <ul>
-<li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
+<li class="chapter" data-level="9.6.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.6.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a>
@@ -405,7 +505,10 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#section-1"><i class="fa fa-check"></i><b>11.2.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
 <ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
@@ -457,7 +560,7 @@ div.csl-indent {
 <div id="header">
 <h1 class="title">Applications of R in Healthcare</h1>
 <p class="author"><em>Thanh Phan</em></p>
-<p class="date"><em>2024-02-05</em></p>
+<p class="date"><em>2024-02-10</em></p>
 </div>
 <div id="preamble" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Preamble<a href="index.html#preamble" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -539,6 +642,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

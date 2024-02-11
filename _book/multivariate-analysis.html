@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,43 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="libs/d3-3.3.8/d3.min.js"></script>
+<script src="libs/dagre-0.4.0/dagre-d3.min.js"></script>
+<link href="libs/mermaid-0.3.0/dist/mermaid.css" rel="stylesheet" />
+<script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
+<script src="libs/chromatography-0.1/chromatography.js"></script>
+<script src="libs/DiagrammeR-binding-1.0.10/DiagrammeR.js"></script>
+<link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
+<script src="libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/ionicons-2.0.1/ionicons.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -418,24 +455,23 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="9" data-path="operational-research.html"><a href="operational-research.html"><i class="fa fa-check"></i><b>9</b> Operational Research</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a></li>
-<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#discrete-event-simulations"><i class="fa fa-check"></i><b>9.2</b> Discrete Event Simulations</a>
+<li class="chapter" data-level="9.1" data-path="operational-research.html"><a href="operational-research.html#queueing-theory"><i class="fa fa-check"></i><b>9.1</b> Queueing theory</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.2.1</b> Simulate capacity of system</a></li>
-<li class="chapter" data-level="9.2.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.2.2</b> Queuing network</a></li>
+<li class="chapter" data-level="9.1.1" data-path="operational-research.html"><a href="operational-research.html#simulate-capacity-of-system"><i class="fa fa-check"></i><b>9.1.1</b> Simulate capacity of system</a></li>
+<li class="chapter" data-level="9.1.2" data-path="operational-research.html"><a href="operational-research.html#queuing-network"><i class="fa fa-check"></i><b>9.1.2</b> Queuing network</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.3</b> Linear Programming</a></li>
-<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.4</b> Forecasting</a>
+<li class="chapter" data-level="9.2" data-path="operational-research.html"><a href="operational-research.html#linear-programming"><i class="fa fa-check"></i><b>9.2</b> Linear Programming</a></li>
+<li class="chapter" data-level="9.3" data-path="operational-research.html"><a href="operational-research.html#forecasting"><i class="fa fa-check"></i><b>9.3</b> Forecasting</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.4.1</b> Bed requirement</a></li>
-<li class="chapter" data-level="9.4.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.4.2</b> Length of stay</a></li>
-<li class="chapter" data-level="9.4.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.4.3</b> Customer churns</a></li>
+<li class="chapter" data-level="9.3.1" data-path="operational-research.html"><a href="operational-research.html#bed-requirement"><i class="fa fa-check"></i><b>9.3.1</b> Bed requirement</a></li>
+<li class="chapter" data-level="9.3.2" data-path="operational-research.html"><a href="operational-research.html#length-of-stay"><i class="fa fa-check"></i><b>9.3.2</b> Length of stay</a></li>
+<li class="chapter" data-level="9.3.3" data-path="operational-research.html"><a href="operational-research.html#customer-churns"><i class="fa fa-check"></i><b>9.3.3</b> Customer churns</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.5</b> Process mapping</a></li>
-<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.6</b> Supply chains</a></li>
-<li class="chapter" data-level="9.7" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.7</b> Health economics</a>
+<li class="chapter" data-level="9.4" data-path="operational-research.html"><a href="operational-research.html#process-mapping"><i class="fa fa-check"></i><b>9.4</b> Process mapping</a></li>
+<li class="chapter" data-level="9.5" data-path="operational-research.html"><a href="operational-research.html#supply-chains"><i class="fa fa-check"></i><b>9.5</b> Supply chains</a></li>
+<li class="chapter" data-level="9.6" data-path="operational-research.html"><a href="operational-research.html#health-economics"><i class="fa fa-check"></i><b>9.6</b> Health economics</a>
 <ul>
-<li class="chapter" data-level="9.7.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.7.1</b> Cost</a></li>
+<li class="chapter" data-level="9.6.1" data-path="operational-research.html"><a href="operational-research.html#cost-1"><i class="fa fa-check"></i><b>9.6.1</b> Cost</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="graph-theory.html"><a href="graph-theory.html"><i class="fa fa-check"></i><b>10</b> Graph Theory</a>
@@ -469,7 +505,10 @@ div.csl-indent {
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#section-1"><i class="fa fa-check"></i><b>11.2.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
 <ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
@@ -527,31 +566,46 @@ div.csl-indent {
 <div id="penalised-regression" class="section level3 hasAnchor" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> Penalised regression<a href="multivariate-analysis.html#penalised-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We used penalised logistic regression (PLR) to assess the relationship between the ASPECTS regions and stroke disability (binary outcome) <span class="citation">(<a href="#ref-pmid23838753">Phan et al. 2013</a>)</span>. PLR can be conceptualized as a modification of logistic regression. In logistic regression, there is no algebraic solution to determine the parameter estimate (β coefficient) and a numerical method (trial and error approach) such as maximum likelihood estimate is used to determine the parameter estimate. In certain situations overfitting of the model may occur with the maximum likelihood method. This situation occurs when there is collinearity (relatedness) of the data. To circumvent this, a bias factor is introduced into the calculation to prevent overfitting of the model. The tuning (regularization) parameter for the bias factor is chosen from the quadratic of the norms of the parameter estimate. This method is known as PLR. This method also allows handling of a large number of interaction terms in the model. We employed a forward and backward stepwise PLR that used all the ASPECTS regions in the analysis, calling on the penalized function in R programming environment. This program automatically assessed the interaction of factors in the regression model in the following manner. The choice of factors to be added/deleted to the stepwise regression was based on the cost complexity statistic. The asymmetric hierarchy principle was used to determine the choice of interaction of factors. In this case, any factor retained in the model can form interactions with others that are already in the model and those that are not yet in the model. In this analysis, we have specified a maximum of 5 terms to be added to the selection procedure. The significance of the interactions was plotted using a previously described method. We regressed the dichotomized mRS score against ASPECTS regions, demographic variables (such as age and sex), physiological variables (such as blood pressure and serum glucose level) and treatment (rt-PA). The results are expressed as β coefficients rather than as odds ratio for consistency due to the presence of interaction terms.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="multivariate-analysis.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(mice)</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="multivariate-analysis.html#cb716-1" tabindex="-1"></a><span class="fu">library</span>(mice)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;mice&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:kernlab&#39;:
+## 
+##     convergence</code></pre>
+<pre><code>## The following object is masked from &#39;package:BiocManager&#39;:
+## 
+##     version</code></pre>
+<pre><code>## The following object is masked from &#39;package:signal&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:pillar&#39;:
+## 
+##     squeeze</code></pre>
+<pre><code>## The following objects are masked from &#39;package:BiocGenerics&#39;:
+## 
+##     cbind, rbind</code></pre>
 <pre><code>## The following object is masked from &#39;package:stats&#39;:
 ## 
 ##     filter</code></pre>
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     cbind, rbind</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="multivariate-analysis.html#cb5-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BreastCancer&quot;</span>,<span class="at">package =</span> <span class="st">&quot;mlbench&quot;</span>)</span>
-<span id="cb5-2"><a href="multivariate-analysis.html#cb5-2" tabindex="-1"></a><span class="fu">colnames</span>(BreastCancer)</span></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="multivariate-analysis.html#cb725-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;BreastCancer&quot;</span>,<span class="at">package =</span> <span class="st">&quot;mlbench&quot;</span>)</span>
+<span id="cb725-2"><a href="multivariate-analysis.html#cb725-2" tabindex="-1"></a><span class="fu">colnames</span>(BreastCancer)</span></code></pre></div>
 <pre><code>##  [1] &quot;Id&quot;              &quot;Cl.thickness&quot;    &quot;Cell.size&quot;       &quot;Cell.shape&quot;     
 ##  [5] &quot;Marg.adhesion&quot;   &quot;Epith.c.size&quot;    &quot;Bare.nuclei&quot;     &quot;Bl.cromatin&quot;    
 ##  [9] &quot;Normal.nucleoli&quot; &quot;Mitoses&quot;         &quot;Class&quot;</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="multivariate-analysis.html#cb7-1" tabindex="-1"></a><span class="co">#check for duplicates</span></span>
-<span id="cb7-2"><a href="multivariate-analysis.html#cb7-2" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">duplicated</span>(BreastCancer))</span></code></pre></div>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="multivariate-analysis.html#cb727-1" tabindex="-1"></a><span class="co">#check for duplicates</span></span>
+<span id="cb727-2"><a href="multivariate-analysis.html#cb727-2" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">duplicated</span>(BreastCancer))</span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="multivariate-analysis.html#cb9-1" tabindex="-1"></a><span class="co">#remove duplicates</span></span>
-<span id="cb9-2"><a href="multivariate-analysis.html#cb9-2" tabindex="-1"></a><span class="co">#keep Id to avoid creation of new duplicates</span></span>
-<span id="cb9-3"><a href="multivariate-analysis.html#cb9-3" tabindex="-1"></a><span class="co">#BreastCancer1&lt;-unique(BreastCancer) #reduce 699 to 691 rows</span></span>
-<span id="cb9-4"><a href="multivariate-analysis.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="multivariate-analysis.html#cb9-5" tabindex="-1"></a><span class="co">#impute missing data</span></span>
-<span id="cb9-6"><a href="multivariate-analysis.html#cb9-6" tabindex="-1"></a><span class="co">#m is number of multiple imputation, default is 5</span></span>
-<span id="cb9-7"><a href="multivariate-analysis.html#cb9-7" tabindex="-1"></a><span class="co">#output is a list</span></span>
-<span id="cb9-8"><a href="multivariate-analysis.html#cb9-8" tabindex="-1"></a>imputed_Data <span class="ot">&lt;-</span> <span class="fu">mice</span>(BreastCancer, <span class="at">m=</span><span class="dv">5</span>, <span class="at">maxit =</span> <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;pmm&#39;</span>, <span class="at">seed =</span> <span class="dv">500</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="multivariate-analysis.html#cb729-1" tabindex="-1"></a><span class="co">#remove duplicates</span></span>
+<span id="cb729-2"><a href="multivariate-analysis.html#cb729-2" tabindex="-1"></a><span class="co">#keep Id to avoid creation of new duplicates</span></span>
+<span id="cb729-3"><a href="multivariate-analysis.html#cb729-3" tabindex="-1"></a><span class="co">#BreastCancer1&lt;-unique(BreastCancer) #reduce 699 to 691 rows</span></span>
+<span id="cb729-4"><a href="multivariate-analysis.html#cb729-4" tabindex="-1"></a></span>
+<span id="cb729-5"><a href="multivariate-analysis.html#cb729-5" tabindex="-1"></a><span class="co">#impute missing data</span></span>
+<span id="cb729-6"><a href="multivariate-analysis.html#cb729-6" tabindex="-1"></a><span class="co">#m is number of multiple imputation, default is 5</span></span>
+<span id="cb729-7"><a href="multivariate-analysis.html#cb729-7" tabindex="-1"></a><span class="co">#output is a list</span></span>
+<span id="cb729-8"><a href="multivariate-analysis.html#cb729-8" tabindex="-1"></a>imputed_Data <span class="ot">&lt;-</span> <span class="fu">mice</span>(BreastCancer, <span class="at">m=</span><span class="dv">5</span>, <span class="at">maxit =</span> <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;pmm&#39;</span>, <span class="at">seed =</span> <span class="dv">500</span>)</span></code></pre></div>
 <pre><code>## 
 ##  iter imp variable
 ##   1   1  Bare.nuclei
@@ -579,28 +633,32 @@ div.csl-indent {
 ##   5   3  Bare.nuclei
 ##   5   4  Bare.nuclei
 ##   5   5  Bare.nuclei</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="multivariate-analysis.html#cb11-1" tabindex="-1"></a><span class="co">#choose among the 5 imputed dataset</span></span>
-<span id="cb11-2"><a href="multivariate-analysis.html#cb11-2" tabindex="-1"></a>completeData <span class="ot">&lt;-</span> <span class="fu">complete</span>(imputed_Data,<span class="dv">2</span>)</span>
-<span id="cb11-3"><a href="multivariate-analysis.html#cb11-3" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="multivariate-analysis.html#cb11-4" tabindex="-1"></a><span class="co">#convert multiple columns to numeric</span></span>
-<span id="cb11-5"><a href="multivariate-analysis.html#cb11-5" tabindex="-1"></a><span class="co">#lapply output a list</span></span>
-<span id="cb11-6"><a href="multivariate-analysis.html#cb11-6" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">lapply</span>(completeData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">11</span>)], as.numeric) <span class="co">#list</span></span>
-<span id="cb11-7"><a href="multivariate-analysis.html#cb11-7" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(BreastCancer2)</span>
-<span id="cb11-8"><a href="multivariate-analysis.html#cb11-8" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span>BreastCancer<span class="sc">$</span>Class</span>
-<span id="cb11-9"><a href="multivariate-analysis.html#cb11-9" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="multivariate-analysis.html#cb11-10" tabindex="-1"></a><span class="co">#convert factor to numeric for calculatin of vif</span></span>
-<span id="cb11-11"><a href="multivariate-analysis.html#cb11-11" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.character</span>(BreastCancer2<span class="sc">$</span>Class)</span>
-<span id="cb11-12"><a href="multivariate-analysis.html#cb11-12" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class[BreastCancer2<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;benign&quot;</span>]<span class="ot">&lt;-</span><span class="dv">0</span></span>
-<span id="cb11-13"><a href="multivariate-analysis.html#cb11-13" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class[BreastCancer2<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;malignant&quot;</span>]<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb11-14"><a href="multivariate-analysis.html#cb11-14" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(BreastCancer2<span class="sc">$</span>Class)</span>
-<span id="cb11-15"><a href="multivariate-analysis.html#cb11-15" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="multivariate-analysis.html#cb11-16" tabindex="-1"></a>BC <span class="ot">&lt;-</span> <span class="fu">unique</span>(BreastCancer2) <span class="co"># Remove duplicates</span></span>
-<span id="cb11-17"><a href="multivariate-analysis.html#cb11-17" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="multivariate-analysis.html#cb11-18" tabindex="-1"></a><span class="co">#check correlation</span></span>
-<span id="cb11-19"><a href="multivariate-analysis.html#cb11-19" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="multivariate-analysis.html#cb13-1" tabindex="-1"></a><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(BC),</span>
-<span id="cb13-2"><a href="multivariate-analysis.html#cb13-2" tabindex="-1"></a>    <span class="at">p.mat=</span><span class="fu">cor_pmat</span>(BC),<span class="at">hc.order=</span>T, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>, <span class="at">colors=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;white&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="at">tl.cex =</span> <span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="multivariate-analysis.html#cb731-1" tabindex="-1"></a><span class="co">#choose among the 5 imputed dataset</span></span>
+<span id="cb731-2"><a href="multivariate-analysis.html#cb731-2" tabindex="-1"></a>completeData <span class="ot">&lt;-</span> <span class="fu">complete</span>(imputed_Data,<span class="dv">2</span>)</span>
+<span id="cb731-3"><a href="multivariate-analysis.html#cb731-3" tabindex="-1"></a></span>
+<span id="cb731-4"><a href="multivariate-analysis.html#cb731-4" tabindex="-1"></a><span class="co">#convert multiple columns to numeric</span></span>
+<span id="cb731-5"><a href="multivariate-analysis.html#cb731-5" tabindex="-1"></a><span class="co">#lapply output a list</span></span>
+<span id="cb731-6"><a href="multivariate-analysis.html#cb731-6" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">lapply</span>(completeData[,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">11</span>)], as.numeric) <span class="co">#list</span></span>
+<span id="cb731-7"><a href="multivariate-analysis.html#cb731-7" tabindex="-1"></a>BreastCancer2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(BreastCancer2)</span>
+<span id="cb731-8"><a href="multivariate-analysis.html#cb731-8" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span>BreastCancer<span class="sc">$</span>Class</span>
+<span id="cb731-9"><a href="multivariate-analysis.html#cb731-9" tabindex="-1"></a></span>
+<span id="cb731-10"><a href="multivariate-analysis.html#cb731-10" tabindex="-1"></a><span class="co">#convert factor to numeric for calculatin of vif</span></span>
+<span id="cb731-11"><a href="multivariate-analysis.html#cb731-11" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.character</span>(BreastCancer2<span class="sc">$</span>Class)</span>
+<span id="cb731-12"><a href="multivariate-analysis.html#cb731-12" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class[BreastCancer2<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;benign&quot;</span>]<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb731-13"><a href="multivariate-analysis.html#cb731-13" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class[BreastCancer2<span class="sc">$</span>Class<span class="sc">==</span><span class="st">&quot;malignant&quot;</span>]<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb731-14"><a href="multivariate-analysis.html#cb731-14" tabindex="-1"></a>BreastCancer2<span class="sc">$</span>Class<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(BreastCancer2<span class="sc">$</span>Class)</span>
+<span id="cb731-15"><a href="multivariate-analysis.html#cb731-15" tabindex="-1"></a></span>
+<span id="cb731-16"><a href="multivariate-analysis.html#cb731-16" tabindex="-1"></a>BC <span class="ot">&lt;-</span> <span class="fu">unique</span>(BreastCancer2) <span class="co"># Remove duplicates</span></span>
+<span id="cb731-17"><a href="multivariate-analysis.html#cb731-17" tabindex="-1"></a></span>
+<span id="cb731-18"><a href="multivariate-analysis.html#cb731-18" tabindex="-1"></a><span class="co">#check correlation</span></span>
+<span id="cb731-19"><a href="multivariate-analysis.html#cb731-19" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ggcorrplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:rstatix&#39;:
+## 
+##     cor_pmat</code></pre>
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="multivariate-analysis.html#cb734-1" tabindex="-1"></a><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(BC),</span>
+<span id="cb734-2"><a href="multivariate-analysis.html#cb734-2" tabindex="-1"></a>    <span class="at">p.mat=</span><span class="fu">cor_pmat</span>(BC),<span class="at">hc.order=</span>T, <span class="at">type=</span><span class="st">&quot;lower&quot;</span>, <span class="at">colors=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;white&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="at">tl.cex =</span> <span class="dv">8</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-2-1.png" width="672" /></p>
 </div>
 <div id="mars" class="section level3 hasAnchor" number="5.1.2">
@@ -608,26 +666,23 @@ div.csl-indent {
 <p>Multivariate adaptive regression spline (MARS) is a non-linear regression method that fits a set of splines (hinge functions) to each of the predictor variables i.e. different hinge function for different variables <span class="citation">(<a href="#ref-pmid8548103">Friedman and Roosen 1995</a>)</span>. As such,
 the method can be used to plot the relationship between each variable and
 outcome. Use in this way, the presence of any threshold effect on the predictors can be graphically visualized. The MARS method is implemented in R programming environment in the <em>earth</em> package.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="multivariate-analysis.html#cb14-1" tabindex="-1"></a><span class="fu">library</span>(earth)</span></code></pre></div>
-<pre><code>## Loading required package: Formula</code></pre>
-<pre><code>## Loading required package: plotmo</code></pre>
-<pre><code>## Loading required package: plotrix</code></pre>
-<pre><code>## Loading required package: TeachingDemos</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="multivariate-analysis.html#cb19-1" tabindex="-1"></a>BC<span class="ot">&lt;-</span>BC[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb19-2"><a href="multivariate-analysis.html#cb19-2" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="multivariate-analysis.html#cb19-3" tabindex="-1"></a>Fit<span class="ot">&lt;-</span><span class="fu">earth</span>(Class <span class="sc">~</span>.,<span class="at">data=</span> BC,</span>
-<span id="cb19-4"><a href="multivariate-analysis.html#cb19-4" tabindex="-1"></a>           <span class="at">nfold=</span><span class="dv">10</span>,<span class="at">ncross=</span><span class="dv">30</span>, <span class="at">varmod.method =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb19-5"><a href="multivariate-analysis.html#cb19-5" tabindex="-1"></a>           <span class="at">glm=</span><span class="fu">list</span>(<span class="at">family=</span>binomial))</span>
-<span id="cb19-6"><a href="multivariate-analysis.html#cb19-6" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="multivariate-analysis.html#cb19-7" tabindex="-1"></a><span class="fu">plotmo</span>(Fit)</span></code></pre></div>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="multivariate-analysis.html#cb735-1" tabindex="-1"></a><span class="fu">library</span>(earth)</span>
+<span id="cb735-2"><a href="multivariate-analysis.html#cb735-2" tabindex="-1"></a></span>
+<span id="cb735-3"><a href="multivariate-analysis.html#cb735-3" tabindex="-1"></a>BC<span class="ot">&lt;-</span>BC[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb735-4"><a href="multivariate-analysis.html#cb735-4" tabindex="-1"></a></span>
+<span id="cb735-5"><a href="multivariate-analysis.html#cb735-5" tabindex="-1"></a>Fit<span class="ot">&lt;-</span><span class="fu">earth</span>(Class <span class="sc">~</span>.,<span class="at">data=</span> BC,</span>
+<span id="cb735-6"><a href="multivariate-analysis.html#cb735-6" tabindex="-1"></a>           <span class="at">nfold=</span><span class="dv">10</span>,<span class="at">ncross=</span><span class="dv">30</span>, <span class="at">varmod.method =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb735-7"><a href="multivariate-analysis.html#cb735-7" tabindex="-1"></a>           <span class="at">glm=</span><span class="fu">list</span>(<span class="at">family=</span>binomial))</span>
+<span id="cb735-8"><a href="multivariate-analysis.html#cb735-8" tabindex="-1"></a></span>
+<span id="cb735-9"><a href="multivariate-analysis.html#cb735-9" tabindex="-1"></a><span class="fu">plotmo</span>(Fit)</span></code></pre></div>
 <pre><code>##  plotmo grid:    Cl.thickness Cell.size Cell.shape Marg.adhesion Epith.c.size
 ##                             4         1          1             1            2
 ##  Bare.nuclei Bl.cromatin Normal.nucleoli Mitoses
 ##            1           3               1       1</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="multivariate-analysis.html#cb21-1" tabindex="-1"></a><span class="fu">summary</span>(Fit)</span></code></pre></div>
-<pre><code>## Call: earth(formula=Class~., data=BC, glm=list(family=binomial), nfold=10,
-##             ncross=30, varmod.method=&quot;none&quot;)
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="multivariate-analysis.html#cb737-1" tabindex="-1"></a><span class="fu">summary</span>(Fit)</span></code></pre></div>
+<pre><code>## Call: earth(formula=Class~., data=BC, glm=list(family=binomial), nfold=10, ncross=30,
+##             varmod.method=&quot;none&quot;)
 ## 
 ## GLM coefficients
 ##                           Class
@@ -651,7 +706,7 @@ outcome. Use in this way, the presence of any threshold effect on the predictors
 ## 
 ## Earth selected 13 of 18 terms, and 7 of 9 predictors
 ## Termination condition: Reached nk 21
-## Importance: Cell.size, Bare.nuclei, Cl.thickness, Normal.nucleoli, ...
+## Importance: Cell.size, Bare.nuclei, Cl.thickness, Normal.nucleoli, Cell.shape, ...
 ## Number of terms at each degree of interaction: 1 12 (additive model)
 ## Earth GCV 0.03174149  RSS 20.3433  GRSq 0.8599283  RSq 0.8695166  CVRSq 0.8481011
 ## 
@@ -694,21 +749,21 @@ several steps including factor and cluster analyses to idetify groups. The
 <div id="generalized-estimating-equation-gee" class="section level3 hasAnchor" number="5.1.5">
 <h3><span class="header-section-number">5.1.5</span> Generalized estimating equation (GEE)<a href="multivariate-analysis.html#generalized-estimating-equation-gee" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>GEE is used for analysis of longitudinal or clustered data. GEE is preferred when the idea is to discover the group effect or population average (marginal) log odds <span class="citation">(<a href="#ref-pmid20220526">Hubbard AE 2010</a>)</span>. This is contrast with the mixed model approach to evaluate the average subject via maximum likelihood estimation. The fitting for mixed model is complex compare to GEE and can breakdown. The library for performing GEE is <em>gee</em> or <em>geepack</em>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="multivariate-analysis.html#cb23-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb23-2"><a href="multivariate-analysis.html#cb23-2" tabindex="-1"></a><span class="fu">library</span>(gee)</span>
-<span id="cb23-3"><a href="multivariate-analysis.html#cb23-3" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="multivariate-analysis.html#cb23-4" tabindex="-1"></a><span class="co">#open simulated data from previous chapter</span></span>
-<span id="cb23-5"><a href="multivariate-analysis.html#cb23-5" tabindex="-1"></a>dtTime<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./Data-Use/dtTime_simulated.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-6"><a href="multivariate-analysis.html#cb23-6" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">NIHSS=</span>Y) <span class="sc">%&gt;%</span> <span class="fu">mutate</span> (<span class="at">NIHSS=</span><span class="fu">abs</span>(NIHSS))</span>
-<span id="cb23-7"><a href="multivariate-analysis.html#cb23-7" tabindex="-1"></a>  </span>
-<span id="cb23-8"><a href="multivariate-analysis.html#cb23-8" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="multivariate-analysis.html#cb23-9" tabindex="-1"></a>(fit<span class="ot">&lt;-</span><span class="fu">gee</span>(ENI<span class="sc">~</span>T<span class="sc">+</span>Diabetes<span class="sc">+</span>NIHSS,</span>
-<span id="cb23-10"><a href="multivariate-analysis.html#cb23-10" tabindex="-1"></a>         <span class="at">id=</span>id, </span>
-<span id="cb23-11"><a href="multivariate-analysis.html#cb23-11" tabindex="-1"></a>         <span class="at">corstr =</span> <span class="st">&quot;unstructured&quot;</span>,</span>
-<span id="cb23-12"><a href="multivariate-analysis.html#cb23-12" tabindex="-1"></a>         <span class="at">tol =</span> <span class="fl">0.001</span>, <span class="at">maxiter =</span> <span class="dv">25</span>,</span>
-<span id="cb23-13"><a href="multivariate-analysis.html#cb23-13" tabindex="-1"></a>         <span class="co">#data=dtTrial_long)</span></span>
-<span id="cb23-14"><a href="multivariate-analysis.html#cb23-14" tabindex="-1"></a>          <span class="at">data=</span>dtTime))</span>
-<span id="cb23-15"><a href="multivariate-analysis.html#cb23-15" tabindex="-1"></a>  <span class="fu">summary</span>(fit)</span></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="multivariate-analysis.html#cb739-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb739-2"><a href="multivariate-analysis.html#cb739-2" tabindex="-1"></a><span class="fu">library</span>(gee)</span>
+<span id="cb739-3"><a href="multivariate-analysis.html#cb739-3" tabindex="-1"></a></span>
+<span id="cb739-4"><a href="multivariate-analysis.html#cb739-4" tabindex="-1"></a><span class="co">#open simulated data from previous chapter</span></span>
+<span id="cb739-5"><a href="multivariate-analysis.html#cb739-5" tabindex="-1"></a>dtTime<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;./Data-Use/dtTime_simulated.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb739-6"><a href="multivariate-analysis.html#cb739-6" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">NIHSS=</span>Y) <span class="sc">%&gt;%</span> <span class="fu">mutate</span> (<span class="at">NIHSS=</span><span class="fu">abs</span>(NIHSS))</span>
+<span id="cb739-7"><a href="multivariate-analysis.html#cb739-7" tabindex="-1"></a>  </span>
+<span id="cb739-8"><a href="multivariate-analysis.html#cb739-8" tabindex="-1"></a></span>
+<span id="cb739-9"><a href="multivariate-analysis.html#cb739-9" tabindex="-1"></a>(fit<span class="ot">&lt;-</span><span class="fu">gee</span>(ENI<span class="sc">~</span>T<span class="sc">+</span>Diabetes<span class="sc">+</span>NIHSS,</span>
+<span id="cb739-10"><a href="multivariate-analysis.html#cb739-10" tabindex="-1"></a>         <span class="at">id=</span>id, </span>
+<span id="cb739-11"><a href="multivariate-analysis.html#cb739-11" tabindex="-1"></a>         <span class="at">corstr =</span> <span class="st">&quot;unstructured&quot;</span>,</span>
+<span id="cb739-12"><a href="multivariate-analysis.html#cb739-12" tabindex="-1"></a>         <span class="at">tol =</span> <span class="fl">0.001</span>, <span class="at">maxiter =</span> <span class="dv">25</span>,</span>
+<span id="cb739-13"><a href="multivariate-analysis.html#cb739-13" tabindex="-1"></a>         <span class="co">#data=dtTrial_long)</span></span>
+<span id="cb739-14"><a href="multivariate-analysis.html#cb739-14" tabindex="-1"></a>          <span class="at">data=</span>dtTime))</span>
+<span id="cb739-15"><a href="multivariate-analysis.html#cb739-15" tabindex="-1"></a>  <span class="fu">summary</span>(fit)</span></code></pre></div>
 </div>
 </div>
 <div id="principal-component-analysis" class="section level2 hasAnchor" number="5.2">
@@ -725,61 +780,61 @@ of observed variables. The next principal component is orthogonal to the first p
 <div id="pca-with-mri" class="section level3 hasAnchor" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> PCA with MRI<a href="multivariate-analysis.html#pca-with-mri" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here we illustrate multivariate analysis with <em>mand</em> library.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="multivariate-analysis.html#cb24-1" tabindex="-1"></a><span class="co">#modified commands from mand vignette</span></span>
-<span id="cb24-2"><a href="multivariate-analysis.html#cb24-2" tabindex="-1"></a><span class="fu">library</span>(mand)</span></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="multivariate-analysis.html#cb740-1" tabindex="-1"></a><span class="co">#modified commands from mand vignette</span></span>
+<span id="cb740-2"><a href="multivariate-analysis.html#cb740-2" tabindex="-1"></a><span class="fu">library</span>(mand)</span></code></pre></div>
 <pre><code>## Loading required package: msma</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multivariate-analysis.html#cb26-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;atlas&quot;</span>)</span>
-<span id="cb26-2"><a href="multivariate-analysis.html#cb26-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;atlasdatasets&quot;</span>)</span>
-<span id="cb26-3"><a href="multivariate-analysis.html#cb26-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;template&quot;</span>)</span>
-<span id="cb26-4"><a href="multivariate-analysis.html#cb26-4" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="multivariate-analysis.html#cb26-5" tabindex="-1"></a>atlasdataset<span class="ot">=</span>atlasdatasets<span class="sc">$</span>aal</span>
-<span id="cb26-6"><a href="multivariate-analysis.html#cb26-6" tabindex="-1"></a>tmpatlas<span class="ot">=</span>atlas<span class="sc">$</span>aal</span>
-<span id="cb26-7"><a href="multivariate-analysis.html#cb26-7" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="multivariate-analysis.html#cb26-8" tabindex="-1"></a><span class="co">#overlay images</span></span>
-<span id="cb26-9"><a href="multivariate-analysis.html#cb26-9" tabindex="-1"></a><span class="fu">coat</span>(template, tmpatlas, <span class="at">regionplot=</span><span class="cn">TRUE</span>, </span>
-<span id="cb26-10"><a href="multivariate-analysis.html#cb26-10" tabindex="-1"></a> <span class="at">atlasdataset=</span>atlasdataset, <span class="at">ROIids =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">41</span><span class="sc">:</span><span class="dv">44</span>), <span class="at">regionlegend=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="multivariate-analysis.html#cb742-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;atlas&quot;</span>)</span>
+<span id="cb742-2"><a href="multivariate-analysis.html#cb742-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;atlasdatasets&quot;</span>)</span>
+<span id="cb742-3"><a href="multivariate-analysis.html#cb742-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;template&quot;</span>)</span>
+<span id="cb742-4"><a href="multivariate-analysis.html#cb742-4" tabindex="-1"></a></span>
+<span id="cb742-5"><a href="multivariate-analysis.html#cb742-5" tabindex="-1"></a>atlasdataset<span class="ot">=</span>atlasdatasets<span class="sc">$</span>aal</span>
+<span id="cb742-6"><a href="multivariate-analysis.html#cb742-6" tabindex="-1"></a>tmpatlas<span class="ot">=</span>atlas<span class="sc">$</span>aal</span>
+<span id="cb742-7"><a href="multivariate-analysis.html#cb742-7" tabindex="-1"></a></span>
+<span id="cb742-8"><a href="multivariate-analysis.html#cb742-8" tabindex="-1"></a><span class="co">#overlay images</span></span>
+<span id="cb742-9"><a href="multivariate-analysis.html#cb742-9" tabindex="-1"></a><span class="fu">coat</span>(template, tmpatlas, <span class="at">regionplot=</span><span class="cn">TRUE</span>, </span>
+<span id="cb742-10"><a href="multivariate-analysis.html#cb742-10" tabindex="-1"></a> <span class="at">atlasdataset=</span>atlasdataset, <span class="at">ROIids =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">41</span><span class="sc">:</span><span class="dv">44</span>), <span class="at">regionlegend=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-5-1.png" width="672" /></p>
 <p>Simulate a dataset using <em>mand</em>.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="multivariate-analysis.html#cb27-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;diffimg&quot;</span>) <span class="co">#mand</span></span>
-<span id="cb27-2"><a href="multivariate-analysis.html#cb27-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;baseimg&quot;</span>)</span>
-<span id="cb27-3"><a href="multivariate-analysis.html#cb27-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mask&quot;</span>)</span>
-<span id="cb27-4"><a href="multivariate-analysis.html#cb27-4" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sdevimg&quot;</span>)</span>
-<span id="cb27-5"><a href="multivariate-analysis.html#cb27-5" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="multivariate-analysis.html#cb27-6" tabindex="-1"></a>diffimg2 <span class="ot">=</span> diffimg <span class="sc">*</span> (tmpatlas <span class="sc">%in%</span> <span class="dv">41</span><span class="sc">:</span><span class="dv">44</span>)</span>
-<span id="cb27-7"><a href="multivariate-analysis.html#cb27-7" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="multivariate-analysis.html#cb27-8" tabindex="-1"></a>img1 <span class="ot">=</span> <span class="fu">simbrain</span>(<span class="at">baseimg =</span> baseimg, <span class="at">diffimg =</span> diffimg2, </span>
-<span id="cb27-9"><a href="multivariate-analysis.html#cb27-9" tabindex="-1"></a><span class="at">sdevimg=</span>sdevimg, <span class="at">mask=</span>mask, <span class="at">n0=</span><span class="dv">20</span>, <span class="at">c1=</span><span class="fl">0.01</span>, <span class="at">sd1=</span><span class="fl">0.05</span>)</span>
-<span id="cb27-10"><a href="multivariate-analysis.html#cb27-10" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="multivariate-analysis.html#cb27-11" tabindex="-1"></a><span class="co">#dim(img1$S) #40 6422</span></span>
-<span id="cb27-12"><a href="multivariate-analysis.html#cb27-12" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="multivariate-analysis.html#cb27-13" tabindex="-1"></a><span class="co">#mand takes matrix array as argument</span></span>
-<span id="cb27-14"><a href="multivariate-analysis.html#cb27-14" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">msma</span>(img1<span class="sc">$</span>S,<span class="at">comp=</span><span class="dv">2</span>)</span>
-<span id="cb27-15"><a href="multivariate-analysis.html#cb27-15" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">v=</span><span class="st">&quot;score&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">plottype=</span><span class="st">&quot;scatter&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="multivariate-analysis.html#cb743-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;diffimg&quot;</span>) <span class="co">#mand</span></span>
+<span id="cb743-2"><a href="multivariate-analysis.html#cb743-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;baseimg&quot;</span>)</span>
+<span id="cb743-3"><a href="multivariate-analysis.html#cb743-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mask&quot;</span>)</span>
+<span id="cb743-4"><a href="multivariate-analysis.html#cb743-4" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;sdevimg&quot;</span>)</span>
+<span id="cb743-5"><a href="multivariate-analysis.html#cb743-5" tabindex="-1"></a></span>
+<span id="cb743-6"><a href="multivariate-analysis.html#cb743-6" tabindex="-1"></a>diffimg2 <span class="ot">=</span> diffimg <span class="sc">*</span> (tmpatlas <span class="sc">%in%</span> <span class="dv">41</span><span class="sc">:</span><span class="dv">44</span>)</span>
+<span id="cb743-7"><a href="multivariate-analysis.html#cb743-7" tabindex="-1"></a></span>
+<span id="cb743-8"><a href="multivariate-analysis.html#cb743-8" tabindex="-1"></a>img1 <span class="ot">=</span> <span class="fu">simbrain</span>(<span class="at">baseimg =</span> baseimg, <span class="at">diffimg =</span> diffimg2, </span>
+<span id="cb743-9"><a href="multivariate-analysis.html#cb743-9" tabindex="-1"></a><span class="at">sdevimg=</span>sdevimg, <span class="at">mask=</span>mask, <span class="at">n0=</span><span class="dv">20</span>, <span class="at">c1=</span><span class="fl">0.01</span>, <span class="at">sd1=</span><span class="fl">0.05</span>)</span>
+<span id="cb743-10"><a href="multivariate-analysis.html#cb743-10" tabindex="-1"></a></span>
+<span id="cb743-11"><a href="multivariate-analysis.html#cb743-11" tabindex="-1"></a><span class="co">#dim(img1$S) #40 6422</span></span>
+<span id="cb743-12"><a href="multivariate-analysis.html#cb743-12" tabindex="-1"></a></span>
+<span id="cb743-13"><a href="multivariate-analysis.html#cb743-13" tabindex="-1"></a><span class="co">#mand takes matrix array as argument</span></span>
+<span id="cb743-14"><a href="multivariate-analysis.html#cb743-14" tabindex="-1"></a>fit<span class="ot">=</span><span class="fu">msma</span>(img1<span class="sc">$</span>S,<span class="at">comp=</span><span class="dv">2</span>)</span>
+<span id="cb743-15"><a href="multivariate-analysis.html#cb743-15" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">v=</span><span class="st">&quot;score&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">plottype=</span><span class="st">&quot;scatter&quot;</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-5-1-1.png" width="672" /></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="multivariate-analysis.html#cb28-1" tabindex="-1"></a>midx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the modality</span></span>
-<span id="cb28-2"><a href="multivariate-analysis.html#cb28-2" tabindex="-1"></a>vidx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the component</span></span>
-<span id="cb28-3"><a href="multivariate-analysis.html#cb28-3" tabindex="-1"></a>Q <span class="ot">=</span> fit<span class="sc">$</span>wbX[[midx]][,vidx]</span>
-<span id="cb28-4"><a href="multivariate-analysis.html#cb28-4" tabindex="-1"></a>outstat1 <span class="ot">=</span> <span class="fu">rec</span>(Q, img1<span class="sc">$</span>imagedim, <span class="at">mask=</span>img1<span class="sc">$</span>brainpos)</span>
-<span id="cb28-5"><a href="multivariate-analysis.html#cb28-5" tabindex="-1"></a><span class="fu">coat</span>(template, outstat1)</span></code></pre></div>
+<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb744-1"><a href="multivariate-analysis.html#cb744-1" tabindex="-1"></a>midx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the modality</span></span>
+<span id="cb744-2"><a href="multivariate-analysis.html#cb744-2" tabindex="-1"></a>vidx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the component</span></span>
+<span id="cb744-3"><a href="multivariate-analysis.html#cb744-3" tabindex="-1"></a>Q <span class="ot">=</span> fit<span class="sc">$</span>wbX[[midx]][,vidx]</span>
+<span id="cb744-4"><a href="multivariate-analysis.html#cb744-4" tabindex="-1"></a>outstat1 <span class="ot">=</span> <span class="fu">rec</span>(Q, img1<span class="sc">$</span>imagedim, <span class="at">mask=</span>img1<span class="sc">$</span>brainpos)</span>
+<span id="cb744-5"><a href="multivariate-analysis.html#cb744-5" tabindex="-1"></a><span class="fu">coat</span>(template, outstat1)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-5-1-2.png" width="672" /></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="multivariate-analysis.html#cb29-1" tabindex="-1"></a><span class="co">#https://rdrr.io/cran/mand/f/vignettes/a_overview.Rmd</span></span>
-<span id="cb29-2"><a href="multivariate-analysis.html#cb29-2" tabindex="-1"></a><span class="co">#https://rdrr.io/cran/caret/man/plsda.html</span></span></code></pre></div>
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="multivariate-analysis.html#cb745-1" tabindex="-1"></a><span class="co">#https://rdrr.io/cran/mand/f/vignettes/a_overview.Rmd</span></span>
+<span id="cb745-2"><a href="multivariate-analysis.html#cb745-2" tabindex="-1"></a><span class="co">#https://rdrr.io/cran/caret/man/plsda.html</span></span></code></pre></div>
 <p>Let’s apply <em>mand</em> on imaging data. First we use pattern matching to extract the relevant nii files into a list.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="multivariate-analysis.html#cb30-1" tabindex="-1"></a><span class="co">#remotes::install_github(&quot;neuroconductor/MNITemplate&quot;)</span></span>
-<span id="cb30-2"><a href="multivariate-analysis.html#cb30-2" tabindex="-1"></a><span class="fu">library</span>(MNITemplate)</span>
-<span id="cb30-3"><a href="multivariate-analysis.html#cb30-3" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="multivariate-analysis.html#cb30-4" tabindex="-1"></a><span class="co">#MNI choose resolution</span></span>
-<span id="cb30-5"><a href="multivariate-analysis.html#cb30-5" tabindex="-1"></a>MNI <span class="ot">=</span> <span class="fu">readMNI</span>(<span class="at">res =</span> <span class="st">&quot;2mm&quot;</span>)</span>
-<span id="cb30-6"><a href="multivariate-analysis.html#cb30-6" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="multivariate-analysis.html#cb30-7" tabindex="-1"></a><span class="co">#create a list using pattern matching ending in .nii</span></span>
-<span id="cb30-8"><a href="multivariate-analysis.html#cb30-8" tabindex="-1"></a><span class="co">#regular expression | indicates matching for ica.nii or mca_blur.nii</span></span>
-<span id="cb30-9"><a href="multivariate-analysis.html#cb30-9" tabindex="-1"></a>mca.list<span class="ot">&lt;-</span><span class="fu">list.files</span>(<span class="at">path=</span><span class="st">&quot;./Ext-Data/&quot;</span>,</span>
-<span id="cb30-10"><a href="multivariate-analysis.html#cb30-10" tabindex="-1"></a>                     <span class="at">pattern =</span> <span class="st">&quot;*ica.nii|*mca_blur.nii&quot;</span>, </span>
-<span id="cb30-11"><a href="multivariate-analysis.html#cb30-11" tabindex="-1"></a>                     <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="multivariate-analysis.html#cb746-1" tabindex="-1"></a><span class="co">#remotes::install_github(&quot;neuroconductor/MNITemplate&quot;)</span></span>
+<span id="cb746-2"><a href="multivariate-analysis.html#cb746-2" tabindex="-1"></a><span class="fu">library</span>(MNITemplate)</span>
+<span id="cb746-3"><a href="multivariate-analysis.html#cb746-3" tabindex="-1"></a></span>
+<span id="cb746-4"><a href="multivariate-analysis.html#cb746-4" tabindex="-1"></a><span class="co">#MNI choose resolution</span></span>
+<span id="cb746-5"><a href="multivariate-analysis.html#cb746-5" tabindex="-1"></a>MNI <span class="ot">=</span> <span class="fu">readMNI</span>(<span class="at">res =</span> <span class="st">&quot;2mm&quot;</span>)</span>
+<span id="cb746-6"><a href="multivariate-analysis.html#cb746-6" tabindex="-1"></a></span>
+<span id="cb746-7"><a href="multivariate-analysis.html#cb746-7" tabindex="-1"></a><span class="co">#create a list using pattern matching ending in .nii</span></span>
+<span id="cb746-8"><a href="multivariate-analysis.html#cb746-8" tabindex="-1"></a><span class="co">#regular expression | indicates matching for ica.nii or mca_blur.nii</span></span>
+<span id="cb746-9"><a href="multivariate-analysis.html#cb746-9" tabindex="-1"></a>mca.list<span class="ot">&lt;-</span><span class="fu">list.files</span>(<span class="at">path=</span><span class="st">&quot;./Ext-Data/&quot;</span>,</span>
+<span id="cb746-10"><a href="multivariate-analysis.html#cb746-10" tabindex="-1"></a>                     <span class="at">pattern =</span> <span class="st">&quot;*ica.nii|*mca_blur.nii&quot;</span>, </span>
+<span id="cb746-11"><a href="multivariate-analysis.html#cb746-11" tabindex="-1"></a>                     <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>We use the <em>imgdatamat</em> function to read in the files with patients as rows and imaging voxels in columns.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multivariate-analysis.html#cb31-1" tabindex="-1"></a><span class="co">#use imgdatamat to organise data as rows of patients and columns of voxels</span></span>
-<span id="cb31-2"><a href="multivariate-analysis.html#cb31-2" tabindex="-1"></a><span class="co">#simscale reduces the size of the voxel to quarter of its size</span></span>
-<span id="cb31-3"><a href="multivariate-analysis.html#cb31-3" tabindex="-1"></a>m.list.dat<span class="ot">&lt;-</span><span class="fu">imgdatamat</span>(mca.list, <span class="at">simscale=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="multivariate-analysis.html#cb747-1" tabindex="-1"></a><span class="co">#use imgdatamat to organise data as rows of patients and columns of voxels</span></span>
+<span id="cb747-2"><a href="multivariate-analysis.html#cb747-2" tabindex="-1"></a><span class="co">#simscale reduces the size of the voxel to quarter of its size</span></span>
+<span id="cb747-3"><a href="multivariate-analysis.html#cb747-3" tabindex="-1"></a>m.list.dat<span class="ot">&lt;-</span><span class="fu">imgdatamat</span>(mca.list, <span class="at">simscale=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## Malformed NIfTI - not reading NIfTI extension, use at own risk!
 ## Malformed NIfTI - not reading NIfTI extension, use at own risk!
 ## Malformed NIfTI - not reading NIfTI extension, use at own risk!
@@ -805,27 +860,27 @@ of observed variables. The next principal component is orthogonal to the first p
 ## Malformed NIfTI - not reading NIfTI extension, use at own risk!
 ## Malformed NIfTI - not reading NIfTI extension, use at own risk!
 ## Malformed NIfTI - not reading NIfTI extension, use at own risk!</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="multivariate-analysis.html#cb33-1" tabindex="-1"></a><span class="co">#check that the dimension is correct</span></span>
-<span id="cb33-2"><a href="multivariate-analysis.html#cb33-2" tabindex="-1"></a><span class="fu">dim</span>(m.list.dat<span class="sc">$</span>S) <span class="co">#42 902629</span></span></code></pre></div>
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="multivariate-analysis.html#cb749-1" tabindex="-1"></a><span class="co">#check that the dimension is correct</span></span>
+<span id="cb749-2"><a href="multivariate-analysis.html#cb749-2" tabindex="-1"></a><span class="fu">dim</span>(m.list.dat<span class="sc">$</span>S) <span class="co">#42 902629</span></span></code></pre></div>
 <pre><code>## [1]     29 902629</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="multivariate-analysis.html#cb35-1" tabindex="-1"></a>fit1<span class="ot">=</span><span class="fu">msma</span>(m.list.dat<span class="sc">$</span>S,<span class="at">comp=</span><span class="dv">2</span>)</span>
-<span id="cb35-2"><a href="multivariate-analysis.html#cb35-2" tabindex="-1"></a><span class="fu">plot</span>(fit1, <span class="at">v=</span><span class="st">&quot;score&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">plottype=</span><span class="st">&quot;scatter&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="multivariate-analysis.html#cb751-1" tabindex="-1"></a>fit1<span class="ot">=</span><span class="fu">msma</span>(m.list.dat<span class="sc">$</span>S,<span class="at">comp=</span><span class="dv">2</span>)</span>
+<span id="cb751-2"><a href="multivariate-analysis.html#cb751-2" tabindex="-1"></a><span class="fu">plot</span>(fit1, <span class="at">v=</span><span class="st">&quot;score&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">plottype=</span><span class="st">&quot;scatter&quot;</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-5-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="multivariate-analysis.html#cb36-1" tabindex="-1"></a>midx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the modality</span></span>
-<span id="cb36-2"><a href="multivariate-analysis.html#cb36-2" tabindex="-1"></a>vidx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the component</span></span>
-<span id="cb36-3"><a href="multivariate-analysis.html#cb36-3" tabindex="-1"></a>Q <span class="ot">=</span> fit1<span class="sc">$</span>wbX[[midx]][,vidx]</span>
-<span id="cb36-4"><a href="multivariate-analysis.html#cb36-4" tabindex="-1"></a>outstat_fit1 <span class="ot">=</span> <span class="fu">rec</span>(Q, m.list.dat<span class="sc">$</span>imagedim, <span class="at">mask=</span>m.list.dat<span class="sc">$</span>brainpos)</span>
-<span id="cb36-5"><a href="multivariate-analysis.html#cb36-5" tabindex="-1"></a><span class="fu">coat</span>(MNI, outstat_fit1)</span></code></pre></div>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="multivariate-analysis.html#cb752-1" tabindex="-1"></a>midx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the modality</span></span>
+<span id="cb752-2"><a href="multivariate-analysis.html#cb752-2" tabindex="-1"></a>vidx <span class="ot">=</span> <span class="dv">1</span> <span class="do">## the index for the component</span></span>
+<span id="cb752-3"><a href="multivariate-analysis.html#cb752-3" tabindex="-1"></a>Q <span class="ot">=</span> fit1<span class="sc">$</span>wbX[[midx]][,vidx]</span>
+<span id="cb752-4"><a href="multivariate-analysis.html#cb752-4" tabindex="-1"></a>outstat_fit1 <span class="ot">=</span> <span class="fu">rec</span>(Q, m.list.dat<span class="sc">$</span>imagedim, <span class="at">mask=</span>m.list.dat<span class="sc">$</span>brainpos)</span>
+<span id="cb752-5"><a href="multivariate-analysis.html#cb752-5" tabindex="-1"></a><span class="fu">coat</span>(MNI, outstat_fit1)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-5-3-2.png" width="672" /></p>
 </div>
 </div>
 <div id="independent-component-analysis" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Independent component analysis<a href="multivariate-analysis.html#independent-component-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Independent component analysis is different from PCA in that it seeks components which are statistically independent.It separates signal from a multivariate distribution into additive components which as statistically independent. It is used in separating components of noise signal or blind source localisation.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="multivariate-analysis.html#cb37-1" tabindex="-1"></a><span class="fu">library</span>(fastICA)</span>
-<span id="cb37-2"><a href="multivariate-analysis.html#cb37-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">fastICA</span>(img1<span class="sc">$</span>S, <span class="dv">2</span>, <span class="at">alg.typ =</span> <span class="st">&quot;deflation&quot;</span>, <span class="at">fun =</span> <span class="st">&quot;logcosh&quot;</span>, <span class="at">alpha =</span> <span class="dv">1</span>,</span>
-<span id="cb37-3"><a href="multivariate-analysis.html#cb37-3" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;R&quot;</span>, <span class="at">row.norm =</span> <span class="cn">FALSE</span>, <span class="at">maxit =</span> <span class="dv">200</span>, </span>
-<span id="cb37-4"><a href="multivariate-analysis.html#cb37-4" tabindex="-1"></a>             <span class="at">tol =</span> <span class="fl">0.0001</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="multivariate-analysis.html#cb753-1" tabindex="-1"></a><span class="fu">library</span>(fastICA)</span>
+<span id="cb753-2"><a href="multivariate-analysis.html#cb753-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">fastICA</span>(img1<span class="sc">$</span>S, <span class="dv">2</span>, <span class="at">alg.typ =</span> <span class="st">&quot;deflation&quot;</span>, <span class="at">fun =</span> <span class="st">&quot;logcosh&quot;</span>, <span class="at">alpha =</span> <span class="dv">1</span>,</span>
+<span id="cb753-3"><a href="multivariate-analysis.html#cb753-3" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;R&quot;</span>, <span class="at">row.norm =</span> <span class="cn">FALSE</span>, <span class="at">maxit =</span> <span class="dv">200</span>, </span>
+<span id="cb753-4"><a href="multivariate-analysis.html#cb753-4" tabindex="-1"></a>             <span class="at">tol =</span> <span class="fl">0.0001</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Centering</code></pre>
 <pre><code>## Whitening</code></pre>
 <pre><code>## Deflation FastICA using logcosh approx. to neg-entropy function</code></pre>
@@ -844,43 +899,43 @@ mathematical exposition of the PLS-PLR technique used here can be found in the p
 library <span class="citation">(<a href="#ref-pmid28968879">Durif et al. 2018</a>)</span>. The analysis involves partitioning the data into
 training and test set. The classification data is in the Y column. This example
 is provided by the <em>plsgenomics</em> library</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="multivariate-analysis.html#cb46-1" tabindex="-1"></a><span class="fu">library</span>(plsgenomics)</span></code></pre></div>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="multivariate-analysis.html#cb762-1" tabindex="-1"></a><span class="fu">library</span>(plsgenomics)</span></code></pre></div>
 <pre><code>## For any news related to the &#39;plsgenomics&#39; package (update, corrected bugs), please check http://thoth.inrialpes.fr/people/gdurif/</code></pre>
 <pre><code>## C++ based sparse PLS routines will soon be available on the CRAN in the new &#39;fastPLS&#39; package.</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="multivariate-analysis.html#cb49-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Colon&quot;</span>)</span>
-<span id="cb49-2"><a href="multivariate-analysis.html#cb49-2" tabindex="-1"></a><span class="fu">class</span>(Colon) <span class="co">#list</span></span></code></pre></div>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="multivariate-analysis.html#cb765-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;Colon&quot;</span>)</span>
+<span id="cb765-2"><a href="multivariate-analysis.html#cb765-2" tabindex="-1"></a><span class="fu">class</span>(Colon) <span class="co">#list</span></span></code></pre></div>
 <pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="multivariate-analysis.html#cb51-1" tabindex="-1"></a><span class="co">#62 samples 2000 genes</span></span>
-<span id="cb51-2"><a href="multivariate-analysis.html#cb51-2" tabindex="-1"></a><span class="co">#Outcome is in Y column as 1 and 2. 62 rows</span></span>
-<span id="cb51-3"><a href="multivariate-analysis.html#cb51-3" tabindex="-1"></a><span class="co">#2000 gene names</span></span>
-<span id="cb51-4"><a href="multivariate-analysis.html#cb51-4" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="multivariate-analysis.html#cb51-5" tabindex="-1"></a><span class="fu">dim</span>(Colon<span class="sc">$</span>X) </span></code></pre></div>
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb767-1"><a href="multivariate-analysis.html#cb767-1" tabindex="-1"></a><span class="co">#62 samples 2000 genes</span></span>
+<span id="cb767-2"><a href="multivariate-analysis.html#cb767-2" tabindex="-1"></a><span class="co">#Outcome is in Y column as 1 and 2. 62 rows</span></span>
+<span id="cb767-3"><a href="multivariate-analysis.html#cb767-3" tabindex="-1"></a><span class="co">#2000 gene names</span></span>
+<span id="cb767-4"><a href="multivariate-analysis.html#cb767-4" tabindex="-1"></a></span>
+<span id="cb767-5"><a href="multivariate-analysis.html#cb767-5" tabindex="-1"></a><span class="fu">dim</span>(Colon<span class="sc">$</span>X) </span></code></pre></div>
 <pre><code>## [1]   62 2000</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="multivariate-analysis.html#cb53-1" tabindex="-1"></a><span class="co">#heatmap</span></span>
-<span id="cb53-2"><a href="multivariate-analysis.html#cb53-2" tabindex="-1"></a><span class="fu">matrix.heatmap</span>(<span class="fu">cbind</span>(Colon<span class="sc">$</span>X,Colon<span class="sc">$</span>y))</span></code></pre></div>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="multivariate-analysis.html#cb769-1" tabindex="-1"></a><span class="co">#heatmap</span></span>
+<span id="cb769-2"><a href="multivariate-analysis.html#cb769-2" tabindex="-1"></a><span class="fu">matrix.heatmap</span>(<span class="fu">cbind</span>(Colon<span class="sc">$</span>X,Colon<span class="sc">$</span>y))</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/04-multivariate-analysis-6-1.png" width="672" /></p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="multivariate-analysis.html#cb54-1" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb54-2"><a href="multivariate-analysis.html#cb54-2" tabindex="-1"></a>IndexLearn <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sample</span>(<span class="fu">which</span>(Colon<span class="sc">$</span>Y<span class="sc">==</span><span class="dv">2</span>),<span class="dv">12</span>),<span class="fu">sample</span>(<span class="fu">which</span>(Colon<span class="sc">$</span>Y<span class="sc">==</span><span class="dv">1</span>),<span class="dv">8</span>))</span>
-<span id="cb54-3"><a href="multivariate-analysis.html#cb54-3" tabindex="-1"></a>Xtrain <span class="ot">&lt;-</span> Colon<span class="sc">$</span>X[IndexLearn,] </span>
-<span id="cb54-4"><a href="multivariate-analysis.html#cb54-4" tabindex="-1"></a>Ytrain <span class="ot">&lt;-</span> Colon<span class="sc">$</span>Y[IndexLearn] </span>
-<span id="cb54-5"><a href="multivariate-analysis.html#cb54-5" tabindex="-1"></a>Xtest <span class="ot">&lt;-</span> Colon<span class="sc">$</span>X[<span class="sc">-</span>IndexLearn,]</span>
-<span id="cb54-6"><a href="multivariate-analysis.html#cb54-6" tabindex="-1"></a></span>
-<span id="cb54-7"><a href="multivariate-analysis.html#cb54-7" tabindex="-1"></a><span class="co"># preprocess data </span></span>
-<span id="cb54-8"><a href="multivariate-analysis.html#cb54-8" tabindex="-1"></a>resP <span class="ot">&lt;-</span> <span class="fu">preprocess</span>(<span class="at">Xtrain=</span> Xtrain, <span class="at">Xtest=</span>Xtest,<span class="at">Threshold =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">16000</span>),<span class="at">Filtering=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">500</span>), <span class="at">log10.scale=</span><span class="cn">TRUE</span>,<span class="at">row.stand=</span><span class="cn">TRUE</span>)</span>
-<span id="cb54-9"><a href="multivariate-analysis.html#cb54-9" tabindex="-1"></a></span>
-<span id="cb54-10"><a href="multivariate-analysis.html#cb54-10" tabindex="-1"></a><span class="co"># Determine optimum h and lambda</span></span>
-<span id="cb54-11"><a href="multivariate-analysis.html#cb54-11" tabindex="-1"></a>hlam <span class="ot">&lt;-</span> <span class="fu">gsim.cv</span>(<span class="at">Xtrain=</span>resP<span class="sc">$</span>pXtrain,<span class="at">Ytrain=</span>Ytrain,<span class="at">hARange=</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">20</span>),</span>
-<span id="cb54-12"><a href="multivariate-analysis.html#cb54-12" tabindex="-1"></a>              <span class="at">LambdaRange=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="dv">1</span>),<span class="at">hB=</span><span class="cn">NULL</span>)</span>
-<span id="cb54-13"><a href="multivariate-analysis.html#cb54-13" tabindex="-1"></a></span>
-<span id="cb54-14"><a href="multivariate-analysis.html#cb54-14" tabindex="-1"></a><span class="co"># perform prediction by GSIM </span></span>
-<span id="cb54-15"><a href="multivariate-analysis.html#cb54-15" tabindex="-1"></a><span class="co"># lambda is the ridge regularization parameter from the cross validation</span></span>
-<span id="cb54-16"><a href="multivariate-analysis.html#cb54-16" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">gsim</span>(<span class="at">Xtrain=</span>resP<span class="sc">$</span>pXtrain, </span>
-<span id="cb54-17"><a href="multivariate-analysis.html#cb54-17" tabindex="-1"></a>            <span class="at">Ytrain=</span> Ytrain,<span class="at">Xtest=</span>resP<span class="sc">$</span>pXtest,</span>
-<span id="cb54-18"><a href="multivariate-analysis.html#cb54-18" tabindex="-1"></a>            <span class="at">Lambda=</span>hlam<span class="sc">$</span>Lambda,<span class="at">hA=</span>hlam<span class="sc">$</span>hA,<span class="at">hB=</span><span class="cn">NULL</span>)</span>
-<span id="cb54-19"><a href="multivariate-analysis.html#cb54-19" tabindex="-1"></a>res<span class="sc">$</span>Cvg </span></code></pre></div>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="multivariate-analysis.html#cb770-1" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb770-2"><a href="multivariate-analysis.html#cb770-2" tabindex="-1"></a>IndexLearn <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sample</span>(<span class="fu">which</span>(Colon<span class="sc">$</span>Y<span class="sc">==</span><span class="dv">2</span>),<span class="dv">12</span>),<span class="fu">sample</span>(<span class="fu">which</span>(Colon<span class="sc">$</span>Y<span class="sc">==</span><span class="dv">1</span>),<span class="dv">8</span>))</span>
+<span id="cb770-3"><a href="multivariate-analysis.html#cb770-3" tabindex="-1"></a>Xtrain <span class="ot">&lt;-</span> Colon<span class="sc">$</span>X[IndexLearn,] </span>
+<span id="cb770-4"><a href="multivariate-analysis.html#cb770-4" tabindex="-1"></a>Ytrain <span class="ot">&lt;-</span> Colon<span class="sc">$</span>Y[IndexLearn] </span>
+<span id="cb770-5"><a href="multivariate-analysis.html#cb770-5" tabindex="-1"></a>Xtest <span class="ot">&lt;-</span> Colon<span class="sc">$</span>X[<span class="sc">-</span>IndexLearn,]</span>
+<span id="cb770-6"><a href="multivariate-analysis.html#cb770-6" tabindex="-1"></a></span>
+<span id="cb770-7"><a href="multivariate-analysis.html#cb770-7" tabindex="-1"></a><span class="co"># preprocess data </span></span>
+<span id="cb770-8"><a href="multivariate-analysis.html#cb770-8" tabindex="-1"></a>resP <span class="ot">&lt;-</span> <span class="fu">preprocess</span>(<span class="at">Xtrain=</span> Xtrain, <span class="at">Xtest=</span>Xtest,<span class="at">Threshold =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">16000</span>),<span class="at">Filtering=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">500</span>), <span class="at">log10.scale=</span><span class="cn">TRUE</span>,<span class="at">row.stand=</span><span class="cn">TRUE</span>)</span>
+<span id="cb770-9"><a href="multivariate-analysis.html#cb770-9" tabindex="-1"></a></span>
+<span id="cb770-10"><a href="multivariate-analysis.html#cb770-10" tabindex="-1"></a><span class="co"># Determine optimum h and lambda</span></span>
+<span id="cb770-11"><a href="multivariate-analysis.html#cb770-11" tabindex="-1"></a>hlam <span class="ot">&lt;-</span> <span class="fu">gsim.cv</span>(<span class="at">Xtrain=</span>resP<span class="sc">$</span>pXtrain,<span class="at">Ytrain=</span>Ytrain,<span class="at">hARange=</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">20</span>),</span>
+<span id="cb770-12"><a href="multivariate-analysis.html#cb770-12" tabindex="-1"></a>              <span class="at">LambdaRange=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="dv">1</span>),<span class="at">hB=</span><span class="cn">NULL</span>)</span>
+<span id="cb770-13"><a href="multivariate-analysis.html#cb770-13" tabindex="-1"></a></span>
+<span id="cb770-14"><a href="multivariate-analysis.html#cb770-14" tabindex="-1"></a><span class="co"># perform prediction by GSIM </span></span>
+<span id="cb770-15"><a href="multivariate-analysis.html#cb770-15" tabindex="-1"></a><span class="co"># lambda is the ridge regularization parameter from the cross validation</span></span>
+<span id="cb770-16"><a href="multivariate-analysis.html#cb770-16" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">gsim</span>(<span class="at">Xtrain=</span>resP<span class="sc">$</span>pXtrain, </span>
+<span id="cb770-17"><a href="multivariate-analysis.html#cb770-17" tabindex="-1"></a>            <span class="at">Ytrain=</span> Ytrain,<span class="at">Xtest=</span>resP<span class="sc">$</span>pXtest,</span>
+<span id="cb770-18"><a href="multivariate-analysis.html#cb770-18" tabindex="-1"></a>            <span class="at">Lambda=</span>hlam<span class="sc">$</span>Lambda,<span class="at">hA=</span>hlam<span class="sc">$</span>hA,<span class="at">hB=</span><span class="cn">NULL</span>)</span>
+<span id="cb770-19"><a href="multivariate-analysis.html#cb770-19" tabindex="-1"></a>res<span class="sc">$</span>Cvg </span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="multivariate-analysis.html#cb56-1" tabindex="-1"></a><span class="co">#difference between predicted and observed</span></span>
-<span id="cb56-2"><a href="multivariate-analysis.html#cb56-2" tabindex="-1"></a><span class="fu">sum</span>(res<span class="sc">$</span>Ytest<span class="sc">!=</span>Colon<span class="sc">$</span>Y[<span class="sc">-</span>IndexLearn])</span></code></pre></div>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="multivariate-analysis.html#cb772-1" tabindex="-1"></a><span class="co">#difference between predicted and observed</span></span>
+<span id="cb772-2"><a href="multivariate-analysis.html#cb772-2" tabindex="-1"></a><span class="fu">sum</span>(res<span class="sc">$</span>Ytest<span class="sc">!=</span>Colon<span class="sc">$</span>Y[<span class="sc">-</span>IndexLearn])</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 
 </div>
@@ -972,6 +1027,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

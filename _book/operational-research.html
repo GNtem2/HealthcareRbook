@@ -23,7 +23,7 @@
 <meta name="author" content="Thanh Phan" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,27 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
 <script src="libs/grViz-binding-1.0.10/grViz.js"></script>
@@ -62,6 +83,12 @@
 <script src="libs/mermaid-0.3.0/dist/mermaid.slim.min.js"></script>
 <script src="libs/chromatography-0.1/chromatography.js"></script>
 <script src="libs/DiagrammeR-binding-1.0.10/DiagrammeR.js"></script>
+<link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
+<script src="libs/vis-9.1.0/vis-network.min.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/ionicons-2.0.1/ionicons.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -132,6 +159,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <style type="text/css">
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -456,7 +505,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.1.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#openstreetmap"><i class="fa fa-check"></i><b>11.1.1</b> OpenStreetMap</a></li>
 <li class="chapter" data-level="11.1.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#google-maps-api"><i class="fa fa-check"></i><b>11.1.2</b> Google Maps API</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a></li>
+<li class="chapter" data-level="11.2" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#sp-and-sf-objects"><i class="fa fa-check"></i><b>11.2</b> Sp and sf objects</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#section-1"><i class="fa fa-check"></i><b>11.2.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="11.3" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#thematic-map-1"><i class="fa fa-check"></i><b>11.3</b> Thematic map</a>
 <ul>
 <li class="chapter" data-level="11.3.1" data-path="geospatial-analysis.html"><a href="geospatial-analysis.html#calculate-distance-to-hospital-openstreetmap"><i class="fa fa-check"></i><b>11.3.1</b> Calculate distance to Hospital-OpenStreetMap</a></li>
@@ -515,20 +567,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>An example of a single server providing full service is a car wash. Example of a single multiphase server include different single stations in bank of withdrawing, deposit, information A counter at the airport or train station for economy and business passengers is considered multiserver single phase queue. A laundromat with different queues for washing and drying is an example of multiphase multiservers.</p>
 <p>A traditional queue at a shop can also be seen as first in first out with the first customer served first and leave first. An issue with FIFO is that people may queue early such as overnight queue for the latest iPhone. Alternatives include last in first out queue and priority queueing in emergency department.</p>
 <p>Let’s create a simple queue with 2 customers arriving per minute and 3 customers served per minute. The PO is the probability that the server is idle.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="operational-research.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(queueing)</span>
-<span id="cb1-2"><a href="operational-research.html#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="operational-research.html#cb1-3" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># 2 customers arriving per minute</span></span>
-<span id="cb1-4"><a href="operational-research.html#cb1-4" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># 3 customers served per minute</span></span>
-<span id="cb1-5"><a href="operational-research.html#cb1-5" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="operational-research.html#cb1-6" tabindex="-1"></a><span class="co"># MM1 </span></span>
-<span id="cb1-7"><a href="operational-research.html#cb1-7" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="operational-research.html#cb1-8" tabindex="-1"></a>mm1 <span class="ot">&lt;-</span> <span class="fu">NewInput.MM1</span>(<span class="at">lambda =</span> <span class="dv">2</span>, <span class="at">mu =</span> <span class="dv">3</span>, <span class="at">n =</span> <span class="dv">0</span>)</span>
-<span id="cb1-9"><a href="operational-research.html#cb1-9" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="operational-research.html#cb1-10" tabindex="-1"></a><span class="co"># Create queue class object</span></span>
-<span id="cb1-11"><a href="operational-research.html#cb1-11" tabindex="-1"></a>mm1_out <span class="ot">&lt;-</span> <span class="fu">QueueingModel</span>(mm1)</span>
-<span id="cb1-12"><a href="operational-research.html#cb1-12" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="operational-research.html#cb1-13" tabindex="-1"></a><span class="co"># Report</span></span>
-<span id="cb1-14"><a href="operational-research.html#cb1-14" tabindex="-1"></a><span class="fu">Report</span>(mm1_out)</span></code></pre></div>
+<div class="sourceCode" id="cb1056"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1056-1"><a href="operational-research.html#cb1056-1" tabindex="-1"></a><span class="fu">library</span>(queueing)</span>
+<span id="cb1056-2"><a href="operational-research.html#cb1056-2" tabindex="-1"></a></span>
+<span id="cb1056-3"><a href="operational-research.html#cb1056-3" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># 2 customers arriving per minute</span></span>
+<span id="cb1056-4"><a href="operational-research.html#cb1056-4" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># 3 customers served per minute</span></span>
+<span id="cb1056-5"><a href="operational-research.html#cb1056-5" tabindex="-1"></a></span>
+<span id="cb1056-6"><a href="operational-research.html#cb1056-6" tabindex="-1"></a><span class="co"># MM1 </span></span>
+<span id="cb1056-7"><a href="operational-research.html#cb1056-7" tabindex="-1"></a></span>
+<span id="cb1056-8"><a href="operational-research.html#cb1056-8" tabindex="-1"></a>mm1 <span class="ot">&lt;-</span> <span class="fu">NewInput.MM1</span>(<span class="at">lambda =</span> <span class="dv">2</span>, <span class="at">mu =</span> <span class="dv">3</span>, <span class="at">n =</span> <span class="dv">0</span>)</span>
+<span id="cb1056-9"><a href="operational-research.html#cb1056-9" tabindex="-1"></a></span>
+<span id="cb1056-10"><a href="operational-research.html#cb1056-10" tabindex="-1"></a><span class="co"># Create queue class object</span></span>
+<span id="cb1056-11"><a href="operational-research.html#cb1056-11" tabindex="-1"></a>mm1_out <span class="ot">&lt;-</span> <span class="fu">QueueingModel</span>(mm1)</span>
+<span id="cb1056-12"><a href="operational-research.html#cb1056-12" tabindex="-1"></a></span>
+<span id="cb1056-13"><a href="operational-research.html#cb1056-13" tabindex="-1"></a><span class="co"># Report</span></span>
+<span id="cb1056-14"><a href="operational-research.html#cb1056-14" tabindex="-1"></a><span class="fu">Report</span>(mm1_out)</span></code></pre></div>
 <pre><code>## The inputs of the M/M/1 model are:
 ## lambda: 2, mu: 3, n: 0
 ## 
@@ -546,47 +598,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## The mean time spend in the server is: 0.333333333333333
 ## The mean time spend in the queue when there is queue is: 1
 ## The throughput is: 2</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="operational-research.html#cb3-1" tabindex="-1"></a><span class="co"># Summary</span></span>
-<span id="cb3-2"><a href="operational-research.html#cb3-2" tabindex="-1"></a><span class="fu">summary</span>(mm1_out)</span></code></pre></div>
+<div class="sourceCode" id="cb1058"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1058-1"><a href="operational-research.html#cb1058-1" tabindex="-1"></a><span class="co"># Summary</span></span>
+<span id="cb1058-2"><a href="operational-research.html#cb1058-2" tabindex="-1"></a><span class="fu">summary</span>(mm1_out)</span></code></pre></div>
 <pre><code>##   lambda mu c  k  m        RO        P0       Lq        Wq X L W Wqq Lqq
 ## 1      2  3 1 NA NA 0.6666667 0.3333333 1.333333 0.6666667 2 2 1   1   3</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="operational-research.html#cb5-1" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dpois</span>(x, mm1<span class="sc">$</span>lambda),</span>
-<span id="cb5-2"><a href="operational-research.html#cb5-2" tabindex="-1"></a>      <span class="at">from =</span> <span class="dv">0</span>, </span>
-<span id="cb5-3"><a href="operational-research.html#cb5-3" tabindex="-1"></a>      <span class="at">to =</span> <span class="dv">20</span>, </span>
-<span id="cb5-4"><a href="operational-research.html#cb5-4" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, </span>
-<span id="cb5-5"><a href="operational-research.html#cb5-5" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb5-6"><a href="operational-research.html#cb5-6" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;Number of customers&quot;</span>,</span>
-<span id="cb5-7"><a href="operational-research.html#cb5-7" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&quot;Probability&quot;</span>,</span>
-<span id="cb5-8"><a href="operational-research.html#cb5-8" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;Poisson Distribution for Arrival Process&quot;</span>,</span>
-<span id="cb5-9"><a href="operational-research.html#cb5-9" tabindex="-1"></a>      <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>),</span>
-<span id="cb5-10"><a href="operational-research.html#cb5-10" tabindex="-1"></a>      <span class="at">n =</span> <span class="dv">21</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1060-1"><a href="operational-research.html#cb1060-1" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dpois</span>(x, mm1<span class="sc">$</span>lambda),</span>
+<span id="cb1060-2"><a href="operational-research.html#cb1060-2" tabindex="-1"></a>      <span class="at">from =</span> <span class="dv">0</span>, </span>
+<span id="cb1060-3"><a href="operational-research.html#cb1060-3" tabindex="-1"></a>      <span class="at">to =</span> <span class="dv">20</span>, </span>
+<span id="cb1060-4"><a href="operational-research.html#cb1060-4" tabindex="-1"></a>      <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb1060-5"><a href="operational-research.html#cb1060-5" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb1060-6"><a href="operational-research.html#cb1060-6" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">&quot;Number of customers&quot;</span>,</span>
+<span id="cb1060-7"><a href="operational-research.html#cb1060-7" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">&quot;Probability&quot;</span>,</span>
+<span id="cb1060-8"><a href="operational-research.html#cb1060-8" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;Poisson Distribution for Arrival Process&quot;</span>,</span>
+<span id="cb1060-9"><a href="operational-research.html#cb1060-9" tabindex="-1"></a>      <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>),</span>
+<span id="cb1060-10"><a href="operational-research.html#cb1060-10" tabindex="-1"></a>      <span class="at">n =</span> <span class="dv">21</span>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-1-1-1.png" width="672" /></p>
 <p>Lets examine M/M/3 queue with exponential inter-arrival times, exponential service times and 3 servers.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="operational-research.html#cb6-1" tabindex="-1"></a><span class="fu">library</span>(queuecomputer)</span>
-<span id="cb6-2"><a href="operational-research.html#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="operational-research.html#cb6-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb6-4"><a href="operational-research.html#cb6-4" tabindex="-1"></a>arrivals <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(<span class="fu">rexp</span>(n, <span class="fl">1.9</span>))</span>
-<span id="cb6-5"><a href="operational-research.html#cb6-5" tabindex="-1"></a>service <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n)</span>
-<span id="cb6-6"><a href="operational-research.html#cb6-6" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="operational-research.html#cb6-7" tabindex="-1"></a>mm3 <span class="ot">&lt;-</span> <span class="fu">queue_step</span>(<span class="at">arrivals =</span> arrivals, <span class="at">service =</span> service, <span class="at">servers =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1061"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1061-1"><a href="operational-research.html#cb1061-1" tabindex="-1"></a><span class="fu">library</span>(queuecomputer)</span>
+<span id="cb1061-2"><a href="operational-research.html#cb1061-2" tabindex="-1"></a></span>
+<span id="cb1061-3"><a href="operational-research.html#cb1061-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1061-4"><a href="operational-research.html#cb1061-4" tabindex="-1"></a>arrivals <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(<span class="fu">rexp</span>(n, <span class="fl">1.9</span>))</span>
+<span id="cb1061-5"><a href="operational-research.html#cb1061-5" tabindex="-1"></a>service <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n)</span>
+<span id="cb1061-6"><a href="operational-research.html#cb1061-6" tabindex="-1"></a></span>
+<span id="cb1061-7"><a href="operational-research.html#cb1061-7" tabindex="-1"></a>mm3 <span class="ot">&lt;-</span> <span class="fu">queue_step</span>(<span class="at">arrivals =</span> arrivals, <span class="at">service =</span> service, <span class="at">servers =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p>Plot the arrival and departure times</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="operational-research.html#cb7-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1062"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1062-1"><a href="operational-research.html#cb1062-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-2-1-1.png" width="672" />
 Plot waiting time</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="operational-research.html#cb9-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1064"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1064-1"><a href="operational-research.html#cb1064-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-2-2-1.png" width="672" /></p>
 <p>Plot customer in queue</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="operational-research.html#cb11-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1066"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1066-1"><a href="operational-research.html#cb1066-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">3</span>]</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-2-3-1.png" width="672" /></p>
 <p>Plot customer and server status</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="operational-research.html#cb13-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1068"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1068-1"><a href="operational-research.html#cb1068-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">4</span>]</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-2-4-1.png" width="672" /></p>
 <p>Plot arrival and departure time</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="operational-research.html#cb15-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">5</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1070"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1070-1"><a href="operational-research.html#cb1070-1" tabindex="-1"></a><span class="fu">plot</span>(mm3)[<span class="dv">5</span>]</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-2-5-1.png" width="672" />
 ## Discrete Event Simulations</p>
@@ -594,41 +646,120 @@ Plot waiting time</p>
 <div id="simulate-capacity-of-system" class="section level3 hasAnchor" number="9.1.1">
 <h3><span class="header-section-number">9.1.1</span> Simulate capacity of system<a href="operational-research.html#simulate-capacity-of-system" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The example below is a based on examples provided in the <em>simmer</em> website for laundromat.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="operational-research.html#cb17-1" tabindex="-1"></a><span class="fu">library</span>(simmer)</span>
-<span id="cb17-2"><a href="operational-research.html#cb17-2" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
-<span id="cb17-3"><a href="operational-research.html#cb17-3" tabindex="-1"></a><span class="fu">library</span>(simmer.plot)</span></code></pre></div>
-<pre><code>## Loading required package: ggplot2</code></pre>
+<div class="sourceCode" id="cb1072"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1072-1"><a href="operational-research.html#cb1072-1" tabindex="-1"></a><span class="fu">library</span>(simmer)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;simmer&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Rgraphviz&#39;:
+## 
+##     from, to</code></pre>
+<pre><code>## The following object is masked from &#39;package:graph&#39;:
+## 
+##     join</code></pre>
+<pre><code>## The following objects are masked from &#39;package:R.utils&#39;:
+## 
+##     reset, wrap</code></pre>
+<pre><code>## The following object is masked from &#39;package:lava&#39;:
+## 
+##     wait</code></pre>
+<pre><code>## The following object is masked from &#39;package:rmarkdown&#39;:
+## 
+##     run</code></pre>
+<pre><code>## The following object is masked from &#39;package:raster&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:terra&#39;:
+## 
+##     wrap</code></pre>
+<pre><code>## The following object is masked from &#39;package:bit&#39;:
+## 
+##     clone</code></pre>
+<pre><code>## The following object is masked from &#39;package:crayon&#39;:
+## 
+##     reset</code></pre>
+<pre><code>## The following object is masked from &#39;package:future&#39;:
+## 
+##     run</code></pre>
+<pre><code>## The following object is masked from &#39;package:strucchange&#39;:
+## 
+##     monitor</code></pre>
+<pre><code>## The following object is masked from &#39;package:modeltools&#39;:
+## 
+##     clone</code></pre>
+<pre><code>## The following object is masked from &#39;package:rstatix&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:httr&#39;:
+## 
+##     timeout</code></pre>
+<pre><code>## The following object is masked from &#39;package:R.oo&#39;:
+## 
+##     clone</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:eegUtils&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:CHNOSZ&#39;:
+## 
+##     reset</code></pre>
+<pre><code>## The following object is masked from &#39;package:plotly&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidygraph&#39;:
+## 
+##     activate, select</code></pre>
+<pre><code>## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     join</code></pre>
+<pre><code>## The following objects are masked from &#39;package:lubridate&#39;:
+## 
+##     now, rollback</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     separate</code></pre>
+<pre><code>## The following object is masked from &#39;package:NMF&#39;:
+## 
+##     run</code></pre>
+<div class="sourceCode" id="cb1099"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1099-1"><a href="operational-research.html#cb1099-1" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
+<span id="cb1099-2"><a href="operational-research.html#cb1099-2" tabindex="-1"></a><span class="fu">library</span>(simmer.plot)</span></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;simmer.plot&#39;:
+##   method    from 
+##   plot.list DALEX</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;simmer.plot&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:simmer&#39;:
 ## 
 ##     get_mon_arrivals, get_mon_attributes, get_mon_resources</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="operational-research.html#cb21-1" tabindex="-1"></a>NUM_ANGIO <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># Number of machines for performing ECR</span></span>
-<span id="cb21-2"><a href="operational-research.html#cb21-2" tabindex="-1"></a>ECRTIME <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co"># hours it takes to perform ECR~ 90/60</span></span>
-<span id="cb21-3"><a href="operational-research.html#cb21-3" tabindex="-1"></a>T_INTER <span class="ot">&lt;-</span> <span class="dv">13</span> <span class="co"># new patient every ~365*24/700 hours</span></span>
-<span id="cb21-4"><a href="operational-research.html#cb21-4" tabindex="-1"></a>SIM_TIME <span class="ot">&lt;-</span> <span class="dv">24</span><span class="sc">*</span><span class="dv">30</span>     <span class="co"># Simulation time over 30 days</span></span>
-<span id="cb21-5"><a href="operational-research.html#cb21-5" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="operational-research.html#cb21-6" tabindex="-1"></a><span class="co"># setup</span></span>
-<span id="cb21-7"><a href="operational-research.html#cb21-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb21-8"><a href="operational-research.html#cb21-8" tabindex="-1"></a>env <span class="ot">&lt;-</span> <span class="fu">simmer</span>()</span>
-<span id="cb21-9"><a href="operational-research.html#cb21-9" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb21-10"><a href="operational-research.html#cb21-10" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="st">&quot;arrives at the ECR&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-11"><a href="operational-research.html#cb21-11" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;removeclot&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-12"><a href="operational-research.html#cb21-12" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="st">&quot;enters the ECR&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-13"><a href="operational-research.html#cb21-13" tabindex="-1"></a>  <span class="fu">timeout</span>(ECRTIME) <span class="sc">%&gt;%</span></span>
-<span id="cb21-14"><a href="operational-research.html#cb21-14" tabindex="-1"></a>  <span class="fu">set_attribute</span>(<span class="st">&quot;clot_removed&quot;</span>, <span class="cf">function</span>() <span class="fu">sample</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">99</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-15"><a href="operational-research.html#cb21-15" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="cf">function</span>() </span>
-<span id="cb21-16"><a href="operational-research.html#cb21-16" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="fu">get_attribute</span>(env, <span class="st">&quot;clot_removed&quot;</span>), <span class="st">&quot;% of clot was removed&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-17"><a href="operational-research.html#cb21-17" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;removeclot&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-18"><a href="operational-research.html#cb21-18" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="st">&quot;leaves the ECR&quot;</span>)</span>
-<span id="cb21-19"><a href="operational-research.html#cb21-19" tabindex="-1"></a>env <span class="sc">%&gt;%</span></span>
-<span id="cb21-20"><a href="operational-research.html#cb21-20" tabindex="-1"></a>  <span class="fu">add_resource</span>(<span class="st">&quot;removeclot&quot;</span>, NUM_ANGIO) <span class="sc">%&gt;%</span></span>
-<span id="cb21-21"><a href="operational-research.html#cb21-21" tabindex="-1"></a>  <span class="co"># feed the trajectory with 4 initial patients</span></span>
-<span id="cb21-22"><a href="operational-research.html#cb21-22" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;patient_initial&quot;</span>, patient, <span class="fu">at</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb21-23"><a href="operational-research.html#cb21-23" tabindex="-1"></a>  <span class="co"># new patient approx. every T_INTER minutes</span></span>
-<span id="cb21-24"><a href="operational-research.html#cb21-24" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;patient&quot;</span>, patient, <span class="cf">function</span>() <span class="fu">sample</span>((T_INTER<span class="dv">-2</span>)<span class="sc">:</span>(T_INTER<span class="sc">+</span><span class="dv">2</span>), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb21-25"><a href="operational-research.html#cb21-25" tabindex="-1"></a>  <span class="co"># start the simulation</span></span>
-<span id="cb21-26"><a href="operational-research.html#cb21-26" tabindex="-1"></a>  <span class="fu">run</span>(SIM_TIME)</span></code></pre></div>
+<div class="sourceCode" id="cb1103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1103-1"><a href="operational-research.html#cb1103-1" tabindex="-1"></a>NUM_ANGIO <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># Number of machines for performing ECR</span></span>
+<span id="cb1103-2"><a href="operational-research.html#cb1103-2" tabindex="-1"></a>ECRTIME <span class="ot">&lt;-</span> <span class="dv">1</span>     <span class="co"># hours it takes to perform ECR~ 90/60</span></span>
+<span id="cb1103-3"><a href="operational-research.html#cb1103-3" tabindex="-1"></a>T_INTER <span class="ot">&lt;-</span> <span class="dv">13</span> <span class="co"># new patient every ~365*24/700 hours</span></span>
+<span id="cb1103-4"><a href="operational-research.html#cb1103-4" tabindex="-1"></a>SIM_TIME <span class="ot">&lt;-</span> <span class="dv">24</span><span class="sc">*</span><span class="dv">30</span>     <span class="co"># Simulation time over 30 days</span></span>
+<span id="cb1103-5"><a href="operational-research.html#cb1103-5" tabindex="-1"></a></span>
+<span id="cb1103-6"><a href="operational-research.html#cb1103-6" tabindex="-1"></a><span class="co"># setup</span></span>
+<span id="cb1103-7"><a href="operational-research.html#cb1103-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1103-8"><a href="operational-research.html#cb1103-8" tabindex="-1"></a>env <span class="ot">&lt;-</span> <span class="fu">simmer</span>()</span>
+<span id="cb1103-9"><a href="operational-research.html#cb1103-9" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1103-10"><a href="operational-research.html#cb1103-10" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="st">&quot;arrives at the ECR&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-11"><a href="operational-research.html#cb1103-11" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;removeclot&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-12"><a href="operational-research.html#cb1103-12" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="st">&quot;enters the ECR&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-13"><a href="operational-research.html#cb1103-13" tabindex="-1"></a>  <span class="fu">timeout</span>(ECRTIME) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-14"><a href="operational-research.html#cb1103-14" tabindex="-1"></a>  <span class="fu">set_attribute</span>(<span class="st">&quot;clot_removed&quot;</span>, <span class="cf">function</span>() <span class="fu">sample</span>(<span class="dv">50</span><span class="sc">:</span><span class="dv">99</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-15"><a href="operational-research.html#cb1103-15" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="cf">function</span>() </span>
+<span id="cb1103-16"><a href="operational-research.html#cb1103-16" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="fu">get_attribute</span>(env, <span class="st">&quot;clot_removed&quot;</span>), <span class="st">&quot;% of clot was removed&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-17"><a href="operational-research.html#cb1103-17" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;removeclot&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-18"><a href="operational-research.html#cb1103-18" tabindex="-1"></a>  <span class="fu">log_</span>(<span class="st">&quot;leaves the ECR&quot;</span>)</span>
+<span id="cb1103-19"><a href="operational-research.html#cb1103-19" tabindex="-1"></a>env <span class="sc">%&gt;%</span></span>
+<span id="cb1103-20"><a href="operational-research.html#cb1103-20" tabindex="-1"></a>  <span class="fu">add_resource</span>(<span class="st">&quot;removeclot&quot;</span>, NUM_ANGIO) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-21"><a href="operational-research.html#cb1103-21" tabindex="-1"></a>  <span class="co"># feed the trajectory with 4 initial patients</span></span>
+<span id="cb1103-22"><a href="operational-research.html#cb1103-22" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;patient_initial&quot;</span>, patient, <span class="fu">at</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">4</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-23"><a href="operational-research.html#cb1103-23" tabindex="-1"></a>  <span class="co"># new patient approx. every T_INTER minutes</span></span>
+<span id="cb1103-24"><a href="operational-research.html#cb1103-24" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;patient&quot;</span>, patient, <span class="cf">function</span>() <span class="fu">sample</span>((T_INTER<span class="dv">-2</span>)<span class="sc">:</span>(T_INTER<span class="sc">+</span><span class="dv">2</span>), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1103-25"><a href="operational-research.html#cb1103-25" tabindex="-1"></a>  <span class="co"># start the simulation</span></span>
+<span id="cb1103-26"><a href="operational-research.html#cb1103-26" tabindex="-1"></a>  <span class="fu">run</span>(SIM_TIME)</span></code></pre></div>
 <pre><code>## 0: patient_initial0: arrives at the ECR
 ## 0: patient_initial0: enters the ECR
 ## 0: patient_initial1: arrives at the ECR
@@ -869,152 +1000,152 @@ Plot waiting time</p>
 ## { Source: patient_initial | monitored: 1 | n_generated: 4 }
 ## { Source: patient | monitored: 1 | n_generated: 56 }</code></pre>
 <p>Plot the schematics of the simulation.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="operational-research.html#cb24-1" tabindex="-1"></a><span class="fu">plot</span>(patient)</span></code></pre></div>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-72be1f50ed0d6e05f7ae" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-72be1f50ed0d6e05f7ae">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"sans-serif\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"1.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: arrives at..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"2\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: removeclot, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"3\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: enters the..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"4\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: 1\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"5\" [label = \"SetAttribute\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"keys: [clot_removed], values: function(), global: 0, mod: N, init: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"6\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: function(), level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"7\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: removeclot, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"8\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: leaves the..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"black\", style = \"solid\"] \n\"2\"->\"3\" [color = \"black\", style = \"solid\"] \n\"3\"->\"4\" [color = \"black\", style = \"solid\"] \n\"4\"->\"5\" [color = \"black\", style = \"solid\"] \n\"5\"->\"6\" [color = \"black\", style = \"solid\"] \n\"6\"->\"7\" [color = \"black\", style = \"solid\"] \n\"7\"->\"8\" [color = \"black\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb1106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1106-1"><a href="operational-research.html#cb1106-1" tabindex="-1"></a><span class="fu">plot</span>(patient)</span></code></pre></div>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ee0a14d93904d7350560" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-ee0a14d93904d7350560">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"sans-serif\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"1.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: arrives at..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"2\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: removeclot, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"3\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: enters the..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"4\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: 1\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"5\" [label = \"SetAttribute\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"keys: [clot_removed], values: function(), global: 0, mod: N, init: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"6\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: function(), level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"7\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: removeclot, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"8\" [label = \"Log\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"message: leaves the..., level: 0\", fontcolor = \"black\", fillcolor = \"#000000\"] \n\"1\"->\"2\" [color = \"black\", style = \"solid\"] \n\"2\"->\"3\" [color = \"black\", style = \"solid\"] \n\"3\"->\"4\" [color = \"black\", style = \"solid\"] \n\"4\"->\"5\" [color = \"black\", style = \"solid\"] \n\"5\"->\"6\" [color = \"black\", style = \"solid\"] \n\"6\"->\"7\" [color = \"black\", style = \"solid\"] \n\"7\"->\"8\" [color = \"black\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Plot resource usage</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="operational-research.html#cb25-1" tabindex="-1"></a>resource <span class="ot">&lt;-</span> <span class="fu">get_mon_resources</span>(env)</span>
-<span id="cb25-2"><a href="operational-research.html#cb25-2" tabindex="-1"></a><span class="fu">plot</span>(resource)</span></code></pre></div>
+<div class="sourceCode" id="cb1107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1107-1"><a href="operational-research.html#cb1107-1" tabindex="-1"></a>resource <span class="ot">&lt;-</span> <span class="fu">get_mon_resources</span>(env)</span>
+<span id="cb1107-2"><a href="operational-research.html#cb1107-2" tabindex="-1"></a><span class="fu">plot</span>(resource)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-3-2-1.png" width="672" />
 Total queue size</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="operational-research.html#cb26-1" tabindex="-1"></a><span class="fu">sum</span>(resource<span class="sc">$</span>queue) <span class="co">#total queue size</span></span></code></pre></div>
+<div class="sourceCode" id="cb1108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1108-1"><a href="operational-research.html#cb1108-1" tabindex="-1"></a><span class="fu">sum</span>(resource<span class="sc">$</span>queue) <span class="co">#total queue size</span></span></code></pre></div>
 <pre><code>## [1] 9</code></pre>
 <p>Number of people in queue of size 1</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="operational-research.html#cb28-1" tabindex="-1"></a><span class="fu">sum</span>(resource<span class="sc">$</span>queue<span class="sc">==</span><span class="dv">1</span>) <span class="co">#number of people in queue</span></span></code></pre></div>
+<div class="sourceCode" id="cb1110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1110-1"><a href="operational-research.html#cb1110-1" tabindex="-1"></a><span class="fu">sum</span>(resource<span class="sc">$</span>queue<span class="sc">==</span><span class="dv">1</span>) <span class="co">#number of people in queue</span></span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <p>Number of peope in queue of size 2</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="operational-research.html#cb30-1" tabindex="-1"></a><span class="fu">sum</span>(resource<span class="sc">$</span>queue<span class="sc">==</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1112-1"><a href="operational-research.html#cb1112-1" tabindex="-1"></a><span class="fu">sum</span>(resource<span class="sc">$</span>queue<span class="sc">==</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <p>Plot arrival versus flow</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="operational-research.html#cb32-1" tabindex="-1"></a><span class="co">#View(get_mon_arrivals(env))</span></span>
-<span id="cb32-2"><a href="operational-research.html#cb32-2" tabindex="-1"></a><span class="fu">plot</span>(env,<span class="at">what=</span><span class="st">&quot;arrivals&quot;</span>,<span class="at">metric=</span><span class="st">&quot;flow_time&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1114-1"><a href="operational-research.html#cb1114-1" tabindex="-1"></a><span class="co">#View(get_mon_arrivals(env))</span></span>
+<span id="cb1114-2"><a href="operational-research.html#cb1114-2" tabindex="-1"></a><span class="fu">plot</span>(env,<span class="at">what=</span><span class="st">&quot;arrivals&quot;</span>,<span class="at">metric=</span><span class="st">&quot;flow_time&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-3-6-1.png" width="672" /></p>
 <p>Next we simulate the process of running a stroke code. In this simulation the activities occur sequentially.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="operational-research.html#cb34-1" tabindex="-1"></a><span class="co">#simulate ST6</span></span>
-<span id="cb34-2"><a href="operational-research.html#cb34-2" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">trajectory</span>(<span class="st">&quot;patients&#39; path&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a href="operational-research.html#cb34-3" tabindex="-1"></a>  <span class="do">## add an intake activity - nurse arrive first on scene in ED to triage</span></span>
-<span id="cb34-4"><a href="operational-research.html#cb34-4" tabindex="-1"></a>  <span class="co">#seize specify priority</span></span>
-<span id="cb34-5"><a href="operational-research.html#cb34-5" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-6"><a href="operational-research.html#cb34-6" tabindex="-1"></a>  <span class="co">#timeout return one random value from 5 mean+/-5 SD </span></span>
-<span id="cb34-7"><a href="operational-research.html#cb34-7" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-8"><a href="operational-research.html#cb34-8" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-9"><a href="operational-research.html#cb34-9" tabindex="-1"></a>  </span>
-<span id="cb34-10"><a href="operational-research.html#cb34-10" tabindex="-1"></a>  <span class="do">## add a registrar activity - stroke registrar arrive after stroke code</span></span>
-<span id="cb34-11"><a href="operational-research.html#cb34-11" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;stroke reg&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-12"><a href="operational-research.html#cb34-12" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">10</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-13"><a href="operational-research.html#cb34-13" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;stroke reg&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-14"><a href="operational-research.html#cb34-14" tabindex="-1"></a>  </span>
-<span id="cb34-15"><a href="operational-research.html#cb34-15" tabindex="-1"></a>  <span class="co">#add CT scanning - the process takes 15 minutes</span></span>
-<span id="cb34-16"><a href="operational-research.html#cb34-16" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;CT scan&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-17"><a href="operational-research.html#cb34-17" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">15</span>,<span class="dv">15</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-18"><a href="operational-research.html#cb34-18" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;CT scan&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-19"><a href="operational-research.html#cb34-19" tabindex="-1"></a>  </span>
-<span id="cb34-20"><a href="operational-research.html#cb34-20" tabindex="-1"></a>    <span class="co">#stroke reg re-enter</span></span>
-<span id="cb34-21"><a href="operational-research.html#cb34-21" tabindex="-1"></a>    <span class="co">#seize(&quot;stroke reg&quot;, 1) %&gt;%</span></span>
-<span id="cb34-22"><a href="operational-research.html#cb34-22" tabindex="-1"></a>    <span class="co">#timeout(function() rnorm(1, 10,5)) %&gt;%</span></span>
-<span id="cb34-23"><a href="operational-research.html#cb34-23" tabindex="-1"></a>    <span class="co">#release(&quot;stroke reg&quot;, 1) %&gt;%</span></span>
-<span id="cb34-24"><a href="operational-research.html#cb34-24" tabindex="-1"></a>  <span class="co">#branch</span></span>
-<span id="cb34-25"><a href="operational-research.html#cb34-25" tabindex="-1"></a>  </span>
-<span id="cb34-26"><a href="operational-research.html#cb34-26" tabindex="-1"></a>  <span class="do">## add stroke consultant - to review scan and makes decision</span></span>
-<span id="cb34-27"><a href="operational-research.html#cb34-27" tabindex="-1"></a>  </span>
-<span id="cb34-28"><a href="operational-research.html#cb34-28" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;stroke consultant&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-29"><a href="operational-research.html#cb34-29" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">5</span>,<span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-30"><a href="operational-research.html#cb34-30" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;stroke consultant&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-31"><a href="operational-research.html#cb34-31" tabindex="-1"></a>  </span>
-<span id="cb34-32"><a href="operational-research.html#cb34-32" tabindex="-1"></a>  <span class="do">## add a thrombectomy decision activity</span></span>
-<span id="cb34-33"><a href="operational-research.html#cb34-33" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;inr&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-34"><a href="operational-research.html#cb34-34" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-35"><a href="operational-research.html#cb34-35" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;inr&quot;</span>, <span class="dv">1</span>) </span>
-<span id="cb34-36"><a href="operational-research.html#cb34-36" tabindex="-1"></a></span>
-<span id="cb34-37"><a href="operational-research.html#cb34-37" tabindex="-1"></a>envs <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(i) {</span>
-<span id="cb34-38"><a href="operational-research.html#cb34-38" tabindex="-1"></a>  <span class="fu">simmer</span>(<span class="st">&quot;SuperDuperSim&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-39"><a href="operational-research.html#cb34-39" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-40"><a href="operational-research.html#cb34-40" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;stroke reg&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-41"><a href="operational-research.html#cb34-41" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;CT scan&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-42"><a href="operational-research.html#cb34-42" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;stroke consultant&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-43"><a href="operational-research.html#cb34-43" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;inr&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-44"><a href="operational-research.html#cb34-44" tabindex="-1"></a>    <span class="fu">add_generator</span>(<span class="st">&quot;patient&quot;</span>, patient, <span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-45"><a href="operational-research.html#cb34-45" tabindex="-1"></a>    <span class="fu">run</span>(<span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-46"><a href="operational-research.html#cb34-46" tabindex="-1"></a>    <span class="fu">wrap</span>()</span>
-<span id="cb34-47"><a href="operational-research.html#cb34-47" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb1116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1116-1"><a href="operational-research.html#cb1116-1" tabindex="-1"></a><span class="co">#simulate ST6</span></span>
+<span id="cb1116-2"><a href="operational-research.html#cb1116-2" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">trajectory</span>(<span class="st">&quot;patients&#39; path&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-3"><a href="operational-research.html#cb1116-3" tabindex="-1"></a>  <span class="do">## add an intake activity - nurse arrive first on scene in ED to triage</span></span>
+<span id="cb1116-4"><a href="operational-research.html#cb1116-4" tabindex="-1"></a>  <span class="co">#seize specify priority</span></span>
+<span id="cb1116-5"><a href="operational-research.html#cb1116-5" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-6"><a href="operational-research.html#cb1116-6" tabindex="-1"></a>  <span class="co">#timeout return one random value from 5 mean+/-5 SD </span></span>
+<span id="cb1116-7"><a href="operational-research.html#cb1116-7" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-8"><a href="operational-research.html#cb1116-8" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-9"><a href="operational-research.html#cb1116-9" tabindex="-1"></a>  </span>
+<span id="cb1116-10"><a href="operational-research.html#cb1116-10" tabindex="-1"></a>  <span class="do">## add a registrar activity - stroke registrar arrive after stroke code</span></span>
+<span id="cb1116-11"><a href="operational-research.html#cb1116-11" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;stroke reg&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-12"><a href="operational-research.html#cb1116-12" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">10</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-13"><a href="operational-research.html#cb1116-13" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;stroke reg&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-14"><a href="operational-research.html#cb1116-14" tabindex="-1"></a>  </span>
+<span id="cb1116-15"><a href="operational-research.html#cb1116-15" tabindex="-1"></a>  <span class="co">#add CT scanning - the process takes 15 minutes</span></span>
+<span id="cb1116-16"><a href="operational-research.html#cb1116-16" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;CT scan&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-17"><a href="operational-research.html#cb1116-17" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">15</span>,<span class="dv">15</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-18"><a href="operational-research.html#cb1116-18" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;CT scan&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-19"><a href="operational-research.html#cb1116-19" tabindex="-1"></a>  </span>
+<span id="cb1116-20"><a href="operational-research.html#cb1116-20" tabindex="-1"></a>    <span class="co">#stroke reg re-enter</span></span>
+<span id="cb1116-21"><a href="operational-research.html#cb1116-21" tabindex="-1"></a>    <span class="co">#seize(&quot;stroke reg&quot;, 1) %&gt;%</span></span>
+<span id="cb1116-22"><a href="operational-research.html#cb1116-22" tabindex="-1"></a>    <span class="co">#timeout(function() rnorm(1, 10,5)) %&gt;%</span></span>
+<span id="cb1116-23"><a href="operational-research.html#cb1116-23" tabindex="-1"></a>    <span class="co">#release(&quot;stroke reg&quot;, 1) %&gt;%</span></span>
+<span id="cb1116-24"><a href="operational-research.html#cb1116-24" tabindex="-1"></a>  <span class="co">#branch</span></span>
+<span id="cb1116-25"><a href="operational-research.html#cb1116-25" tabindex="-1"></a>  </span>
+<span id="cb1116-26"><a href="operational-research.html#cb1116-26" tabindex="-1"></a>  <span class="do">## add stroke consultant - to review scan and makes decision</span></span>
+<span id="cb1116-27"><a href="operational-research.html#cb1116-27" tabindex="-1"></a>  </span>
+<span id="cb1116-28"><a href="operational-research.html#cb1116-28" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;stroke consultant&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-29"><a href="operational-research.html#cb1116-29" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">5</span>,<span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-30"><a href="operational-research.html#cb1116-30" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;stroke consultant&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-31"><a href="operational-research.html#cb1116-31" tabindex="-1"></a>  </span>
+<span id="cb1116-32"><a href="operational-research.html#cb1116-32" tabindex="-1"></a>  <span class="do">## add a thrombectomy decision activity</span></span>
+<span id="cb1116-33"><a href="operational-research.html#cb1116-33" tabindex="-1"></a>  <span class="fu">seize</span>(<span class="st">&quot;inr&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-34"><a href="operational-research.html#cb1116-34" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">5</span>,<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-35"><a href="operational-research.html#cb1116-35" tabindex="-1"></a>  <span class="fu">release</span>(<span class="st">&quot;inr&quot;</span>, <span class="dv">1</span>) </span>
+<span id="cb1116-36"><a href="operational-research.html#cb1116-36" tabindex="-1"></a></span>
+<span id="cb1116-37"><a href="operational-research.html#cb1116-37" tabindex="-1"></a>envs <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb1116-38"><a href="operational-research.html#cb1116-38" tabindex="-1"></a>  <span class="fu">simmer</span>(<span class="st">&quot;SuperDuperSim&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-39"><a href="operational-research.html#cb1116-39" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-40"><a href="operational-research.html#cb1116-40" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;stroke reg&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-41"><a href="operational-research.html#cb1116-41" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;CT scan&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-42"><a href="operational-research.html#cb1116-42" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;stroke consultant&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-43"><a href="operational-research.html#cb1116-43" tabindex="-1"></a>    <span class="fu">add_resource</span>(<span class="st">&quot;inr&quot;</span>, <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-44"><a href="operational-research.html#cb1116-44" tabindex="-1"></a>    <span class="fu">add_generator</span>(<span class="st">&quot;patient&quot;</span>, patient, <span class="cf">function</span>() <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-45"><a href="operational-research.html#cb1116-45" tabindex="-1"></a>    <span class="fu">run</span>(<span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1116-46"><a href="operational-research.html#cb1116-46" tabindex="-1"></a>    <span class="fu">wrap</span>()</span>
+<span id="cb1116-47"><a href="operational-research.html#cb1116-47" tabindex="-1"></a>})</span></code></pre></div>
 <p>Plot patient flow</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="operational-research.html#cb35-1" tabindex="-1"></a><span class="fu">plot</span>(patient)</span></code></pre></div>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2abda4cf70fff570f11e" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-2abda4cf70fff570f11e">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"sans-serif\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"1.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: ed nurse, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"2\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"3\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: ed nurse, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"4\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke reg, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"5\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"6\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke reg, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"7\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#FDC086\", tooltip = \"resource: CT scan, amount: 1\", fontcolor = \"black\", fillcolor = \"#FDC086\"] \n  \"8\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"9\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#FDC086\", tooltip = \"resource: CT scan, amount: 1\", fontcolor = \"black\", fillcolor = \"#FDC086\"] \n  \"10\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke consultant, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"11\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"12\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke consultant, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"13\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#FFFF99\", tooltip = \"resource: inr, amount: 1\", fontcolor = \"black\", fillcolor = \"#FFFF99\"] \n  \"14\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"15\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#FFFF99\", tooltip = \"resource: inr, amount: 1\", fontcolor = \"black\", fillcolor = \"#FFFF99\"] \n\"1\"->\"2\" [color = \"black\", style = \"solid\"] \n\"2\"->\"3\" [color = \"black\", style = \"solid\"] \n\"3\"->\"4\" [color = \"black\", style = \"solid\"] \n\"4\"->\"5\" [color = \"black\", style = \"solid\"] \n\"5\"->\"6\" [color = \"black\", style = \"solid\"] \n\"6\"->\"7\" [color = \"black\", style = \"solid\"] \n\"7\"->\"8\" [color = \"black\", style = \"solid\"] \n\"8\"->\"9\" [color = \"black\", style = \"solid\"] \n\"9\"->\"10\" [color = \"black\", style = \"solid\"] \n\"10\"->\"11\" [color = \"black\", style = \"solid\"] \n\"11\"->\"12\" [color = \"black\", style = \"solid\"] \n\"12\"->\"13\" [color = \"black\", style = \"solid\"] \n\"13\"->\"14\" [color = \"black\", style = \"solid\"] \n\"14\"->\"15\" [color = \"black\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="operational-research.html#cb36-1" tabindex="-1"></a><span class="co">#plot.simmer</span></span>
-<span id="cb36-2"><a href="operational-research.html#cb36-2" tabindex="-1"></a>resources <span class="ot">&lt;-</span> <span class="fu">get_mon_resources</span>(envs)</span>
-<span id="cb36-3"><a href="operational-research.html#cb36-3" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="operational-research.html#cb36-4" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb36-5"><a href="operational-research.html#cb36-5" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">plot</span>(resources, <span class="at">metric =</span> <span class="st">&quot;usage&quot;</span>, </span>
-<span id="cb36-6"><a href="operational-research.html#cb36-6" tabindex="-1"></a>         <span class="fu">c</span>(<span class="st">&quot;ed nurse&quot;</span>,<span class="st">&quot;stroke reg&quot;</span>,<span class="st">&quot;CT scan&quot;</span>, <span class="st">&quot;stroke                         consultant&quot;</span>,<span class="st">&quot;inr&quot;</span>), </span>
-<span id="cb36-7"><a href="operational-research.html#cb36-7" tabindex="-1"></a>         <span class="at">items =</span> <span class="st">&quot;serve&quot;</span>)</span>
-<span id="cb36-8"><a href="operational-research.html#cb36-8" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="operational-research.html#cb36-9" tabindex="-1"></a><span class="co">#resource usage</span></span>
-<span id="cb36-10"><a href="operational-research.html#cb36-10" tabindex="-1"></a>p2<span class="ot">&lt;-</span><span class="fu">plot</span>(<span class="fu">get_mon_resources</span>(envs[[<span class="dv">6</span>]]), <span class="at">metric =</span> <span class="st">&quot;usage&quot;</span>, <span class="st">&quot;stroke consultant&quot;</span>, <span class="at">items =</span> <span class="st">&quot;server&quot;</span>, <span class="at">steps =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb36-11"><a href="operational-research.html#cb36-11" tabindex="-1"></a></span>
-<span id="cb36-12"><a href="operational-research.html#cb36-12" tabindex="-1"></a><span class="co">#resource utilisation</span></span>
-<span id="cb36-13"><a href="operational-research.html#cb36-13" tabindex="-1"></a>p3<span class="ot">&lt;-</span><span class="fu">plot</span>(resources, <span class="at">metric=</span><span class="st">&quot;utilization&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="st">&quot;stroke reg&quot;</span>,<span class="st">&quot;CT scan&quot;</span>))</span>
-<span id="cb36-14"><a href="operational-research.html#cb36-14" tabindex="-1"></a></span>
-<span id="cb36-15"><a href="operational-research.html#cb36-15" tabindex="-1"></a><span class="co">#Flow time evolution</span></span>
-<span id="cb36-16"><a href="operational-research.html#cb36-16" tabindex="-1"></a>arrivals <span class="ot">&lt;-</span> <span class="fu">get_mon_arrivals</span>(envs)</span>
-<span id="cb36-17"><a href="operational-research.html#cb36-17" tabindex="-1"></a>p4<span class="ot">&lt;-</span><span class="fu">plot</span>(arrivals, <span class="at">metric =</span> <span class="st">&quot;flow_time&quot;</span>)</span>
-<span id="cb36-18"><a href="operational-research.html#cb36-18" tabindex="-1"></a></span>
-<span id="cb36-19"><a href="operational-research.html#cb36-19" tabindex="-1"></a><span class="co">#combine plot</span></span>
-<span id="cb36-20"><a href="operational-research.html#cb36-20" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1,p2, p3,p4)</span></code></pre></div>
+<div class="sourceCode" id="cb1117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1117-1"><a href="operational-research.html#cb1117-1" tabindex="-1"></a><span class="fu">plot</span>(patient)</span></code></pre></div>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1bb5e0a50f595497293e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1bb5e0a50f595497293e">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"sans-serif\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"1.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: ed nurse, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"2\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"3\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#7FC97F\", tooltip = \"resource: ed nurse, amount: 1\", fontcolor = \"black\", fillcolor = \"#7FC97F\"] \n  \"4\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke reg, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"5\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"6\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke reg, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"7\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#FDC086\", tooltip = \"resource: CT scan, amount: 1\", fontcolor = \"black\", fillcolor = \"#FDC086\"] \n  \"8\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"9\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#FDC086\", tooltip = \"resource: CT scan, amount: 1\", fontcolor = \"black\", fillcolor = \"#FDC086\"] \n  \"10\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke consultant, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"11\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"12\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#BEAED4\", tooltip = \"resource: stroke consultant, amount: 1\", fontcolor = \"black\", fillcolor = \"#BEAED4\"] \n  \"13\" [label = \"Seize\", shape = \"box\", style = \"filled\", color = \"#FFFF99\", tooltip = \"resource: inr, amount: 1\", fontcolor = \"black\", fillcolor = \"#FFFF99\"] \n  \"14\" [label = \"Timeout\", shape = \"box\", style = \"solid\", color = \"black\", tooltip = \"delay: function()\", fontcolor = \"black\", fillcolor = \"#000000\"] \n  \"15\" [label = \"Release\", shape = \"box\", style = \"filled\", color = \"#FFFF99\", tooltip = \"resource: inr, amount: 1\", fontcolor = \"black\", fillcolor = \"#FFFF99\"] \n\"1\"->\"2\" [color = \"black\", style = \"solid\"] \n\"2\"->\"3\" [color = \"black\", style = \"solid\"] \n\"3\"->\"4\" [color = \"black\", style = \"solid\"] \n\"4\"->\"5\" [color = \"black\", style = \"solid\"] \n\"5\"->\"6\" [color = \"black\", style = \"solid\"] \n\"6\"->\"7\" [color = \"black\", style = \"solid\"] \n\"7\"->\"8\" [color = \"black\", style = \"solid\"] \n\"8\"->\"9\" [color = \"black\", style = \"solid\"] \n\"9\"->\"10\" [color = \"black\", style = \"solid\"] \n\"10\"->\"11\" [color = \"black\", style = \"solid\"] \n\"11\"->\"12\" [color = \"black\", style = \"solid\"] \n\"12\"->\"13\" [color = \"black\", style = \"solid\"] \n\"13\"->\"14\" [color = \"black\", style = \"solid\"] \n\"14\"->\"15\" [color = \"black\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb1118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1118-1"><a href="operational-research.html#cb1118-1" tabindex="-1"></a><span class="co">#plot.simmer</span></span>
+<span id="cb1118-2"><a href="operational-research.html#cb1118-2" tabindex="-1"></a>resources <span class="ot">&lt;-</span> <span class="fu">get_mon_resources</span>(envs)</span>
+<span id="cb1118-3"><a href="operational-research.html#cb1118-3" tabindex="-1"></a></span>
+<span id="cb1118-4"><a href="operational-research.html#cb1118-4" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb1118-5"><a href="operational-research.html#cb1118-5" tabindex="-1"></a>p1<span class="ot">&lt;-</span><span class="fu">plot</span>(resources, <span class="at">metric =</span> <span class="st">&quot;usage&quot;</span>, </span>
+<span id="cb1118-6"><a href="operational-research.html#cb1118-6" tabindex="-1"></a>         <span class="fu">c</span>(<span class="st">&quot;ed nurse&quot;</span>,<span class="st">&quot;stroke reg&quot;</span>,<span class="st">&quot;CT scan&quot;</span>, <span class="st">&quot;stroke                         consultant&quot;</span>,<span class="st">&quot;inr&quot;</span>), </span>
+<span id="cb1118-7"><a href="operational-research.html#cb1118-7" tabindex="-1"></a>         <span class="at">items =</span> <span class="st">&quot;serve&quot;</span>)</span>
+<span id="cb1118-8"><a href="operational-research.html#cb1118-8" tabindex="-1"></a></span>
+<span id="cb1118-9"><a href="operational-research.html#cb1118-9" tabindex="-1"></a><span class="co">#resource usage</span></span>
+<span id="cb1118-10"><a href="operational-research.html#cb1118-10" tabindex="-1"></a>p2<span class="ot">&lt;-</span><span class="fu">plot</span>(<span class="fu">get_mon_resources</span>(envs[[<span class="dv">6</span>]]), <span class="at">metric =</span> <span class="st">&quot;usage&quot;</span>, <span class="st">&quot;stroke consultant&quot;</span>, <span class="at">items =</span> <span class="st">&quot;server&quot;</span>, <span class="at">steps =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1118-11"><a href="operational-research.html#cb1118-11" tabindex="-1"></a></span>
+<span id="cb1118-12"><a href="operational-research.html#cb1118-12" tabindex="-1"></a><span class="co">#resource utilisation</span></span>
+<span id="cb1118-13"><a href="operational-research.html#cb1118-13" tabindex="-1"></a>p3<span class="ot">&lt;-</span><span class="fu">plot</span>(resources, <span class="at">metric=</span><span class="st">&quot;utilization&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;ed nurse&quot;</span>, <span class="st">&quot;stroke reg&quot;</span>,<span class="st">&quot;CT scan&quot;</span>))</span>
+<span id="cb1118-14"><a href="operational-research.html#cb1118-14" tabindex="-1"></a></span>
+<span id="cb1118-15"><a href="operational-research.html#cb1118-15" tabindex="-1"></a><span class="co">#Flow time evolution</span></span>
+<span id="cb1118-16"><a href="operational-research.html#cb1118-16" tabindex="-1"></a>arrivals <span class="ot">&lt;-</span> <span class="fu">get_mon_arrivals</span>(envs)</span>
+<span id="cb1118-17"><a href="operational-research.html#cb1118-17" tabindex="-1"></a>p4<span class="ot">&lt;-</span><span class="fu">plot</span>(arrivals, <span class="at">metric =</span> <span class="st">&quot;flow_time&quot;</span>)</span>
+<span id="cb1118-18"><a href="operational-research.html#cb1118-18" tabindex="-1"></a></span>
+<span id="cb1118-19"><a href="operational-research.html#cb1118-19" tabindex="-1"></a><span class="co">#combine plot</span></span>
+<span id="cb1118-20"><a href="operational-research.html#cb1118-20" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(p1,p2, p3,p4)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-4-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="operational-research.html#cb38-1" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb38-2"><a href="operational-research.html#cb38-2" tabindex="-1"></a>activity<span class="ot">&lt;-</span><span class="fu">get_mon_arrivals</span>(envs)</span>
-<span id="cb38-3"><a href="operational-research.html#cb38-3" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="operational-research.html#cb38-4" tabindex="-1"></a><span class="fu">plot</span>(activity,<span class="at">metric=</span><span class="st">&quot;activity_time&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1120-1"><a href="operational-research.html#cb1120-1" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb1120-2"><a href="operational-research.html#cb1120-2" tabindex="-1"></a>activity<span class="ot">&lt;-</span><span class="fu">get_mon_arrivals</span>(envs)</span>
+<span id="cb1120-3"><a href="operational-research.html#cb1120-3" tabindex="-1"></a></span>
+<span id="cb1120-4"><a href="operational-research.html#cb1120-4" tabindex="-1"></a><span class="fu">plot</span>(activity,<span class="at">metric=</span><span class="st">&quot;activity_time&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-4-3-1.png" width="672" /></p>
 <p>Now we will fork another path in the patient flow</p>
 </div>
 <div id="queuing-network" class="section level3 hasAnchor" number="9.1.2">
 <h3><span class="header-section-number">9.1.2</span> Queuing network<a href="operational-research.html#queuing-network" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="operational-research.html#cb40-1" tabindex="-1"></a>mean_pkt_size <span class="ot">&lt;-</span> <span class="dv">100</span>        <span class="co"># bytes</span></span>
-<span id="cb40-2"><a href="operational-research.html#cb40-2" tabindex="-1"></a>lambda1 <span class="ot">&lt;-</span> <span class="dv">2</span>                <span class="co"># pkts/s</span></span>
-<span id="cb40-3"><a href="operational-research.html#cb40-3" tabindex="-1"></a>lambda3 <span class="ot">&lt;-</span> <span class="fl">0.5</span>              <span class="co"># pkts/s</span></span>
-<span id="cb40-4"><a href="operational-research.html#cb40-4" tabindex="-1"></a>lambda4 <span class="ot">&lt;-</span> <span class="fl">0.6</span>              <span class="co"># pkts/s</span></span>
-<span id="cb40-5"><a href="operational-research.html#cb40-5" tabindex="-1"></a>rate <span class="ot">&lt;-</span> <span class="fl">2.2</span> <span class="sc">*</span> mean_pkt_size <span class="co"># bytes/s</span></span>
-<span id="cb40-6"><a href="operational-research.html#cb40-6" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="operational-research.html#cb40-7" tabindex="-1"></a><span class="co"># set an exponential message size of mean mean_pkt_size</span></span>
-<span id="cb40-8"><a href="operational-research.html#cb40-8" tabindex="-1"></a>set_msg_size <span class="ot">&lt;-</span> <span class="cf">function</span>(.)</span>
-<span id="cb40-9"><a href="operational-research.html#cb40-9" tabindex="-1"></a>  <span class="fu">set_attribute</span>(., <span class="st">&quot;size&quot;</span>, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span>mean_pkt_size))</span>
-<span id="cb40-10"><a href="operational-research.html#cb40-10" tabindex="-1"></a></span>
-<span id="cb40-11"><a href="operational-research.html#cb40-11" tabindex="-1"></a><span class="co"># seize an M/D/1 queue by id; the timeout is function of the message size</span></span>
-<span id="cb40-12"><a href="operational-research.html#cb40-12" tabindex="-1"></a>md1 <span class="ot">&lt;-</span> <span class="cf">function</span>(., id)</span>
-<span id="cb40-13"><a href="operational-research.html#cb40-13" tabindex="-1"></a>  <span class="fu">seize</span>(., <span class="fu">paste0</span>(<span class="st">&quot;md1_&quot;</span>, id), <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-14"><a href="operational-research.html#cb40-14" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">get_attribute</span>(env, <span class="st">&quot;size&quot;</span>) <span class="sc">/</span> rate) <span class="sc">%&gt;%</span></span>
-<span id="cb40-15"><a href="operational-research.html#cb40-15" tabindex="-1"></a>  <span class="fu">release</span>(<span class="fu">paste0</span>(<span class="st">&quot;md1_&quot;</span>, id), <span class="dv">1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="operational-research.html#cb41-1" tabindex="-1"></a>to_queue_1 <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="operational-research.html#cb41-2" tabindex="-1"></a>  <span class="fu">set_msg_size</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-3"><a href="operational-research.html#cb41-3" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb41-4"><a href="operational-research.html#cb41-4" tabindex="-1"></a>  <span class="fu">leave</span>(<span class="fl">0.25</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb41-5"><a href="operational-research.html#cb41-5" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb41-6"><a href="operational-research.html#cb41-6" tabindex="-1"></a>  <span class="fu">branch</span>(</span>
-<span id="cb41-7"><a href="operational-research.html#cb41-7" tabindex="-1"></a>    <span class="cf">function</span>() (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> <span class="fl">0.65</span>) <span class="sc">+</span> <span class="dv">1</span>, <span class="at">continue=</span><span class="fu">c</span>(F, F),</span>
-<span id="cb41-8"><a href="operational-research.html#cb41-8" tabindex="-1"></a>    <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span> <span class="fu">md1</span>(<span class="dv">3</span>),</span>
-<span id="cb41-9"><a href="operational-research.html#cb41-9" tabindex="-1"></a>    <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span> <span class="fu">md1</span>(<span class="dv">4</span>)</span>
-<span id="cb41-10"><a href="operational-research.html#cb41-10" tabindex="-1"></a>  )</span>
-<span id="cb41-11"><a href="operational-research.html#cb41-11" tabindex="-1"></a></span>
-<span id="cb41-12"><a href="operational-research.html#cb41-12" tabindex="-1"></a>to_queue_3 <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-13"><a href="operational-research.html#cb41-13" tabindex="-1"></a>  <span class="fu">set_msg_size</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-14"><a href="operational-research.html#cb41-14" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">3</span>)</span>
-<span id="cb41-15"><a href="operational-research.html#cb41-15" tabindex="-1"></a></span>
-<span id="cb41-16"><a href="operational-research.html#cb41-16" tabindex="-1"></a>to_queue_4 <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-17"><a href="operational-research.html#cb41-17" tabindex="-1"></a>  <span class="fu">set_msg_size</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb41-18"><a href="operational-research.html#cb41-18" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">4</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="operational-research.html#cb42-1" tabindex="-1"></a>env <span class="ot">&lt;-</span> <span class="fu">simmer</span>()</span>
-<span id="cb42-2"><a href="operational-research.html#cb42-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) env <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="operational-research.html#cb42-3" tabindex="-1"></a>  <span class="fu">add_resource</span>(<span class="fu">paste0</span>(<span class="st">&quot;md1_&quot;</span>, i))</span>
-<span id="cb42-4"><a href="operational-research.html#cb42-4" tabindex="-1"></a>env <span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="operational-research.html#cb42-5" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;arrival1_&quot;</span>, to_queue_1, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, lambda1), <span class="at">mon=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-6"><a href="operational-research.html#cb42-6" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;arrival3_&quot;</span>, to_queue_3, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, lambda3), <span class="at">mon=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-7"><a href="operational-research.html#cb42-7" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;arrival4_&quot;</span>, to_queue_4, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, lambda4), <span class="at">mon=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-8"><a href="operational-research.html#cb42-8" tabindex="-1"></a>  <span class="fu">run</span>(<span class="dv">4000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1122-1"><a href="operational-research.html#cb1122-1" tabindex="-1"></a>mean_pkt_size <span class="ot">&lt;-</span> <span class="dv">100</span>        <span class="co"># bytes</span></span>
+<span id="cb1122-2"><a href="operational-research.html#cb1122-2" tabindex="-1"></a>lambda1 <span class="ot">&lt;-</span> <span class="dv">2</span>                <span class="co"># pkts/s</span></span>
+<span id="cb1122-3"><a href="operational-research.html#cb1122-3" tabindex="-1"></a>lambda3 <span class="ot">&lt;-</span> <span class="fl">0.5</span>              <span class="co"># pkts/s</span></span>
+<span id="cb1122-4"><a href="operational-research.html#cb1122-4" tabindex="-1"></a>lambda4 <span class="ot">&lt;-</span> <span class="fl">0.6</span>              <span class="co"># pkts/s</span></span>
+<span id="cb1122-5"><a href="operational-research.html#cb1122-5" tabindex="-1"></a>rate <span class="ot">&lt;-</span> <span class="fl">2.2</span> <span class="sc">*</span> mean_pkt_size <span class="co"># bytes/s</span></span>
+<span id="cb1122-6"><a href="operational-research.html#cb1122-6" tabindex="-1"></a></span>
+<span id="cb1122-7"><a href="operational-research.html#cb1122-7" tabindex="-1"></a><span class="co"># set an exponential message size of mean mean_pkt_size</span></span>
+<span id="cb1122-8"><a href="operational-research.html#cb1122-8" tabindex="-1"></a>set_msg_size <span class="ot">&lt;-</span> <span class="cf">function</span>(.)</span>
+<span id="cb1122-9"><a href="operational-research.html#cb1122-9" tabindex="-1"></a>  <span class="fu">set_attribute</span>(., <span class="st">&quot;size&quot;</span>, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span>mean_pkt_size))</span>
+<span id="cb1122-10"><a href="operational-research.html#cb1122-10" tabindex="-1"></a></span>
+<span id="cb1122-11"><a href="operational-research.html#cb1122-11" tabindex="-1"></a><span class="co"># seize an M/D/1 queue by id; the timeout is function of the message size</span></span>
+<span id="cb1122-12"><a href="operational-research.html#cb1122-12" tabindex="-1"></a>md1 <span class="ot">&lt;-</span> <span class="cf">function</span>(., id)</span>
+<span id="cb1122-13"><a href="operational-research.html#cb1122-13" tabindex="-1"></a>  <span class="fu">seize</span>(., <span class="fu">paste0</span>(<span class="st">&quot;md1_&quot;</span>, id), <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1122-14"><a href="operational-research.html#cb1122-14" tabindex="-1"></a>  <span class="fu">timeout</span>(<span class="cf">function</span>() <span class="fu">get_attribute</span>(env, <span class="st">&quot;size&quot;</span>) <span class="sc">/</span> rate) <span class="sc">%&gt;%</span></span>
+<span id="cb1122-15"><a href="operational-research.html#cb1122-15" tabindex="-1"></a>  <span class="fu">release</span>(<span class="fu">paste0</span>(<span class="st">&quot;md1_&quot;</span>, id), <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1123-1"><a href="operational-research.html#cb1123-1" tabindex="-1"></a>to_queue_1 <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1123-2"><a href="operational-research.html#cb1123-2" tabindex="-1"></a>  <span class="fu">set_msg_size</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1123-3"><a href="operational-research.html#cb1123-3" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1123-4"><a href="operational-research.html#cb1123-4" tabindex="-1"></a>  <span class="fu">leave</span>(<span class="fl">0.25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1123-5"><a href="operational-research.html#cb1123-5" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1123-6"><a href="operational-research.html#cb1123-6" tabindex="-1"></a>  <span class="fu">branch</span>(</span>
+<span id="cb1123-7"><a href="operational-research.html#cb1123-7" tabindex="-1"></a>    <span class="cf">function</span>() (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> <span class="fl">0.65</span>) <span class="sc">+</span> <span class="dv">1</span>, <span class="at">continue=</span><span class="fu">c</span>(F, F),</span>
+<span id="cb1123-8"><a href="operational-research.html#cb1123-8" tabindex="-1"></a>    <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span> <span class="fu">md1</span>(<span class="dv">3</span>),</span>
+<span id="cb1123-9"><a href="operational-research.html#cb1123-9" tabindex="-1"></a>    <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span> <span class="fu">md1</span>(<span class="dv">4</span>)</span>
+<span id="cb1123-10"><a href="operational-research.html#cb1123-10" tabindex="-1"></a>  )</span>
+<span id="cb1123-11"><a href="operational-research.html#cb1123-11" tabindex="-1"></a></span>
+<span id="cb1123-12"><a href="operational-research.html#cb1123-12" tabindex="-1"></a>to_queue_3 <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1123-13"><a href="operational-research.html#cb1123-13" tabindex="-1"></a>  <span class="fu">set_msg_size</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1123-14"><a href="operational-research.html#cb1123-14" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">3</span>)</span>
+<span id="cb1123-15"><a href="operational-research.html#cb1123-15" tabindex="-1"></a></span>
+<span id="cb1123-16"><a href="operational-research.html#cb1123-16" tabindex="-1"></a>to_queue_4 <span class="ot">&lt;-</span> <span class="fu">trajectory</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1123-17"><a href="operational-research.html#cb1123-17" tabindex="-1"></a>  <span class="fu">set_msg_size</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1123-18"><a href="operational-research.html#cb1123-18" tabindex="-1"></a>  <span class="fu">md1</span>(<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1124-1"><a href="operational-research.html#cb1124-1" tabindex="-1"></a>env <span class="ot">&lt;-</span> <span class="fu">simmer</span>()</span>
+<span id="cb1124-2"><a href="operational-research.html#cb1124-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) env <span class="sc">%&gt;%</span> </span>
+<span id="cb1124-3"><a href="operational-research.html#cb1124-3" tabindex="-1"></a>  <span class="fu">add_resource</span>(<span class="fu">paste0</span>(<span class="st">&quot;md1_&quot;</span>, i))</span>
+<span id="cb1124-4"><a href="operational-research.html#cb1124-4" tabindex="-1"></a>env <span class="sc">%&gt;%</span></span>
+<span id="cb1124-5"><a href="operational-research.html#cb1124-5" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;arrival1_&quot;</span>, to_queue_1, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, lambda1), <span class="at">mon=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1124-6"><a href="operational-research.html#cb1124-6" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;arrival3_&quot;</span>, to_queue_3, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, lambda3), <span class="at">mon=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1124-7"><a href="operational-research.html#cb1124-7" tabindex="-1"></a>  <span class="fu">add_generator</span>(<span class="st">&quot;arrival4_&quot;</span>, to_queue_4, <span class="cf">function</span>() <span class="fu">rexp</span>(<span class="dv">1</span>, lambda4), <span class="at">mon=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1124-8"><a href="operational-research.html#cb1124-8" tabindex="-1"></a>  <span class="fu">run</span>(<span class="dv">4000</span>)</span></code></pre></div>
 <pre><code>## simmer environment: anonymous | now: 4000 | next: 4000.01785654125
 ## { Monitor: in memory }
 ## { Resource: md1_1 | monitored: TRUE | server status: 1(1) | queue status: 15(Inf) }
@@ -1024,23 +1155,23 @@ Total queue size</p>
 ## { Source: arrival1_ | monitored: 2 | n_generated: 8023 }
 ## { Source: arrival3_ | monitored: 2 | n_generated: 2031 }
 ## { Source: arrival4_ | monitored: 2 | n_generated: 2399 }</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="operational-research.html#cb44-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">get_mon_arrivals</span>(env, <span class="at">per_resource =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="operational-research.html#cb44-2" tabindex="-1"></a>  <span class="fu">subset</span>(resource <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;md1_3&quot;</span>, <span class="st">&quot;md1_4&quot;</span>), <span class="at">select=</span><span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;resource&quot;</span>))</span>
-<span id="cb44-3"><a href="operational-research.html#cb44-3" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="operational-research.html#cb44-4" tabindex="-1"></a>arr <span class="ot">&lt;-</span> <span class="fu">get_mon_arrivals</span>(env) <span class="sc">%&gt;%</span></span>
-<span id="cb44-5"><a href="operational-research.html#cb44-5" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">waiting_time =</span> end_time <span class="sc">-</span> (start_time <span class="sc">+</span> activity_time)) <span class="sc">%&gt;%</span></span>
-<span id="cb44-6"><a href="operational-research.html#cb44-6" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">generator =</span> <span class="fu">regmatches</span>(name, <span class="fu">regexpr</span>(<span class="st">&quot;arrival[[:digit:]]&quot;</span>, name))) <span class="sc">%&gt;%</span></span>
-<span id="cb44-7"><a href="operational-research.html#cb44-7" tabindex="-1"></a>  <span class="fu">merge</span>(res)</span>
-<span id="cb44-8"><a href="operational-research.html#cb44-8" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="operational-research.html#cb44-9" tabindex="-1"></a><span class="fu">aggregate</span>(waiting_time <span class="sc">~</span> generator <span class="sc">+</span> resource, arr, <span class="cf">function</span>(x) <span class="fu">sum</span>(x)<span class="sc">/</span><span class="fu">length</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb1126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1126-1"><a href="operational-research.html#cb1126-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">get_mon_arrivals</span>(env, <span class="at">per_resource =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1126-2"><a href="operational-research.html#cb1126-2" tabindex="-1"></a>  <span class="fu">subset</span>(resource <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;md1_3&quot;</span>, <span class="st">&quot;md1_4&quot;</span>), <span class="at">select=</span><span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;resource&quot;</span>))</span>
+<span id="cb1126-3"><a href="operational-research.html#cb1126-3" tabindex="-1"></a></span>
+<span id="cb1126-4"><a href="operational-research.html#cb1126-4" tabindex="-1"></a>arr <span class="ot">&lt;-</span> <span class="fu">get_mon_arrivals</span>(env) <span class="sc">%&gt;%</span></span>
+<span id="cb1126-5"><a href="operational-research.html#cb1126-5" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">waiting_time =</span> end_time <span class="sc">-</span> (start_time <span class="sc">+</span> activity_time)) <span class="sc">%&gt;%</span></span>
+<span id="cb1126-6"><a href="operational-research.html#cb1126-6" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">generator =</span> <span class="fu">regmatches</span>(name, <span class="fu">regexpr</span>(<span class="st">&quot;arrival[[:digit:]]&quot;</span>, name))) <span class="sc">%&gt;%</span></span>
+<span id="cb1126-7"><a href="operational-research.html#cb1126-7" tabindex="-1"></a>  <span class="fu">merge</span>(res)</span>
+<span id="cb1126-8"><a href="operational-research.html#cb1126-8" tabindex="-1"></a></span>
+<span id="cb1126-9"><a href="operational-research.html#cb1126-9" tabindex="-1"></a><span class="fu">aggregate</span>(waiting_time <span class="sc">~</span> generator <span class="sc">+</span> resource, arr, <span class="cf">function</span>(x) <span class="fu">sum</span>(x)<span class="sc">/</span><span class="fu">length</span>(x))</span></code></pre></div>
 <pre><code>##   generator resource waiting_time
 ## 1  arrival1    md1_3    6.8729025
 ## 2  arrival3    md1_3    0.8427541
 ## 3  arrival1    md1_4    6.7479945
 ## 4  arrival4    md1_4    0.4598295</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="operational-research.html#cb46-1" tabindex="-1"></a><span class="fu">get_n_generated</span>(env, <span class="st">&quot;arrival1_&quot;</span>) <span class="sc">+</span> <span class="fu">get_n_generated</span>(env, <span class="st">&quot;arrival4_&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1128-1"><a href="operational-research.html#cb1128-1" tabindex="-1"></a><span class="fu">get_n_generated</span>(env, <span class="st">&quot;arrival1_&quot;</span>) <span class="sc">+</span> <span class="fu">get_n_generated</span>(env, <span class="st">&quot;arrival4_&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 10422</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="operational-research.html#cb48-1" tabindex="-1"></a><span class="fu">aggregate</span>(waiting_time <span class="sc">~</span> generator <span class="sc">+</span> resource, arr, length)</span></code></pre></div>
+<div class="sourceCode" id="cb1130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1130-1"><a href="operational-research.html#cb1130-1" tabindex="-1"></a><span class="fu">aggregate</span>(waiting_time <span class="sc">~</span> generator <span class="sc">+</span> resource, arr, length)</span></code></pre></div>
 <pre><code>##   generator resource waiting_time
 ## 1  arrival1    md1_3         3824
 ## 2  arrival3    md1_3         2030
@@ -1051,111 +1182,83 @@ Total queue size</p>
 <div id="linear-programming" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Linear Programming<a href="operational-research.html#linear-programming" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Linear programming is an optimisation process to maximise profit and minimise cost with multiple parts of the model having linear relationship. There are several different libraries useful for linear programming. The <em>lpSolve</em> library is used here as illustration.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="operational-research.html#cb50-1" tabindex="-1"></a><span class="fu">library</span>(lpSolve)</span>
-<span id="cb50-2"><a href="operational-research.html#cb50-2" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="operational-research.html#cb50-3" tabindex="-1"></a><span class="co">#solve using linear programming</span></span>
-<span id="cb50-4"><a href="operational-research.html#cb50-4" tabindex="-1"></a>n <span class="ot">&lt;-</span><span class="fl">2.5</span> <span class="co"># Numbers of techs. 1 EFT means a person is employed for 40 hours a week and 0.5 EFT means a person is employed for 20 hours a week.</span></span>
-<span id="cb50-5"><a href="operational-research.html#cb50-5" tabindex="-1"></a>set_up_eeg <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># 40 minutes</span></span>
-<span id="cb50-6"><a href="operational-research.html#cb50-6" tabindex="-1"></a>to_do_eeg <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># 30 minutes</span></span>
-<span id="cb50-7"><a href="operational-research.html#cb50-7" tabindex="-1"></a>clean_equipment <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># 20 minutes</span></span>
-<span id="cb50-8"><a href="operational-research.html#cb50-8" tabindex="-1"></a>annotate_eeg <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># 10 minutes</span></span>
-<span id="cb50-9"><a href="operational-research.html#cb50-9" tabindex="-1"></a></span>
-<span id="cb50-10"><a href="operational-research.html#cb50-10" tabindex="-1"></a><span class="co"># put some error for EEG time</span></span>
-<span id="cb50-11"><a href="operational-research.html#cb50-11" tabindex="-1"></a><span class="co"># if error=1 that mean NO errors happen</span></span>
-<span id="cb50-12"><a href="operational-research.html#cb50-12" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="co">#change from 0.93</span></span>
-<span id="cb50-13"><a href="operational-research.html#cb50-13" tabindex="-1"></a></span>
-<span id="cb50-14"><a href="operational-research.html#cb50-14" tabindex="-1"></a><span class="co">#Calculate time for EEG in hour</span></span>
-<span id="cb50-15"><a href="operational-research.html#cb50-15" tabindex="-1"></a>eeg_case_time <span class="ot">&lt;-</span> ((set_up_eeg<span class="sc">+</span>to_do_eeg<span class="sc">+</span>clean_equipment<span class="sc">+</span>annotate_eeg)<span class="sc">/</span><span class="dv">60</span>)<span class="sc">*</span>error</span>
-<span id="cb50-16"><a href="operational-research.html#cb50-16" tabindex="-1"></a></span>
-<span id="cb50-17"><a href="operational-research.html#cb50-17" tabindex="-1"></a><span class="co"># limit for EEG per day</span></span>
-<span id="cb50-18"><a href="operational-research.html#cb50-18" tabindex="-1"></a><span class="co"># we can put different limits for EEGs</span></span>
-<span id="cb50-19"><a href="operational-research.html#cb50-19" tabindex="-1"></a>limit_eeg <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">8</span><span class="sc">*</span>eeg_case_time, <span class="at">digits =</span> <span class="dv">0</span>)</span>
-<span id="cb50-20"><a href="operational-research.html#cb50-20" tabindex="-1"></a></span>
-<span id="cb50-21"><a href="operational-research.html#cb50-21" tabindex="-1"></a><span class="co">#s[i] - numbers of cases for each i-EEG&#39;s machines </span></span>
-<span id="cb50-22"><a href="operational-research.html#cb50-22" tabindex="-1"></a><span class="co">#Setting the coefficients of s[i]-decision variables</span></span>
-<span id="cb50-23"><a href="operational-research.html#cb50-23" tabindex="-1"></a><span class="co">#In a future can put some efficiency or some cost</span></span>
-<span id="cb50-24"><a href="operational-research.html#cb50-24" tabindex="-1"></a>objective.in<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb50-25"><a href="operational-research.html#cb50-25" tabindex="-1"></a></span>
-<span id="cb50-26"><a href="operational-research.html#cb50-26" tabindex="-1"></a><span class="co">#Constraint Matrix</span></span>
-<span id="cb50-27"><a href="operational-research.html#cb50-27" tabindex="-1"></a>const.mat<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
-<span id="cb50-28"><a href="operational-research.html#cb50-28" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
-<span id="cb50-29"><a href="operational-research.html#cb50-29" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
-<span id="cb50-30"><a href="operational-research.html#cb50-30" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
-<span id="cb50-31"><a href="operational-research.html#cb50-31" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,</span>
-<span id="cb50-32"><a href="operational-research.html#cb50-32" tabindex="-1"></a>                   <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">nrow =</span> <span class="dv">6</span>,<span class="at">byrow =</span> T)</span>
-<span id="cb50-33"><a href="operational-research.html#cb50-33" tabindex="-1"></a></span>
-<span id="cb50-34"><a href="operational-research.html#cb50-34" tabindex="-1"></a><span class="co">#defining constraints</span></span>
-<span id="cb50-35"><a href="operational-research.html#cb50-35" tabindex="-1"></a>const_num_1<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
-<span id="cb50-36"><a href="operational-research.html#cb50-36" tabindex="-1"></a>const_num_2<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
-<span id="cb50-37"><a href="operational-research.html#cb50-37" tabindex="-1"></a>const_num_3<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
-<span id="cb50-38"><a href="operational-research.html#cb50-38" tabindex="-1"></a>const_num_4<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
-<span id="cb50-39"><a href="operational-research.html#cb50-39" tabindex="-1"></a>const_num_5<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
-<span id="cb50-40"><a href="operational-research.html#cb50-40" tabindex="-1"></a>const_res<span class="ot">=</span> n<span class="sc">*</span><span class="dv">7</span> <span class="co"># limit per sessions</span></span>
-<span id="cb50-41"><a href="operational-research.html#cb50-41" tabindex="-1"></a></span>
-<span id="cb50-42"><a href="operational-research.html#cb50-42" tabindex="-1"></a><span class="co">#RHS for constraints</span></span>
-<span id="cb50-43"><a href="operational-research.html#cb50-43" tabindex="-1"></a>const.rhs<span class="ot">=</span><span class="fu">c</span>(const_num_1,const_num_2,const_num_3,const_num_4,const_num_5, const_res)</span>
-<span id="cb50-44"><a href="operational-research.html#cb50-44" tabindex="-1"></a></span>
-<span id="cb50-45"><a href="operational-research.html#cb50-45" tabindex="-1"></a><span class="co">#Direction for constraints</span></span>
-<span id="cb50-46"><a href="operational-research.html#cb50-46" tabindex="-1"></a>constr.dir <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;&lt;=&quot;</span>,<span class="dv">6</span>)</span>
-<span id="cb50-47"><a href="operational-research.html#cb50-47" tabindex="-1"></a></span>
-<span id="cb50-48"><a href="operational-research.html#cb50-48" tabindex="-1"></a><span class="co">#Finding the optimum solution</span></span>
-<span id="cb50-49"><a href="operational-research.html#cb50-49" tabindex="-1"></a>opt<span class="ot">=</span><span class="fu">lp</span>(<span class="at">direction =</span> <span class="st">&quot;max&quot;</span>,objective.in,const.mat,constr.dir,const.rhs)</span>
-<span id="cb50-50"><a href="operational-research.html#cb50-50" tabindex="-1"></a><span class="co">#summary(opt)</span></span>
-<span id="cb50-51"><a href="operational-research.html#cb50-51" tabindex="-1"></a></span>
-<span id="cb50-52"><a href="operational-research.html#cb50-52" tabindex="-1"></a><span class="co">#Objective values of s[i]</span></span>
-<span id="cb50-53"><a href="operational-research.html#cb50-53" tabindex="-1"></a></span>
-<span id="cb50-54"><a href="operational-research.html#cb50-54" tabindex="-1"></a>opt<span class="sc">$</span>solution </span></code></pre></div>
+<div class="sourceCode" id="cb1132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1132-1"><a href="operational-research.html#cb1132-1" tabindex="-1"></a><span class="fu">library</span>(lpSolve)</span>
+<span id="cb1132-2"><a href="operational-research.html#cb1132-2" tabindex="-1"></a></span>
+<span id="cb1132-3"><a href="operational-research.html#cb1132-3" tabindex="-1"></a><span class="co">#solve using linear programming</span></span>
+<span id="cb1132-4"><a href="operational-research.html#cb1132-4" tabindex="-1"></a>n <span class="ot">&lt;-</span><span class="fl">2.5</span> <span class="co"># Numbers of techs. 1 EFT means a person is employed for 40 hours a week and 0.5 EFT means a person is employed for 20 hours a week.</span></span>
+<span id="cb1132-5"><a href="operational-research.html#cb1132-5" tabindex="-1"></a>set_up_eeg <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># 40 minutes</span></span>
+<span id="cb1132-6"><a href="operational-research.html#cb1132-6" tabindex="-1"></a>to_do_eeg <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># 30 minutes</span></span>
+<span id="cb1132-7"><a href="operational-research.html#cb1132-7" tabindex="-1"></a>clean_equipment <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># 20 minutes</span></span>
+<span id="cb1132-8"><a href="operational-research.html#cb1132-8" tabindex="-1"></a>annotate_eeg <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># 10 minutes</span></span>
+<span id="cb1132-9"><a href="operational-research.html#cb1132-9" tabindex="-1"></a></span>
+<span id="cb1132-10"><a href="operational-research.html#cb1132-10" tabindex="-1"></a><span class="co"># put some error for EEG time</span></span>
+<span id="cb1132-11"><a href="operational-research.html#cb1132-11" tabindex="-1"></a><span class="co"># if error=1 that mean NO errors happen</span></span>
+<span id="cb1132-12"><a href="operational-research.html#cb1132-12" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="co">#change from 0.93</span></span>
+<span id="cb1132-13"><a href="operational-research.html#cb1132-13" tabindex="-1"></a></span>
+<span id="cb1132-14"><a href="operational-research.html#cb1132-14" tabindex="-1"></a><span class="co">#Calculate time for EEG in hour</span></span>
+<span id="cb1132-15"><a href="operational-research.html#cb1132-15" tabindex="-1"></a>eeg_case_time <span class="ot">&lt;-</span> ((set_up_eeg<span class="sc">+</span>to_do_eeg<span class="sc">+</span>clean_equipment<span class="sc">+</span>annotate_eeg)<span class="sc">/</span><span class="dv">60</span>)<span class="sc">*</span>error</span>
+<span id="cb1132-16"><a href="operational-research.html#cb1132-16" tabindex="-1"></a></span>
+<span id="cb1132-17"><a href="operational-research.html#cb1132-17" tabindex="-1"></a><span class="co"># limit for EEG per day</span></span>
+<span id="cb1132-18"><a href="operational-research.html#cb1132-18" tabindex="-1"></a><span class="co"># we can put different limits for EEGs</span></span>
+<span id="cb1132-19"><a href="operational-research.html#cb1132-19" tabindex="-1"></a>limit_eeg <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">8</span><span class="sc">*</span>eeg_case_time, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb1132-20"><a href="operational-research.html#cb1132-20" tabindex="-1"></a></span>
+<span id="cb1132-21"><a href="operational-research.html#cb1132-21" tabindex="-1"></a><span class="co">#s[i] - numbers of cases for each i-EEG&#39;s machines </span></span>
+<span id="cb1132-22"><a href="operational-research.html#cb1132-22" tabindex="-1"></a><span class="co">#Setting the coefficients of s[i]-decision variables</span></span>
+<span id="cb1132-23"><a href="operational-research.html#cb1132-23" tabindex="-1"></a><span class="co">#In a future can put some efficiency or some cost</span></span>
+<span id="cb1132-24"><a href="operational-research.html#cb1132-24" tabindex="-1"></a>objective.in<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb1132-25"><a href="operational-research.html#cb1132-25" tabindex="-1"></a></span>
+<span id="cb1132-26"><a href="operational-research.html#cb1132-26" tabindex="-1"></a><span class="co">#Constraint Matrix</span></span>
+<span id="cb1132-27"><a href="operational-research.html#cb1132-27" tabindex="-1"></a>const.mat<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb1132-28"><a href="operational-research.html#cb1132-28" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb1132-29"><a href="operational-research.html#cb1132-29" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb1132-30"><a href="operational-research.html#cb1132-30" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb1132-31"><a href="operational-research.html#cb1132-31" tabindex="-1"></a>                   <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,</span>
+<span id="cb1132-32"><a href="operational-research.html#cb1132-32" tabindex="-1"></a>                   <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">nrow =</span> <span class="dv">6</span>,<span class="at">byrow =</span> T)</span>
+<span id="cb1132-33"><a href="operational-research.html#cb1132-33" tabindex="-1"></a></span>
+<span id="cb1132-34"><a href="operational-research.html#cb1132-34" tabindex="-1"></a><span class="co">#defining constraints</span></span>
+<span id="cb1132-35"><a href="operational-research.html#cb1132-35" tabindex="-1"></a>const_num_1<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
+<span id="cb1132-36"><a href="operational-research.html#cb1132-36" tabindex="-1"></a>const_num_2<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
+<span id="cb1132-37"><a href="operational-research.html#cb1132-37" tabindex="-1"></a>const_num_3<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
+<span id="cb1132-38"><a href="operational-research.html#cb1132-38" tabindex="-1"></a>const_num_4<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
+<span id="cb1132-39"><a href="operational-research.html#cb1132-39" tabindex="-1"></a>const_num_5<span class="ot">=</span>limit_eeg  <span class="co">#in cases</span></span>
+<span id="cb1132-40"><a href="operational-research.html#cb1132-40" tabindex="-1"></a>const_res<span class="ot">=</span> n<span class="sc">*</span><span class="dv">7</span> <span class="co"># limit per sessions</span></span>
+<span id="cb1132-41"><a href="operational-research.html#cb1132-41" tabindex="-1"></a></span>
+<span id="cb1132-42"><a href="operational-research.html#cb1132-42" tabindex="-1"></a><span class="co">#RHS for constraints</span></span>
+<span id="cb1132-43"><a href="operational-research.html#cb1132-43" tabindex="-1"></a>const.rhs<span class="ot">=</span><span class="fu">c</span>(const_num_1,const_num_2,const_num_3,const_num_4,const_num_5, const_res)</span>
+<span id="cb1132-44"><a href="operational-research.html#cb1132-44" tabindex="-1"></a></span>
+<span id="cb1132-45"><a href="operational-research.html#cb1132-45" tabindex="-1"></a><span class="co">#Direction for constraints</span></span>
+<span id="cb1132-46"><a href="operational-research.html#cb1132-46" tabindex="-1"></a>constr.dir <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;&lt;=&quot;</span>,<span class="dv">6</span>)</span>
+<span id="cb1132-47"><a href="operational-research.html#cb1132-47" tabindex="-1"></a></span>
+<span id="cb1132-48"><a href="operational-research.html#cb1132-48" tabindex="-1"></a><span class="co">#Finding the optimum solution</span></span>
+<span id="cb1132-49"><a href="operational-research.html#cb1132-49" tabindex="-1"></a>opt<span class="ot">=</span><span class="fu">lp</span>(<span class="at">direction =</span> <span class="st">&quot;max&quot;</span>,objective.in,const.mat,constr.dir,const.rhs)</span>
+<span id="cb1132-50"><a href="operational-research.html#cb1132-50" tabindex="-1"></a><span class="co">#summary(opt)</span></span>
+<span id="cb1132-51"><a href="operational-research.html#cb1132-51" tabindex="-1"></a></span>
+<span id="cb1132-52"><a href="operational-research.html#cb1132-52" tabindex="-1"></a><span class="co">#Objective values of s[i]</span></span>
+<span id="cb1132-53"><a href="operational-research.html#cb1132-53" tabindex="-1"></a></span>
+<span id="cb1132-54"><a href="operational-research.html#cb1132-54" tabindex="-1"></a>opt<span class="sc">$</span>solution </span></code></pre></div>
 <pre><code>## [1] 11.0  6.5  0.0  0.0  0.0</code></pre>
 <p>Estimate for day (Value of objective function at optimal point)</p>
 <pre><code>## [1] 17.5</code></pre>
 <p>Estimate EEG per month based on staff EFT- only 2.5</p>
 <pre><code>## [1] 366</code></pre>
 <p>Assuming that the time spend on a report by neurologists (1 report = 30 min) then in a 3.5 hour session a neurologist can report 7 EEG.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="operational-research.html#cb54-1" tabindex="-1"></a>neurologist_session<span class="ot">=</span>estimate_week<span class="sc">/</span><span class="dv">7</span></span>
-<span id="cb54-2"><a href="operational-research.html#cb54-2" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="operational-research.html#cb54-3" tabindex="-1"></a>neurologist_session</span></code></pre></div>
+<div class="sourceCode" id="cb1136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1136-1"><a href="operational-research.html#cb1136-1" tabindex="-1"></a>neurologist_session<span class="ot">=</span>estimate_week<span class="sc">/</span><span class="dv">7</span></span>
+<span id="cb1136-2"><a href="operational-research.html#cb1136-2" tabindex="-1"></a></span>
+<span id="cb1136-3"><a href="operational-research.html#cb1136-3" tabindex="-1"></a>neurologist_session</span></code></pre></div>
 <pre><code>## [1] 13.07143</code></pre>
 </div>
 <div id="forecasting" class="section level2 hasAnchor" number="9.3">
 <h2><span class="header-section-number">9.3</span> Forecasting<a href="operational-research.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Forecasting is useful in predicting trends. In health care it can be used for estimating seasonal trends and bed requirement. Below is a forecast of mortality from COVID-19 in 2020. This forecast is an example and is not meant to be used in practice as mortality from COVID depends on the number of factors including infected cases, age, socioeconomic group, and comorbidity.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="operational-research.html#cb56-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.2     ✔ readr     2.1.4
-## ✔ forcats   1.0.0     ✔ stringr   1.5.0
-## ✔ lubridate 1.9.2     ✔ tibble    3.2.1
-## ✔ purrr     1.0.1     ✔ tidyr     1.3.0
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter()       masks stats::filter()
-## ✖ dplyr::lag()          masks stats::lag()
-## ✖ lubridate::now()      masks simmer::now()
-## ✖ lubridate::rollback() masks simmer::rollback()
-## ✖ dplyr::select()       masks simmer::select()
-## ✖ tidyr::separate()     masks simmer::separate()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="operational-research.html#cb58-1" tabindex="-1"></a><span class="fu">library</span>(prophet)</span></code></pre></div>
-<pre><code>## Loading required package: Rcpp
-## Loading required package: rlang
-## 
-## Attaching package: &#39;rlang&#39;
-## 
-## The following objects are masked from &#39;package:purrr&#39;:
-## 
-##     %@%, flatten, flatten_chr, flatten_dbl, flatten_int, flatten_lgl,
-##     flatten_raw, invoke, splice</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="operational-research.html#cb60-1" tabindex="-1"></a><span class="fu">library</span>(hrbrthemes)</span>
-<span id="cb60-2"><a href="operational-research.html#cb60-2" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb60-3"><a href="operational-research.html#cb60-3" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co">#use read_csv to read csv rather than base R</span></span>
-<span id="cb60-4"><a href="operational-research.html#cb60-4" tabindex="-1"></a></span>
-<span id="cb60-5"><a href="operational-research.html#cb60-5" tabindex="-1"></a>covid<span class="ot">&lt;-</span><span class="fu">read_csv</span>(<span class="st">&quot;./Data-Use/Covid_Table100420.csv&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb1138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1138-1"><a href="operational-research.html#cb1138-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1138-2"><a href="operational-research.html#cb1138-2" tabindex="-1"></a><span class="fu">library</span>(prophet)</span>
+<span id="cb1138-3"><a href="operational-research.html#cb1138-3" tabindex="-1"></a><span class="fu">library</span>(hrbrthemes)</span></code></pre></div>
+<pre><code>## Registering Windows fonts with R</code></pre>
+<div class="sourceCode" id="cb1140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1140-1"><a href="operational-research.html#cb1140-1" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1140-2"><a href="operational-research.html#cb1140-2" tabindex="-1"></a><span class="fu">library</span>(readr) <span class="co">#use read_csv to read csv rather than base R</span></span>
+<span id="cb1140-3"><a href="operational-research.html#cb1140-3" tabindex="-1"></a></span>
+<span id="cb1140-4"><a href="operational-research.html#cb1140-4" tabindex="-1"></a>covid<span class="ot">&lt;-</span><span class="fu">read_csv</span>(<span class="st">&quot;./Data-Use/Covid_Table100420.csv&quot;</span>) </span></code></pre></div>
 <pre><code>## New names:
-## Rows: 27 Columns: 12
-## ── Column specification
-## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; dbl
-## (8): ...1, Year, Week, COVID-19 Deaths...6, Pneumonia Deaths*...8, Infl... num
-## (3): Total Deaths, COVID-19 Deaths...5, Pneumonia Deaths*...7 date (1): Date
-## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
-## Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ## • `` -&gt; `...1`
 ## • `COVID-19 Deaths` -&gt; `COVID-19 Deaths...5`
 ## • `COVID-19 Deaths` -&gt; `COVID-19 Deaths...6`
@@ -1163,42 +1266,51 @@ Total queue size</p>
 ## • `Pneumonia Deaths*` -&gt; `Pneumonia Deaths*...8`
 ## • `Influenza Deaths` -&gt; `Influenza Deaths...9`
 ## • `Influenza Deaths` -&gt; `Influenza Deaths...10`</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="operational-research.html#cb62-1" tabindex="-1"></a><span class="fu">colnames</span>(covid)</span></code></pre></div>
+<pre><code>## Rows: 27 Columns: 12
+## ── Column specification ──────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl  (8): ...1, Year, Week, COVID-19 Deaths...6, Pneumonia Deaths*...8, Influenza ...
+## num  (3): Total Deaths, COVID-19 Deaths...5, Pneumonia Deaths*...7
+## date (1): Date
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb1143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1143-1"><a href="operational-research.html#cb1143-1" tabindex="-1"></a><span class="fu">colnames</span>(covid)</span></code></pre></div>
 <pre><code>##  [1] &quot;...1&quot;                  &quot;Year&quot;                  &quot;Week&quot;                 
 ##  [4] &quot;Total Deaths&quot;          &quot;COVID-19 Deaths...5&quot;   &quot;COVID-19 Deaths...6&quot;  
 ##  [7] &quot;Pneumonia Deaths*...7&quot; &quot;Pneumonia Deaths*...8&quot; &quot;Influenza Deaths...9&quot; 
 ## [10] &quot;Influenza Deaths...10&quot; &quot;Total.Deaths&quot;          &quot;Date&quot;</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="operational-research.html#cb64-1" tabindex="-1"></a><span class="co"># A data frame with columns ds &amp; y (datetimes &amp; metrics)</span></span>
-<span id="cb64-2"><a href="operational-research.html#cb64-2" tabindex="-1"></a>covid<span class="ot">&lt;-</span><span class="fu">rename</span>(covid, <span class="at">ds =</span>Date, <span class="at">y=</span>Total.Deaths)</span>
-<span id="cb64-3"><a href="operational-research.html#cb64-3" tabindex="-1"></a>covid2 <span class="ot">&lt;-</span> covid[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),]</span>
-<span id="cb64-4"><a href="operational-research.html#cb64-4" tabindex="-1"></a></span>
-<span id="cb64-5"><a href="operational-research.html#cb64-5" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fu">prophet</span>(covid2)<span class="co">#create prophet object</span></span></code></pre></div>
+<div class="sourceCode" id="cb1145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1145-1"><a href="operational-research.html#cb1145-1" tabindex="-1"></a><span class="co"># A data frame with columns ds &amp; y (datetimes &amp; metrics)</span></span>
+<span id="cb1145-2"><a href="operational-research.html#cb1145-2" tabindex="-1"></a>covid<span class="ot">&lt;-</span><span class="fu">rename</span>(covid, <span class="at">ds =</span>Date, <span class="at">y=</span>Total.Deaths)</span>
+<span id="cb1145-3"><a href="operational-research.html#cb1145-3" tabindex="-1"></a>covid2 <span class="ot">&lt;-</span> covid[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),]</span>
+<span id="cb1145-4"><a href="operational-research.html#cb1145-4" tabindex="-1"></a></span>
+<span id="cb1145-5"><a href="operational-research.html#cb1145-5" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fu">prophet</span>(covid2)<span class="co">#create prophet object</span></span></code></pre></div>
 <pre><code>## Disabling yearly seasonality. Run prophet with yearly.seasonality=TRUE to override this.
 ## Disabling weekly seasonality. Run prophet with weekly.seasonality=TRUE to override this.
 ## Disabling daily seasonality. Run prophet with daily.seasonality=TRUE to override this.
 ## n.changepoints greater than number of observations. Using 8</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="operational-research.html#cb66-1" tabindex="-1"></a><span class="co"># Extend dataframe 12 weeks into the future</span></span>
-<span id="cb66-2"><a href="operational-research.html#cb66-2" tabindex="-1"></a>future <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(m, <span class="at">freq=</span><span class="st">&quot;week&quot;</span> , <span class="at">periods =</span> <span class="dv">26</span>)</span>
-<span id="cb66-3"><a href="operational-research.html#cb66-3" tabindex="-1"></a><span class="co"># Generate forecast for next 500 days</span></span>
-<span id="cb66-4"><a href="operational-research.html#cb66-4" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, future)</span>
-<span id="cb66-5"><a href="operational-research.html#cb66-5" tabindex="-1"></a></span>
-<span id="cb66-6"><a href="operational-research.html#cb66-6" tabindex="-1"></a><span class="co"># What&#39;s the forecast for July 2020?</span></span>
-<span id="cb66-7"><a href="operational-research.html#cb66-7" tabindex="-1"></a>forecasted_rides <span class="ot">&lt;-</span> forecast <span class="sc">%&gt;%</span></span>
-<span id="cb66-8"><a href="operational-research.html#cb66-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ds)) <span class="sc">%&gt;%</span></span>
-<span id="cb66-9"><a href="operational-research.html#cb66-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb66-10"><a href="operational-research.html#cb66-10" tabindex="-1"></a>  <span class="fu">pull</span>(yhat) <span class="sc">%&gt;%</span></span>
-<span id="cb66-11"><a href="operational-research.html#cb66-11" tabindex="-1"></a>  <span class="fu">round</span>()</span>
-<span id="cb66-12"><a href="operational-research.html#cb66-12" tabindex="-1"></a>forecasted_rides</span></code></pre></div>
+<div class="sourceCode" id="cb1147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1147-1"><a href="operational-research.html#cb1147-1" tabindex="-1"></a><span class="co"># Extend dataframe 12 weeks into the future</span></span>
+<span id="cb1147-2"><a href="operational-research.html#cb1147-2" tabindex="-1"></a>future <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(m, <span class="at">freq=</span><span class="st">&quot;week&quot;</span> , <span class="at">periods =</span> <span class="dv">26</span>)</span>
+<span id="cb1147-3"><a href="operational-research.html#cb1147-3" tabindex="-1"></a><span class="co"># Generate forecast for next 500 days</span></span>
+<span id="cb1147-4"><a href="operational-research.html#cb1147-4" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, future)</span>
+<span id="cb1147-5"><a href="operational-research.html#cb1147-5" tabindex="-1"></a></span>
+<span id="cb1147-6"><a href="operational-research.html#cb1147-6" tabindex="-1"></a><span class="co"># What&#39;s the forecast for July 2020?</span></span>
+<span id="cb1147-7"><a href="operational-research.html#cb1147-7" tabindex="-1"></a>forecasted_rides <span class="ot">&lt;-</span> forecast <span class="sc">%&gt;%</span></span>
+<span id="cb1147-8"><a href="operational-research.html#cb1147-8" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ds)) <span class="sc">%&gt;%</span></span>
+<span id="cb1147-9"><a href="operational-research.html#cb1147-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1147-10"><a href="operational-research.html#cb1147-10" tabindex="-1"></a>  <span class="fu">pull</span>(yhat) <span class="sc">%&gt;%</span></span>
+<span id="cb1147-11"><a href="operational-research.html#cb1147-11" tabindex="-1"></a>  <span class="fu">round</span>()</span>
+<span id="cb1147-12"><a href="operational-research.html#cb1147-12" tabindex="-1"></a>forecasted_rides</span></code></pre></div>
 <pre><code>## [1] 67488</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="operational-research.html#cb68-1" tabindex="-1"></a><span class="co"># Visualize</span></span>
-<span id="cb68-2"><a href="operational-research.html#cb68-2" tabindex="-1"></a>forecast_p <span class="ot">&lt;-</span> <span class="fu">plot</span>(m, forecast) <span class="sc">+</span> </span>
-<span id="cb68-3"><a href="operational-research.html#cb68-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, </span>
-<span id="cb68-4"><a href="operational-research.html#cb68-4" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;mortality&quot;</span>, </span>
-<span id="cb68-5"><a href="operational-research.html#cb68-5" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Projected COVID-19 world mortality&quot;</span>, </span>
-<span id="cb68-6"><a href="operational-research.html#cb68-6" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;based on data truncated in January 2020&quot;</span>) <span class="sc">+</span></span>
-<span id="cb68-7"><a href="operational-research.html#cb68-7" tabindex="-1"></a>        <span class="fu">ylim</span>(<span class="dv">20000</span>,<span class="dv">80000</span>)<span class="sc">+</span></span>
-<span id="cb68-8"><a href="operational-research.html#cb68-8" tabindex="-1"></a>  <span class="fu">theme_ipsum_rc</span>()</span>
-<span id="cb68-9"><a href="operational-research.html#cb68-9" tabindex="-1"></a><span class="co">#forecast_p</span></span></code></pre></div>
+<div class="sourceCode" id="cb1149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1149-1"><a href="operational-research.html#cb1149-1" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb1149-2"><a href="operational-research.html#cb1149-2" tabindex="-1"></a>forecast_p <span class="ot">&lt;-</span> <span class="fu">plot</span>(m, forecast) <span class="sc">+</span> </span>
+<span id="cb1149-3"><a href="operational-research.html#cb1149-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb1149-4"><a href="operational-research.html#cb1149-4" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;mortality&quot;</span>, </span>
+<span id="cb1149-5"><a href="operational-research.html#cb1149-5" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Projected COVID-19 world mortality&quot;</span>, </span>
+<span id="cb1149-6"><a href="operational-research.html#cb1149-6" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;based on data truncated in January 2020&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1149-7"><a href="operational-research.html#cb1149-7" tabindex="-1"></a>        <span class="fu">ylim</span>(<span class="dv">20000</span>,<span class="dv">80000</span>)<span class="sc">+</span></span>
+<span id="cb1149-8"><a href="operational-research.html#cb1149-8" tabindex="-1"></a>  <span class="fu">theme_ipsum_rc</span>()</span>
+<span id="cb1149-9"><a href="operational-research.html#cb1149-9" tabindex="-1"></a><span class="co">#forecast_p</span></span></code></pre></div>
 <div id="bed-requirement" class="section level3 hasAnchor" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> Bed requirement<a href="operational-research.html#bed-requirement" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 </div>
@@ -1212,45 +1324,78 @@ Total queue size</p>
 </div>
 <div id="process-mapping" class="section level2 hasAnchor" number="9.4">
 <h2><span class="header-section-number">9.4</span> Process mapping<a href="operational-research.html#process-mapping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="operational-research.html#cb69-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
-<span id="cb69-2"><a href="operational-research.html#cb69-2" tabindex="-1"></a>a.plot<span class="ot">&lt;-</span><span class="fu">mermaid</span>(<span class="st">&quot;</span></span>
-<span id="cb69-3"><a href="operational-research.html#cb69-3" tabindex="-1"></a><span class="st">        graph TB</span></span>
-<span id="cb69-4"><a href="operational-research.html#cb69-4" tabindex="-1"></a><span class="st">        </span></span>
-<span id="cb69-5"><a href="operational-research.html#cb69-5" tabindex="-1"></a><span class="st">        A((Triage))</span></span>
-<span id="cb69-6"><a href="operational-research.html#cb69-6" tabindex="-1"></a><span class="st">        A--&gt;|2.3 hr|B(Imaging-No Stroke Code)</span></span>
-<span id="cb69-7"><a href="operational-research.html#cb69-7" tabindex="-1"></a><span class="st">        A--&gt;|0.6 hr|B1(Imaging-Stroke Code)</span></span>
-<span id="cb69-8"><a href="operational-research.html#cb69-8" tabindex="-1"></a><span class="st">        </span></span>
-<span id="cb69-9"><a href="operational-research.html#cb69-9" tabindex="-1"></a><span class="st">        B--&gt;|14.6 hr|B2(Dysphagia Screen)</span></span>
-<span id="cb69-10"><a href="operational-research.html#cb69-10" tabindex="-1"></a><span class="st">        B1--&gt;|no TPA 10.7 hr|B2(Dysphagia Screen)</span></span>
-<span id="cb69-11"><a href="operational-research.html#cb69-11" tabindex="-1"></a></span>
-<span id="cb69-12"><a href="operational-research.html#cb69-12" tabindex="-1"></a><span class="st">        C(Stop NBM)</span></span>
-<span id="cb69-13"><a href="operational-research.html#cb69-13" tabindex="-1"></a><span class="st">        B2--&gt;|0 hr|C</span></span>
-<span id="cb69-14"><a href="operational-research.html#cb69-14" tabindex="-1"></a><span class="st">      </span></span>
-<span id="cb69-15"><a href="operational-research.html#cb69-15" tabindex="-1"></a><span class="st">        C--&gt;|Oral route 1.7 hr|E{Antithrombotics}</span></span>
-<span id="cb69-16"><a href="operational-research.html#cb69-16" tabindex="-1"></a><span class="st">        </span></span>
-<span id="cb69-17"><a href="operational-research.html#cb69-17" tabindex="-1"></a><span class="st">        D1--&gt;|7.5 hr|E</span></span>
-<span id="cb69-18"><a href="operational-research.html#cb69-18" tabindex="-1"></a><span class="st">        B--&gt;|PR route 6.8 hr|E</span></span>
-<span id="cb69-19"><a href="operational-research.html#cb69-19" tabindex="-1"></a><span class="st">        B1--&gt;|PR route 3.8 hr|E</span></span>
-<span id="cb69-20"><a href="operational-research.html#cb69-20" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb69-21"><a href="operational-research.html#cb69-21" tabindex="-1"></a><span class="st">        B1--&gt;|TPA 24.7 hr|D1(Post TPA Scan)</span></span>
-<span id="cb69-22"><a href="operational-research.html#cb69-22" tabindex="-1"></a><span class="st">    </span></span>
-<span id="cb69-23"><a href="operational-research.html#cb69-23" tabindex="-1"></a><span class="st">        style A fill:#ADF, stroke:#333, stroke-width:2px</span></span>
-<span id="cb69-24"><a href="operational-research.html#cb69-24" tabindex="-1"></a><span class="st">        style B fill:#9AA, stroke:#333, stroke-width:2px</span></span>
-<span id="cb69-25"><a href="operational-research.html#cb69-25" tabindex="-1"></a><span class="st">        style B2 fill:#9AA, stroke:#333, stroke-width:2px</span></span>
-<span id="cb69-26"><a href="operational-research.html#cb69-26" tabindex="-1"></a><span class="st">        style B1 fill:#879, stroke:#333, stroke-width:2px</span></span>
-<span id="cb69-27"><a href="operational-research.html#cb69-27" tabindex="-1"></a><span class="st">        style C fill:#9AA, stroke:#333, stroke-width:2px</span></span>
-<span id="cb69-28"><a href="operational-research.html#cb69-28" tabindex="-1"></a><span class="st">        style D1 fill:#879, stroke:#333, stroke-width:2px</span></span>
-<span id="cb69-29"><a href="operational-research.html#cb69-29" tabindex="-1"></a><span class="st">        style E fill:#9C2, stroke:#9C2, stroke-width:2px</span></span>
-<span id="cb69-30"><a href="operational-research.html#cb69-30" tabindex="-1"></a><span class="st">        &quot;</span>) </span>
-<span id="cb69-31"><a href="operational-research.html#cb69-31" tabindex="-1"></a>a.plot</span></code></pre></div>
-<div class="DiagrammeR html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a15ddf05d5255e0553fb" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-a15ddf05d5255e0553fb">{"x":{"diagram":"\n        graph TB\n        \n        A((Triage))\n        A-->|2.3 hr|B(Imaging-No Stroke Code)\n        A-->|0.6 hr|B1(Imaging-Stroke Code)\n        \n        B-->|14.6 hr|B2(Dysphagia Screen)\n        B1-->|no TPA 10.7 hr|B2(Dysphagia Screen)\n\n        C(Stop NBM)\n        B2-->|0 hr|C\n      \n        C-->|Oral route 1.7 hr|E{Antithrombotics}\n        \n        D1-->|7.5 hr|E\n        B-->|PR route 6.8 hr|E\n        B1-->|PR route 3.8 hr|E\n    \n        B1-->|TPA 24.7 hr|D1(Post TPA Scan)\n    \n        style A fill:#ADF, stroke:#333, stroke-width:2px\n        style B fill:#9AA, stroke:#333, stroke-width:2px\n        style B2 fill:#9AA, stroke:#333, stroke-width:2px\n        style B1 fill:#879, stroke:#333, stroke-width:2px\n        style C fill:#9AA, stroke:#333, stroke-width:2px\n        style D1 fill:#879, stroke:#333, stroke-width:2px\n        style E fill:#9C2, stroke:#9C2, stroke-width:2px\n        "},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="operational-research.html#cb70-1" tabindex="-1"></a><span class="fu">library</span>(bupaR)</span></code></pre></div>
+<div class="sourceCode" id="cb1150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1150-1"><a href="operational-research.html#cb1150-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb1150-2"><a href="operational-research.html#cb1150-2" tabindex="-1"></a>a.plot<span class="ot">&lt;-</span><span class="fu">mermaid</span>(<span class="st">&quot;</span></span>
+<span id="cb1150-3"><a href="operational-research.html#cb1150-3" tabindex="-1"></a><span class="st">        graph TB</span></span>
+<span id="cb1150-4"><a href="operational-research.html#cb1150-4" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb1150-5"><a href="operational-research.html#cb1150-5" tabindex="-1"></a><span class="st">        A((Triage))</span></span>
+<span id="cb1150-6"><a href="operational-research.html#cb1150-6" tabindex="-1"></a><span class="st">        A--&gt;|2.3 hr|B(Imaging-No Stroke Code)</span></span>
+<span id="cb1150-7"><a href="operational-research.html#cb1150-7" tabindex="-1"></a><span class="st">        A--&gt;|0.6 hr|B1(Imaging-Stroke Code)</span></span>
+<span id="cb1150-8"><a href="operational-research.html#cb1150-8" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb1150-9"><a href="operational-research.html#cb1150-9" tabindex="-1"></a><span class="st">        B--&gt;|14.6 hr|B2(Dysphagia Screen)</span></span>
+<span id="cb1150-10"><a href="operational-research.html#cb1150-10" tabindex="-1"></a><span class="st">        B1--&gt;|no TPA 10.7 hr|B2(Dysphagia Screen)</span></span>
+<span id="cb1150-11"><a href="operational-research.html#cb1150-11" tabindex="-1"></a></span>
+<span id="cb1150-12"><a href="operational-research.html#cb1150-12" tabindex="-1"></a><span class="st">        C(Stop NBM)</span></span>
+<span id="cb1150-13"><a href="operational-research.html#cb1150-13" tabindex="-1"></a><span class="st">        B2--&gt;|0 hr|C</span></span>
+<span id="cb1150-14"><a href="operational-research.html#cb1150-14" tabindex="-1"></a><span class="st">      </span></span>
+<span id="cb1150-15"><a href="operational-research.html#cb1150-15" tabindex="-1"></a><span class="st">        C--&gt;|Oral route 1.7 hr|E{Antithrombotics}</span></span>
+<span id="cb1150-16"><a href="operational-research.html#cb1150-16" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb1150-17"><a href="operational-research.html#cb1150-17" tabindex="-1"></a><span class="st">        D1--&gt;|7.5 hr|E</span></span>
+<span id="cb1150-18"><a href="operational-research.html#cb1150-18" tabindex="-1"></a><span class="st">        B--&gt;|PR route 6.8 hr|E</span></span>
+<span id="cb1150-19"><a href="operational-research.html#cb1150-19" tabindex="-1"></a><span class="st">        B1--&gt;|PR route 3.8 hr|E</span></span>
+<span id="cb1150-20"><a href="operational-research.html#cb1150-20" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb1150-21"><a href="operational-research.html#cb1150-21" tabindex="-1"></a><span class="st">        B1--&gt;|TPA 24.7 hr|D1(Post TPA Scan)</span></span>
+<span id="cb1150-22"><a href="operational-research.html#cb1150-22" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb1150-23"><a href="operational-research.html#cb1150-23" tabindex="-1"></a><span class="st">        style A fill:#ADF, stroke:#333, stroke-width:2px</span></span>
+<span id="cb1150-24"><a href="operational-research.html#cb1150-24" tabindex="-1"></a><span class="st">        style B fill:#9AA, stroke:#333, stroke-width:2px</span></span>
+<span id="cb1150-25"><a href="operational-research.html#cb1150-25" tabindex="-1"></a><span class="st">        style B2 fill:#9AA, stroke:#333, stroke-width:2px</span></span>
+<span id="cb1150-26"><a href="operational-research.html#cb1150-26" tabindex="-1"></a><span class="st">        style B1 fill:#879, stroke:#333, stroke-width:2px</span></span>
+<span id="cb1150-27"><a href="operational-research.html#cb1150-27" tabindex="-1"></a><span class="st">        style C fill:#9AA, stroke:#333, stroke-width:2px</span></span>
+<span id="cb1150-28"><a href="operational-research.html#cb1150-28" tabindex="-1"></a><span class="st">        style D1 fill:#879, stroke:#333, stroke-width:2px</span></span>
+<span id="cb1150-29"><a href="operational-research.html#cb1150-29" tabindex="-1"></a><span class="st">        style E fill:#9C2, stroke:#9C2, stroke-width:2px</span></span>
+<span id="cb1150-30"><a href="operational-research.html#cb1150-30" tabindex="-1"></a><span class="st">        &quot;</span>) </span>
+<span id="cb1150-31"><a href="operational-research.html#cb1150-31" tabindex="-1"></a>a.plot</span></code></pre></div>
+<div class="DiagrammeR html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1ba7595dc83bb10fc18c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1ba7595dc83bb10fc18c">{"x":{"diagram":"\n        graph TB\n        \n        A((Triage))\n        A-->|2.3 hr|B(Imaging-No Stroke Code)\n        A-->|0.6 hr|B1(Imaging-Stroke Code)\n        \n        B-->|14.6 hr|B2(Dysphagia Screen)\n        B1-->|no TPA 10.7 hr|B2(Dysphagia Screen)\n\n        C(Stop NBM)\n        B2-->|0 hr|C\n      \n        C-->|Oral route 1.7 hr|E{Antithrombotics}\n        \n        D1-->|7.5 hr|E\n        B-->|PR route 6.8 hr|E\n        B1-->|PR route 3.8 hr|E\n    \n        B1-->|TPA 24.7 hr|D1(Post TPA Scan)\n    \n        style A fill:#ADF, stroke:#333, stroke-width:2px\n        style B fill:#9AA, stroke:#333, stroke-width:2px\n        style B2 fill:#9AA, stroke:#333, stroke-width:2px\n        style B1 fill:#879, stroke:#333, stroke-width:2px\n        style C fill:#9AA, stroke:#333, stroke-width:2px\n        style D1 fill:#879, stroke:#333, stroke-width:2px\n        style E fill:#9C2, stroke:#9C2, stroke-width:2px\n        "},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb1151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1151-1"><a href="operational-research.html#cb1151-1" tabindex="-1"></a><span class="fu">library</span>(bupaR)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;bupaR&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:simmer&#39;:
 ## 
 ##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:xgboost&#39;:
+## 
+##     slice</code></pre>
+<pre><code>## The following object is masked from &#39;package:R.utils&#39;:
+## 
+##     timestamp</code></pre>
+<pre><code>## The following object is masked from &#39;package:signal&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:listenv&#39;:
+## 
+##     mapping</code></pre>
+<pre><code>## The following object is masked from &#39;package:raster&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:matrixStats&#39;:
+## 
+##     count</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:CHNOSZ&#39;:
+## 
+##     slice</code></pre>
+<pre><code>## The following object is masked from &#39;package:reshape&#39;:
+## 
+##     rename</code></pre>
+<pre><code>## The following objects are masked from &#39;package:plyr&#39;:
+## 
+##     arrange, count, mutate, rename, summarise</code></pre>
+<pre><code>## The following object is masked from &#39;package:oro.nifti&#39;:
+## 
+##     slice</code></pre>
 <pre><code>## The following object is masked from &#39;package:stats&#39;:
 ## 
 ##     filter</code></pre>
@@ -1265,47 +1410,28 @@ Total queue size</p>
 <h2><span class="header-section-number">9.6</span> Health economics<a href="operational-research.html#health-economics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="cost-1" class="section level3 hasAnchor" number="9.6.1">
 <h3><span class="header-section-number">9.6.1</span> Cost<a href="operational-research.html#cost-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="operational-research.html#cb75-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;hesim&quot;</span>)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;hesim&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     expand</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="operational-research.html#cb78-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;data.table&quot;</span>)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;data.table&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:rlang&#39;:
-## 
-##     :=</code></pre>
-<pre><code>## The following objects are masked from &#39;package:lubridate&#39;:
-## 
-##     hour, isoweek, mday, minute, month, quarter, second, wday, week,
-##     yday, year</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     between, first, last</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     transpose</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="operational-research.html#cb84-1" tabindex="-1"></a>strategies <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">strategy_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb84-2"><a href="operational-research.html#cb84-2" tabindex="-1"></a>n_patients <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb84-3"><a href="operational-research.html#cb84-3" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">patient_id =</span> <span class="dv">1</span><span class="sc">:</span>n_patients,</span>
-<span id="cb84-4"><a href="operational-research.html#cb84-4" tabindex="-1"></a>          <span class="at">age =</span> <span class="fu">rnorm</span>(n_patients, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
-<span id="cb84-5"><a href="operational-research.html#cb84-5" tabindex="-1"></a>          <span class="at">female =</span> <span class="fu">rbinom</span>(n_patients, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> .<span class="dv">4</span>))</span>
-<span id="cb84-6"><a href="operational-research.html#cb84-6" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">state_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb84-7"><a href="operational-research.html#cb84-7" tabindex="-1"></a>                     <span class="at">state_name =</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </span>
-<span id="cb84-8"><a href="operational-research.html#cb84-8" tabindex="-1"></a><span class="co"># Non-death health states</span></span>
-<span id="cb84-9"><a href="operational-research.html#cb84-9" tabindex="-1"></a>tmat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb84-10"><a href="operational-research.html#cb84-10" tabindex="-1"></a>              <span class="fu">c</span>(<span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">4</span>),</span>
-<span id="cb84-11"><a href="operational-research.html#cb84-11" tabindex="-1"></a>              <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span>
-<span id="cb84-12"><a href="operational-research.html#cb84-12" tabindex="-1"></a><span class="fu">colnames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
-<span id="cb84-13"><a href="operational-research.html#cb84-13" tabindex="-1"></a>transitions <span class="ot">&lt;-</span> <span class="fu">create_trans_dt</span>(tmat)</span>
-<span id="cb84-14"><a href="operational-research.html#cb84-14" tabindex="-1"></a>transitions[, trans <span class="sc">:=</span> <span class="fu">factor</span>(transition_id)]</span>
-<span id="cb84-15"><a href="operational-research.html#cb84-15" tabindex="-1"></a>hesim_dat <span class="ot">&lt;-</span> <span class="fu">hesim_data</span>(<span class="at">strategies =</span> strategies,</span>
-<span id="cb84-16"><a href="operational-research.html#cb84-16" tabindex="-1"></a>                        <span class="at">patients =</span> patients, </span>
-<span id="cb84-17"><a href="operational-research.html#cb84-17" tabindex="-1"></a>                        <span class="at">states =</span> states,</span>
-<span id="cb84-18"><a href="operational-research.html#cb84-18" tabindex="-1"></a>                        <span class="at">transitions =</span> transitions)</span>
-<span id="cb84-19"><a href="operational-research.html#cb84-19" tabindex="-1"></a><span class="fu">print</span>(hesim_dat)</span></code></pre></div>
+<div class="sourceCode" id="cb1167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1167-1"><a href="operational-research.html#cb1167-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;hesim&quot;</span>)</span>
+<span id="cb1167-2"><a href="operational-research.html#cb1167-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;data.table&quot;</span>)</span>
+<span id="cb1167-3"><a href="operational-research.html#cb1167-3" tabindex="-1"></a></span>
+<span id="cb1167-4"><a href="operational-research.html#cb1167-4" tabindex="-1"></a>strategies <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">strategy_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1167-5"><a href="operational-research.html#cb1167-5" tabindex="-1"></a>n_patients <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb1167-6"><a href="operational-research.html#cb1167-6" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">patient_id =</span> <span class="dv">1</span><span class="sc">:</span>n_patients,</span>
+<span id="cb1167-7"><a href="operational-research.html#cb1167-7" tabindex="-1"></a>          <span class="at">age =</span> <span class="fu">rnorm</span>(n_patients, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb1167-8"><a href="operational-research.html#cb1167-8" tabindex="-1"></a>          <span class="at">female =</span> <span class="fu">rbinom</span>(n_patients, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> .<span class="dv">4</span>))</span>
+<span id="cb1167-9"><a href="operational-research.html#cb1167-9" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">state_id =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb1167-10"><a href="operational-research.html#cb1167-10" tabindex="-1"></a>                     <span class="at">state_name =</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>)) </span>
+<span id="cb1167-11"><a href="operational-research.html#cb1167-11" tabindex="-1"></a><span class="co"># Non-death health states</span></span>
+<span id="cb1167-12"><a href="operational-research.html#cb1167-12" tabindex="-1"></a>tmat <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb1167-13"><a href="operational-research.html#cb1167-13" tabindex="-1"></a>              <span class="fu">c</span>(<span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">4</span>),</span>
+<span id="cb1167-14"><a href="operational-research.html#cb1167-14" tabindex="-1"></a>              <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span>
+<span id="cb1167-15"><a href="operational-research.html#cb1167-15" tabindex="-1"></a><span class="fu">colnames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Healthy&quot;</span>, <span class="st">&quot;Sick&quot;</span>, <span class="st">&quot;Dead&quot;</span>)</span>
+<span id="cb1167-16"><a href="operational-research.html#cb1167-16" tabindex="-1"></a>transitions <span class="ot">&lt;-</span> <span class="fu">create_trans_dt</span>(tmat)</span>
+<span id="cb1167-17"><a href="operational-research.html#cb1167-17" tabindex="-1"></a>transitions[, trans <span class="sc">:=</span> <span class="fu">factor</span>(transition_id)]</span>
+<span id="cb1167-18"><a href="operational-research.html#cb1167-18" tabindex="-1"></a>hesim_dat <span class="ot">&lt;-</span> <span class="fu">hesim_data</span>(<span class="at">strategies =</span> strategies,</span>
+<span id="cb1167-19"><a href="operational-research.html#cb1167-19" tabindex="-1"></a>                        <span class="at">patients =</span> patients, </span>
+<span id="cb1167-20"><a href="operational-research.html#cb1167-20" tabindex="-1"></a>                        <span class="at">states =</span> states,</span>
+<span id="cb1167-21"><a href="operational-research.html#cb1167-21" tabindex="-1"></a>                        <span class="at">transitions =</span> transitions)</span>
+<span id="cb1167-22"><a href="operational-research.html#cb1167-22" tabindex="-1"></a><span class="fu">print</span>(hesim_dat)</span></code></pre></div>
 <pre><code>## $strategies
 ##    strategy_id
 ## 1:           1
@@ -1340,42 +1466,63 @@ Total queue size</p>
 ## attr(,&quot;class&quot;)
 ## [1] &quot;hesim_data&quot;</code></pre>
 <p>Data from WHO on mortality rate can be extracted directly from WHO or by calling <em>get_who_mr</em> in <em>heemod</em> library.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="operational-research.html#cb86-1" tabindex="-1"></a><span class="fu">library</span>(heemod)</span></code></pre></div>
+<div class="sourceCode" id="cb1169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1169-1"><a href="operational-research.html#cb1169-1" tabindex="-1"></a><span class="fu">library</span>(heemod)</span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;heemod&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     modify</code></pre>
 <pre><code>## The following object is masked from &#39;package:simmer&#39;:
 ## 
 ##     join</code></pre>
+<pre><code>## The following object is masked from &#39;package:graph&#39;:
+## 
+##     join</code></pre>
+<pre><code>## The following object is masked from &#39;package:mice&#39;:
+## 
+##     pool</code></pre>
+<pre><code>## The following object is masked from &#39;package:terra&#39;:
+## 
+##     project</code></pre>
+<pre><code>## The following object is masked from &#39;package:CHNOSZ&#39;:
+## 
+##     mix</code></pre>
+<pre><code>## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     join</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     modify</code></pre>
 <p>There are several data in BCEA library such as Vaccine.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="operational-research.html#cb90-1" tabindex="-1"></a><span class="fu">library</span>(BCEA)</span></code></pre></div>
+<div class="sourceCode" id="cb1178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1178-1"><a href="operational-research.html#cb1178-1" tabindex="-1"></a><span class="fu">library</span>(BCEA)</span></code></pre></div>
 <pre><code>## The BCEA version loaded is: 2.4.4</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;BCEA&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:raster&#39;:
+## 
+##     contour</code></pre>
+<pre><code>## The following object is masked from &#39;package:terra&#39;:
+## 
+##     contour</code></pre>
 <pre><code>## The following object is masked from &#39;package:graphics&#39;:
 ## 
 ##     contour</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="operational-research.html#cb94-1" tabindex="-1"></a><span class="co">#use Vaccine data from BCEA</span></span>
-<span id="cb94-2"><a href="operational-research.html#cb94-2" tabindex="-1"></a><span class="fu">data</span>(Vaccine)</span>
-<span id="cb94-3"><a href="operational-research.html#cb94-3" tabindex="-1"></a></span>
-<span id="cb94-4"><a href="operational-research.html#cb94-4" tabindex="-1"></a>ints<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Standard care&quot;</span>,<span class="st">&quot;Vaccination&quot;</span>)</span>
-<span id="cb94-5"><a href="operational-research.html#cb94-5" tabindex="-1"></a></span>
-<span id="cb94-6"><a href="operational-research.html#cb94-6" tabindex="-1"></a><span class="co"># Runs the health economic evaluation using BCEA</span></span>
-<span id="cb94-7"><a href="operational-research.html#cb94-7" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">bcea</span>(</span>
-<span id="cb94-8"><a href="operational-research.html#cb94-8" tabindex="-1"></a>      <span class="at">e=</span>eff,</span>
-<span id="cb94-9"><a href="operational-research.html#cb94-9" tabindex="-1"></a>      <span class="at">c=</span>cost,               <span class="co"># defines the variables of </span></span>
-<span id="cb94-10"><a href="operational-research.html#cb94-10" tabindex="-1"></a>                            <span class="co">#  effectiveness and cost</span></span>
-<span id="cb94-11"><a href="operational-research.html#cb94-11" tabindex="-1"></a>      <span class="at">ref=</span><span class="dv">2</span>,                <span class="co"># selects the 2nd row of (e, c) </span></span>
-<span id="cb94-12"><a href="operational-research.html#cb94-12" tabindex="-1"></a>                            <span class="co">#  as containing the reference intervention</span></span>
-<span id="cb94-13"><a href="operational-research.html#cb94-13" tabindex="-1"></a>      <span class="at">interventions=</span>treats, <span class="co"># defines the labels to be associated </span></span>
-<span id="cb94-14"><a href="operational-research.html#cb94-14" tabindex="-1"></a>                            <span class="co">#  with each intervention</span></span>
-<span id="cb94-15"><a href="operational-research.html#cb94-15" tabindex="-1"></a>      <span class="at">Kmax=</span><span class="dv">50000</span>,           <span class="co"># maximum value possible for the willingness </span></span>
-<span id="cb94-16"><a href="operational-research.html#cb94-16" tabindex="-1"></a>                            <span class="co">#  to pay threshold; implies that k is chosen </span></span>
-<span id="cb94-17"><a href="operational-research.html#cb94-17" tabindex="-1"></a>                            <span class="co">#  in a grid from the interval (0, Kmax)</span></span>
-<span id="cb94-18"><a href="operational-research.html#cb94-18" tabindex="-1"></a>      <span class="at">plot=</span><span class="cn">TRUE</span>             <span class="co"># plots the results</span></span>
-<span id="cb94-19"><a href="operational-research.html#cb94-19" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1184-1"><a href="operational-research.html#cb1184-1" tabindex="-1"></a><span class="co">#use Vaccine data from BCEA</span></span>
+<span id="cb1184-2"><a href="operational-research.html#cb1184-2" tabindex="-1"></a><span class="fu">data</span>(Vaccine)</span>
+<span id="cb1184-3"><a href="operational-research.html#cb1184-3" tabindex="-1"></a></span>
+<span id="cb1184-4"><a href="operational-research.html#cb1184-4" tabindex="-1"></a>ints<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Standard care&quot;</span>,<span class="st">&quot;Vaccination&quot;</span>)</span>
+<span id="cb1184-5"><a href="operational-research.html#cb1184-5" tabindex="-1"></a></span>
+<span id="cb1184-6"><a href="operational-research.html#cb1184-6" tabindex="-1"></a><span class="co"># Runs the health economic evaluation using BCEA</span></span>
+<span id="cb1184-7"><a href="operational-research.html#cb1184-7" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">bcea</span>(</span>
+<span id="cb1184-8"><a href="operational-research.html#cb1184-8" tabindex="-1"></a>      <span class="at">e=</span>eff,</span>
+<span id="cb1184-9"><a href="operational-research.html#cb1184-9" tabindex="-1"></a>      <span class="at">c=</span>cost,               <span class="co"># defines the variables of </span></span>
+<span id="cb1184-10"><a href="operational-research.html#cb1184-10" tabindex="-1"></a>                            <span class="co">#  effectiveness and cost</span></span>
+<span id="cb1184-11"><a href="operational-research.html#cb1184-11" tabindex="-1"></a>      <span class="at">ref=</span><span class="dv">2</span>,                <span class="co"># selects the 2nd row of (e, c) </span></span>
+<span id="cb1184-12"><a href="operational-research.html#cb1184-12" tabindex="-1"></a>                            <span class="co">#  as containing the reference intervention</span></span>
+<span id="cb1184-13"><a href="operational-research.html#cb1184-13" tabindex="-1"></a>      <span class="at">interventions=</span>treats, <span class="co"># defines the labels to be associated </span></span>
+<span id="cb1184-14"><a href="operational-research.html#cb1184-14" tabindex="-1"></a>                            <span class="co">#  with each intervention</span></span>
+<span id="cb1184-15"><a href="operational-research.html#cb1184-15" tabindex="-1"></a>      <span class="at">Kmax=</span><span class="dv">50000</span>,           <span class="co"># maximum value possible for the willingness </span></span>
+<span id="cb1184-16"><a href="operational-research.html#cb1184-16" tabindex="-1"></a>                            <span class="co">#  to pay threshold; implies that k is chosen </span></span>
+<span id="cb1184-17"><a href="operational-research.html#cb1184-17" tabindex="-1"></a>                            <span class="co">#  in a grid from the interval (0, Kmax)</span></span>
+<span id="cb1184-18"><a href="operational-research.html#cb1184-18" tabindex="-1"></a>      <span class="at">plot=</span><span class="cn">TRUE</span>             <span class="co"># plots the results</span></span>
+<span id="cb1184-19"><a href="operational-research.html#cb1184-19" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="Applications-of-R-in-Healthcare_files/figure-html/08-operational-research-12-1.png" width="672" /></p>
 
 </div>
