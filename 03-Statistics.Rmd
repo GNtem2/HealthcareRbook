@@ -595,7 +595,8 @@ Positive likelihood ratio (PLR) is the ratio of sensitivity to false positive ra
 Fagan’s normogram can be conceptualised as a sliding ruler to match the disease 
 prevalence and likelihood ratios to evaluate the impact on the post-test probability [@pmid1143310]. At the current disease prevalence of 23.4% and PLR 4.65, the post-test probability remains low at 0.60. 
 
-```{r 03-Statistics-14-3-2}
+```{r 03-Statistics-14-3-2, eval=F}
+library(tidyverse)
 source("https://raw.githubusercontent.com/achekroud/nomogrammer/master/nomogrammer.r")
 p<-nomogrammer(Prevalence = .234, Plr = 4.85, Nlr = 0.49)
 p+ggtitle("Fagan's normogram for Spot Sign and ICH growth")
@@ -994,9 +995,9 @@ Control.per=c(12.5,10.1,16.9,3.5,13.6,28.6, 11.9,23.9,20.7,27.3)
 #combine into data frame
 rct<-data.frame(Year,Trials,Treatment,Treatment.per,Control,Control.per) %>%
   mutate(Treatment.number=round(Treatment*100/Treatment.per,0),
-         Control.number=round(Control*100/Control.per,0)) %>%
+         Control.number=round(Control*100/Control.per,0), group=ifelse(Year>2010,"wide","narrow")) %>%
   rename(ai=Treatment,n1i=Treatment.number,ci=Control,
-         n2i=Control.number,study=Trials,year=Year)
+         n2i=Control.number,study=Trials) 
 
 
 #peto's fixed effect method
@@ -1038,15 +1039,8 @@ metafor::forest(res.HK,main="RCT of Omega3 fatty acid for cardiovascular disease
 
 Subgroup analysis is one way of exploring the data for group effect. Metaregression is illustrated later.
 
-```{r 03-Statistics-17-5, warning=F}
-#create subgroups for Omega 3 trial based on year of publication
-rct1<-rct[1:5,]
-rct2<-rct[6:10,]
-rct1$group[rct1$year>=1999]<-"wide"
-rct2$group[rct2$year>=1999]<-"narrow"
-rct3<-rbind(rct1,rct2)
-
-datO3$group<-rct3$group
+```{r 03-Statistics-17-5, warning=F, eval=F}
+#datO3$group<-rct3$group
 #plot subgroups
 res.group <- rma(yi, vi, mods = ~ group, data=datO3)
 res.wide<- rma(yi, vi, subset=(group=="wide"), data=datO3)
